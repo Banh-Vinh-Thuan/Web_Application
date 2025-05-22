@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    padding: 20px;
+}
+
+h2 {
+    color: #004080;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background: #004080;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background: #f0f4fa;
+}
+
+th:nth-child(9),
+td:nth-child(9) {
+    width: 80px;
+    /* hoặc 180px tuỳ nhu cầu */
+}
+
+a {
+    color: #004080;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 800px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+button,
+input[type="submit"] {
+    background: #004080;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    margin-top: 20px;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: #003366;
+}
+
+.form-container {
+    margin: 40px auto;
+    max-width: 850px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    text-align: left;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Red centered back button */
+.btn-back {
+    display: block;
+    margin: 30px auto 0 auto;
+    background: #cc0000;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 15px;
+    text-align: center;
+    width: 200px;
+    font-weight: bold;
+    transition: background 0.3s ease;
+}
+
+.btn-back:hover {
+    background: #990000;
+}

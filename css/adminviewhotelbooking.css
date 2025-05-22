@@ -1,0 +1,133 @@
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f7f9fc;
+        padding: 20px;
+        color: #333;
+    }
+    h2 {
+        color: #004080;
+        margin-bottom: 20px;
+    }
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+        background: #fff;
+        box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        text-align: left;
+        font-size: 14px;
+    }
+    th {
+        background: #004080;
+        color: white;
+        font-weight: 600;
+    }
+    tr:nth-child(even) {
+        background: #f0f4fa;
+    }
+    a {
+        color: #004080;
+        text-decoration: none;
+        margin: 0 5px;
+    }
+    a:hover {
+        text-decoration: underline;
+    }
+    form {
+        background: #fff;
+        padding: 20px;
+        border: 1px solid #ccc;
+        max-width: 900px;
+        border-radius: 6px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.05);
+        width: 100%;
+        margin: 0 auto 40px auto;
+    }
+    .form-columns {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .form-columns > div {
+        flex: 1;
+        min-width: 250px;
+    }
+    label {
+        display: block;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        font-weight: bold;
+        color: #004080;
+    }
+    select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #fff;
+    color: #333;
+}
+
+    input[type="text"],
+    input[type="email"],
+    input[type="number"],
+    input[type="date"] {
+        width: calc(100% - 20px);
+        padding: 10px;
+        border: 1px solid #bbb;
+        border-radius: 4px;
+        font-size: 14px;
+        color: #333;
+    }
+    button, input[type="submit"] {
+        background: #004080;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 15px;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+    }
+    button:hover, input[type="submit"]:hover {
+        background: #003366;
+    }
+    .form-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 30px;
+    }
+    .form-container h2 {
+        text-align: center;
+        margin-bottom: 15px;
+    }
+    .back-btn-wrapper {
+    text-align: center;
+    margin-top: 20px;
+}
+    /* Red centered Back to Dashboard button */
+    .back-btn {
+        display: block;
+        margin: 0 auto 40px auto;
+        padding: 12px 30px;
+        font-size: 16px;
+        background-color: #d9534f;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        max-width: 220px;
+        text-align: center;
+        transition: background-color 0.3s ease;
+    }
+    .back-btn:hover {
+        background-color: #c9302c;
+    }

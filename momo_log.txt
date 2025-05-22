@@ -35,3 +35,7 @@ Request: {"partnerCode":"MOMO","partnerName":"Test","storeId":"MomoTestStore","r
 Response: {"partnerCode":"MOMO","orderId":"MOMO1747895621","requestId":"MOMO1747895621","amount":2390000,"responseTime":1747895619708,"message":"Thành công.","resultCode":0,"payUrl":"https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTc0Nzg5NTYyMQ&s=c11e1ce5910b2f674a0a9150124dc53b4688deb5ee94935e281450b712e02b61","shortLink":"https://test-payment.momo.vn/shortlink/e49uk7rFxp"}
 HTTP Code: 200
 Curl Error: 
+Request: {"partnerCode":"MOMO","partnerName":"Test","storeId":"MomoTestStore","requestId":"MOMO1747919600","amount":6890000,"orderId":"MOMO1747919600","orderInfo":"Pay with MoMo","redirectUrl":"http:\/\/localhost:8000\/payment_return.php","ipnUrl":"http:\/\/localhost:8000\/ipn2.php","lang":"vi","requestType":"payWithMethod","payType":"momo_wallet","autoCapture":true,"extraData":"","orderGroupId":"","signature":"4dc34e47d8daa17a2833e800df449416b303f5be760f8cec139a3695934a467b"}
+Response: {"partnerCode":"MOMO","orderId":"MOMO1747919600","requestId":"MOMO1747919600","amount":6890000,"responseTime":1747919597263,"message":"Thành công.","resultCode":0,"payUrl":"https://test-payment.momo.vn/v2/gateway/pay?t=TU9NT3xNT01PMTc0NzkxOTYwMA&s=77c9a5f702c30e15e53637a3157f257abbc749d77d902f57a9787568f5ac3fed","shortLink":"https://test-payment.momo.vn/shortlink/61w6z2xo9a"}
+HTTP Code: 200
+Curl Error: 

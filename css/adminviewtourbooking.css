@@ -1,0 +1,220 @@
+/* CSS for Admin View Tour Booking */
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+}
+
+.header {
+    background-color: #1f2937;
+    color: #ffffff;
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header .logo h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+select {
+    width: calc(100% - 20px);
+    padding: 10px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+    background: #fff;
+    color: #333;
+}
+
+.header .navigation ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 1rem;
+}
+
+.header .navigation ul li a {
+    text-decoration: none;
+    color: #ffffff;
+    padding: 0.5rem 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.header .navigation ul li a:hover {
+    background-color: #4b5563;
+    border-radius: 5px;
+}
+
+.footer {
+    background-color: #1f2937;
+    color: #ffffff;
+    padding: 1rem;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    box-shadow: 0 -4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.footer p {
+    margin: 0;
+    font-size: 0.875rem;
+}
+
+.container {
+    padding: 2rem;
+    margin-bottom: 4rem;
+    /* To avoid overlapping with the fixed footer */
+}
+
+.container h2 {
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f7f9fc;
+    margin: 20px;
+    color: #333;
+}
+
+h2,
+h3 {
+    color: #004080;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 25px;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    background: #fff;
+}
+
+th,
+td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    background-color: #004080;
+    color: #fff;
+    font-weight: 600;
+}
+
+tr:nth-child(even) {
+    background-color: #f2f6fc;
+}
+
+/* Đặt chiều rộng riêng cho các cột Date và Actions */
+th:nth-child(7),
+td:nth-child(7) {
+    width: 80px;
+    /* hoặc 180px tuỳ nhu cầu */
+}
+
+th:nth-child(12),
+td:nth-child(12) {
+    width: 100px;
+    white-space: nowrap;
+    /* giữ nút Edit/Delete trên 1 dòng */
+}
+
+a {
+    color: #004080;
+    text-decoration: none;
+    margin: 0 5px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 20px;
+}
+
+form {
+    background: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    max-width: 800px;
+    width: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 6px;
+}
+
+.form-columns {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.form-columns>div {
+    flex: 1;
+    min-width: 250px;
+}
+
+.form-columns label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-columns input {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form input[type="submit"] {
+    background-color: #004080;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+form input[type="submit"]:hover {
+    background-color: #003366;
+}
+
+/* Red, centered Back to Dashboard button */
+button {
+    display: block;
+    margin: 30px auto 0 auto;
+    padding: 12px 25px;
+    font-size: 16px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    max-width: 200px;
+    text-align: center;
+}
+
+button:hover {
+    background-color: #c9302c;
+}
