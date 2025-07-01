@@ -1,0 +1,461 @@
+{
+  "dalat": [
+    {
+        "city": "Dalat",
+      "title": "Dalat Dreamy Getaway: Valley of Love - Datanla Waterfall - Langbiang Mountain - Local Flower Gardens",
+      "image": "../tourphotoID/21.jpg",
+      "duration": 4,
+      "price": 5290000,
+      "original_price": 6223529,
+      "discount": 15,
+      "departure": "Ho Chi Minh City",
+      "dates": ["2024-05-22", "2024-05-29", "2024-06-05"],
+      "transport": "bus",
+      "link": "/Tour_detail/dalat_1.php"
+    },
+    {
+      "title": "Dalat Nature & Culture: Tuyen Lam Lake - Truc Lam Zen Monastery - Clay Tunnel - Night Market",
+      "image": "../tourphotoID/22.jpg",
+      "duration": 4,
+      "price": 5690000,
+      "original_price": 6465909,
+      "discount": 12,
+      "departure": "Ho Chi Minh City",
+      "dates": ["2024-05-23", "2024-05-30", "2024-06-06"],
+      "transport": "bus",
+      "link": "/Tour_detail/dalat_2.php"
+    },
+    {
+      "title": "Dalat Flower & Highlands Adventure: Valley of Love - Langbiang Peak - Dalat Railway - Hydrangea Garden",
+      "image": "../tourphotoID/23.jpg",
+      "duration": 4,
+      "price": 6290000,
+      "original_price": 7400000,
+      "discount": 15,
+      "departure": "Da Nang",
+      "dates": ["2024-05-24", "2024-05-31", "2024-06-07"],
+      "transport": "flight",
+      "link": "/Tour_detail/dalat_3.php"
+    },
+    {
+      "title": "Dalat Chill & Relax: Tuyen Lam Lake - Clay Tunnel - Fresh Garden - Coffee Farm Experience",
+      "image": "../tourphotoID/24.jpg",
+      "duration": 4,
+      "price": 5790000,
+      "original_price": 6579545,
+      "discount": 12,
+      "departure": "Ho Chi Minh City",
+      "dates": ["2024-05-23", "2024-05-30", "2024-06-06"],
+      "transport": "bus",
+      "link": "/Tour_detail/dalat_4.php"
+    }
+  ],
+  "hagiang": [
+    {
+        "city": "Ha Giang",
+      "title": "Ha Giang Adventure & Culture: Ma Pi Leng Pass - Dong Van Plateau - Lung Cu Flag Tower - Ethnic Villages",
+      "image": "../tourphotoID/33.jpg",
+      "duration": 4,
+      "price": 6890000,
+      "original_price": 7830000,
+      "discount": 12,
+      "departure": "Hanoi",
+      "dates": ["2024-06-01", "2024-06-08", "2024-06-15"],
+      "transport": "bus",
+      "link": "/Tour_detail/hagiang_1.php"
+    },
+    {
+      "title": "Ha Giang Explorer: Quan Ba Heaven Gate - Dong Van Karst Plateau - Meo Vac - Local Homestay Experience",
+      "image": "../tourphotoID/34.jpg",
+      "duration": 4,
+      "price": 6990000,
+      "original_price": 7860000,
+      "discount": 11,
+      "departure": "Can Tho",
+      "dates": ["2024-06-05", "2024-06-12", "2024-06-19"],
+      "transport": "bus",
+      "link": "/Tour_detail/hagiang_2.php"
+    },
+    {
+      "title": "Ha Giang Nature & Culture: Lung Cu Flagpole - Nho Que River Boat Ride - Ma Pi Leng Pass - Minority Villages",
+      "image": "../tourphotoID/35.jpg",
+      "duration": 4,
+      "price": 6190000,
+      "original_price": 7110000,
+      "discount": 13,
+      "departure": "Hanoi",
+      "dates": ["2024-06-07", "2024-06-14", "2024-06-21"],
+      "transport": "bus",
+      "link": "/Tour_detail/hagiang_3.php"
+    },
+    {
+      "title": "Ha Giang Nature & Culture: Dong Van Karst Plateau - Lung Cam Cultural Village - Ma Pi Leng Panorama - Local Craft Workshops",
+      "image": "../tourphotoID/36.jpg",
+      "duration": 4,
+      "price": 7150000,
+      "original_price": 8300000,
+      "discount": 14,
+      "departure": "Ho Chi Minh City",
+      "dates": ["2024-06-08", "2024-06-15", "2024-06-22"],
+      "transport": "bus",
+      "link": "/Tour_detail/hagiang_4.php"
+    }
+  ],
+  "hcm": [
+    {
+        "city": "Ho Chi Minh City",
+      "title": "Discover Ho Chi Minh - Cu Chi Tunnels - Mekong Delta",
+      "image": "../tourphotoID/5.jpg",
+      "duration": 4,
+      "price": 4590000,
+      "original_price": 4840000,
+      "discount": 5.2,
+      "departure": "Ho Chi Minh City",
+      "dates": ["daily"],
+      "transport": "bus",
+      "link": "/Tour_detail/hcm_1.php"
+    },
+    {
+      "title": "Ho Chi Minh City Street Food and Culture Walk",
+      "image": "../tourphotoID/6.jpg",
+      "duration": 1,
+      "price": 890000,
+      "original_price": 933000,
+      "discount": 4.5,
+      "departure": "Ho Chi Minh City",
+      "dates": ["afternoon"],
+      "transport": "walking",
+      "link": "/Tour_detail/hcm_2.php"
+    },
+    {
+      "title": "Museum and Contemporary Art Tour in Ho Chi Minh",
+      "image": "../tourphotoID/7.jpg",
+      "duration": 2,
+      "price": 980000,
+      "original_price": 1019000,
+      "discount": 3.8,
+      "departure": "Ho Chi Minh City",
+      "dates": ["weekdays"],
+      "transport": "bus",
+      "link": "/Tour_detail/hcm_3.php"
+    },
+    {
+      "title": "Mekong Delta Tour Departing from Ho Chi Minh City",
+      "image": "../tourphotoID/8.jpg",
+      "duration": 1,
+      "price": 1050000,
+      "original_price": 1100000,
+      "discount": 4.5,
+      "departure": "Ho Chi Minh City",
+      "dates": ["daily"],
+      "transport": "bus-boat",
+      "link": "/Tour_detail/hcm_4.php"
+    }
+  ],
+  "hoian": [
+    {
+        "city": "Hoi An",
+      "title": "Hoi An Ancient Town Discovery: Old Quarter - Japanese Bridge - Riverside Market - Lantern Festival",
+      "image": "../tourphotoID/29.jpg",
+      "duration": 4,
+      "price": 6490000,
+      "original_price": 7475000,
+      "discount": 13,
+      "departure": "Da Nang",
+      "dates": ["26/05", "02/06", "09/06"],
+      "transport": "bus",
+      "link": "/Tour_detail/hoian_1.php"
+    },
+    {
+      "title": "Hoi An Cultural Experience: Ancient Town - Riverside Market - Traditional Craft Villages - Lantern Festival",
+      "image": "../tourphotoID/30.jpg",
+      "duration": 4,
+      "price": 6390000,
+      "original_price": 7100000,
+      "discount": 10,
+      "departure": "Hanoi",
+      "dates": ["24/05", "31/05", "07/06"],
+      "transport": "bus",
+      "link": "/Tour_detail/hoian_2.php"
+    },
+    {
+      "title": "Hoi An Heritage & Beach: Ancient Town - My Son Sanctuary - An Bang Beach - Traditional Cooking Class",
+      "image": "../tourphotoID/31.jpg",
+      "duration": 4,
+      "price": 6290000,
+      "original_price": 7140000,
+      "discount": 12,
+      "departure": "Hanoi",
+      "dates": ["28/05", "04/06", "11/06"],
+      "transport": "bus",
+      "link": "/Tour_detail/hoian_3.php"
+    },
+    {
+      "title": "Hoi An Nature & Culture: Cam Thanh Village - Thu Bon River Cruise - Marble Mountains - Local Handicraft Workshops",
+      "image": "../tourphotoID/32.jpg",
+      "duration": 4,
+      "price": 6150000,
+      "original_price": 7230000,
+      "discount": 15,
+      "departure": "Da Nang",
+      "dates": ["30/05", "06/06", "13/06"],
+      "transport": "bus",
+      "link": "/Tour_detail/hoian_4.php"
+    }
+  ],
+  "hue": [
+    {
+        "city": "Hue",
+      "title": "Da Nang - Phong Nha Cave - La Vang - Hue - Ba Na Hills - Hoi An",
+      "image": "../tourphotoID/13.jpg",
+      "duration": 5,
+      "price": 6990000,
+      "original_price": 7943182,
+      "discount": 12,
+      "departure": "Ho Chi Minh City",
+      "dates": ["21/05", "23/05", "26/05"],
+      "transport": "bus",
+      "link": "/Tour_detail/hue_1.php"
+    },
+    {
+      "title": "Hanoi - Sapa - Fansipan - Ha Long - Ninh Binh - Da Nang - Son Tra - Ba Na Hills - Golden Bridge - Hoi An - La Vang - Hue - Phong Nha",
+      "image": "../tourphotoID/14.jpg",
+      "duration": 10,
+      "price": 23590000,
+      "original_price": 26211111,
+      "discount": 10,
+      "departure": "Ho Chi Minh City",
+      "dates": ["17/05", "24/05", "31/05"],
+      "transport": "bus",
+      "link": "/Tour_detail/hue_2.php"
+    },
+    {
+      "title": "Hue Cultural Discovery – Imperial Citadel – Thien Mu Pagoda – Perfume River – Truong Tien Bridge – Local Cuisine",
+      "image": "../tourphotoID/15.jpg",
+      "duration": 4,
+      "price": 7590000,
+      "original_price": 8923500,
+      "discount": 15,
+      "departure": "Can Tho",
+      "dates": ["18/05", "25/05", "01/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/hue_3.php"
+    },
+    {
+      "title": "Hanoi - Overnight Train to Hue - Imperial City - Khai Dinh Tomb - Dong Ba Market - Relaxing Cruise on Perfume River",
+      "image": "../tourphotoID/16.jpg",
+      "duration": 4,
+      "price": 5290000,
+      "original_price": 6080460,
+      "discount": 13,
+      "departure": "Hanoi",
+      "dates": ["18/05", "25/05", "01/06"],
+      "transport": "train",
+      "link": "/Tour_detail/hue_4.php"
+    }
+  ],
+  "nhatrang": [
+    {
+        "city": "Nha Trang",
+      "title": "Nha Trang - Thap Ba Ponagar - Nhu Tien Beach - VinWonders - Bau Truc Pottery Village",
+      "image": "../tourphotoID/9.jpg",
+      "duration": 3,
+      "price": 2390000,
+      "original_price": 2987500,
+      "discount": 20,
+      "departure": "Ho Chi Minh City",
+      "dates": ["12/05", "19/05", "26/05"],
+      "transport": "bus",
+      "link": "/Tour_detail/nhatrang_1.php"
+    },
+    {
+      "title": "Nha Trang - Bau Truc Pottery Village - Ancient Nha Trang - Thap Ba Ponagar - Nhu Tien Beach - VinWonders - Pottery & Seashell Workshop Experience",
+      "image": "../tourphotoID/10.jpg",
+      "duration": 3,
+      "price": 2690000,
+      "original_price": 3280488,
+      "discount": 18,
+      "departure": "Da Nang",
+      "dates": ["12/05", "09/06", "16/06"],
+      "transport": "bus",
+      "link": "/Tour_detail/nhatrang_2.php"
+    },
+    {
+      "title": "Nha Trang - Hon Mun Island Snorkeling - Institute of Oceanography - Vinpearl Cable Car - Long Son Pagoda - Local Seafood Feast",
+      "image": "../tourphotoID/11.jpg",
+      "duration": 3,
+      "price": 3190000,
+      "original_price": 3752900,
+      "discount": 15,
+      "departure": "Ho Chi Minh City",
+      "dates": ["18/05", "25/05", "01/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/nhatrang_3.php"
+    },
+    {
+      "title": "Nha Trang - Yang Bay Eco Park - Mud Bath Experience - Dam Market - Thap Ba Ponagar - Coastal Road Discovery",
+      "image": "../tourphotoID/12.jpg",
+      "duration": 3,
+      "price": 2890000,
+      "original_price": 3481200,
+      "discount": 17,
+      "departure": "Can Tho",
+      "dates": ["20/05", "27/05", "03/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/nhatrang_4.php"
+    }
+  ],
+  "phuquoc": [
+    {
+        "city": "Phu Quoc",
+      "title": "Phu Quoc Paradise Escape: Sao Beach - Vinpearl Safari - Night Market - Pepper Farm",
+      "image": "../tourphotoID/25.jpg",
+      "duration": 4,
+      "price": 6290000,
+      "original_price": 7136364,
+      "discount": 12,
+      "departure": "Ho Chi Minh City",
+      "dates": ["24/05", "31/05", "07/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/phuquoc_1.php"
+    },
+    {
+      "title": "Phu Quoc Island Adventure: Phu Quoc National Park - Fish Sauce Factory - Coconut Prison - Sunset Beach",
+      "image": "../tourphotoID/26.jpg",
+      "duration": 4,
+      "price": 5790000,
+      "original_price": 6744186,
+      "discount": 14,
+      "departure": "Ho Chi Minh City",
+      "dates": ["25/05", "01/06", "08/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/phuquoc_2.php"
+    },
+    {
+      "title": "Phu Quoc Island Serenity: Sao Beach - Pepper Farm - Night Market - Sunset at Dinh Cau",
+      "image": "../tourphotoID/27.jpg",
+      "duration": 4,
+      "price": 6490000,
+      "original_price": 7475000,
+      "discount": 13,
+      "departure": "Da Nang",
+      "dates": ["26/05", "02/06", "09/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/phuquoc_3.php"
+    },
+    {
+      "title": "Phu Quoc Relax & Discover: Ong Lang Beach - Pepper Farm - Fish Sauce Village - Night Market",
+      "image": "../tourphotoID/28.jpg",
+      "duration": 4,
+      "price": 6390000,
+      "original_price": 7100000,
+      "discount": 10,
+      "departure": "Hanoi",
+      "dates": ["24/05", "31/05", "07/06"],
+      "transport": "bus",
+      "link": "/Tour_detail/phuquoc_4.php"
+    }
+  ],
+  "phuyen": [
+    {
+        "city": "Phu Yen",
+      "title": "Phu Yen Gems: Da Dia Reef - Bai Xep - Mang Lang Church - Nhan Tower",
+      "image": "../tourphotoID/17.jpg",
+      "duration": 4,
+      "price": 5990000,
+      "original_price": 7304878,
+      "discount": 18,
+      "departure": "Nha Trang",
+      "dates": ["21/05", "28/05", "04/06"],
+      "transport": "train",
+      "link": "/Tour_detail/phuyen_1.php"
+    },
+    {
+      "title": "Phu Yen - Mui Dien Sunrise - Vung Ro Bay - Bai Mon Beach - Local Seafood Tasting",
+      "image": "../tourphotoID/18.jpg",
+      "duration": 4,
+      "price": 7790000,
+      "original_price": 9273810,
+      "discount": 16,
+      "departure": "Ho Chi Minh City",
+      "dates": ["26/05", "02/06", "09/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/phuyen_2.php"
+    },
+    {
+      "title": "Phu Yen - Quy Nhon - Ky Co - Bai Xep - Ganh Da Dia",
+      "image": "../tourphotoID/19.jpg",
+      "duration": 4,
+      "price": 8490000,
+      "original_price": 9758621,
+      "discount": 13,
+      "departure": "Hanoi",
+      "dates": ["25/05", "01/06", "08/06"],
+      "transport": "flight",
+      "link": "/Tour_detail/phuyen_3.php"
+    },
+    {
+      "title": "Phu Yen - Tuy Hoa - Ganh Da Dia - Vung Ro Bay - Mang Lang Church",
+      "image": "../tourphotoID/20.jpg",
+      "duration": 5,
+      "price": 6690000,
+      "original_price": 7779070,
+      "discount": 14,
+      "departure": "Da Nang",
+      "dates": ["22/05", "29/05", "05/06"],
+      "transport": "train",
+      "link": "/Tour_detail/phuyen_4.php"
+    }
+  ],
+  "taybac": [
+    {
+        "city": "Tay Bac",
+      "title": "Northwest in Rice Harvest Season - Nghia Lo - Mu Cang Chai - Sapa - Fansipan - Lai Chau - Dien Bien - Moc Chau",
+      "image": "../tourphotoID/1.jpg",
+      "duration": 6,
+      "price": 12179000,
+      "original_price": 12779000,
+      "discount": 4.7,
+      "departure": "Hanoi",
+      "dates": ["Everyday"],
+      "transport": "flight",
+      "link": "/Tour_detail/taybac_1.php"
+    },
+    {
+      "title": "Hung Temple - Nghia Lo - Tu Le - Mu Cang Chai - Sapa - Fansipan - Dien Bien - Moc Chau",
+      "image": "../tourphotoID/2.jpg",
+      "duration": 4,
+      "price": 13590000,
+      "original_price": 14590000,
+      "discount": 9,
+      "departure": "Ho Chi Minh City",
+      "dates": ["Monday", "Thursday", "Saturday"],
+      "transport": "bus",
+      "link": "/Tour_detail/taybac_2.php"
+    },
+    {
+      "title": "Sapa - Fansipan - Y Ty - Bat Xat Rice Terraces",
+      "image": "../tourphotoID/3.jpg",
+      "duration": 3,
+      "price": 9405000,
+      "original_price": 9900000,
+      "discount": 5,
+      "departure": "Hanoi",
+      "dates": ["Wednesday", "Friday", "Sunday"],
+      "transport": "bus",
+      "link": "/Tour_detail/taybac_3.php"
+    },
+    {
+      "title": "Moc Chau - Pha Din Pass - Son La - Dien Bien",
+      "image": "../tourphotoID/4.jpg",
+      "duration": 5,
+      "price": 10545000,
+      "original_price": 11400000,
+      "discount": 7.5,
+      "departure": "Da Nang",
+      "dates": ["Tuesday", "Saturday"],
+      "transport": "bus",
+      "link": "/Tour_detail/taybac_4.php"
+    }
+  ]
+}
