@@ -8,9 +8,57 @@
     <link rel="icon" type="image/png" href="/images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
-    <link rel="stylesheet" href="./css/style.css">
-    </head>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
 <body>
+    <style>
+        .footer .box-container{
+            display: flex;
+            flex-wrap: wrap;
+            gap:1.5rem;
+        }
+
+        .footer .box-container .box{
+            flex:1 1 25rem;
+        }
+
+        .footer .box-container .box h3{
+            color:#333;
+            font-size: 2.5rem;
+            padding:1rem 0;
+        }
+
+        .footer .box-container .box a{
+            display: block;
+            color:#666;
+            font-size: 1.5rem;
+            padding:1rem 0;
+        }
+
+        .footer .box-container .box a:hover{
+            color:var(--pink);
+            text-decoration: underline;
+        }
+
+        .footer .box-container .box  img{
+            margin-top: 1rem;
+        }
+
+        .footer .credit{
+            text-align: center;
+            padding:1.5rem;
+            margin-top: 1.5rem;
+            padding-top: 2.5rem;
+            font-size: 2rem;
+            color:#333;
+            border-top: .1rem solid rgba(0,0,0,.1);
+            padding-bottom: 9rem;
+        }
+
+        .footer .credit span{
+            color:var(--pink);
+        }
+    </style>
 
 <header>
 
@@ -341,10 +389,6 @@
 </div>
 
 </section>
-
-
-
-
 <section class="footer">
 
     <div class="box-container">

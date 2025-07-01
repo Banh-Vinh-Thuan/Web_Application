@@ -6,178 +6,7 @@
   <title>Find Travel Tour</title>
   <link rel="icon" type="image/png" href="../images/favicon.png">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
-      color: #333;
-    }
-
-    .main-header {
-      background-color: #003580;
-      color: white;
-      padding: 25px 15px 15px;
-      text-align: center;
-    }
-
-    .header-content {
-      max-width: 1125px;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 30px;
-      text-align: left;
-    }
-
-    .main-header h1 {
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    .main-header p {
-      font-size: 18px;
-    }
-
-    .search-bar {
-      background-color: white;
-      border: 3px solid #febb02;
-      border-radius: 10px;
-      padding: 10px;
-      max-width: 1100px;
-      margin-top: 50px;
-      margin-right: auto;
-      margin-bottom: -50px;
-      margin-left: auto;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-
-    .search-input {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .search-input input[type="text"] {
-      padding: 12px;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      background-color: #f0f0f0;
-      flex: 1;
-    }
-
-    .search-button {
-      background-color: #0071c2;
-      color: white;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      font-size: 16px;
-      transition: background-color 0.2s ease-in-out;
-    }
-
-    .search-button:hover {
-      background-color: #005a9e;
-    }
-
-    .suggestion-section {
-      padding: 30px 20px;
-      max-width: 1125px;
-      margin: 0 auto;
-    }
-
-    .suggestion-section h2 {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      margin-top: 40px;
-    }
-
-    .suggestion-list {
-      display: flex;
-      gap: 20px;
-      overflow-x: auto;
-    }
-
-    .suggestion-item {
-      min-width: 250px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-      flex-shrink: 0;
-      overflow: hidden;
-    }
-
-    .image-container {
-      position: relative;
-    }
-
-    .image-container img {
-      width: 100%;
-      height: 199px;
-      object-fit: contain;
-    }
-
-    .rating {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      background-color: #003580;
-      color: white;
-      padding: 6px 10px;
-      border-radius: 5px;
-      font-size: 16px;
-      font-weight: bold;
-    }
-
-    .wishlist-button {
-      position: absolute;
-      top: 10px;
-      right: 10px;
-      background: white;
-      border-radius: 50%;
-      border: none;
-      width: 30px;
-      height: 30px;
-      font-size: 16px;
-      cursor: pointer;
-      opacity: 0.8;
-    }
-
-    .wishlist-button:hover {
-      opacity: 1;
-    }
-
-    .suggestion-item h3 {
-      margin: 10px;
-      font-size: 1em;
-      font-weight: bold;
-    }
-
-    .location {
-      margin: 0 10px;
-      color: #555;
-      font-size: 0.9em;
-    }
-
-    .review-info {
-      padding: 10px;
-      border-top: 1px solid #eee;
-      font-size: 0.9em;
-      color: #555;
-    }
-
-    .review-info .review-count {
-      font-weight: bold;
-      color: #003580;
-    }
-  </style>
+  <link rel="stylesheet" href="../css/findtour.css">
   <script>
     $(document).ready(function () {
       $("#city").on("input", function () {
@@ -207,7 +36,6 @@
         e.preventDefault();
         var city = $("#city").val().trim();
         if (city) {
-
           var citySlug = city.toLowerCase().replace(/\s+/g, '_');
           window.location.href = `../Journey/viewjourney_${citySlug}.php`;
         } else {
@@ -235,75 +63,53 @@
   <section class="suggestion-section">
     <h2>Tour suggestion</h2>
     <div class="suggestion-list">
+      <?php
+        // Assuming database connection
+       include '../dbconnect.php';
+        // Query to get 4 random tours with city names
+        $sql = "SELECT t.tourid, t.tour_name, t.duration_days, t.price_per_person, c.city as city_name 
+                FROM tours t 
+                JOIN cities c ON t.cityid = c.cityid 
+                ORDER BY RAND() LIMIT 4";
+        $result = $conn->query($sql);
+
+        if ($result->num_rows > 0) {
+          while($row = $result->fetch_assoc()) {
+            $tour_id = htmlspecialchars($row['tourid']);
+            $tour_name = htmlspecialchars($row['tour_name']);
+            // Truncate tour name to 30 characters
+            $display_name = strlen($tour_name) > 30 ? substr($tour_name, 0, 27) . '...' : $tour_name;
+            $duration = htmlspecialchars($row['duration_days']);
+            $price = number_format($row['price_per_person'], 0, ',', '.') . 'đ';
+            $city_name = htmlspecialchars($row['city_name']);
+            // Create slug for tour detail link
+            $city_slug = strtolower($city_name);
+            $city_slug = str_replace(' ', '_', $city_slug);
+      ?>
       <div class="suggestion-item">
         <div class="image-container">
-          <img src="../tourphotoID/3.jpg" alt="Tay Bac Tour">
+          <img src="../tourphotoID/<?php echo $tour_id; ?>.jpg" alt="<?php echo $tour_name; ?>">
           <div class="rating">
-            <span class="score">3 days</span>
+            <span class="score"><?php echo $duration; ?> days</span>
           </div>
           <button class="wishlist-button">❤️</button>
         </div>
-        <h3>Sapa - Fansipan - Y Ty - Bat Xat </h3>
-        <p class="location">Tay Bac, Vietnam</p>
+        <h3><?php echo $display_name; ?></h3>
+        <p class="location"><?php echo $city_name; ?>, Vietnam</p>
         <div class="review-info">
           <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="review-count">9.405.000đ</span>
-            <a href="../Tour_detail/taybac_3.php">More information</a>
+            <span class="review-count"><?php echo $price; ?></span>
+           
           </div>
         </div>
       </div>
-      <div class="suggestion-item">
-        <div class="image-container">
-          <img src="../tourphotoID/8.jpg" alt="Ho Chi Minh Tour">
-          <div class="rating">
-            <span class="score">1 day</span>
-          </div>
-          <button class="wishlist-button">❤️</button>
-        </div>
-        <h3>Mekong Delta Tour </h3>
-        <p class="location">Ho Chi Minh City, Vietnam</p>
-        <div class="review-info">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-           <span class="review-count">1.050.000đ</span>
-            <a href="../Tour_detail/hcm_4.php">More information</a>
-          </div>
-        </div>
-      </div>
-      <div class="suggestion-item">
-        <div class="image-container">
-          <img src="../tourphotoID/13.jpg" alt="Hue Tour">
-          <div class="rating">
-            <span class="score">5 days</span>
-          </div>
-          <button class="wishlist-button">❤️</button>
-        </div>
-        <h3>Da Nang - Phong Nha Cave - La Vang..</h3>
-        <p class="location">Hue, Vietnam</p>
-        <div class="review-info">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="review-count">6.990.000đ</span>
-            <a href="../Tour_detail/hue_1.php">More information</a>
-          </div>
-        </div>
-      </div>
-      <div class="suggestion-item">
-        <div class="image-container">
-          <img src="../tourphotoID/20.jpg" alt="Phu Yen Tour">
-          <div class="rating">
-            <span class="score">5 days</span>
-          </div>
-          <button class="wishlist-button">❤️</button>
-        </div>
-        <h3>Phu Yen - Tuy Hoa - Ganh Da Dia...</h3>
-        <p class="location">Phu Yen, Vietnam</p>
-        <div class="review-info">
-          <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span class="review-count">6.690.000đ</span>
-            <a href="../Tour_detail/phuyen_4.php">More information</a>
-          </div>
-        </div>
-      </div>
+      <?php
+          }
+        }
+        $conn->close();
+      ?>
     </div>
   </section>
+  <?php include __DIR__ . '/../footer.php'; ?>
 </body>
 </html>

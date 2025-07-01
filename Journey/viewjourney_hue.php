@@ -1,3 +1,8 @@
+<?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,21 +11,10 @@
     <title>Hue Travel</title>
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link rel="stylesheet" href="../css/viewjourney.css">
-    <style>
-        /* Ensure content is not overlapped by fixed header */
-        .main-content {
-            margin-top: 100px; /* Adjust based on header height */
-            padding: 20px;
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
 
-<?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-?>
 <header>
     <input type="checkbox" name="" id="toggler">
     <label for="toggler" class="fas fa-bars"></label>
@@ -51,7 +45,7 @@ if (session_status() === PHP_SESSION_NONE) {
         Hue, the ancient imperial capital of Vietnam, is a peaceful city rich in history, culture, and architectural beauty. Nestled along the banks of the Perfume River, Hue enchants visitors with its centuries-old citadels, royal tombs, and serene pagodas, all echoing the grandeur of the Nguyen Dynasty.
     </p>
     <p>
-        Register for a <strong>Hue</strong> tour with Vietravel and immerse yourself in the city's heritage with visits to the Imperial City, Thien Mu Pagoda, and traditional garden houses. To learn more about Hue’s royal legacy and tranquil charm, please refer to <a href="/Travel tips/traveltip_hue.php">Hue Travel Tips</a>.
+        Register for a <strong>Hue</strong> tour with Vietravel and immerse yourself in the city's heritage with visits to the Imperial City, Thien Mu Pagoda, and traditional garden houses. To learn more about Hue’s royal legacy and tranquil charm, please refer to <a href="/Travel tips/traveltip.php?tip=hue" style="color: #007bff; text-decoration: underline !important;">Hue Travel Tips</a>.
     </p>
 
     <div class="content-container">
@@ -230,37 +224,162 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
-
-
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-        <div class="box">
-            <h3>Extra links</h3>
-            <a href="/Login/profile.php">My account</a>
-            <a href="/Payment Interface/receiptlist.php">My List</a>
-            <a href="/Login/profile.php">My favorite</a>
-        </div>
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="viewjourney_taybac.php">Tay Bac</a>
-            <a href="viewjourney_hcm.php">Ho Chi Minh</a>
-            <a href="viewjourney_phuquoc.php">Phu Quoc</a>
-            <a href="viewjourney_hue.php">Hue</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="./images/payment.png" alt="">
-        </div>
-    </div>
-    <div class="credit">©2025 VietTransit</div>
-</section>
+<?php include __DIR__ . '/../footer.php'; ?>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Get elements
+    const rangeMin = document.querySelector('.range-min');
+    const rangeMax = document.querySelector('.range-max');
+    const minPrice = document.querySelector('.min-price');
+    const maxPrice = document.querySelector('.max-price');
+    const applyFilterBtn = document.getElementById('apply-filter');
+    const resetFilterBtn = document.getElementById('reset-filter');
+    const tourCards = document.querySelectorAll('.tour-card');
+    
+    // Update input fields when range sliders move
+    rangeMin.addEventListener('input', function() {
+        minPrice.value = this.value;
+        if (parseInt(rangeMin.value) > parseInt(rangeMax.value)) {
+            rangeMin.value = rangeMax.value;
+            minPrice.value = rangeMax.value;
+        }
+    });
+    
+    rangeMax.addEventListener('input', function() {
+        maxPrice.value = this.value;
+        if (parseInt(rangeMax.value) < parseInt(rangeMin.value)) {
+            rangeMax.value = rangeMin.value;
+            maxPrice.value = rangeMin.value;
+        }
+    });
+    
+    // Update range sliders when input fields change
+    minPrice.addEventListener('input', function() {
+        rangeMin.value = this.value;
+    });
+    
+    maxPrice.addEventListener('input', function() {
+        rangeMax.value = this.value;
+    });
+    
+    // Apply filters
+    applyFilterBtn.addEventListener('click', function() {
+        // Get filter values
+        const minPriceValue = parseInt(minPrice.value);
+        const maxPriceValue = parseInt(maxPrice.value);
+        
+        // Get selected durations
+        const selectedDurations = [];
+        document.querySelectorAll('input[name="duration"]:checked').forEach(input => {
+            selectedDurations.push(input.value);
+        });
+        
+        // Get selected destinations
+        const selectedDestinations = [];
+        document.querySelectorAll('input[name="destination"]:checked').forEach(input => {
+            selectedDestinations.push(input.value);
+        });
+        
+        // Get selected transportation types
+        const selectedTransports = [];
+        document.querySelectorAll('input[name="transport"]:checked').forEach(input => {
+            selectedTransports.push(input.value);
+        });
+        
+        // Get departure point
+        const departurePoint = document.querySelector('.departure-select').value;
+        
+        // Get departure date
+        const departureDate = document.querySelector('.departure-date').value;
+        
+        // Apply filters to each tour card
+        tourCards.forEach(card => {
+            let showCard = true;
+            
+            // Filter by price
+            const tourPrice = parseInt(card.getAttribute('data-price'));
+            if (tourPrice < minPriceValue || tourPrice > maxPriceValue) {
+                showCard = false;
+            }
+            
+            // Filter by duration
+            if (selectedDurations.length > 0) {
+                const tourDuration = parseInt(card.getAttribute('data-duration'));
+                let durationMatch = false;
+                
+                selectedDurations.forEach(range => {
+                    if (range === '1-3' && tourDuration >= 1 && tourDuration <= 3) {
+                        durationMatch = true;
+                    } else if (range === '4-7' && tourDuration >= 4 && tourDuration <= 7) {
+                        durationMatch = true;
+                    } else if (range === '8+' && tourDuration >= 8) {
+                        durationMatch = true;
+                    }
+                });
+                
+                if (!durationMatch) {
+                    showCard = false;
+                }
+            }
+            
+            // Filter by destination
+            if (selectedDestinations.length > 0) {
+                const tourDestination = card.getAttribute('data-destination');
+                if (!selectedDestinations.includes(tourDestination)) {
+                    showCard = false;
+                }
+            }
+            
+            // Filter by transportation
+            if (selectedTransports.length > 0) {
+                const tourTransport = card.getAttribute('data-transport');
+                if (!selectedTransports.includes(tourTransport)) {
+                    showCard = false;
+                }
+            }
+            
+            // Filter by departure point
+            if (departurePoint && departurePoint !== '') {
+                const tourDeparture = card.getAttribute('data-departure');
+                if (tourDeparture !== departurePoint) {
+                    showCard = false;
+                }
+            }
+            
+            // Show or hide card
+            if (showCard) {
+                card.style.display = 'flex';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    });
+    
+    // Reset filters
+    resetFilterBtn.addEventListener('click', function() {
+        // Reset range sliders and inputs
+        rangeMin.value = 1000000;
+        rangeMax.value = 20000000;
+        minPrice.value = 1000000;
+        maxPrice.value = 20000000;
+        
+        // Reset checkboxes
+        document.querySelectorAll('input[type="checkbox"]').forEach(input => {
+            input.checked = false;
+        });
+        
+        // Reset select
+        document.querySelector('.departure-select').value = '';
+        
+        // Reset date
+        document.querySelector('.departure-date').value = '';
+        
+        // Show all tour cards
+        tourCards.forEach(card => {
+            card.style.display = 'flex';
+        });
+    });
+});
+</script>
 </body>
 </html>

@@ -46,7 +46,7 @@ if (session_status() === PHP_SESSION_NONE) {
     Ho Chi Minh City in the spring is alive with vibrant streets, blooming flowers, and the energetic rhythm of daily life. The city comes to life with the aroma of street food, the sounds of motorbikes, and the warm smiles of the locals, making spring in Ho Chi Minh a unique and colorful experience.
     </p>
     <p>
-    Register for a <strong>Ho Chi Minh City</strong> tour with VietTransit, and you can explore the following popular destinations: <strong>Ho Chi Minh City</strong>... To learn more about Ho Chi Minh City, please refer to <a href="/Travel tips/traveltip_hcm.php">Ho Chi Minh City Travel Tips</a>.
+    Register for a <strong>Ho Chi Minh City</strong> tour with VietTransit, and you can explore the following popular destinations: <strong>Ho Chi Minh City</strong>... To learn more about Ho Chi Minh City, please refer to <a href="/Travel tips/traveltip.php?tip=hcm" style="color: #007bff; text-decoration: underline !important;">Ho Chi Minh City Travel Tips</a>.
     </p>
 
     <div class="content-container">
@@ -226,38 +226,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
-
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-        <div class="box">
-            <h3>Extra links</h3>
-            <a href="/Login/profile.php">My account</a>
-            <a href="/Payment Interface/receiptlist.php">My List</a>
-            <a href="/Login/profile.php">My favorite</a>
-        </div>
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="viewjourney_taybac.php">Tay Bac</a>
-            <a href="viewjourney_hcm.php">Ho Chi Minh</a>
-            <a href="viewjourney_phuquoc.php">Phu Quoc</a>
-            <a href="viewjourney_hue.php">Hue</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="./images/payment.png" alt="">
-        </div>
-    </div>
-    <div class="credit">©2025 VietTransit</div>
-</section>
-
+<?php include __DIR__ . '/../footer.php'; ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Get elements

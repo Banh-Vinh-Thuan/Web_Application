@@ -1,0 +1,40 @@
+*   Trying 210.245.113.71:443...
+* Connected to test-payment.momo.vn (210.245.113.71) port 443
+* ALPN: curl offers h2,http/1.1
+*  CAfile: C:\xampp\apache\bin\curl-ca-bundle.crt
+*  CApath: none
+* SSL connection using TLSv1.2 / ECDHE-RSA-CHACHA20-POLY1305
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: C=VN; ST=Ho Chi Minh; L=Ho Chi Minh; O=Online Mobile Services Joint Stock Company; CN=*.momo.vn
+*  start date: Dec  5 06:41:07 2024 GMT
+*  expire date: Jan  6 06:41:06 2026 GMT
+*  subjectAltName: host "test-payment.momo.vn" matched cert's "*.momo.vn"
+*  issuer: C=BE; O=GlobalSign nv-sa; CN=GlobalSign RSA OV SSL CA 2018
+*  SSL certificate verify ok.
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://test-payment.momo.vn/v2/gateway/api/create
+* [HTTP/2] [1] [:method: POST]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: test-payment.momo.vn]
+* [HTTP/2] [1] [:path: /v2/gateway/api/create]
+* [HTTP/2] [1] [accept: */*]
+* [HTTP/2] [1] [content-type: application/json]
+* [HTTP/2] [1] [content-length: 458]
+> POST /v2/gateway/api/create HTTP/2
+Host: test-payment.momo.vn
+Accept: */*
+Content-Type: application/json
+Content-Length: 458
+
+< HTTP/2 200 
+< server: nginx
+< date: Thu, 22 May 2025 04:40:00 GMT
+< content-type: application/json
+< vary: Accept-Encoding
+< x-content-type-options: nosniff
+< x-xss-protection: 1; mode=block
+< pragma: no-cache
+< strict-transport-security: max-age=15768000
+< 
+* Connection #0 to host test-payment.momo.vn left intact

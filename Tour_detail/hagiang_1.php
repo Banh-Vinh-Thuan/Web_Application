@@ -8,6 +8,7 @@ session_start();
     <title>Ha Giang Adventure & Culture</title>
     <link rel="stylesheet" href="../css/tour.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/css/lightgallery.css">
 </head>
 <body>
 
@@ -31,12 +32,12 @@ session_start();
 
 <main>
     <h1>Ha Giang Adventure & Culture: Ma Pi Leng Pass - Dong Van Plateau - Lung Cu Flag Tower - Ethnic Villages</h1>
-    <div class="gallery">
-        <div class="big"><img src="hagiang1/1.jpg" alt="Big Image"></div>
-        <div class="small1"><img src="hagiang1/2.jpg" alt="Small 1"></div>
-        <div class="small2"><img src="hagiang1/3.jpg" alt="Small 2"></div>
-        <div class="small3"><img src="hagiang1/4.jpg" alt="Small 3"></div>
-        <div class="small4"><img src="hagiang1/5.jpg" alt="Small 4"></div>
+    <div class="gallery" id="lightgallery">
+        <a href="hagiang1/1.jpg" class="big"><img src="hagiang1/1.jpg" alt="Dong Van District"></a>
+        <a href="hagiang1/2.jpg" class="small1"><img src="hagiang1/2.jpg" alt="Ma Li Peng Hill"></a>
+        <a href="hagiang1/3.jpg" class="small2"><img src="hagiang1/3.jpg" alt="Lung Po Mountain"></a>
+        <a href="hagiang1/4.jpg" class="small3"><img src="hagiang1/4.jpg" alt="Bac Sum Hill"></a>
+        <a href="hagiang1/5.jpg" class="small4"><img src="hagiang1/5.jpg" alt="Meo Vac District"></a>
     </div>
 
     <div class="content-columns">
@@ -79,7 +80,7 @@ session_start();
                     <h3 style="display: inline;">Price From</h3>
                     <p style="color: red; font-weight: bold; display: inline;">6,890,000 VND</p>
                     <p style="text-decoration: line-through; color: gray;">7,830,000 VND</p>
-                    <a href="../booktour.php?cityid=18&tourid=33" class="booking-button">Booking now!</a>
+                    <a href="/tour/booking?cityid=18&tourid=33" class="booking-button">Booking now!</a>
                 </div>
             </div>
 
@@ -105,37 +106,17 @@ session_start();
         </div>
     </div>
 </main>
-
-<footer>
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-        <div class="box">
-            <h3>Extra links</h3>
-            <a href="/Login/profile.php">My account</a>
-            <a href="/Payment Interface/receiptlist.php">My List</a>
-            <a href="/Login/profile.php">My favorite</a>
-        </div>
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="/journey/viewjourney_taybac.php">Tay Bac</a>
-            <a href="/journey/viewjourney_hcm.php">Ho Chi Minh</a>
-            <a href="/journey/viewjourney_phuquoc.php">Phu Quoc</a>
-            <a href="/journey/viewjourney_hue.php">Hue</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="./images/payment.png" alt="">
-        </div>
-    </div>
-    <div class="credit">©2025 VietTransit</div>
-</section>
-</footer>
+<?php include __DIR__ . '/../footer.php'; ?>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/lightgallery.min.js"></script>
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        thumbnail: true,
+        animateThumb: true,
+        showThumbByDefault: true,
+        mode: 'lg-slide',
+        download: false,
+        share: false
+    });
+</script>
+</body>
 </html>

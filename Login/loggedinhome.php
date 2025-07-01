@@ -1,8 +1,6 @@
 <?php
 session_start();
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,7 +10,6 @@ session_start();
     <title> VietTransit</title>
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
     <link rel="stylesheet" href="../css/style.css">
     </head>
 <body>
@@ -42,14 +39,14 @@ session_start();
 
     <div class="icons">
         <span data-tooltip="Favourites" data-flow="top"> 
-             <a href="profile.php" class="fas fa-heart"></a>
-            </span>
+            <a href="profile.php"><i class="fas fa-heart"></i></a>
+        </span>
         <span data-tooltip="Profile" data-flow="top">
-             <a href="profile.php" class="fas fa-user"></a>
+            <a href="profile.php"><i class="fas fa-user"></i></a>
         </span>
     </div>
-
 </header>
+
 
 <section class="home" id="home">
     <!-- Video background -->
@@ -153,9 +150,11 @@ session_start();
             <div class="image">
                 <img src="../images/taybac.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=10" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=10" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_tay_bac.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=10" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=10" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -168,9 +167,11 @@ session_start();
             <div class="image">
                 <img src="../images/hcm.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=11" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=11" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_ho_chi_minh.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=11" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=11" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -183,9 +184,11 @@ session_start();
             <div class="image">
                 <img src="../images/nhatrang.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=12" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=12" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_nha_trang.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=12" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=12" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -198,9 +201,11 @@ session_start();
             <div class="image">
                 <img src="../images/hue.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=13" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=13" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_hue.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=13" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=13" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -213,9 +218,11 @@ session_start();
             <div class="image">
                 <img src="../images/phuyen.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=14" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=14" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_phu_yen.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=14" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=14" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -228,9 +235,11 @@ session_start();
             <div class="image">
                 <img src="../images/dalat.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=15" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=15" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_da_lat.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=15" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=15" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -243,9 +252,11 @@ session_start();
             <div class="image">
                 <img src="../images/phuquoc.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=16" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=16" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_phu_quoc.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=16" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=16" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -258,9 +269,11 @@ session_start();
             <div class="image">
                 <img src="../images/hoian.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=17" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=17" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_hoi_an.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=17" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=17" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -273,9 +286,11 @@ session_start();
             <div class="image">
                 <img src="../images/hagiang.jpg" alt="">
                 <div class="icons">
-                    <a href="add_favorite.php?cityid=18" class="fas fa-heart"></a>
+                    <a href="add_favorite.php?cityid=18" class="favorite-btn">
+                    <i class="fas fa-heart"></i>
+                    </a>
                     <a href="..//Journey/viewjourney_ha_giang.php" class="cart-btn">View Tour</a>
-                    <a href="../view_hotels.php?city_id=18" class="cart-btn">View Hotel</a>
+                    <a href="../hotelinfo/view_hotels.php?city_id=18" class="cart-btn">View Hotel</a>
                 </div>
             </div>
             <div class="content">
@@ -289,13 +304,9 @@ session_start();
 </section>
 
 
-
 <section class="review" id="review">
-
 <h1 class="heading"> customer's <span>review</span> </h1>
-
 <div class="box-container">
-
     <div class="box">
         <div class="stars">
             <i class="fas fa-star"></i>
@@ -352,52 +363,8 @@ session_start();
         </div>
         <span class="fas fa-quote-right"></span>
     </div>
-
 </div>
-
 </section>
-
-
-
-<section class="footer">
-
-    <div class="box-container">
-
-        <div class="box">
-            <h3>quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About </a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-
-        <div class="box">
-            <h3>extra links</h3>
-            <a href="profile.php">My account</a>
-            <a href="profile.php">My List</a>
-            <a href="profile.php">My favorite</a>
-        </div>
-
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="../viewjourney.php?cityid=10">Tay Bac</a>
-            <a href="../viewjourney.php?cityid=11">Ho Chi Minh</a>
-            <a href="../viewjourney.php?cityid=16">Phu Quoc</a>
-            <a href="../viewjourney.php?cityid=13">Hue</a>
-        </div>
-
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="../images/payment.png" alt="">
-        </div>
-
-
-    </div>
-
-    <div class="credit">&copy;2025 VietTransit</div>
-
-</section>
-
+<?php include __DIR__ . '/../footer.php'; ?>
 </body>
 </html>

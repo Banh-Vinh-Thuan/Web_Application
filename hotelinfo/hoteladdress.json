@@ -1,0 +1,722 @@
+[
+  {
+    "hotelid": 1,
+    "coordinates": {
+      "latitude": 21.391451074533247,
+      "longitude": 103.01454278614617
+    },
+    "address": "41 Đ. Nguyễn Chí Thanh, Phường Mường Thanh, Điện Biên Phủ, Điện Biên 03415, Việt Nam"
+  },
+  {
+    "hotelid": 2,
+    "coordinates": {
+      "latitude": 21.382884806127418,
+      "longitude": 103.02028355109904
+    },
+    "address": "Tổ 11 đường Hoàng Văn Thái, Phường Mường Thanh, Điện Biên Phủ, Điện Biên, Việt Nam"
+  },
+  {
+    "hotelid": 3,
+    "coordinates": {
+      "latitude": 21.39315447274772, 
+      "longitude": 103.01116001062003
+    },
+    "address": "8 Lò Văn Hặc, Street, Điện Biên Phủ, Điện Biên 380000, Việt Nam"
+  },
+  {
+    "hotelid": 4,
+    "coordinates": {
+      "latitude": 21.38764107028578, 
+      "longitude": 103.01715589527737
+    },
+    "address": "Tổ 7 Đường Phan Đình Giót, Phường Mường Thanh, Điện Biên Phủ, Điện Biên 32000, Việt Nam"
+  },
+  {
+    "hotelid": 5,
+    "coordinates": {
+      "latitude": 22.173158288158444,
+      "longitude": 103.754797002697
+    },
+    "address": "5QF3+5QQ, tập thể Nông trường Than Uyên, Tân Uyên, Lai Châu, Việt Nam"
+  },
+  {
+    "hotelid": 6,
+    "coordinates": {
+      "latitude": 20.845190439161755,
+      "longitude": 104.66260801060544
+    },
+    "address": "Đường Hoàng Quốc Việt, Phiêng Luông, Mộc Châu, Sơn La, Việt Nam"
+  },
+  {
+    "hotelid": 7,
+    "coordinates": {
+      "latitude": 22.391280038711667, 
+      "longitude": 103.46742720879837
+    },
+    "address": "Công Viên Thủy Sơn, 027 đường bờ hồ, Tân Phong, Lai Châu, 30000, Việt Nam"
+  },
+  {
+    "hotelid": 8,
+    "coordinates": {
+      "latitude": 22.40156119076922, 
+      "longitude": 103.4624908664699
+    },
+    "address": "179 Lê Duẩn, Tân Phong, Lai Châu, 390000, Việt Nam"
+  },
+  {
+    "hotelid": 9,
+    "coordinates": {
+      "latitude": 21.716704959966837, 
+      "longitude": 104.91522590877946
+    },
+    "address": "56 Ngô Sĩ Liên, P.Đồng Tâm, Yên Bái, Việt Nam"
+  },
+  {
+    "hotelid": 10,
+    "coordinates": {
+      "latitude": 10.956282054957832,
+      "longitude": 108.22775504055349
+    },
+    "address": "201/4 Nguyễn Đình Chiểu, Phường Hàm Tiến, Thành phố Phan Thiết, Bình Thuận, Việt Nam"
+  },
+  {
+    "hotelid": 11,
+    "coordinates": {
+      "latitude": 10.767755967904131,
+      "longitude": 106.69133473739916
+    },
+    "address": "Đ. Phạm Ngũ Lão, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam"
+  },
+  {
+    "hotelid": 12,
+    "coordinates": {
+      "latitude": 10.766305269021975,
+      "longitude": 106.69338981041305
+    },
+    "address": "100/25/19, Đ. Trần Hưng Đạo, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 71012, Việt Nam"
+  },
+  {
+    "hotelid": 13,
+    "coordinates": {
+      "latitude": 10.76780192793399, 
+      "longitude": 106.69080430856359
+    },
+    "address": "313 Đ. Phạm Ngũ Lão, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 700000, Việt Nam"
+  },
+  {
+    "hotelid": 14,
+    "coordinates": {
+      "latitude": 10.769645888029734, 
+      "longitude": 106.69728709322101
+    },
+    "address": "20 Đ. Đặng Thị Nhu, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh 700000, Việt Nam"
+  },
+  {
+    "hotelid": 15,
+    "coordinates": {
+      "latitude": 10.771283305936207, 
+      "longitude": 106.6895779239062
+    },
+    "address": "84A Đ. Bùi Thị Xuân, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 71000, Việt Nam"
+  },
+  {
+    "hotelid": 16,
+    "coordinates": {
+      "latitude": 10.773109283027111, 
+      "longitude": 106.69692221041313
+    },
+    "address": "202 Đ. Lê Thánh Tôn, Phường Bến Thành, Quận 1, Hồ Chí Minh 70000, Việt Nam"
+  },
+  {
+    "hotelid": 17,
+    "coordinates": {
+      "latitude": 10.76830953971065, 
+      "longitude": 106.69419979802822
+    },
+    "address": "Market, 40/23 Đ. Bùi Viện, Phường Bến Thành, Quận 1, Hồ Chí Minh 700000, Việt Nam"
+  },
+  {
+    "hotelid": 18,
+    "coordinates": {
+      "latitude": 10.766228569136025, 
+      "longitude": 106.69540080856348
+    },
+    "address": "135/46 Đ. Trần Hưng Đạo, Phường Cầu Ông Lãnh, Quận 1, Hồ Chí Minh, Việt Nam"
+  },
+  {
+    "hotelid": 19,
+    "coordinates": {
+      "latitude": 10.773731482482054, 
+      "longitude": 106.69849998157743
+    },
+    "address": "191 Đ. Lê Thánh Tôn, Phường Bến Thành, Quận 1, Hồ Chí Minh 700000, Việt Nam"
+  },
+  {
+    "hotelid": 20,
+    "coordinates": {
+      "latitude": 10.768446072829288, 
+      "longitude": 106.69465100146861
+    },
+    "address": "12/5 Đ. Bùi Viện, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam"
+  },
+  {
+    "hotelid": 21,
+    "coordinates": {
+      "latitude": 12.238901422970116, 
+      "longitude": 109.19561082392497
+    },
+    "address": "2 Nguyễn Thị Minh Khai, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 22,
+    "coordinates": {
+      "latitude": 12.238983602946531, 
+      "longitude": 109.195565573925
+    },
+    "address": "2 Nguyễn Thị Minh Khai, Lộc Thọ, Nha Trang, Khánh Hòa 65000, Việt Nam"
+  },
+  {
+    "hotelid": 23,
+    "coordinates": {
+      "latitude": 12.23565417567522, 
+      "longitude": 109.19499108159627
+    },
+    "address": "19 Biệt Thự, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 24,
+    "coordinates": {
+      "latitude": 12.239006272878212,
+      "longitude": 109.19560009508935
+    },
+    "address": "2 Nguyễn Thị Minh Khai, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 25,
+    "coordinates": {
+      "latitude": 12.233035840306039, 
+      "longitude": 109.19718869878827
+    },
+    "address": "78-80 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 26,
+    "coordinates": {
+      "latitude": 12.280534071647933, 
+      "longitude": 109.2019721950899
+    },
+    "address": "10 Đ. Củ Chi, Vĩnh Hải, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 27,
+    "coordinates": {
+      "latitude": 12.228694969047497, 
+      "longitude": 109.19916182207535
+    },
+    "address": "96A5 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 28,
+    "coordinates": {
+      "latitude": 12.240595261953194, 
+      "longitude": 109.19453412392497
+    },
+    "address": "32/6 Hùng Vương, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 29,
+    "coordinates": {
+      "latitude": 12.225963483757019, 
+      "longitude": 109.1999072355684
+    },
+    "address": "100/8B, 100 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 30,
+    "coordinates": {
+      "latitude": 12.225686485316608, 
+      "longitude": 109.19990070858213
+    },
+    "address": "100/8C - 100/C9, Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam"
+  },
+  {
+    "hotelid": 31,
+    "coordinates": {
+      "latitude": 16.471804400632262, 
+      "longitude": 107.59807656447627
+    },
+    "address": "5 kiệt 57 Nguyễn Công Trứ, Phú Hội, Huế, Thành phố Huế 530000, Việt Nam"
+  },
+  {
+    "hotelid": 32,
+    "coordinates": {
+      "latitude": 16.45292811132288, 
+      "longitude": 107.5935949274545
+    },
+    "address": "27 Duy Tân, An Cựu, Huế, Thành phố Huế 530000, Việt Nam"
+  },
+  {
+    "hotelid": 33,
+    "coordinates": {
+      "latitude": 16.479603139901457, 
+      "longitude": 107.56073159325331
+    },
+    "address": "18a Lương Ngọc Quyến, Tây Lộc, Huế, Thành phố Huế 49000, Việt Nam"
+  },
+  {
+    "hotelid": 34,
+    "coordinates": {
+      "latitude": 16.471794116117117, 
+      "longitude": 107.59624583515769
+    },
+    "address": "91 Võ Thị Sáu, Phú Hội, Huế, Thành phố Huế 530000, Việt Nam"
+  },
+  {
+    "hotelid": 35,
+    "coordinates": {
+      "latitude": 16.471351261022022, 
+      "longitude": 107.57139704898825
+    },
+    "address": "73 Đường Thạch Hãn, Thuận Hoà, Huế, Thành phố Huế 52000, Việt Nam"
+  },
+  {
+    "hotelid": 36,
+    "coordinates": {
+      "latitude": 16.470199282317374, 
+      "longitude": 107.59710497786263
+    },
+    "address": "31 Kiệt 42 Nguyễn Công Trứ, Phú Hội, Huế, Thành phố Huế 49000, Việt Nam"
+  },
+  {
+    "hotelid": 37,
+    "coordinates": {
+      "latitude": 16.46999935081881, 
+      "longitude": 107.59688220666544
+    },
+    "address": "28 Kiệt 42 Nguyễn Công Trứ, Phú Hội, Huế, Thành phố Huế, Việt Nam"
+  },
+  {
+    "hotelid": 38,
+    "coordinates": {
+      "latitude": 16.467273887048787, 
+      "longitude": 107.59487543551664
+    },
+    "address": "city, 17 Bến Nghé, Street, Huế, Thành phố Huế 530000, Việt Nam"
+  },
+  {
+    "hotelid": 39,
+    "coordinates": {
+      "latitude": 16.473053213366118, 
+      "longitude": 107.58436514898324
+    },
+    "address": "1 kiet 28 Lê Thánh Tôn, Phú Hậu, Huế, Thành phố Huế, Việt Nam"
+  },
+  {
+    "hotelid": 40,
+    "coordinates": {
+      "latitude": 16.464662200161282,
+      "longitude": 107.59273379321148
+    },
+    "address": "4 Kiệt 34 Nguyễn Tri Phương, Phú Hội, Huế, Thành phố Huế 530000, Việt Nam"
+  },
+  {
+    "hotelid": 41,
+    "coordinates": {
+      "latitude": 10.025966122469907, 
+      "longitude": 104.00884694901302
+    },
+    "address": "Sunset Town, 9 Đường MILAN, An Thới, Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 42,
+    "coordinates": {
+      "latitude": 10.257858683085326, 
+      "longitude": 104.07951329319984
+    },
+    "address": "resort, The Pier, Km 11 TL48, Ấp Cây Sao, Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 43,
+    "coordinates": {
+      "latitude": 10.029235520712705, 
+      "longitude": 104.00975942019762
+    },
+    "address": "22H5+JW An Thới, Tp. Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 44,
+    "coordinates": {
+      "latitude": 10.027811381240554, 
+      "longitude": 104.00982686382024
+    },
+    "address": "Sunset, Town, Ward, Phú Quốc, Kiên Giang 925000, Việt Nam"
+  },
+  {
+    "hotelid": 45,
+    "coordinates": {
+      "latitude": 10.02475907841458, 
+      "longitude": 104.00777880485133
+    },
+    "address": "302 - 304 đường Sorrento, An Thới, Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 46,
+    "coordinates": {
+      "latitude": 10.028804410399225, 
+      "longitude": 104.00946536620562
+    },
+    "address": "22H5+CQC the Sea, Sun Grand City Hillside Residence, An Thới, Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 47,
+    "coordinates": {
+      "latitude": 10.029275442173837, 
+      "longitude": 104.00972690855532
+    },
+    "address": "Đường Burano, Sunset town, Phú Quốc, Kiên Giang 920000, Việt Nam"
+  },
+  {
+    "hotelid": 48,
+    "coordinates": {
+      "latitude": 10.031657456716545, 
+      "longitude": 104.00557800855526
+    },
+    "address": "Primavera, Pos 41,43 Sun Premier Village, Phú Quốc, Kiên Giang 92500, Việt Nam"
+  },
+  {
+    "hotelid": 49,
+    "coordinates": {
+      "latitude": 10.029683157877448, 
+      "longitude": 104.00932219506215
+    },
+    "address": "Sun Grand City Hillside Residence, Đường TAORMINA, An Thới, Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 50,
+    "coordinates": {
+      "latitude": 10.188047104365031, 
+      "longitude": 103.96613592389953
+    },
+    "address": "152 Đường Trần Hưng Đạo, Cửa Lấp, Phú Quốc, Kiên Giang, Việt Nam"
+  },
+  {
+    "hotelid": 51,
+    "coordinates": {
+      "latitude": 11.941323081695154, 
+      "longitude": 108.43347285089165
+    },
+    "address": "17 Đ. Thủ Khoa Huân, Phường 1, Đà Lạt, Lâm Đồng 670000, Việt Nam"
+  },
+  {
+    "hotelid": 52,
+    "coordinates": {
+      "latitude": 11.937034194587682, 
+      "longitude": 108.43373614900491
+    },
+    "address": "35 Đường Bà Triệu, Phường 3, Đà Lạt, Lâm Đồng, Việt Nam"
+  },
+  {
+    "hotelid": 53,
+    "coordinates": {
+      "latitude": 11.937972503550293, 
+      "longitude": 108.45883582202734
+    },
+    "address": "52 Khe Sanh, Phường 10, Đà Lạt, Lâm Đồng 670000, Việt Nam"
+  },
+  {
+    "hotelid": 54,
+    "coordinates": {
+      "latitude": 11.933002594315187,
+      "longitude": 108.42915190665732
+    },
+    "address": "15c Lê Hồng Phong, Phường 4, Đà Lạt, Lâm Đồng 670000, Việt Nam"
+  },
+  {
+    "hotelid": 55,
+    "coordinates": {
+      "latitude": 11.947947862096374, 
+      "longitude": 108.44122483366623
+    },
+    "address": "04. Golf Valley, Phường 2, Ward 2, Lâm Đồng 66109, Việt Nam"
+  },
+  {
+    "hotelid": 56,
+    "coordinates": {
+      "latitude": 11.938474074309134, 
+      "longitude": 108.43528665086389
+    },
+    "address": "WCQP+73X, Phường 1, Đà Lạt, Lâm Đồng, Việt Nam"
+  },
+  {
+    "hotelid": 57,
+    "coordinates": {
+      "latitude": 11.951022666577511, 
+      "longitude": 108.45368423551159
+    },
+    "address": "5/1, D. Sương Nguyệt Anh, Phường 9, Đà Lạt, Lâm Đồng 670000, Việt Nam"
+  },
+  {
+    "hotelid": 58,
+    "coordinates": {
+      "latitude": 11.932445719592183, 
+      "longitude": 108.44228832392066
+    },
+    "address": "52 Đường Lương Thế Vinh, Phường 3, Đà Lạt, Lâm Đồng 670000, Việt Nam"
+  },
+  {
+    "hotelid": 59,
+    "coordinates": {
+      "latitude": 11.945900321611715, 
+      "longitude": 108.43958990857845
+    },
+    "address": "42 Đường Bùi Thị Xuân, Phường 2, Đà Lạt, Lâm Đồng 670000, Việt Nam"
+  },
+  {
+    "hotelid": 60,
+    "coordinates": {
+      "latitude": 11.942340761305594, 
+      "longitude": 108.43399483741399
+    },
+    "address": "70b Ba Tháng Hai, Phường 1, Đà Lạt, Lâm Đồng 67000, Việt Nam"
+  },
+  {
+    "hotelid": 61,
+    "coordinates": {
+      "latitude": 13.115789719568719, 
+      "longitude": 109.29890523066419
+    },
+    "address": "16 Đường Nguyễn Văn Huyên, Bình Kiến, Tuy Hòa, Phú Yên, Việt Nam"
+  },
+  {
+    "hotelid": 62,
+    "coordinates": {
+      "latitude": 13.104089410701487, 
+      "longitude": 109.30756786435423
+    },
+    "address": "4835+G2H, Phường7, Tp. Tuy Hòa, Phú Yên 560000, Việt Nam"
+  },
+  {
+    "hotelid": 63,
+    "coordinates": {
+      "latitude": 13.217583191601973, 
+      "longitude": 109.29275516249322
+    },
+    "address": "Thôn Giai Sơn, Tuy An, Phú Yên 56000, Việt Nam"
+  },
+  {
+    "hotelid": 64,
+    "coordinates": {
+      "latitude": 13.005043860754185, 
+      "longitude": 109.3560256643648
+    },
+    "address": "2934+WC, Hoà Hiệp Trung, Đông Hòa, Phú Yên, Việt Nam"
+  },
+  {
+    "hotelid": 65,
+    "coordinates": {
+      "latitude": 13.096953820122218, 
+      "longitude": 109.31192369318973
+    },
+    "address": "294 ĐL Hùng Vương, Phường 7, Tuy Hòa, Phú Yên, Việt Nam"
+  },
+  {
+    "hotelid": 66,
+    "coordinates": {
+      "latitude": 13.086126829986124, 
+      "longitude": 109.2962413931696
+    },
+    "address": "Nguyễn Tất Thành/Hẻm 83 Vào hẻm 100m, Phường 2, Tuy Hòa, Phú Yên 56100, Việt Nam"
+  },
+  {
+    "hotelid": 67,
+    "coordinates": {
+      "latitude": 13.096429221002243, 
+      "longitude": 109.32125559319229
+    },
+    "address": "51 Độc Lập, Phường 7, Tuy Hòa, Phú Yên, Việt Nam"
+  },
+  {
+    "hotelid": 68,
+    "coordinates": {
+      "latitude": 12.988700422583767, 
+      "longitude": 109.38965329318674
+    },
+    "address": "X9QQ+9R, Hoà Hiệp Trung, Đông Hòa, Phú Yên, Việt Nam"
+  },
+  {
+    "hotelid": 69,
+    "coordinates": {
+      "latitude": 13.093002723428357, 
+      "longitude": 109.29907226436278
+    },
+    "address": "32 Cần Vương, Phường 2, Tuy Hòa, Phú Yên 56114, Việt Nam"
+  },
+  {
+    "hotelid": 70,
+    "coordinates": {
+      "latitude": 13.10669841034932, 
+      "longitude": 109.31022346436984
+    },
+    "address": "407 Lê Duẩn, Phường 9, Tuy Hòa, Phú Yên, Việt Nam"
+  },
+  {
+    "hotelid": 71,
+    "coordinates": {
+      "latitude": 15.896421004589744, 
+      "longitude": 108.36299583550353
+    },
+    "address": "96 Trương Minh Hùng, Cửa Đại, Hội An, Quảng Nam 564060, Việt Nam"
+  },
+  {
+    "hotelid": 72,
+    "coordinates": {
+      "latitude": 15.88218456459221, 
+      "longitude": 108.38912787783697
+    },
+    "address": "Block 6, Phuoc Hai, Cửa Đại, Hội An, Quảng Nam 51300, Việt Nam"
+  },
+  {
+    "hotelid": 73,
+    "coordinates": {
+      "latitude": 15.874897834997705, 
+      "longitude": 108.33291559317206
+    },
+    "address": "Xuyen Trung Block, Ward, Quảng Nam, Việt Nam"
+  },
+  {
+    "hotelid": 74,
+    "coordinates": {
+      "latitude": 15.892880477845397, 
+      "longitude": 108.36133723548382
+    },
+    "address": "89 Cửa Đại, Cẩm Châu, Hội An, Quảng Nam, Việt Nam"
+  },
+  {
+    "hotelid": 75,
+    "coordinates": {
+      "latitude": 15.891987278655913, 
+      "longitude": 108.3161233931918
+    },
+    "address": "99 Phạm Văn Đồng, Tân An, Hội An, Quảng Nam 51000, Việt Nam"
+  },
+  {
+    "hotelid": 76,
+    "coordinates": {
+      "latitude": 15.90740471879932,
+      "longitude": 108.34883139319528
+    },
+    "address": "11 Nguyễn Phan Vinh, Cẩm An, Hội An, Quảng Nam 560000, Việt Nam"
+  },
+  {
+    "hotelid": 77,
+    "coordinates": {
+      "latitude": 15.876037890968727, 
+      "longitude": 108.3574418066594
+    },
+    "address": "510 Trần Nhân Tông, Cẩm Thanh, Hội An, Quảng Nam 51000, Việt Nam"
+  },
+  {
+    "hotelid": 78,
+    "coordinates": {
+      "latitude": 15.887284706768984, 
+      "longitude": 108.32916412201774
+    },
+    "address": "38 Phan Đình Phùng, Sơn Phong, Hội An, Quảng Nam 560000, Việt Nam"
+  },
+  {
+    "hotelid": 79,
+    "coordinates": {
+      "latitude": 15.875984049854676, 
+      "longitude": 108.32076306247909
+    },
+    "address": "43 18 Tháng 8, Phường Minh An, Hội An, Quảng Nam, Việt Nam"
+  },
+  {
+    "hotelid": 80,
+    "coordinates": {
+      "latitude": 15.913074895123982, 
+      "longitude": 108.34159599321502
+    },
+    "address": "Kiệt 90 Nguyễn Phan Vinh, Cẩm An, Hội An, Quảng Nam, Việt Nam"
+  },
+  {
+    "hotelid": 81,
+    "coordinates": {
+      "latitude": 22.83399244046059, 
+      "longitude": 104.94448005298932
+    },
+    "address": "Thôn Tha, Hà Giang, 310000, Việt Nam"
+  },
+  {
+    "hotelid": 82,
+    "coordinates": {
+      "latitude": 22.833945952966474, 
+      "longitude": 104.98898456432893
+    },
+    "address": "Tran Phu Street, Đ. Trần Phú, Ward, Hà Giang, 310000, Việt Nam"
+  },
+  {
+    "hotelid": 83,
+    "coordinates": {
+      "latitude": 23.071115920952657, 
+      "longitude": 105.02800516433452
+    },
+    "address": "Khu Tráng Kìm, Quản Bạ, Hà Giang, Việt Nam"
+  },
+  {
+    "hotelid": 84,
+    "coordinates": {
+      "latitude": 22.841515843890125, 
+      "longitude": 104.97963222015066
+    },
+    "address": "239 Nguyễn Văn Linh, P. Quang Trung, Hà Giang, 310000, Việt Nam"
+  },
+  {
+    "hotelid": 85,
+    "coordinates": {
+      "latitude": 22.829371970066695, 
+      "longitude": 104.9837900220112
+    },
+    "address": "517 Nguyễn Trãi, P. Nguyễn Trãi, Hà Giang, Việt Nam"
+  },
+  {
+    "hotelid": 86,
+    "coordinates": {
+      "latitude": 22.811045749613843, 
+      "longitude": 104.97928844899486
+    },
+    "address": "90 Nguyễn Trãi, P. Nguyễn Trãi, Hà Giang, 100000, Việt Nam"
+  },
+  {
+    "hotelid": 87,
+    "coordinates": {
+      "latitude": 22.82109992437752, 
+      "longitude": 104.98424113553584
+    },
+    "address": "43 Nguyễn Thái Học, P. Minh Khai, Hà Giang, 310000, Việt Nam"
+  },
+  {
+    "hotelid": 88,
+    "coordinates": {
+      "latitude": 22.825108650682726, 
+      "longitude": 104.98649747782586
+    },
+    "address": "31 Nguyễn Văn Cừ, P. Minh Khai, Hà Giang, Việt Nam"
+  },
+  {
+    "hotelid": 89,
+    "coordinates": {
+      "latitude": 22.776937166682256, 
+      "longitude": 104.96920270667351
+    },
+    "address": "Thôn Tiến Thắng, Phương Thiện, Hà Giang, 20000, Việt Nam"
+  },
+  {
+    "hotelid": 90,
+    "coordinates": {
+      "latitude": 22.839039997647852, 
+      "longitude": 104.96498155085328
+    },
+    "address": "Tổ 2, Hà Giang, 311000, Việt Nam"
+  }
+]

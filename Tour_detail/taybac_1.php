@@ -8,6 +8,7 @@ session_start();
     <title>Northwest in Rice Harvest Season - Nghia Lo - Mu Cang Chai - Sapa - Fansipan - Lai Chau - Dien Bien - Moc Chau</title>
     <link rel="stylesheet" href="../css/tour.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/css/lightgallery.css">
 </head>
 <body>
 
@@ -35,13 +36,12 @@ session_start();
     <h1>&nbsp;&nbsp;&nbsp; Nghia Lo - Mu Cang Chai - Sapa - Fansipan - Lai Chau - Dien Bien - Moc Chau</h1>
     <p></p>
     <!-- Gallery placed above the columns -->
-    <div class="gallery">
-
-        <div class="big"><img src="taybac/1.jpg" alt="Big Image"></div>
-        <div class="small1"><img src="taybac/2.jpg" alt="Small 1"></div>
-        <div class="small2"><img src="taybac/3.jpg" alt="Small 2"></div>
-        <div class="small3"><img src="taybac/4.jpg" alt="Small 3"></div>
-        <div class="small4"><img src="taybac/5.jpg" alt="Small 4"></div>
+    <div class="gallery" id="lightgallery">
+        <a href="taybac/1.jpg" class="big"><img src="taybac/1.jpg" alt="O Quy Ho Hill"></a>
+        <a href="taybac/2.jpg" class="small1"><img src="taybac/2.jpg" alt="O Quy Ho Hill"></a>
+        <a href="taybac/3.jpg" class="small2"><img src="taybac/3.jpg" alt="Pu Sam Cap Cave"></a>
+        <a href="taybac/4.jpg" class="small3"><img src="taybac/4.jpg" alt="Dien Bien City"></a>
+        <a href="taybac/5.jpg" class="small4"><img src="taybac/5.jpg" alt="Dien Bien Phu Victory Statue"></a>
     </div>
     <p></p>
     <!-- Columns start here -->
@@ -98,7 +98,7 @@ session_start();
                     <h3 style="display: inline;">Price From</h3>
                     <p style="color: red; font-weight: bold; display: inline;">12,179,000 VND</p>
                     <p style="text-decoration: line-through; color: gray;">12,779,000 VND</p>
-                    <a href="../booktour.php?cityid=10&tourid=1" class="booking-button">Booking now!</a>
+                    <a href="/tour/booking?cityid=10&tourid=1" class="booking-button">Booking now!</a>
                 </div>
             </div>
             <div class="box">
@@ -121,37 +121,18 @@ session_start();
         </div>
     </div>
 </main>
-
-<footer>
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-        <div class="box">
-            <h3>Extra links</h3>
-            <a href="/Login/profile.php">My account</a>
-            <a href="/Payment Interface/receiptlist.php">My List</a>
-            <a href="/Login/profile.php">My favorite</a>
-        </div>
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="/journey/viewjourney_taybac.php">Tay Bac</a>
-            <a href="/journey/viewjourney_hcm.php">Ho Chi Minh</a>
-            <a href="/journey/viewjourney_phuquoc.php">Phu Quoc</a>
-            <a href="/journey/viewjourney_hue.php">Hue</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="./images/payment.png" alt="">
-        </div>
-    </div>
-    <div class="credit">©2025 VietTransit</div>
+<?php include __DIR__ . '/../footer.php'; ?>
 </section>
-</footer>
+<script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/lightgallery.min.js"></script>
+<script>
+    lightGallery(document.getElementById('lightgallery'), {
+        thumbnail: true,
+        animateThumb: true,
+        showThumbByDefault: true,
+        mode: 'lg-slide',
+        download: false,
+        share: false
+    });
+</script>
+</body>
 </html>

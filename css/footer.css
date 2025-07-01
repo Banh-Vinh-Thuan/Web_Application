@@ -1,0 +1,213 @@
+/* Professional Footer Styles */
+.footer {
+  margin-top: 50px;
+  background: #ffffff;
+  padding: 40px 20px 20px;
+  text-align: left;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #1565c0;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(21,101,192,0.05)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+  pointer-events: none;
+}
+
+.footer .box-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 25px;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.footer .box {
+  background: rgba(21, 101, 192, 0.05);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 20px;
+  border: 1px solid rgba(21, 101, 192, 0.1);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.footer .box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #64b5f6, transparent);
+  transition: left 0.5s ease;
+}
+
+.footer .box:hover::before {
+  left: 100%;
+}
+
+.footer .box:hover {
+  transform: translateY(-5px);
+  background: rgba(21, 101, 192, 0.1);
+  box-shadow: 0 10px 30px rgba(21, 101, 192, 0.15);
+}
+
+.footer .box h3 {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1565c0;
+  margin-bottom: 15px;
+  position: relative;
+  padding-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.footer .box h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 30px;
+  height: 2px;
+  background: linear-gradient(90deg, #64b5f6, #42a5f5);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.footer .box:hover h3::after {
+  width: 60px;
+}
+
+.footer .box a {
+  display: block;
+  color: #1976d2;
+  text-decoration: none;
+  margin-bottom: 8px;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 400;
+  font-size: 13px;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer .box a::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(66, 165, 245, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.footer .box a:hover::before {
+  left: 100%;
+}
+
+.footer .box a:hover {
+  color: #1565c0;
+  background: rgba(144, 202, 249, 0.4);
+  transform: translateX(5px);
+  box-shadow: 0 3px 10px rgba(21, 101, 192, 0.2);
+}
+
+.footer .box a:active {
+  transform: translateX(5px) scale(0.98);
+}
+
+.footer .credit {
+  margin-top: 30px;
+  padding-top: 20px;
+  font-size: 14px;
+  color: #1976d2;
+  text-align: center;
+  border-top: 1px solid rgba(21, 101, 192, 0.2);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.footer img {
+  max-width: 80px;
+  margin-top: 10px;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  filter: brightness(1.1) contrast(1.1);
+}
+
+.footer img:hover {
+  transform: scale(1.05);
+  filter: brightness(1.2) contrast(1.2);
+  box-shadow: 0 5px 20px rgba(21, 101, 192, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    padding: 30px 15px 15px;
+    text-align: center;
+  }
+  
+  .footer .box-container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+  
+  .footer .box {
+    padding: 15px;
+    aspect-ratio: 1;
+  }
+  
+  .footer .box h3 {
+    font-size: 14px;
+  }
+  
+  .footer .box a {
+    font-size: 12px;
+  }
+  
+  .footer .box a:hover {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 480px) {
+  .footer .box-container {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .footer .box {
+    padding: 15px;
+    aspect-ratio: auto;
+  }
+  
+  .footer .box h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+  
+  .footer .box a {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+}

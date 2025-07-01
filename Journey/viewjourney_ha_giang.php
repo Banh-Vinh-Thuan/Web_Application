@@ -46,7 +46,7 @@ if (session_status() === PHP_SESSION_NONE) {
     Ha Giang is a breathtaking province in northern Vietnam, known for its majestic mountains, winding passes, and vibrant ethnic cultures. This off-the-beaten-path destination offers dramatic landscapes such as the Dong Van Karst Plateau, Ma Pi Leng Pass, and terraced rice fields in Hoang Su Phi. With its untouched natural beauty and rich cultural experiences, Ha Giang is perfect for adventurous travelers seeking authentic Vietnamese heritage.
     </p>
     <p>
-    Register for a <strong>Ha Giang</strong> tour with VietTransit, and you can explore the following must-see destinations: <strong>Dong Van</strong>, <strong>Lung Cu Flag Tower</strong>, <strong>Ma Pi Leng Pass</strong>, and more. To learn more about Ha Giang, please refer to <a href="/Travel tips/traveltip_hagiang.php">Ha Giang Travel Tips</a>.
+    Register for a <strong>Ha Giang</strong> tour with VietTransit, and you can explore the following must-see destinations: <strong>Dong Van</strong>, <strong>Lung Cu Flag Tower</strong>, <strong>Ma Pi Leng Pass</strong>, and more. To learn more about Ha Giang, please refer to <a href="/Travel tips/traveltip.php?tip=hagiang" style="color: #007bff; text-decoration: underline !important;">Ha Giang Travel Tips</a>.
     </p>
 
     <div class="content-container">
@@ -225,38 +225,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
-
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-        <div class="box">
-            <h3>Extra links</h3>
-            <a href="/Login/profile.php">My account</a>
-            <a href="/Payment Interface/receiptlist.php">My List</a>
-            <a href="/Login/profile.php">My favorite</a>
-        </div>
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="viewjourney_taybac.php">Tay Bac</a>
-            <a href="viewjourney_hcm.php">Ho Chi Minh</a>
-            <a href="viewjourney_phuquoc.php">Phu Quoc</a>
-            <a href="viewjourney_hue.php">Hue</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="./images/payment.png" alt="">
-        </div>
-    </div>
-    <div class="credit">©2025 VietTransit</div>
-</section>
-
+<?php include __DIR__ . '/../footer.php'; ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Get elements

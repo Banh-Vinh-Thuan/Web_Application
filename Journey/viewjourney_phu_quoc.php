@@ -46,7 +46,7 @@ if (session_status() === PHP_SESSION_NONE) {
     Phu Quoc is a tropical paradise renowned for its pristine beaches, crystal-clear waters, and lush green landscapes. This island offers a perfect blend of relaxation and adventure with vibrant coral reefs, pepper farms, bustling night markets, and tranquil fishing villages. Whether you seek sun-soaked shores or cultural experiences, Phu Quoc welcomes all travelers with its warm hospitality and natural beauty.
     </p>
     <p>
-    Register for a <strong>Phu Quoc</strong> tour with VietTransit, and you can explore the following must-see destinations: <strong>Phu Quoc</strong>... To learn more about Phu Quoc, please refer to <a href="/Travel tips/traveltip_phuquoc.php">Phu Quoc Travel Tips</a>.
+    Register for a <strong>Phu Quoc</strong> tour with VietTransit, and you can explore the following must-see destinations: <strong>Phu Quoc</strong>... To learn more about Phu Quoc, please refer to <a href="/Travel tips/traveltip.php?tip=phuquoc" style="color: #007bff; text-decoration: underline !important;">Phu Quoc Travel Tips</a>.
     </p>
 
     <div class="content-container">
@@ -225,38 +225,7 @@ if (session_status() === PHP_SESSION_NONE) {
         </div>
     </div>
 </div>
-
-<section class="footer">
-    <div class="box-container">
-        <div class="box">
-            <h3>Quick links</h3>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#products">Places</a>
-            <a href="#review">Review</a>
-        </div>
-        <div class="box">
-            <h3>Extra links</h3>
-            <a href="/Login/profile.php">My account</a>
-            <a href="/Payment Interface/receiptlist.php">My List</a>
-            <a href="/Login/profile.php">My favorite</a>
-        </div>
-        <div class="box">
-            <h3>Popular Travel Locations</h3>
-            <a href="viewjourney_taybac.php">Tay Bac</a>
-            <a href="viewjourney_hcm.php">Ho Chi Minh</a>
-            <a href="viewjourney_phuquoc.php">Phu Quoc</a>
-            <a href="viewjourney_hue.php">Hue</a>
-        </div>
-        <div class="box">
-            <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-            <img src="./images/payment.png" alt="">
-        </div>
-    </div>
-    <div class="credit">©2025 VietTransit</div>
-</section>
-
+<?php include __DIR__ . '/../footer.php'; ?>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // Get elements

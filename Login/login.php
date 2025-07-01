@@ -5,105 +5,181 @@
 <?php
         if (isset($_GET["error"])) {
             if ($_GET["error"] == "emptyinput"){
-                echo "<p>Fill in all fields!</p>";
+                echo "<div class='error-message'><i class='fas fa-exclamation-circle'></i> Fill in all fields!</div>";
             }
             else if($_GET["error"] == "invaliduid"){
-                echo "<p>Choose a proper username</p>";
+                echo "<div class='error-message'><i class='fas fa-exclamation-circle'></i> Choose a proper username</div>";
             }
             else if($_GET["error"] == "invaliduemail"){
-                echo "<p>Choose a proper email/p>";
+                echo "<div class='error-message'><i class='fas fa-exclamation-circle'></i> Choose a proper email</div>";
             }
-            else if($_GET["error"] == "usernametaken"){
-                echo "<p>Passwords don't match!</p>";
+            else if($_GET["error"] == "passwordsdontmatch"){
+                echo "<div class='error-message'><i class='fas fa-exclamation-circle'></i> Passwords don't match!</div>";
             }
             else if($_GET["error"] == "stmtfailed"){
-                echo "<p>Something went wrong! Try again!</p>";
+                echo "<div class='error-message'><i class='fas fa-exclamation-circle'></i> Something went wrong! Try again!</div>";
             }
             else if($_GET["error"] == "usernametaken"){
-                echo "<p>Try another username</p>";
+                echo "<div class='error-message'><i class='fas fa-exclamation-circle'></i> Try another username</div>";
             }
             else if ($_GET["error"] == "none"){
-                echo "<p>Successfully Signed Up!</p>";
+                echo "<div class='success-message'><i class='fas fa-check-circle'></i> Successfully Signed Up!</div>";
             }
         }
         ?>
 
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Dual Login / Signup Form</title>
+<head>
+    <title>Professional Login Portal</title>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css'>
     <link rel="stylesheet" href="../css/login.css" />
     <link rel="icon" type="image/png" href="../images/favicon.png">
-
-</style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Background Elements -->
+    <div class="background-decoration">
+        <div class="floating-shape shape-1"></div>
+        <div class="floating-shape shape-2"></div>
+        <div class="floating-shape shape-3"></div>
+        <div class="floating-shape shape-4"></div>
+    </div>
 
-  <body>
-  <section>
-      <div class="container" id="container">
-          <div class="form-container sign-up-container">
-              <form action="signup-inc.php" method="POST">
-                  <h1>Sign Up</h1>
-                  <div class="social-container">
-                      <a href="https://Github.com/AtharvaKulkarniIT" target="_blank" class="social"><i class="fab fa-github"></i></a>
-                  </div>
-                <span>Or use your Email for registration</span>
-                <label>
-                    <input type="email" name="email" placeholder="Email" />
-                </label>
-                <label>
-                    <input type="text" name="uid" placeholder="Username" />
-                </label>
-                <label>
-                    <input type="password" name="pwd" placeholder="Password" />
-                </label>
-                <label>
-                    <input type="password" name="pwdconfirm" placeholder="Confirm Password" />
-                </label>
-                  <button type="submit" name="submit" style="margin-top: 9px">Sign Up</button>
-              </form>
-          </div>
+    <!-- Ocean Animation -->
+    <div class="ocean">
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 
+    <section class="auth-section">
+        <div class="auth-container" id="container">
+            <!-- Sign Up Form -->
+            <div class="form-container sign-up-container">
+                <form action="signup-inc.php" method="POST" class="auth-form">
+                    <div class="form-header">
+                        <h2><i class="fas fa-user-plus"></i> Create Account</h2>
+                        <p>Join us today and start your journey</p>
+                    </div>
+                    
+                    <div class="social-container">
+                        <a href="https://Github.com/AtharvaKulkarniIT" target="_blank" class="social-btn" title="Visit GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>Or register with email</span>
+                    </div>
 
-          <div class="form-container sign-in-container">
-              <form action="login-inc.php" method="POST">
-                  <h1>Login</h1>
-                  <div class="social-container">
-                      <a href="https://github.com/socolate12345/Travel-Booking-Website" target="_blank" class="social"><i class="fab fa-github"></i></a>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" name="email" placeholder="Email Address" required />
                         </div>
-                  <label>
-                      <input type="text" name="uid" placeholder="Username or Email"/>
-                  </label>
-                  <label>
-                      <input type="password" name="pwd" placeholder="Password"/>
-                  </label>
-                  <a href="#">Forgot your password?</a>
-                  <button name="login">Login</button>
-              </form>
-          </div>
-          <div class="overlay-container">
-              <div class="overlay">
-                  <div class="overlay-panel overlay-left">
-                      <h1>Login</h1>
-                      <p>Login here if you already have an account </p>
-                      <button class="ghost mt-5" id="signIn">Login</button>
-                  </div>
-                  <div class="overlay-panel overlay-right">
-                      <h1>Create an Account!</h1>
-                      <p>Sign up if you still don't have an account ... </p>
-                      <button class="ghost" id="signUp">Sign Up</button>
-                  </div>
-              </div>
-          </div>
-      </div>
-  </section>
-  <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js'></script>
-    <script src="../js/login.js"></script>
+                    </div>
 
-  </body>
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" name="uid" placeholder="Username" required />
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="pwd" placeholder="Password" required />
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="pwdconfirm" placeholder="Confirm Password" required />
+                        </div>
+                    </div>
+
+                    <button type="submit" name="submit" class="auth-btn primary-btn">
+                        <i class="fas fa-user-plus"></i> Create Account
+                    </button>
+                </form>
+            </div>
+
+            <!-- Sign In Form -->
+            <div class="form-container sign-in-container">
+                <form action="login-inc.php" method="POST" class="auth-form">
+                    <div class="form-header">
+                        <h2><i class="fas fa-sign-in-alt"></i> Welcome Back</h2>
+                        <p>Sign in to access your account</p>
+                    </div>
+                    
+                    <div class="social-container">
+                        <a href="https://github.com/socolate12345/Travel-Booking-Website" target="_blank" class="social-btn" title="Visit GitHub">
+                            <i class="fab fa-github"></i>
+                        </a>
+                    </div>
+                    
+                    <div class="divider">
+                        <span>Or sign in with credentials</span>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" name="uid" placeholder="Username or Email" required />
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="pwd" placeholder="Password" required />
+                        </div>
+                    </div>
+
+                    <div class="form-options">
+                        <a href="#" class="forgot-link">
+                            <i class="fas fa-key"></i> Forgot your password?
+                        </a>
+                    </div>
+
+                    <button type="submit" name="login" class="auth-btn primary-btn">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                </form>
+            </div>
+
+            <!-- Overlay Panels -->
+            <div class="overlay-container">
+                <div class="overlay">
+                    <div class="overlay-panel overlay-left">
+                        <div class="overlay-content">
+                            <h2><i class="fas fa-arrow-left"></i> Already a Member?</h2>
+                            <p>Sign in to access your personal dashboard and continue your journey with us.</p>
+                            <button class="auth-btn ghost-btn" id="signIn">
+                                <i class="fas fa-sign-in-alt"></i> Sign In
+                            </button>
+                        </div>
+                    </div>
+                    <div class="overlay-panel overlay-right">
+                        <div class="overlay-content">
+                            <h2><i class="fas fa-rocket"></i> New Here?</h2>
+                            <p>Create an account and discover all the amazing features we have to offer!</p>
+                            <button class="auth-btn ghost-btn" id="signUp">
+                                <i class="fas fa-user-plus"></i> Sign Up
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js'></script>
+    <script src="../js/login.js"></script>
+</body>
 </html>

@@ -1,0 +1,5 @@
+RewriteEngine On
+RewriteBase /Travel-Booking-Website/  # ← thay đúng tên folder chứa project của bạn
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [QSA,L]
