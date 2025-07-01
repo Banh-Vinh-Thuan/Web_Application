@@ -127,7 +127,8 @@ $result = $conn->query($sql);
                         while ($row = $result->fetch_assoc()) {
                             $hotelId = htmlspecialchars($row['hotelid']);
                             $imagePath = "../hotelphotoID/{$hotelId}.jpg";
-                            $discount = rand(3, 5); // Random discount for demo
+                            // Fixed 7% discount to match hoteldescription.php
+                            $discount = 7;
                             $discountedPrice = $row['cost'] * (1 - $discount / 100);
                             $amenities = htmlspecialchars($row['amenities']);
                             ?>

@@ -29,6 +29,22 @@ foreach ($hotel_addresses as $addr) {
     }
 }
 
+// Read hotel location data for map
+$location_data = file_get_contents('hoteladdress.json');
+$hotel_locations = json_decode($location_data, true);
+
+// Find main hotel and nearby hotels
+$mainHotel = null;
+$nearbyHotels = [];
+
+foreach ($hotel_locations as $hotelLocation) {
+    if ($hotelLocation['hotelid'] == $hotelId) {
+        $mainHotel = $hotelLocation;
+    } else {
+        $nearbyHotels[] = $hotelLocation;
+    }
+}
+
 // Calculate discounted price (7% off)
 $originalPrice = $hotel ? $hotel['cost'] : 14590000;
 $discountedPrice = $originalPrice * 0.93;
@@ -38,229 +54,495 @@ $discountedPrice = $originalPrice * 0.93;
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $hotel ? htmlspecialchars($hotel['hotel']) : 'Hotel Tour'; ?></title>
     <link rel="stylesheet" href="../css/hotelinfo.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <!-- Leaflet CSS and JS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    
     <!-- LightGallery CSS and JS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/css/lightgallery.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery/2.7.2/lightgallery.min.js"></script>
+    
+    <!-- AOS Animation Library -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </head>
 <body>
-<header>
+<header class="header-modern">
     <div class="header-container">
-        <a href="#" class="logo">
+        <a href="#" class="logo" data-aos="fade-right">
             <img src="../images/logo.png" alt="VietTransit Logo">
             <span>VietTransit</span>
         </a>
-        <nav class="navbar">
-            <a href="/Login/loggedinhome.php">Home</a>
+        <nav class="navbar" data-aos="fade-left">
+            <a href="/Login/loggedinhome.php" class="nav-link">Home</a>
             <?php
                 if (isset($_SESSION['usersuid'])) {
-                    echo "<a href='/Login/profile.php'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
+                    echo "<a href='/Login/profile.php' class='nav-link user-greeting'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
                 }
-                echo '<a href="../home.php">Logout</a>';
+                echo '<a href="../home.php" class="nav-link logout-btn">Logout</a>';
             ?>
         </nav>
     </div>
 </header>
 
-<main>
-    <?php if ($hotel): ?>
-        <h1>  <?php echo htmlspecialchars($hotel['hotel']); ?></h1>
-        <p>   <?php echo $address ? htmlspecialchars($address['address']) : 'Address not found'; ?></p>
-    <?php else: ?>
-        <h1>Hotel Tour</h1>
-        <p>Address not available</p>
-    <?php endif; ?>
-    <div class="gallery" id="lightgallery">
-        <?php if ($hotel): ?>
-            <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.1.jpg" class="big"><img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.1.jpg" alt="Hotel Image 1"></a>
-            <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.2.jpg" class="small1"><img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.2.jpg" alt="Hotel Image 2"></a>
-            <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.3.jpg" class="small2"><img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.3.jpg" alt="Hotel Image 3"></a>
-            <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.4.jpg" class="small3"><img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.4.jpg" alt="Hotel Image 4"></a>
-            <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.5.jpg" class="small4"><img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.5.jpg" alt="Hotel Image 5"></a>
-        <?php else: ?>
-            <p>No hotel images available.</p>
-        <?php endif; ?>
-    </div>
+<main class="main-content">
+    <!-- Hero Section -->
+    <section class="hero-section" data-aos="fade-up">
+        <div class="hero-content">
+            <?php if ($hotel): ?>
+                <h1 class="hero-title"><?php echo htmlspecialchars($hotel['hotel']); ?></h1>
+                <p class="hero-address">📍 <?php echo $address ? htmlspecialchars($address['address']) : 'Address not found'; ?></p>
+            <?php else: ?>
+                <h1 class="hero-title">Hotel Tour</h1>
+                <p class="hero-address">📍 Address not available</p>
+            <?php endif; ?>
+        </div>
+    </section>
 
-    <div class="content-columns">
-        <div class="left-column">
-            <div class="box">
-                <div class="box2">
-                    <h3>Hotel Description</h3>
-                    <p>
-                        <?php 
-                        echo htmlspecialchars($hotel['description'] ?? 
-                        'Indulge in the perfect blend of comfort, elegance, and world-class hospitality at this premier hotel, where every detail is designed to exceed your expectations. From beautifully appointed rooms and suites to exceptional service that caters to your every need, guests are treated to a truly luxurious experience.') 
-                        . '<br><br>' . 
-                        htmlspecialchars('Enjoy breathtaking views of the surrounding landscape, whether you are relaxing in your room, dining at the gourmet restaurant, or unwinding in the rooftop lounge. Whether you are traveling for business or leisure, this hotel offers an unparalleled stay marked by sophistication, tranquility, and unforgettable moments.');
-                        ?>
-                    </p>
-                </div>
+    <!-- Image Gallery Section -->
+    <section class="gallery-section" data-aos="fade-up" data-aos-delay="200">
+        <div class="container">
+            <div class="gallery-grid" id="lightgallery">
+                <?php if ($hotel): ?>
+                    <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.1.jpg" class="gallery-item main-image">
+                        <img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.1.jpg" alt="Hotel Image 1">
+                        <div class="image-overlay">
+                            <span class="view-icon">🔍</span>
+                        </div>
+                    </a>
+                    <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.2.jpg" class="gallery-item">
+                        <img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.2.jpg" alt="Hotel Image 2">
+                        <div class="image-overlay">
+                            <span class="view-icon">🔍</span>
+                        </div>
+                    </a>
+                    <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.3.jpg" class="gallery-item">
+                        <img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.3.jpg" alt="Hotel Image 3">
+                        <div class="image-overlay">
+                            <span class="view-icon">🔍</span>
+                        </div>
+                    </a>
+                    <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.4.jpg" class="gallery-item">
+                        <img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.4.jpg" alt="Hotel Image 4">
+                        <div class="image-overlay">
+                            <span class="view-icon">🔍</span>
+                        </div>
+                    </a>
+                    <a href="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.5.jpg" class="gallery-item">
+                        <img src="<?php echo $hotelId; ?>/<?php echo $hotelId; ?>.5.jpg" alt="Hotel Image 5">
+                        <div class="image-overlay">
+                            <span class="view-icon">🔍</span>
+                        </div>
+                    </a>
+                <?php else: ?>
+                    <div class="no-images">
+                        <p>No hotel images available.</p>
+                    </div>
+                <?php endif; ?>
             </div>
-            <div class="box">
-                <div class="box2">
-                    <h3>Most Popular Amenities</h3>
-                    <?php
-                    $amenities = $hotel['amenities'] ?? '';
-                    $amenities_list = array_map('trim', explode(',', $amenities));
-                    $amenity_icons = [
-                        'Wifi' => '🛜', 'Tivi' => '🖥️', 'Parking' => '🅿️', 'Bar' => '🍹',
-                        'Pool' => '🏞️', 'Airport' => '✈️', 'Spa' => '💆🏻‍♀️🧖🏻', 'Breakfast' => '🍳🍽️🥞'
-                    ];
-                    $displayed_amenities = [];
-                    foreach ($amenities_list as $amenity) {
-                        if (array_key_exists($amenity, $amenity_icons)) {
-                            $displayed_amenities[] = $amenity_icons[$amenity] . ' ' . $amenity;
-                        }
-                    }
-                    echo !empty($displayed_amenities) ? '<p>' . implode(' ', $displayed_amenities) . '</p>' : '<p>No amenities available.</p>';
-                    ?>
-                </div>
-                <div class="box2">
-                    <h3>Hotel Quality <?php echo htmlspecialchars($hotel['ratings']); ?> ⭐</h3>
-                </div>
-                <div class="box2">
-                    <h3>See Room Price</h3>
-                    <?php
-                    $basePrice = $hotel['cost'] ?? 0;
-                    $deluxePrice = $basePrice + 200000;
-                    $suitePrice = $basePrice + 500000;
-                    ?>
-                    <div style="display: flex; justify-content: space-around; align-items: flex-start; gap: 20px;">
-                        <div>
-                            <strong>🏢 Standard Hotel Room</strong><br><br>
-                            <div>Two Single Beds:</div><br>
-                            <div><?php echo number_format($basePrice); ?> VND</div>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="content-section">
+        <div class="container">
+            <div class="content-grid">
+                <!-- Left Column -->
+                <div class="left-column">
+                    <!-- Hotel Description -->
+                    <div class="content-card" data-aos="fade-right">
+                        <div class="card-header">
+                            <h2 class="card-title">🏨 Hotel Description</h2>
                         </div>
-                        <div>
-                            <strong>✨ Deluxe Hotel Room</strong><br><br>
-                            <div>One Single Bed, One Double Bed:</div><br>
-                            <div><?php echo number_format($deluxePrice); ?> VND</div>
+                        <div class="card-content">
+                            <p class="description-text">
+                                <?php 
+                                echo htmlspecialchars($hotel['description'] ?? 
+                                'Indulge in the perfect blend of comfort, elegance, and world-class hospitality at this premier hotel, where every detail is designed to exceed your expectations. From beautifully appointed rooms and suites to exceptional service that caters to your every need, guests are treated to a truly luxurious experience.') 
+                                . '<br><br>' . 
+                                htmlspecialchars('Enjoy breathtaking views of the surrounding landscape, whether you are relaxing in your room, dining at the gourmet restaurant, or unwinding in the rooftop lounge. Whether you are traveling for business or leisure, this hotel offers an unparalleled stay marked by sophistication, tranquility, and unforgettable moments.');
+                                ?>
+                            </p>
                         </div>
-                        <div>
-                            <strong>⚜️ Suite Hotel Room</strong><br><br>
-                            <div>A Large King Size Bed:</div><br>
-                            <div><?php echo number_format($suitePrice); ?> VND</div>
+                    </div>
+
+                    <!-- Amenities Section -->
+                    <div class="content-card" data-aos="fade-right" data-aos-delay="100">
+                        <div class="card-header">
+                            <h2 class="card-title">✨ Most Popular Amenities</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="amenities-grid">
+                                <?php
+                                $amenities = $hotel['amenities'] ?? '';
+                                $amenities_list = array_map('trim', explode(',', $amenities));
+                                $amenity_icons = [
+                                    'Wifi' => '🛜', 'Tivi' => '🖥️', 'Parking' => '🅿️', 'Bar' => '🍹',
+                                    'Pool' => '🏞️', 'Airport' => '✈️', 'Spa' => '💆🏻‍♀️', 'Breakfast' => '🍳'
+                                ];
+                                $displayed_amenities = [];
+                                foreach ($amenities_list as $amenity) {
+                                    if (array_key_exists($amenity, $amenity_icons)) {
+                                        echo "<div class='amenity-item'>";
+                                        echo "<span class='amenity-icon'>" . $amenity_icons[$amenity] . "</span>";
+                                        echo "<span class='amenity-name'>" . $amenity . "</span>";
+                                        echo "</div>";
+                                    }
+                                }
+                                if (empty($displayed_amenities) && empty($amenities)) {
+                                    echo '<p class="no-amenities">No amenities available.</p>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hotel Rating -->
+                    <div class="content-card rating-card" data-aos="fade-right" data-aos-delay="200">
+                        <div class="card-content">
+                            <div class="rating-display">
+                                <span class="rating-stars">
+                                    <?php
+                                    $rating = $hotel['ratings'] ?? 0;
+                                    for ($i = 1; $i <= 5; $i++) {
+                                        if ($i <= $rating) {
+                                            echo '<span class="star filled">⭐</span>';
+                                        } else {
+                                            echo '<span class="star">☆</span>';
+                                        }
+                                    }
+                                    ?>
+                                </span>
+                                <span class="rating-text">Hotel Quality <?php echo htmlspecialchars($hotel['ratings'] ?? '0'); ?>/5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Room Prices -->
+                    <div class="content-card" data-aos="fade-right" data-aos-delay="300">
+                        <div class="card-header">
+                            <h2 class="card-title">🛏️ Room Types & Prices</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="room-types-grid">
+                                <?php
+                                $basePrice = $hotel['cost'] ?? 0;
+                                $deluxePrice = $basePrice + 200000;
+                                $suitePrice = $basePrice + 500000;
+                                ?>
+                                <div class="room-type">
+                                    <div class="room-icon">🏢</div>
+                                    <h3 class="room-name">Standard Room</h3>
+                                    <p class="room-desc">Two Single Beds</p>
+                                    <div class="room-price"><?php echo number_format($basePrice); ?> VND</div>
+                                </div>
+                                <div class="room-type">
+                                    <div class="room-icon">✨</div>
+                                    <h3 class="room-name">Deluxe Room</h3>
+                                    <p class="room-desc">One Single + One Double Bed</p>
+                                    <div class="room-price"><?php echo number_format($deluxePrice); ?> VND</div>
+                                </div>
+                                <div class="room-type">
+                                    <div class="room-icon">⚜️</div>
+                                    <h3 class="room-name">Suite Room</h3>
+                                    <p class="room-desc">Large King Size Bed</p>
+                                    <div class="room-price"><?php echo number_format($suitePrice); ?> VND</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="right-column">
+                    <!-- Booking Card -->
+                    <div class="booking-card" data-aos="fade-left">
+                        <div class="booking-header">
+                            <h3 class="booking-title">💰 Price From</h3>
+                            <div class="price-display">
+                                <span class="current-price"><?php echo number_format($discountedPrice); ?> VND</span>
+                                <span class="original-price"><?php echo number_format($originalPrice); ?> VND</span>
+                            </div>
+                            <div class="discount-badge">7% OFF</div>
+                        </div>
+                        <a href="/hotel/booking?hotel_id=<?php echo $hotelId; ?>" class="booking-button">
+                            <span>Book Now</span>
+                            <span class="button-icon">→</span>
+                        </a>
+                    </div>
+
+                    <!-- Location Map -->
+                    <div class="content-card map-card" data-aos="fade-left" data-aos-delay="100">
+                        <div class="card-header">
+                            <h2 class="card-title">📍 Location Map</h2>
+                        </div>
+                        <div class="card-content">
+                            <?php if ($mainHotel): ?>
+                                <div id="smallMap" class="small-map">
+                                    <div class="map-container">
+                                        <div id="mapSmall"></div>
+                                        <div class="map-overlay">
+                                            <button id="expandMap" class="expand-btn">🔍 View Large Map</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php else: ?>
+                                <p class="no-map">Map not available.</p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+
+                    <!-- Why Book -->
+                    <div class="content-card" data-aos="fade-left" data-aos-delay="200">
+                        <div class="card-header">
+                            <h2 class="card-title">🎯 Why Book With Us?</h2>
+                        </div>
+                        <div class="card-content">
+                            <div class="benefits-list">
+                                <div class="benefit-item">
+                                    <span class="benefit-icon">🔒</span>
+                                    <span class="benefit-text">Safe & Secure Booking</span>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="benefit-icon">💎</span>
+                                    <span class="benefit-text">Exclusive Deals</span>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="benefit-icon">⚡</span>
+                                    <span class="benefit-text">Instant Confirmation</span>
+                                </div>
+                                <div class="benefit-item">
+                                    <span class="benefit-icon">🆓</span>
+                                    <span class="benefit-text">No Hidden Fees</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trust Badge -->
+                    <div class="content-card trust-card" data-aos="fade-left" data-aos-delay="300">
+                        <div class="card-header">
+                            <h2 class="card-title">🏆 Trusted Since 2025</h2>
+                        </div>
+                        <div class="card-content">
+                            <p class="trust-text">Nationally recognized for excellence and reliability in travel booking services.</p>
+                            <div class="trust-badges">
+                                <span class="trust-badge">⭐ 4.8/5 Rating</span>
+                                <span class="trust-badge">🔐 SSL Secured</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="right-column">
-            <div class="box3">
-                <div class="button">
-                    <h3 style="display: inline;">Price From</h3>
-                    <p style="color: red; font-weight: bold; display: inline;"><?php echo number_format($discountedPrice); ?> VND</p>
-                    <p style="text-decoration: line-through; color: gray;"><?php echo number_format($originalPrice); ?> VND</p>
-                    <a href="/hotel/booking?hotel_id=<?php echo $hotelId; ?>" class="booking-button">Book now</a>
-                </div>
-            </div>
-            <div class="box">
-                <h3>Location Map</h3>
-                <?php if ($address): ?>
-                    <div id="map"></div>
-                <?php else: ?>
-                    <p>Map not available.</p>
-                <?php endif; ?>
-            </div>
-            <div class="box">
-                <h3>Why Book Hotel On Our Website?</h3>
-                <p>Our service is safe and secure, offering a convenient and time-saving experience. We ensure transparency with no hidden fees and provide access to exclusive deals you won't find elsewhere.</p>
-            </div>
-            <div class="box">
-                <h3>Trusted Website</h3>
-                <p>Since its founding in 2025, our website has become a leading travel brand and is nationally recognized for its excellence and reliability.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modal for map -->
-    <div id="mapModal" class="modal">
-        <span class="close">×</span>
-        <div id="modalMap"></div>
-    </div>
+    </section>
 </main>
 
-<footer>
-    <section class="footer">
-        <div class="box-container">
-            <div class="box2">
-                <h3>Extra links</h3>
-                <a href="../Login/profile.php">My account</a>
-                <a href="../Payment Interface/receiptlist.php">My List</a>
-                <a href="../Login/profile.php">My favorite</a>
-            </div>
-            <div class="box2">
-                <h3>Popular Travel Locations</h3>
-                <a href="../Journey/viewjourney_tay_bac.php">Tay Bac</a>
-                <a href="../Journey/viewjourney_ho_chi_minh.php">Ho Chi Minh</a>
-                <a href="../Journey/viewjourney_phu_quoc.php">Phu Quoc</a>
-                <a href="../Journey/viewjourney_hue.php">Hue</a>
-            </div>
-            <div class="box2">
-                <h3>Contact Info</h3>
-                <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
-                <img src="./images/payment.png" alt="">
+<!-- Full screen map modal -->
+<div id="mapModal" class="map-modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>🗺️ Hotel Location & Nearby Hotels</h3>
+            <span class="close-btn" id="closeModal">&times;</span>
+        </div>
+        <div class="modal-body">
+            <div id="mapLarge"></div>
+            <div id="hotelInfo" class="hotel-info-panel">
+                <!-- Hotel information will be populated here -->
             </div>
         </div>
-        <div class="credit">©2025 VietTransit</div>
-    </section>
-</footer>
-
+    </div>
+</div>
+<?php include __DIR__ . '/../footer.php'; ?>
 <script>
-// Initialize LightGallery
-document.addEventListener('DOMContentLoaded', function() {
-    lightGallery(document.getElementById('lightgallery'), {
-        speed: 500,
-        plugins: [],
-        mode: 'lg-slide',
-        thumbnail: true,
-        zoom: true,
-        download: false
+// Initialize AOS
+AOS.init({
+    duration: 800,
+    easing: 'ease-in-out',
+    once: true,
+    offset: 100
+});
+
+// Hotel data from PHP
+const mainHotel = <?php echo json_encode($mainHotel); ?>;
+const nearbyHotels = <?php echo json_encode($nearbyHotels); ?>;
+
+// Initialize map functionality
+if (mainHotel) {
+    initializeMapSystem();
+}
+
+function initializeMapSystem() {
+    // Custom icons
+    const mainHotelIcon = L.divIcon({
+        className: 'custom-marker main-hotel',
+        html: '<div class="marker-pin main-pin">📍</div>',
+        iconSize: [40, 40],
+        iconAnchor: [20, 40]
     });
-});
 
-// Initialize Leaflet map
-<?php if ($address): ?>
-var map = L.map('map').setView([<?php echo $address['coordinates']['latitude']; ?>, <?php echo $address['coordinates']['longitude']; ?>], 13);
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-}).addTo(map);
-L.marker([<?php echo $address['coordinates']['latitude']; ?>, <?php echo $address['coordinates']['longitude']; ?>])
-    .addTo(map)
-    .bindPopup('<?php echo htmlspecialchars($address['address']); ?>');
+    const nearbyHotelIcon = L.divIcon({
+        className: 'custom-marker nearby-hotel',
+        html: '<div class="marker-pin nearby-pin">🏨</div>',
+        iconSize: [30, 30],
+        iconAnchor: [15, 30]
+    });
 
-// Map modal functionality
-var mapModal = document.getElementById('mapModal');
-var modalMap = document.getElementById('modalMap');
-var closeBtn = mapModal.getElementsByClassName('close')[0];
+    // Initialize small map
+    let smallMap = L.map('mapSmall', {
+        zoomControl: false,
+        scrollWheelZoom: false,
+        doubleClickZoom: false,
+        boxZoom: false,
+        keyboard: false,
+        dragging: false
+    }).setView([mainHotel.coordinates.latitude, mainHotel.coordinates.longitude], 14);
 
-map.addEventListener('click', function() {
-    mapModal.style.display = 'flex';
-    var modalLeafletMap = L.map('modalMap').setView([<?php echo $address['coordinates']['latitude']; ?>, <?php echo $address['coordinates']['longitude']; ?>], 13);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-    }).addTo(modalLeafletMap);
-    L.marker([<?php echo $address['coordinates']['latitude']; ?>, <?php echo $address['coordinates']['longitude']; ?>])
-        .addTo(modalLeafletMap)
-        .bindPopup('<?php echo htmlspecialchars($address['address']); ?>').openPopup();
-});
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(smallMap);
 
-closeBtn.addEventListener('click', function() {
-    mapModal.style.display = 'none';
-});
+    // Add main hotel marker to small map
+    L.marker([mainHotel.coordinates.latitude, mainHotel.coordinates.longitude], {
+        icon: mainHotelIcon
+    }).addTo(smallMap);
 
-window.addEventListener('click', function(event) {
-    if (event.target == mapModal) {
-        mapModal.style.display = 'none';
+    // Large map variable
+    let largeMap = null;
+
+    // Expand map functionality
+    document.getElementById('expandMap').addEventListener('click', function() {
+        document.getElementById('mapModal').style.display = 'flex';
+        setTimeout(() => {
+            initializeLargeMap();
+        }, 100);
+    });
+
+    // Close modal
+    document.getElementById('closeModal').addEventListener('click', function() {
+        document.getElementById('mapModal').style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(event) {
+        const modal = document.getElementById('mapModal');
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    function initializeLargeMap() {
+        if (largeMap) {
+            largeMap.remove();
+        }
+
+        largeMap = L.map('mapLarge').setView([mainHotel.coordinates.latitude, mainHotel.coordinates.longitude], 14);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(largeMap);
+
+        // Add main hotel marker
+        const mainMarker = L.marker([mainHotel.coordinates.latitude, mainHotel.coordinates.longitude], {
+            icon: mainHotelIcon
+        }).addTo(largeMap);
+
+        mainMarker.on('click', function() {
+            showHotelInfo(mainHotel, true);
+        });
+
+        // Add nearby hotel markers
+        nearbyHotels.forEach(hotel => {
+            const marker = L.marker([hotel.coordinates.latitude, hotel.coordinates.longitude], {
+                icon: nearbyHotelIcon
+            }).addTo(largeMap);
+
+            marker.on('click', function() {
+                showHotelInfo(hotel, false);
+            });
+        });
+
+        // Show main hotel info by default
+        showHotelInfo(mainHotel, true);
     }
-});
-<?php endif; ?>
+
+    function showHotelInfo(hotel, isMainHotel) {
+        const infoPanel = document.getElementById('hotelInfo');
+        const hotelType = isMainHotel ? 'Current Hotel' : 'Nearby Hotel';
+        const typeClass = isMainHotel ? 'main-hotel-badge' : 'nearby-hotel-badge';
+
+        const attractionsHtml = hotel.nearby_attractions.map(attraction => 
+            `<div class="attraction-item">
+                <span class="attraction-name">${attraction.name}</span>
+                <span class="attraction-distance">${attraction.distance}</span>
+            </div>`
+        ).join('');
+
+        infoPanel.innerHTML = `
+            <div class="hotel-info-card">
+                <div class="hotel-header">
+                    <div class="hotel-image">
+                        <img src="${hotel.image}" alt="${hotel.name}" onerror="this.src='https://via.placeholder.com/100x80?text=No+Image'">
+                    </div>
+                    <div class="hotel-basic-info">
+                        <div class="hotel-type-badge ${typeClass}">${hotelType}</div>
+                        <h4 class="hotel-name">${hotel.name}</h4>
+                        <div class="hotel-rating">
+                            <span class="stars">${generateStars(hotel.rating)}</span>
+                            <span class="rating-number">${hotel.rating}</span>
+                        </div>
+                        <div class="hotel-price">${formatPrice(hotel.price)}/night</div>
+                    </div>
+                </div>
+                <div class="hotel-address">
+                    <strong>📍 Address:</strong> ${hotel.address}
+                </div>
+                <div class="attractions-section">
+                    <h5>🎯 Nearby Attractions:</h5>
+                    <div class="attractions-list">
+                        ${attractionsHtml}
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function generateStars(rating) {
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = (rating - fullStars) >= 0.5;
+        let stars = '';
+        
+        for (let i = 0; i < fullStars; i++) {
+            stars += '⭐';
+        }
+        if (hasHalfStar) {
+            stars += '⭐';
+        }
+        
+        return stars;
+    }
+
+    function formatPrice(price) {
+        return new Intl.NumberFormat('vi-VN').format(price) + ' VND';
+    }
+}
+
+// Initialize LightGallery
+if (document.getElementById('lightgallery')) {
+    lightGallery(document.getElementById('lightgallery'), {
+        plugins: [],
+        speed: 500,
+        licenseKey: 'your_license_key'
+    });
+}
 </script>
 </body>
 </html>

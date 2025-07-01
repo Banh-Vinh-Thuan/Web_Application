@@ -245,68 +245,79 @@ $stmt->close();
     </div>
 
     <script>
-        // Initialize page animations
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelector('.container').classList.add('loaded');
-        });
+    // Initialize page animations
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.container').classList.add('loaded');
+    });
 
-        // Number input controls
-        function changeNumber(inputId, change) {
-            const input = document.getElementById(inputId);
-            const currentValue = parseInt(input.value) || 1;
-            const newValue = Math.max(1, currentValue + change);
-            input.value = newValue;
-            updateDisplays();
-            calculateTotal();
-        }
-
-        // Update display values
-        function updateDisplays() {
-            const guests = document.getElementById('tourists').value;
-            const rooms = document.getElementById('number_of_rooms').value;
-            
-            document.getElementById('guests-display').textContent = guests + (guests == 1 ? ' person' : ' people');
-            document.getElementById('rooms-display').textContent = rooms + (rooms == 1 ? ' room' : ' rooms');
-        }
-
-        function calculateTotal() {
-            const roomType = document.getElementById('room_type').value;
-            const checkInDate = new Date(document.getElementById('check_in_date').value);
-            const checkOutDate = new Date(document.getElementById('check_out_date').value);
-            const numberOfRooms = parseInt(document.getElementById('number_of_rooms').value) || 1;
-            const baseCost = <?php echo $costPerDay; ?>;
-            
-            const roomExtraCosts = {
-                'Standard': 0,
-                'Deluxe': 200000,
-                'Suite': 500000
-            };
-            
-            const timeDiff = checkOutDate - checkInDate;
-            const days = Math.max(1, timeDiff / (1000 * 60 * 60 * 24));
-            const costPerDay = baseCost + roomExtraCosts[roomType];
-            
-            let total = 0;
-            if (days > 0 && !isNaN(costPerDay) && numberOfRooms > 0) {
-                total = costPerDay * days * numberOfRooms;
-            }
-            
-            // Update displays
-            document.getElementById('nights-display').textContent = days + (days == 1 ? ' night' : ' nights');
-            document.getElementById('room-type-display').textContent = roomType;
-            document.getElementById('total-amount').textContent = 
-                total.toLocaleString('vi-VN') + 'đ';
-        }
-
-        // Event listeners
-        document.getElementById('room_type').addEventListener('change', calculateTotal);
-        document.getElementById('check_in_date').addEventListener('change', calculateTotal);
-        document.getElementById('check_out_date').addEventListener('change', calculateTotal);
-        document.getElementById('number_of_rooms').addEventListener('change', calculateTotal);
-
-        // Initialize calculations
+    // Number input controls
+    function changeNumber(inputId, change) {
+        const input = document.getElementById(inputId);
+        const currentValue = parseInt(input.value) || 1;
+        const newValue = Math.max(1, currentValue + change);
+        input.value = newValue;
         updateDisplays();
         calculateTotal();
+    }
+
+    // Update display values
+    function updateDisplays() {
+        const guests = document.getElementById('tourists').value;
+        const rooms = document.getElementById('number_of_rooms').value;
+        
+        document.getElementById('guests-display').textContent = guests + (guests == 1 ? ' person' : ' people');
+        document.getElementById('rooms-display').textContent = rooms + (rooms == 1 ? ' room' : ' rooms');
+    }
+
+    function calculateTotal() {
+        const roomType = document.getElementById('room_type').value;
+        const checkInDate = new Date(document.getElementById('check_in_date').value);
+        const checkOutDate = new Date(document.getElementById('check_out_date').value);
+        const numberOfRooms = parseInt(document.getElementById('number_of_rooms').value) || 1;
+        const baseCost = <?php echo $costPerDay; ?>;
+        
+        const roomExtraCosts = {
+            'Standard': 0,
+            'Deluxe': 200000,
+            'Suite': 500000
+        };
+        
+        const timeDiff = checkOutDate - checkInDate;
+        const days = Math.max(1, timeDiff / (1000 * 60 * 60 * 24));
+        const costPerDay = baseCost + roomExtraCosts[roomType];
+        
+        let subtotal = 0;
+        let discount = 0;
+        let total = 0;
+        
+        if (days > 0 && !isNaN(costPerDay) && numberOfRooms > 0) {
+            subtotal = costPerDay * days * numberOfRooms;
+            
+            // Apply 7% discount for Standard rooms only
+            if (roomType === 'Standard') {
+                discount = subtotal * 0.07;
+                total = subtotal - discount;
+            } else {
+                total = subtotal;
+            }
+        }
+        
+        // Update displays
+        document.getElementById('nights-display').textContent = days + (days == 1 ? ' night' : ' nights');
+        document.getElementById('room-type-display').textContent = roomType;
+        document.getElementById('total-amount').textContent = 
+            total.toLocaleString('vi-VN') + 'đ';
+    }
+
+    // Event listeners
+    document.getElementById('room_type').addEventListener('change', calculateTotal);
+    document.getElementById('check_in_date').addEventListener('change', calculateTotal);
+    document.getElementById('check_out_date').addEventListener('change', calculateTotal);
+    document.getElementById('number_of_rooms').addEventListener('change', calculateTotal);
+
+    // Initialize calculations
+    updateDisplays();
+    calculateTotal();
     </script>
 </body>
 </html>
