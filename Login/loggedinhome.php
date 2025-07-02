@@ -13,9 +13,7 @@ session_start();
     <link rel="stylesheet" href="../css/style.css">
     </head>
 <body>
-
 <?php include __DIR__ . '/../header.php'; ?>
-
 
 <section class="home" id="home">
     <!-- Video background -->

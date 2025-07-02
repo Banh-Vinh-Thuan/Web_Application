@@ -18,8 +18,10 @@ if (!isset($tourData[$cityId])) {
     exit;
 }
 
-// Lấy danh sách tour của city
-$tours = $tourData[$cityId];
+// Lấy dữ liệu city
+$cityData = $tourData[$cityId];
+$tours = $cityData['tours'];
+$descriptions = $cityData['description'];
 
 // Lấy tên hiển thị từ thuộc tính 'city' trong tour đầu tiên
 $displayCity = $tours[0]['city'] ?? ucfirst($cityId);
@@ -38,6 +40,13 @@ $displayCity = $tours[0]['city'] ?? ucfirst($cityId);
 
 <div class="main-content">
   <h1><?= strtoupper(htmlspecialchars($displayCity)) ?> TRAVEL</h1>
+
+  <!-- City Description Section -->
+  <div class="city-description">
+    <?php foreach ($descriptions as $description): ?>
+      <p><?= $description ?></p>
+    <?php endforeach; ?>
+  </div>
 
   <div class="content-container">
     <!-- Sidebar Filter -->
@@ -96,7 +105,7 @@ $displayCity = $tours[0]['city'] ?? ucfirst($cityId);
           <div class="tour-card"
                data-price="<?= $tour['price'] ?>"
                data-duration="<?= $tour['duration'] ?>"
-               data-destination="<?= $city ?>"
+               data-destination="<?= $cityId ?>"
                data-departure="<?= $tour['departure'] ?>"
                data-transport="<?= $tour['transport'] ?>">
             <div class="tour-image">
