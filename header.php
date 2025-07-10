@@ -1,5 +1,5 @@
 <?php
-    $BASE_URL = "/Login/"; // hoặc "/your-subdirectory/" nếu web đặt trong thư mục con
+    $BASE_URL = "/Login/";
 ?>
 <header>
     <input type="checkbox" name="" id="toggler">
@@ -12,9 +12,9 @@
     
     <nav class="navbar">
         <a href="../login/loggedinhome.php">Home</a>
-        <a href="#about">About</a>
-        <a href="#products">Places</a>
-        <a href="#review">Review</a>
+        <a href="../login/loggedinhome.php#about">About</a>
+        <a href="../login/loggedinhome.php#products">Places</a>
+        <a href="../login/loggedinhome.php#review">Review</a>
         <a href="../booking/find_tour.php">Tour</a>
         <a href="../booking/find_hotels.php">Hotel</a>
         <?php
