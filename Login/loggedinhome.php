@@ -9,6 +9,7 @@
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../chatbot/chatbot.css">
 </head>
 <body>
 <?php include __DIR__ . '/../header.php'; ?>
@@ -148,6 +149,32 @@ changeVideoBackground();
     </div>
 </section>
 
+<!-- START: Chatbot HTML Structure -->
+<div id="chatbot-fab">
+    <i class="fas fa-comment-dots"></i>
+</div>
+
+<div id="chatbot-window" class="hidden">
+    <div class="chatbot-header">
+        <h3>VietTransit Assistant</h3>
+        <button id="chatbot-close-btn">&times;</button>
+    </div>
+    <div id="chatbot-messages">
+        <!-- Messages will be dynamically inserted here -->
+    </div>
+    <div class="chatbot-input-area">
+        <input type="text" id="chatbot-input" placeholder="Ask about tours or hotels...">
+        <button id="chatbot-send-btn">
+            <i class="fas fa-paper-plane"></i>
+        </button>
+    </div>
+</div>
+<!-- END: Chatbot HTML Structure -->
+
+
 <?php include __DIR__ . '/../footer.php'; ?>
+
+<!-- Add the new chatbot JavaScript file -->
+<script src="../chatbot/chatbot.js"></script>
 </body>
 </html>
