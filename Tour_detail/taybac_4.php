@@ -12,29 +12,13 @@ session_start();
 </head>
 <body>
 
-<header>
-    <div class="header-container">
-        <a href="#" class="logo">
-            <img src="../images/logo.png" alt="VietTransit Logo">
-            <span>VietTransit</span>
-        </a>
-        <nav class="navbar">
-            <a href="/Login/loggedinhome.php">Home</a>
-            <?php
-                if (isset($_SESSION['usersuid'])) {
-                    echo "<a href='/Login/profile.php'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
-                }
-                echo '<a href="../home.php">Logout</a>';
-            ?>
-        </nav>
-    </div>
-</header>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <main>
 
-    <h1>&nbsp;&nbsp;&nbsp; Moc Chau - Pha Din Pass - Son La - Dien Bien </h1>
-    <p></p>
-    <!-- Gallery placed above the columns -->
+    <h1>&nbsp;&nbsp;&nbsp; Moc Chau - Pha Din Pass - Son La - Dien Bien</h1>
+
+    <!-- Gallery -->
     <div class="gallery" id="lightgallery">
         <a href="Taybac4/1.jpg" class="big"><img src="Taybac4/1.jpg" alt="Man Ka Na Flower Garden"></a>
         <a href="Taybac4/2.jpg" class="small1"><img src="Taybac4/2.jpg" alt="Pha Din Pass"></a>
@@ -42,8 +26,8 @@ session_start();
         <a href="Taybac4/4.jpg" class="small3"><img src="Taybac4/4.jpg" alt="Ang Village"></a>
         <a href="Taybac4/5.jpg" class="small4"><img src="Taybac4/5.jpg" alt="Dien Bien City"></a>
     </div>
-    <p></p>
-    <!-- Columns start here -->
+
+    <!-- Content columns -->
     <div class="content-columns">
         <div class="left-column">
             <div class="box">
@@ -113,7 +97,9 @@ session_start();
         </div>
     </div>
 </main>
+
 <?php include __DIR__ . '/../footer.php'; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/lightgallery.min.js"></script>
 <script>
     lightGallery(document.getElementById('lightgallery'), {

@@ -12,34 +12,17 @@ session_start();
 </head>
 <body>
 
-<header>
-    <div class="header-container">
-        <a href="#" class="logo">
-            <img src="../images/logo.png" alt="VietTransit Logo">
-            <span>VietTransit</span>
-        </a>
-        <nav class="navbar">
-            <a href="/Login/loggedinhome.php">Home</a>
-            <?php
-                if (isset($_SESSION['usersuid'])) {
-                    echo "<a href='/Login/profile.php'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
-                }
-                echo '<a href="../home.php">Logout</a>';
-            ?>
-        </nav>
-    </div>
-</header>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <main>
     <h1>&nbsp;&nbsp;&nbsp; Sapa - Fansipan - Y Tý - Bát Xát Rice Terraces</h1>
-    <p></p>
 
     <!-- Gallery -->
     <div class="gallery" id="lightgallery">
         <a href="Taybac3/1.jpg" class="big"><img src="Taybac3/1.jpg" alt="Best View Cafe"></a>
         <a href="Taybac3/2.jpg" class="small1"><img src="Taybac3/2.jpg" alt="Phansipang Cable Car"></a>
-        <a href="Taybac3/3.jpg" class="small2"><img src="Taybac3/3.jpg" alt="Hoang Su Phi Rice field"></a>
-        <a href="Taybac3/4.jpg" class="small3"><img src="Taybac3/4.jpg" alt="Bat Xat Rice filed"></a>
+        <a href="Taybac3/3.jpg" class="small2"><img src="Taybac3/3.jpg" alt="Hoang Su Phi Rice Field"></a>
+        <a href="Taybac3/4.jpg" class="small3"><img src="Taybac3/4.jpg" alt="Bat Xat Rice Field"></a>
         <a href="Taybac3/5.jpg" class="small4"><img src="Taybac3/5.jpg" alt="Sewing Tradition"></a>
     </div>
 
@@ -102,7 +85,9 @@ session_start();
         </div>
     </div>
 </main>
+
 <?php include __DIR__ . '/../footer.php'; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/lightgallery.min.js"></script>
 <script>
     lightGallery(document.getElementById('lightgallery'), {

@@ -12,24 +12,7 @@ session_start();
 </head>
 <body>
 
-
-<header>
-    <div class="header-container">
-        <a href="#" class="logo">
-            <img src="../images/logo.png" alt="VietTransit Logo">
-            <span>VietTransit</span>
-        </a>
-        <nav class="navbar">
-            <a href="/Login/loggedinhome.php">Home</a>
-            <?php
-                if (isset($_SESSION['usersuid'])) {
-                    echo "<a href='/Login/profile.php'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
-                }
-                echo '<a href="../home.php">Logout</a>';
-            ?>
-        </nav>
-    </div>
-</header>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <main>
     <h1>&nbsp;&nbsp;&nbsp;  Hung Temple - Nghia Lo - Tu Le - Mu Cang Chai - Sapa - Fansipan - Dien Bien - Moc Chau Tour </h1>
@@ -120,4 +103,5 @@ session_start();
         share: false
     });
 </script>
+</body>
 </html>

@@ -17,8 +17,9 @@
         <a href="../login/loggedinhome.php#review">Review</a>
         <a href="../booking/find_tour.php">Tour</a>
         <a href="../booking/find_hotels.php">Hotel</a>
+        <a href="../AI/AI_planner.php">AI Planner</a>
         <?php
-            echo "<a href='profile.php'>Hello, " . $_SESSION['usersuid'] . "!</a>";
+            echo "<a href='../Login/profile.php'>Hello, " . $_SESSION['usersuid'] . "!</a>";
             echo '<a href="../home.php">Logout</a>';
         ?>
     </nav>

@@ -5,45 +5,41 @@ session_start();
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dalat Chill & Relax: Tuyen Lam Lake - Clay Tunnel - Fresh Garden - Coffee Farm Experience</title>
+    <meta name="description" content="Escape to Dalat with our Chill & Relax tour. Visit Tuyen Lam Lake, Clay Tunnel, Fresh Garden, and enjoy a hands-on coffee farm experience.">
     <link rel="stylesheet" href="../css/tour.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
-              <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/css/lightgallery.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/css/lightgallery.css">
 </head>
 <body>
 
-<header>
-    <div class="header-container">
-        <a href="#" class="logo">
-            <img src="../images/logo.png" alt="VietTransit Logo">
-            <span>VietTransit</span>
-        </a>
-        <nav class="navbar">
-            <a href="/Login/loggedinhome.php">Home</a>
-            <?php
-                if (isset($_SESSION['usersuid'])) {
-                    echo "<a href='/Login/profile.php'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
-                }
-                echo '<a href="../home.php">Logout</a>';
-            ?>
-        </nav>
-    </div>
-</header>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <main>
-    <h1>&nbsp;&nbsp;&nbsp;Dalat Chill & Relax: Tuyen Lam Lake - Clay Tunnel - Fresh Garden - Coffee Farm Experience</h1>
-    <div class="gallery" id="lightgallery">
-        <a href="dalat4/1.jpg" class="big"><img src="dalat4/1.jpg" alt="Tuyen Lam Lake"></a>
-        <a href="dalat4/2.jpg" class="small1"><img src="dalat4/2.jpg" alt="Dalat Scrupture Tunnel"></a>
-        <a href="dalat4/3.jpg" class="small2"><img src="dalat4/3.jpg" alt="Fresh Garden Dalat"></a>
-        <a href="dalat4/4.jpg" class="small3"><img src="dalat4/4.jpg" alt="Tomato Pickup"></a>
-        <a href="dalat4/5.jpg" class="small4"><img src="dalat4/5.jpg" alt="Fresh Garden Dalat"></a>
-    </div>
+    <h1>Dalat Chill & Relax: Tuyen Lam Lake - Clay Tunnel - Fresh Garden - Coffee Farm Experience</h1>
 
+    <div class="gallery" id="lightgallery">
+        <a href="dalat4/1.jpg" class="big">
+            <img src="dalat4/1.jpg" alt="Tuyen Lam Lake" loading="lazy" width="800" height="600">
+        </a>
+        <a href="dalat4/2.jpg" class="small1">
+            <img src="dalat4/2.jpg" alt="Dalat Sculpture Tunnel" loading="lazy" width="400" height="300">
+        </a>
+        <a href="dalat4/3.jpg" class="small2">
+            <img src="dalat4/3.jpg" alt="Fresh Garden Dalat" loading="lazy" width="400" height="300">
+        </a>
+        <a href="dalat4/4.jpg" class="small3">
+            <img src="dalat4/4.jpg" alt="Tomato Harvest at Local Farm" loading="lazy" width="400" height="300">
+        </a>
+        <a href="dalat4/5.jpg" class="small4">
+            <img src="dalat4/5.jpg" alt="Colorful Floral Displays at Fresh Garden" loading="lazy" width="400" height="300">
+        </a>
+    </div>
 
     <div class="content-columns">
         <div class="left-column">
-            <div class="box">
+            <section class="box">
                 <h2>Why This Tour Is Attractive</h2>
                 <ul>
                     <li>Relax and unwind in Dalat’s serene natural settings and charming countryside.</li>
@@ -52,34 +48,34 @@ session_start();
                     <li>Experience an authentic coffee farm tour to learn about local coffee cultivation and tasting.</li>
                     <li>Convenient bus departure from Ho Chi Minh City with comfortable hotel accommodation included.</li>
                 </ul>
-            </div>
+            </section>
 
-            <div class="box">
+            <section class="box">
                 <h2>Itinerary</h2>
-                <div class="box2">
+                <article class="box2">
                     <h3>Day 1: Ho Chi Minh City – Dalat</h3>
                     <p>Depart by bus from Ho Chi Minh City to Dalat. Upon arrival, check in to your hotel and spend the evening relaxing or exploring Dalat Night Market at your leisure.</p>
-                </div>
-                <div class="box2">
+                </article>
+                <article class="box2">
                     <h3>Day 2: Tuyen Lam Lake – Clay Tunnel</h3>
                     <p>Start your day with a peaceful walk around the scenic Tuyen Lam Lake. Later, visit the Clay Tunnel to admire the creative sculptures that reflect Dalat’s culture and history.</p>
-                </div>
-                <div class="box2">
+                </article>
+                <article class="box2">
                     <h3>Day 3: Fresh Garden – Coffee Farm Experience</h3>
                     <p>Visit Fresh Garden to enjoy vibrant flower beds and local produce. In the afternoon, tour a nearby coffee farm to learn about coffee production and enjoy fresh coffee tasting.</p>
-                </div>
-                <div class="box2">
+                </article>
+                <article class="box2">
                     <h3>Day 4: Leisure Morning – Return to Ho Chi Minh City</h3>
                     <p>Spend a relaxed morning at your own pace. After checking out, board the bus for your return trip to Ho Chi Minh City, concluding your peaceful Dalat getaway.</p>
-                </div>
-            </div>
+                </article>
+            </section>
         </div>
 
-        <div class="right-column">
+        <aside class="right-column">
             <div class="box3">
                 <div class="button">
-                    <h3 style="display: inline;">Price From</h3>
-                    <p style="color: red; font-weight: bold; display: inline;">5,790,000 VND</p>
+                    <h3>Price From</h3>
+                    <p style="color: red; font-weight: bold;">5,790,000 VND</p>
                     <p style="text-decoration: line-through; color: gray;">6,579,545 VND</p>
                     <a href="/tour/booking?cityid=15&tourid=24" class="booking-button">Booking now!</a>
                 </div>
@@ -87,7 +83,7 @@ session_start();
 
             <div class="box">
                 <h3>Contact Support</h3>
-                <p>📞 Hotline: 1919 2025<br>✉️ Email: viettransit.support@mail.com</p>
+                <p>📞 Hotline: <a href="tel:19192025">1919 2025</a><br>✉️ Email: <a href="mailto:viettransit.support@mail.com">viettransit.support@mail.com</a></p>
             </div>
 
             <div class="box">
@@ -104,10 +100,12 @@ session_start();
                 <h3>Trusted Tour</h3>
                 <p>Founded in 2025<br>Leading travel brand<br>Nationally recognized</p>
             </div>
-        </div>
+        </aside>
     </div>
 </main>
-<?php include __DIR__ . '/../footer.php'; ?>>
+
+<?php include __DIR__ . '/../footer.php'; ?>
+
 <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.7.0/lightgallery.min.js"></script>
 <script>
     lightGallery(document.getElementById('lightgallery'), {

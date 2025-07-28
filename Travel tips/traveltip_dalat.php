@@ -14,32 +14,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 ?>
-<header>
-    <input type="checkbox" name="" id="toggler">
-    <label for="toggler" class="fas fa-bars"></label>
-
-    <a href="#" class="logo">
-        <img src="/images/logo.png" alt="VietTransit Logo">
-        <span>VietTransit</span>
-    </a>
-
- <nav class="navbar">
-        <a href="/Login/loggedinhome.php">Home</a>
-        <?php
-            echo "<a href='../Login/profile.php'>Hello, " . $_SESSION['usersuid'] . "!</a>";
-            echo '<a href="../home.php">Logout</a>';
-        ?>
-    </nav>
-
-    <div class="icons">
-        <span data-tooltip="Favourites" data-flow="top"> 
-            <a href="profile.php" class="fas fa-heart"></a>
-        </span>
-        <span data-tooltip="Profile" data-flow="top">
-            <a href="profile.php" class="fas fa-user"></a>
-        </span>
-    </div>
-</header>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <body>
     <main class="container">

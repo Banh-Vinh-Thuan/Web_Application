@@ -17,10 +17,10 @@
         </div>
         <div class="box">
             <h3>Popular Travel Locations</h3>
-            <a href="/Journey/viewjourney_tay_bac.php">Tay Bac</a>
-            <a href="/Journey/viewjourney_ho_chi_minh.php">Ho Chi Minh</a>
-            <a href="/Journey/viewjourney_phu_quoc.php">Phu Quoc</a>
-            <a href="/Journey/viewjourney_hue.php">Hue</a>
+            <a href="/Journey/viewjourney.php?id=taybac">Tay Bac</a>
+            <a href="/Journey/viewjourney.php?id=hcm">Ho Chi Minh</a>
+            <a href="/Journey/viewjourney.php?id=phuquoc">Phu Quoc</a>
+            <a href="/Journey/viewjourney.php?id=hue">Hue</a>
         </div>
         <div class="box">
             <h3>Contact Info</h3>
