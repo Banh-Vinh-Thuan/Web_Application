@@ -418,7 +418,7 @@
 
         <div class="box">
             <h3>contact info</h3>
-            <a href="https://github.com/socolate12345/Travel-Booking-Website">GitHub</a>
+            <a href="https://github.com/Banh-Vinh-Thuan/Web_Application">GitHub</a>
         </div>
     </div>
 

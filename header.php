@@ -1,6 +1,11 @@
 <?php
-    $BASE_URL = "/Login/";
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
+$BASE_URL = "/Login/";
 ?>
+
+
 <header>
     <input type="checkbox" name="" id="toggler">
     <label for="toggler" class="fas fa-bars"></label>

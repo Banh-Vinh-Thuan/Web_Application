@@ -75,23 +75,7 @@ $discountedPrice = $originalPrice * 0.93;
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </head>
 <body>
-<header class="header-modern">
-    <div class="header-container">
-        <a href="#" class="logo" data-aos="fade-right">
-            <img src="../images/logo.png" alt="VietTransit Logo">
-            <span>VietTransit</span>
-        </a>
-        <nav class="navbar" data-aos="fade-left">
-            <a href="/Login/loggedinhome.php" class="nav-link">Home</a>
-            <?php
-                if (isset($_SESSION['usersuid'])) {
-                    echo "<a href='/Login/profile.php' class='nav-link user-greeting'>Hello, " . htmlspecialchars($_SESSION['usersuid']) . "!</a>";
-                }
-                echo '<a href="../home.php" class="nav-link logout-btn">Logout</a>';
-            ?>
-        </nav>
-    </div>
-</header>
+<?php include __DIR__ . '/../header.php'; ?>
 
 <main class="main-content">
     <!-- Hero Section -->

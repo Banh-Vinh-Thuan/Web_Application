@@ -81,9 +81,7 @@ $result = $conn->query($sql);
      <link rel="stylesheet" href="../css/hotels.css">
 </head>
 <body>
-    <header>
-        <a href="#" class="logo">VietTransit</a>
-    </header>
+    <?php include __DIR__ . '/../header.php'; ?>
 
     <div class="main-content">
         <h1>Hotels in <?php echo htmlspecialchars($cityName); ?></h1>
