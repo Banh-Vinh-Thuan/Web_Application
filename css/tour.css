@@ -152,7 +152,7 @@ h1 {
     50% { transform: translateY(-5px); }
 }
 
-/* Gallery Styles */
+/* FIXED GALLERY STYLES - Ensuring consistent image sizes */
 .gallery {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
@@ -166,6 +166,8 @@ h1 {
     background: white;
     padding: 12px;
     animation: scaleIn 0.8s ease-out 0.2s both;
+    /* FIXED: Set consistent height for all gallery items */
+    height: 400px;
 }
 
 @keyframes scaleIn {
@@ -185,6 +187,10 @@ h1 {
     border-radius: 10px;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     cursor: pointer;
+    /* FIXED: Ensure all gallery items fill their container */
+    width: 100%;
+    height: 100%;
+    display: block;
 }
 
 .gallery a::before {
@@ -209,13 +215,18 @@ h1 {
     box-shadow: 0 12px 35px rgba(37, 99, 235, 0.2);
 }
 
+/* FIXED: Consistent image sizing for all gallery images */
 .gallery img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     display: block;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     filter: brightness(0.97);
+    /* FIXED: Remove any default width/height attributes */
+    max-width: none;
+    max-height: none;
 }
 
 .gallery a:hover img {
@@ -223,20 +234,35 @@ h1 {
     filter: brightness(1.03);
 }
 
+/* FIXED: Consistent grid positioning with proper heights */
 .big {
     grid-column: 1 / 2;
     grid-row: 1 / 3;
-    min-height: 320px;
+    /* FIXED: Remove conflicting min-height, let grid handle sizing */
 }
 
 .small1, .small2, .small3, .small4 {
-    min-height: 150px;
+    /* FIXED: Remove conflicting min-height, let grid handle sizing */
 }
 
 .small1 { grid-column: 2 / 3; grid-row: 1 / 2; }
 .small2 { grid-column: 3 / 4; grid-row: 1 / 2; }
 .small3 { grid-column: 2 / 3; grid-row: 2 / 3; }
 .small4 { grid-column: 3 / 4; grid-row: 2 / 3; }
+
+/* FIXED: LightGallery Modal Styles for consistent image display */
+.lg-outer .lg-image {
+    max-width: 90vw !important;
+    max-height: 90vh !important;
+    object-fit: contain !important;
+    object-position: center !important;
+}
+
+.lg-outer .lg-img-wrap {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
 
 /* Content Layout */
 .content-columns {
@@ -510,87 +536,21 @@ li:hover {
     line-height: 1.6;
 }
 
-/* Footer Styles */
-footer {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.95) 100%);
-    backdrop-filter: blur(10px);
-    color: #4a5568;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: flex-start;
-    padding: 30px 15px;
-    gap: 25px;
-    margin-top: 40px;
-    box-shadow: 0 -4px 20px rgba(37, 99, 235, 0.08);
-}
 
-footer .box-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 25px;
-    justify-content: center;
-    flex-grow: 1;
-    max-width: 1000px;
-}
-
-footer .box {
-    width: 200px;
-    text-align: center;
-    padding: 15px;
-}
-
-footer .box h3 {
-    margin-bottom: 12px;
-    font-size: 1rem;
-    font-weight: 600;
-    color: #2563eb;
-}
-
-footer a {
-    color: #6b7280;
-    text-decoration: none;
-    display: block;
-    margin: 6px 0;
-    transition: all 0.3s ease;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-size: 0.9rem;
-}
-
-footer a:hover {
-    color: #2563eb;
-    background: rgba(37, 99, 235, 0.1);
-    transform: translateX(3px);
-}
-
-footer .credit {
-    width: 100%;
-    text-align: center;
-    margin-top: 20px;
-    padding-top: 15px;
-    border-top: 1px solid rgba(37, 99, 235, 0.1);
-    color: #9ca3af;
-    font-size: 0.85rem;
-}
-
-/* Floating Elements */
-@keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-10px); }
-}
-
-.box:nth-child(odd) {
-    animation: float 6s ease-in-out infinite;
-}
-
-.box:nth-child(even) {
-    animation: float 6s ease-in-out infinite reverse;
-}
-
+/* FIXED: Remove conflicting float animations that cause CSS conflicts */
 /* Smooth transitions for all interactive elements */
 button, a, input, textarea, select {
     transition: all 0.3s ease;
+}
+
+/* Loading animation for better UX */
+@keyframes loadingPulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.loading {
+    animation: loadingPulse 1.5s ease-in-out infinite;
 }
 
 /* Responsive Design */
@@ -616,11 +576,13 @@ button, a, input, textarea, select {
         grid-template-rows: repeat(5, 180px);
         gap: 8px;
         padding: 10px;
+        /* FIXED: Adjust height for mobile */
+        height: auto;
     }
     
     .big, .small1, .small2, .small3, .small4 {
         grid-column: 1;
-        min-height: 180px;
+        /* FIXED: Let grid handle sizing on mobile */
     }
     
     .big { grid-row: 1; }
@@ -681,20 +643,6 @@ button, a, input, textarea, select {
     .gallery {
         grid-template-rows: repeat(5, 160px);
     }
-    
-    .big, .small1, .small2, .small3, .small4 {
-        min-height: 160px;
-    }
-}
-
-/* Loading animation for better UX */
-@keyframes loadingPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.7; }
-}
-
-.loading {
-    animation: loadingPulse 1.5s ease-in-out infinite;
 }
 
 /* Accessibility improvements */

@@ -1,3 +1,4 @@
+// chatbot.js - Fixed English version for LLM Backend on port 3000
 document.addEventListener('DOMContentLoaded', () => {
     // --- DOM Element References ---
     const chatWindow = document.getElementById('chatbot-window');
@@ -6,224 +7,315 @@ document.addEventListener('DOMContentLoaded', () => {
     const messagesContainer = document.getElementById('chatbot-messages');
     const input = document.getElementById('chatbot-input');
     const sendBtn = document.getElementById('chatbot-send-btn');
+    const statusIndicator = document.getElementById('chatbot-status'); // CHANGED: Added status indicator reference
 
-    // --- Data Store ---
-    let toursData = {};
-    let hotelsData = {};
-    // This mapping is from your loggedinhome.php file to link city names to their IDs for hotel searches.
-    const cityIdMap = {
-        'tay bac': 10, 'ho chi minh': 11, 'nha trang': 12, 'hue': 13,
-        'phu yen': 14, 'da lat': 15, 'phu quoc': 16, 'hoi an': 17, 'ha giang': 18,
-        'da nang': 19 // FIXED: Added "da nang" to the list of known cities.
-    };
+    // --- Configuration - Updated for port 3000 ---
+    const API_URL = 'http://localhost:3000/api/chat';
+    const HEALTH_URL = 'http://localhost:3000/api/health';
+    const MAX_RETRIES = 3;
+    const RETRY_DELAY = 1000; // ms
 
     // --- State Management ---
-    let conversationState = 'idle'; // Can be 'idle', 'awaiting_tour_destination', 'awaiting_hotel_destination'
+    let sessionId = generateSessionId();
+    let isWaitingForResponse = false;
+    let retryCount = 0;
+    let lastUserQuery = ''; // CHANGED: To store the last user query for retry
+
+    // --- Utility Functions ---
+    function generateSessionId() {
+        return 'session_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    }
+
+    function formatTime() {
+        return new Date().toLocaleTimeString('en-US', { 
+            hour: '2-digit', 
+            minute: '2-digit' 
+        });
+    }
+
+    function sanitizeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
 
     // --- Event Listeners ---
     fab.addEventListener('click', () => toggleChat(true));
     closeBtn.addEventListener('click', () => toggleChat(false));
     sendBtn.addEventListener('click', handleUserInput);
+    
     input.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleUserInput();
+        if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleUserInput();
+        }
     });
 
-    /**
-     * Toggles the chat window visibility.
-     * @param {boolean} show - True to show, false to hide.
-     */
+    // Auto-resize input
+    input.addEventListener('input', () => {
+        input.style.height = 'auto';
+        input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+    });
+
+    // --- Chat Functions ---
     function toggleChat(show) {
         if (show) {
             chatWindow.classList.remove('hidden');
             fab.classList.add('hidden');
+            input.focus();
+            
+            // Send welcome message only if chat is empty
+            if (messagesContainer.children.length === 0) {
+                setTimeout(() => {
+                    addMessage(
+                        "Hello! I'm VietTransit's AI assistant. I can help you find tour packages and hotels. How can I help you today?", 
+                        'bot'
+                    );
+                }, 500);
+            }
         } else {
             chatWindow.classList.add('hidden');
             fab.classList.remove('hidden');
         }
     }
 
-    /**
-     * Handles the user's message submission.
-     */
-    function handleUserInput() {
+    async function handleUserInput() {
         const query = input.value.trim();
-        if (!query) return;
+        if (!query || isWaitingForResponse) return;
 
+        lastUserQuery = query; // CHANGED: Store query for potential retry
         addMessage(query, 'user');
         input.value = '';
-        
-        // Show typing indicator
-        addMessage('...', 'bot', true);
+        input.style.height = 'auto';
+        await sendMessage(query);
+    }
+    
+    // CHANGED: Separated sending logic to allow for easier retries
+    async function sendMessage(query) {
+        setInputState(false);
+        const typingId = showTypingIndicator();
 
-        // Process the query after a short delay to simulate thinking
-        setTimeout(() => {
-            processQuery(query.toLowerCase());
-        }, 1000);
+        try {
+            const response = await sendMessageWithRetry(query);
+            removeTypingIndicator(typingId);
+            
+            if (response && response.reply) {
+                addMessage(response.reply, 'bot');
+                retryCount = 0; // Reset retry count on success
+            } else {
+                throw new Error('Invalid response format');
+            }
+        } catch (error) {
+            removeTypingIndicator(typingId);
+            handleError(error);
+        } finally {
+            setInputState(true);
+        }
     }
 
-    /**
-     * Adds a message to the chat interface.
-     * @param {string} text - The message content (can include HTML).
-     * @param {string} sender - 'user' or 'bot'.
-     * @param {boolean} isTyping - If true, adds a typing indicator style.
-     */
-    function addMessage(text, sender, isTyping = false) {
-        // Remove previous typing indicator if it exists
-        const existingTyping = messagesContainer.querySelector('.typing-indicator');
-        if (existingTyping) {
-            existingTyping.remove();
-        }
 
+    async function sendMessageWithRetry(query) {
+        for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
+            try {
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ 
+                        query: query,
+                        session_id: sessionId 
+                    }),
+                    signal: controller.signal
+                });
+
+                clearTimeout(timeoutId);
+
+                if (!response.ok) {
+                    const errorData = await response.json().catch(() => ({})); // Try to parse error
+                    throw new Error(`HTTP ${response.status}: ${errorData.error || response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                return data;
+
+            } catch (error) {
+                console.warn(`Attempt ${attempt} failed:`, error.message);
+                
+                if (attempt === MAX_RETRIES) {
+                    throw error;
+                }
+                
+                await new Promise(resolve => setTimeout(resolve, RETRY_DELAY * attempt));
+            }
+        }
+    }
+
+    function setInputState(enabled) {
+        isWaitingForResponse = !enabled;
+        input.disabled = !enabled;
+        sendBtn.disabled = !enabled;
+        
+        if (enabled) {
+            input.focus();
+            sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i>';
+            sendBtn.title = 'Send message';
+        } else {
+            sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            sendBtn.title = 'Processing...';
+        }
+    }
+
+    function showTypingIndicator() {
+        const typingId = 'typing_' + Date.now();
         const messageDiv = document.createElement('div');
-        messageDiv.className = `chatbot-message ${sender}-message`;
-        messageDiv.innerHTML = text; // Use innerHTML to render links and formatting
-
-        if (isTyping) {
-            messageDiv.classList.add('typing-indicator');
-            // Simple dot animation
-            messageDiv.innerHTML = '<span>.</span><span>.</span><span>.</span>';
-        }
+        messageDiv.className = 'chatbot-message bot-message typing-indicator';
+        messageDiv.id = typingId;
+        messageDiv.innerHTML = `
+            <div class="typing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        `;
         
         messagesContainer.appendChild(messageDiv);
+        scrollToBottom();
+        return typingId;
+    }
+
+    function removeTypingIndicator(typingId) {
+        const element = document.getElementById(typingId);
+        if (element) {
+            element.remove();
+        }
+    }
+
+    function addMessage(text, sender, isHTML = false) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `chatbot-message ${sender}-message`;
+        
+        const timeStamp = document.createElement('div');
+        timeStamp.className = 'message-timestamp';
+        timeStamp.textContent = formatTime();
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        
+        if (isHTML && sender === 'bot') {
+            // Allow HTML for bot responses (for links, formatting)
+            contentDiv.innerHTML = text;
+        } else {
+            // Sanitize all other input to prevent XSS
+            contentDiv.textContent = text;
+        }
+        
+        messageDiv.appendChild(contentDiv);
+        messageDiv.appendChild(timeStamp);
+        
+        messagesContainer.appendChild(messageDiv);
+        scrollToBottom();
+        
+        // Add animation
+        requestAnimationFrame(() => {
+            messageDiv.style.opacity = '0';
+            messageDiv.style.transform = 'translateY(20px)';
+            requestAnimationFrame(() => {
+                messageDiv.style.transition = 'all 0.3s ease';
+                messageDiv.style.opacity = '1';
+                messageDiv.style.transform = 'translateY(0)';
+            });
+        });
+    }
+
+    function handleError(error) {
+        console.error('Chat error:', error);
+        
+        let errorMessage;
+        if (error.message.includes('Failed to fetch') || error.name === 'AbortError') {
+            errorMessage = "I can't connect to the server. Please check your internet connection or try again later.";
+        } else if (error.message.includes('HTTP 500')) {
+            errorMessage = "The server is having some trouble. Please try again in a few minutes.";
+        } else if (error.message.includes('HTTP 429')) {
+            errorMessage = "You're sending messages too fast! Please wait a moment.";
+        } else {
+            errorMessage = "I'm sorry, an unexpected error occurred. Please try sending your message again.";
+        }
+        
+        addMessage(errorMessage, 'bot');
+        
+        // CHANGED: Added a more functional retry button
+        if (retryCount < MAX_RETRIES) {
+            retryCount++;
+            const retryDiv = document.createElement('div');
+            retryDiv.className = 'chatbot-message system-message';
+            const retryButton = document.createElement('button');
+            retryButton.className = 'retry-button';
+            retryButton.innerHTML = '🔄 Try Again';
+            retryButton.onclick = () => {
+                retryDiv.remove(); // Remove the retry button on click
+                sendMessage(lastUserQuery);
+            };
+            retryDiv.appendChild(retryButton);
+            messagesContainer.appendChild(retryDiv);
+            scrollToBottom();
+        }
+    }
+
+
+    function scrollToBottom() {
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
     }
 
-    /**
-     * The core logic for processing the user's query.
-     * @param {string} query - The user's lowercase input.
-     */
-    function processQuery(query) {
-        // First, check conversation state
-        if (conversationState === 'awaiting_tour_destination') {
-            findTours(query);
-            conversationState = 'idle';
-            return;
-        }
-        if (conversationState === 'awaiting_hotel_destination') {
-            findHotels(query);
-            conversationState = 'idle';
-            return;
-        }
-
-        // Attempt to extract a destination early
-        const destination = extractDestination(query, [...Object.keys(toursData), ...Object.keys(cityIdMap)]);
-
-        // If idle, check for keywords or a standalone destination
-        if (query.includes('tour') || query.includes('journey')) {
-            if (destination) {
-                findTours(destination);
-            } else {
-                addMessage('Of course! Where would you like to go?', 'bot');
-                conversationState = 'awaiting_tour_destination';
-            }
-        } else if (query.includes('hotel') || query.includes('stay') || query.includes('room')) {
-             if (destination) {
-                findHotels(destination);
-             } else {
-                addMessage('I can certainly help with hotels. Which city are you interested in?', 'bot');
-                conversationState = 'awaiting_hotel_destination';
-             }
-        } else if (query.includes('hello') || query.includes('hi')) {
-            addMessage('Hello! How can I assist you with tours or hotels today?', 'bot');
-        } else if (destination) { // If a destination is found without other keywords, default to tours
-            findTours(destination); // Automatically suggest tours for the detected destination
-        }
-        else {
-            addMessage("I'm sorry, I can only assist with finding tours and hotels. Please ask me something like 'Find a tour to Da Lat' or 'Show me hotels in Hue'.", 'bot');
-        }
-    }
-
-    /**
-     * Finds and displays tours for a given destination.
-     * @param {string} destination - The name of the destination city.
-     */
-    function findTours(destination) {
-        const cityKey = destination.toLowerCase().replace(' ', ''); // e.g., "da nang" -> "danang"
-        const cityData = toursData[cityKey] || toursData[destination];
-
-        if (cityData && cityData.tours) {
-            let response = `Excellent choice! Here are some of our popular tours in ${capitalize(destination)}:<br><br>`;
-            response += '<div class="results-container">';
-            cityData.tours.slice(0, 3).forEach(tour => { // Show top 3
-                response += `
-                    <div class="result-card">
-                        <strong>${tour.title}</strong><br>
-                        Price: ${tour.price.toLocaleString('vi-VN')} ₫<br>
-                        <a href="${tour.link}" target="_blank">View Details</a>
-                    </div>
-                `;
-            });
-            response += '</div>';
-            response += `<br>You can see all tours for this destination <a href="/Journey/viewjourney.php?id=${cityKey || destination}" target="_blank">here</a>.`;
-            addMessage(response, 'bot');
-        } else {
-            addMessage(`I'm sorry, I couldn't find any tours for "${capitalize(destination)}". Please try another city.`, 'bot');
-        }
-    }
-    
-    /**
-     * Finds and displays hotels for a given destination.
-     * @param {string} destination - The name of the destination city.
-     */
-    function findHotels(destination) {
-        const cityId = cityIdMap[destination.toLowerCase()];
-        if (cityId) {
-            const link = `/hotelinfo/view_hotels.php?city_id=${cityId}`;
-            let response = `Great! I've found our list of hotels in ${capitalize(destination)}. You can view and filter them here:<br><br>`;
-            response += `<a href="${link}" class="results-link-button" target="_blank">View Hotels in ${capitalize(destination)}</a>`;
-            addMessage(response, 'bot');
-        } else {
-            addMessage(`I'm sorry, I don't have hotel information for "${capitalize(destination)}". Please choose from our popular destinations.`, 'bot');
-        }
-    }
-
-
-    /**
-     * A helper to find a known destination from a user's query string.
-     * @param {string} query - The user's input.
-     * @param {string[]} knownDestinations - An array of possible destinations.
-     * @returns {string|null} The found destination or null.
-     */
-    function extractDestination(query, knownDestinations) {
-        for (const dest of knownDestinations) {
-            if (query.includes(dest)) {
-                return dest;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Capitalizes the first letter of a string.
-     * @param {string} s - The string to capitalize.
-     * @returns {string}
-     */
-    function capitalize(s) {
-        return s.charAt(0).toUpperCase() + s.slice(1);
-    }
-
-
-    /**
-     * Fetches the necessary JSON data when the chatbot initializes.
-     */
-    async function initializeData() {
+    // --- Health Check ---
+    async function checkServerHealth() {
         try {
-            const [toursResponse, hotelsResponse] = await Promise.all([
-                fetch('/Journey/tour.json'),
-                fetch('/hotelinfo/hoteladdress.json')
-            ]);
-            toursData = await toursResponse.json();
-            hotelsData = await hotelsResponse.json();
-            // Send initial greeting after data is loaded
-            setTimeout(() => {
-                 addMessage("Hello! I'm your VietTransit assistant. I can help you find tours or hotels. How can I assist you today?", 'bot');
-            }, 500);
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000); // 5 second timeout
+            
+            const response = await fetch(HEALTH_URL, { signal: controller.signal });
+            clearTimeout(timeoutId);
+
+            if (response.ok) {
+                const data = await response.json();
+                if (data.status === 'healthy') {
+                    statusIndicator.classList.add('online');
+                    statusIndicator.classList.remove('offline');
+                    statusIndicator.title = 'Online';
+                    return;
+                }
+            }
+            throw new Error('Health check failed');
         } catch (error) {
-            console.error('Error loading chatbot data:', error);
-            addMessage('I seem to be having trouble accessing my information right now. Please try again in a moment.', 'bot');
+            console.warn('Health check failed:', error.message);
+            statusIndicator.classList.remove('online');
+            statusIndicator.classList.add('offline');
+            statusIndicator.title = 'Offline - Server might be down';
         }
     }
 
     // --- Initialization ---
-    initializeData();
+    function initialize() {
+        console.log('VietTransit Chatbot initialized');
+        console.log('Session ID:', sessionId);
+        console.log('API URL:', API_URL);
+        
+        // Check server health on startup
+        checkServerHealth();
+        
+        // Periodic health check (every 2 minutes)
+        setInterval(checkServerHealth, 2 * 60 * 1000);
+    }
+
+    // Initialize the chatbot
+    initialize();
 });

@@ -1,0 +1,920 @@
+{
+  "sapa": [
+    {
+      "id": "1",
+      "name": "An Loc Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 2,079,000 VND / night",
+      "short_description": "4-star hotel in Sapa with free wifi and parking, perfect for travelers exploring the mountainous region.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=1"
+    },
+    {
+      "id": "2",
+      "name": "Thanh Nam Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 3,
+      "price_range": "From 1,200,000 VND / night",
+      "short_description": "3-star hotel with wifi, parking and bar, creating a relaxing atmosphere after sightseeing.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=2"
+    },
+    {
+      "id": "3",
+      "name": "Frontier Hostel & Tours",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 1,290,000 VND / night",
+      "short_description": "4-star hostel combined with tour services, featuring wifi, parking, breakfast and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=3"
+    },
+    {
+      "id": "4",
+      "name": "Thinh Vuong Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 3,
+      "price_range": "From 2,100,000 VND / night",
+      "short_description": "3-star hotel with full amenities including wifi, parking, airport transfer and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=4"
+    },
+    {
+      "id": "5",
+      "name": "Hoang Lien Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 2,250,000 VND / night",
+      "short_description": "4-star hotel with swimming pool, wifi and parking, offering excellent resort experience.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=5"
+    },
+    {
+      "id": "6",
+      "name": "Muong Thanh Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 3,231,900 VND / night",
+      "short_description": "Premium 4-star hotel with swimming pool, wifi, parking and buffet breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=6"
+    },
+    {
+      "id": "7",
+      "name": "Anh Hong Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 5,
+      "price_range": "From 1,485,000 VND / night",
+      "short_description": "5-star hotel with parking, bar and breakfast, providing high quality service.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=7"
+    },
+    {
+      "id": "8",
+      "name": "Hoa Sua Hotel",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 1,530,000 VND / night",
+      "short_description": "Simple 4-star hotel with parking, suitable for travelers seeking comfortable accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=8"
+    },
+    {
+      "id": "9",
+      "name": "Hoang Ha River Town",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 1,155,000 VND / night",
+      "short_description": "4-star riverside hotel with wifi and parking, offering peaceful and relaxing environment.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=9"
+    },
+    {
+      "id": "10",
+      "name": "Gem Market Guest House",
+      "city": "Sapa",
+      "address": "Sapa, Lao Cai",
+      "rating": 4,
+      "price_range": "From 900,000 VND / night",
+      "short_description": "4-star guest house with full amenities: wifi, parking, breakfast, pool and airport transfer.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=10"
+    }
+  ],
+  "dalat": [
+    {
+      "id": "11",
+      "name": "Ming Ngoc Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 2,
+      "price_range": "From 1,607,800 VND / night",
+      "short_description": "2-star hotel with wifi and parking, conveniently located in Da Lat city center.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=11"
+    },
+    {
+      "id": "12",
+      "name": "Nori Homestay",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,250,504 VND / night",
+      "short_description": "Cozy 4-star homestay with wifi, providing a home-like experience in Da Lat.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=12"
+    },
+    {
+      "id": "13",
+      "name": "Vintage Park View Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,044,000 VND / night",
+      "short_description": "4-star vintage-style hotel with park view, featuring wifi, parking, breakfast, airport transfer and spa.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=13"
+    },
+    {
+      "id": "14",
+      "name": "Quy Hung Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,320,000 VND / night",
+      "short_description": "4-star hotel with wifi and airport transfer service, convenient for travelers.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=14"
+    },
+    {
+      "id": "15",
+      "name": "Niecy Apartment",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,572,278 VND / night",
+      "short_description": "4-star apartment with wifi and parking, offering spacious and comfortable accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=15"
+    },
+    {
+      "id": "16",
+      "name": "Anpha Apartment Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 3,
+      "price_range": "From 2,970,000 VND / night",
+      "short_description": "Premium 3-star apartment hotel with full amenities: wifi, parking, breakfast, airport transfer, spa and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=16"
+    },
+    {
+      "id": "17",
+      "name": "S79 Boutique Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,228,125 VND / night",
+      "short_description": "4-star boutique hotel with unique design, featuring wifi and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=17"
+    },
+    {
+      "id": "18",
+      "name": "Chez Mimosa",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 3,
+      "price_range": "From 2,316,600 VND / night",
+      "short_description": "3-star French-style hotel with wifi and breakfast, creating romantic atmosphere.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=18"
+    },
+    {
+      "id": "19",
+      "name": "The Luxury MAYS Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 5,
+      "price_range": "From 1,134,000 VND / night",
+      "short_description": "5-star luxury hotel with wifi, parking, airport transfer and spa services.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=19"
+    },
+    {
+      "id": "20",
+      "name": "The Alpina Hstaad",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 5,
+      "price_range": "From 1,053,000 VND / night",
+      "short_description": "5-star alpine-style hotel with wifi and airport transfer, mountain resort atmosphere.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=20"
+    }
+  ],
+  "nhatrang": [
+    {
+      "id": "21",
+      "name": "LYN Panorama Nha Trang Condotel",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 1,679,999 VND / night",
+      "short_description": "5-star condotel with panoramic views, featuring wifi and airport transfer services.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=21"
+    },
+    {
+      "id": "22",
+      "name": "Panorama Beachfront",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 4,
+      "price_range": "From 1,200,000 VND / night",
+      "short_description": "4-star beachfront hotel with wifi and airport transfer, direct beach access.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=22"
+    },
+    {
+      "id": "23",
+      "name": "Hermes",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 4,
+      "price_range": "From 639,998 VND / night",
+      "short_description": "4-star hotel with wifi, airport transfer and parking, affordable luxury option.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=23"
+    },
+    {
+      "id": "24",
+      "name": "MySea Panorama",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 4,
+      "price_range": "From 880,000 VND / night",
+      "short_description": "4-star sea view hotel with wifi, airport transfer, parking and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=24"
+    },
+    {
+      "id": "25",
+      "name": "OCEANFRONT SUITES",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 1,125,000 VND / night",
+      "short_description": "5-star oceanfront suites with wifi, airport transfer and parking, luxury beachfront accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=25"
+    },
+    {
+      "id": "26",
+      "name": "Senia Hotel",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 875,000 VND / night",
+      "short_description": "5-star hotel with wifi, airport transfer and swimming pool, excellent value for luxury.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=26"
+    },
+    {
+      "id": "27",
+      "name": "AQua Hotel",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 450,000 VND / night",
+      "short_description": "5-star budget-friendly hotel with wifi and airport transfer, great value accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=27"
+    },
+    {
+      "id": "28",
+      "name": "Yen Indochine",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 554,400 VND / night",
+      "short_description": "5-star Indochine-style hotel with wifi, airport transfer, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=28"
+    },
+    {
+      "id": "29",
+      "name": "Lucky Sun Hotel",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 958,850 VND / night",
+      "short_description": "5-star hotel with airport transfer, swimming pool, bar and breakfast services.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=29"
+    },
+    {
+      "id": "30",
+      "name": "Sun Kiss Hotel",
+      "city": "Nha Trang",
+      "address": "Nha Trang, Khanh Hoa",
+      "rating": 5,
+      "price_range": "From 885,600 VND / night",
+      "short_description": "5-star hotel with wifi, airport transfer, swimming pool, bar and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=30"
+    }
+  ],
+  "hue": [
+    {
+      "id": "31",
+      "name": "VinaSpa Hotel",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 2,
+      "price_range": "From 719,397 VND / night",
+      "short_description": "2-star spa hotel with wifi, parking, breakfast, spa and airport transfer services.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=31"
+    },
+    {
+      "id": "32",
+      "name": "BIG Hotel",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 585,906 VND / night",
+      "short_description": "5-star hotel with wifi, airport transfer and parking, excellent value for luxury stay.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=32"
+    },
+    {
+      "id": "33",
+      "name": "Cosy Homestay",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 3,
+      "price_range": "From 306,000 VND / night",
+      "short_description": "3-star cozy homestay with wifi, airport transfer and parking, budget-friendly option.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=33"
+    },
+    {
+      "id": "34",
+      "name": "Gardenia Hue Hotel",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 624,000 VND / night",
+      "short_description": "5-star garden hotel with wifi, airport transfer, parking and breakfast services.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=34"
+    },
+    {
+      "id": "35",
+      "name": "Dory Homestay",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 324,000 VND / night",
+      "short_description": "5-star homestay with wifi and parking, intimate and personalized service.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=35"
+    },
+    {
+      "id": "36",
+      "name": "Moonlight Boutique Hotel",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 520,200 VND / night",
+      "short_description": "5-star boutique hotel with wifi, parking, airport transfer and swimming pool.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=36"
+    },
+    {
+      "id": "37",
+      "name": "Charm House Hue",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 495,000 VND / night",
+      "short_description": "5-star charming hotel with wifi, airport transfer, parking and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=37"
+    },
+    {
+      "id": "38",
+      "name": "The Scarlett Boutique Hotel",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 906,873 VND / night",
+      "short_description": "5-star luxury boutique hotel with wifi, airport transfer, parking and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=38"
+    },
+    {
+      "id": "39",
+      "name": "Son Ca",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 1,655,000 VND / night",
+      "short_description": "5-star premium hotel with wifi, airport transfer and parking, luxury accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=39"
+    },
+    {
+      "id": "40",
+      "name": "Sunny B Hotel",
+      "city": "Hue",
+      "address": "Hue, Thua Thien Hue",
+      "rating": 5,
+      "price_range": "From 1,350,000 VND / night",
+      "short_description": "5-star hotel with wifi, airport transfer and parking, bright and modern accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=40"
+    }
+  ],
+  "phuyen": [
+    {
+      "id": "61",
+      "name": "Handstay Nghinh Phong",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 4,
+      "price_range": "From 1,300,000 VND / night",
+      "short_description": "4-star handstay with wifi, TV, parking and bar, unique accommodation experience.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=61"
+    },
+    {
+      "id": "62",
+      "name": "Apec Mandala Phu Yen",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 4,
+      "price_range": "From 1,135,000 VND / night",
+      "short_description": "4-star hotel with wifi, TV, parking and bar, modern amenities and comfort.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=62"
+    },
+    {
+      "id": "63",
+      "name": "Palm Beach Hotel Phu Yen",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 5,
+      "price_range": "From 1,590,000 VND / night",
+      "short_description": "5-star beachfront hotel with wifi, TV, parking, bar, breakfast and swimming pool.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=63"
+    },
+    {
+      "id": "64",
+      "name": "PAMY Homestay Phu Yen",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 4,
+      "price_range": "From 1,245,389 VND / night",
+      "short_description": "4-star homestay with wifi, TV, parking and bar, local hospitality experience.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=64"
+    },
+    {
+      "id": "65",
+      "name": "Coconut Hotel Phú Yên",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 5,
+      "price_range": "From 1,734,201 VND / night",
+      "short_description": "5-star tropical hotel with wifi, parking, bar, breakfast and swimming pool.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=65"
+    },
+    {
+      "id": "66",
+      "name": "Paradise Hotel & Homestay",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 3,
+      "price_range": "From 788,563 VND / night",
+      "short_description": "3-star paradise-themed hotel with wifi and parking, affordable beach accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=66"
+    },
+    {
+      "id": "67",
+      "name": "Sala Tuy Hoa Beach Hotel",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 5,
+      "price_range": "From 1,029,447 VND / night",
+      "short_description": "5-star beach hotel with wifi, swimming pool, bar and parking, beachfront luxury.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=67"
+    },
+    {
+      "id": "68",
+      "name": "Dreamville Beach Homestay",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 5,
+      "price_range": "From 1,593,820 VND / night",
+      "short_description": "5-star beach homestay with wifi, TV, parking, breakfast and swimming pool.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=68"
+    },
+    {
+      "id": "69",
+      "name": "Daisy House",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 4,
+      "price_range": "From 686,117 VND / night",
+      "short_description": "4-star house accommodation with wifi and parking, cozy and intimate stay.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=69"
+    },
+    {
+      "id": "70",
+      "name": "Ivory Phu Yen Hotel",
+      "city": "Phu Yen",
+      "address": "Phu Yen Province",
+      "rating": 5,
+      "price_range": "From 957,000 VND / night",
+      "short_description": "5-star hotel with swimming pool, parking and breakfast, elegant accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=70"
+    }
+  ],
+  "dalat_premium": [
+    {
+      "id": "51",
+      "name": "Thanh Premier Dalat",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,400,000 VND / night",
+      "short_description": "4-star premier hotel with wifi, parking and airport transfer, upscale accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=51"
+    },
+    {
+      "id": "52",
+      "name": "BIDV Central Dalat Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 5,
+      "price_range": "From 1,639,000 VND / night",
+      "short_description": "5-star central hotel with wifi, parking, breakfast and airport transfer.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=52"
+    },
+    {
+      "id": "53",
+      "name": "Greenview City Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 5,
+      "price_range": "From 1,954,000 VND / night",
+      "short_description": "5-star city hotel with wifi, TV, parking and airport transfer, green valley views.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=53"
+    },
+    {
+      "id": "54",
+      "name": "Nature Hotel City Center",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,161,000 VND / night",
+      "short_description": "4-star nature-themed hotel with wifi, TV, parking and airport transfer.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=54"
+    },
+    {
+      "id": "55",
+      "name": "Dalat Wind Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 3,
+      "price_range": "From 678,000 VND / night",
+      "short_description": "3-star hotel with wifi, TV, bar and parking, affordable mountain accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=55"
+    },
+    {
+      "id": "56",
+      "name": "Phuong Vy Luxury Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,395,000 VND / night",
+      "short_description": "4-star luxury hotel with wifi, TV and parking, refined accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=56"
+    },
+    {
+      "id": "57",
+      "name": "Dalat Hills Apartment",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 3,
+      "price_range": "From 650,000 VND / night",
+      "short_description": "3-star hillside apartment with wifi, TV, parking and airport transfer.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=57"
+    },
+    {
+      "id": "58",
+      "name": "Nature Green Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,842,000 VND / night",
+      "short_description": "4-star eco-friendly hotel with wifi, TV, parking and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=58"
+    },
+    {
+      "id": "59",
+      "name": "Carnival Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 5,
+      "price_range": "From 1,200,000 VND / night",
+      "short_description": "5-star festive hotel with wifi, TV, parking, breakfast and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=59"
+    },
+    {
+      "id": "60",
+      "name": "Thanh Thanh Hotel",
+      "city": "Da Lat",
+      "address": "Da Lat, Lam Dong",
+      "rating": 4,
+      "price_range": "From 1,100,000 VND / night",
+      "short_description": "4-star hotel with wifi, TV, parking and airport transfer, reliable accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=60"
+    }
+  ],
+  "phuquoc": [
+    {
+      "id": "41",
+      "name": "Novus Sol Hotel Phu Quoc",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 5,
+      "price_range": "From 1,550,000 VND / night",
+      "short_description": "5-star modern hotel with wifi and parking, contemporary luxury accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=41"
+    },
+    {
+      "id": "42",
+      "name": "The Pier Phu Quoc Resort",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 4,
+      "price_range": "From 2,380,000 VND / night",
+      "short_description": "4-star pier resort with wifi, swimming pool and parking, waterfront luxury.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=42"
+    },
+    {
+      "id": "43",
+      "name": "Sole Casa Phu Quoc",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 4,
+      "price_range": "From 1,825,000 VND / night",
+      "short_description": "4-star boutique accommodation with wifi and TV, intimate island experience.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=43"
+    },
+    {
+      "id": "44",
+      "name": "Luna Sol Villas",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 5,
+      "price_range": "From 2,277,000 VND / night",
+      "short_description": "5-star luxury villas with wifi, TV, parking and bar, exclusive island retreat.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=44"
+    },
+    {
+      "id": "45",
+      "name": "Casepia",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 4,
+      "price_range": "From 1,683,000 VND / night",
+      "short_description": "4-star hotel with wifi, TV and bar, modern comfort on the island.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=45"
+    },
+    {
+      "id": "46",
+      "name": "Azure Premium Apartments",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 4,
+      "price_range": "From 956,000 VND / night",
+      "short_description": "4-star premium apartments with TV and bar, spacious island accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=46"
+    },
+    {
+      "id": "47",
+      "name": "Mira Home",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 3,
+      "price_range": "From 1,008,000 VND / night",
+      "short_description": "3-star home-style accommodation with TV and bar, cozy island stay.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=47"
+    },
+    {
+      "id": "48",
+      "name": "Rova Hotel",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 3,
+      "price_range": "From 374,000 VND / night",
+      "short_description": "3-star budget hotel with wifi and bar, affordable island accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=48"
+    },
+    {
+      "id": "49",
+      "name": "Oscar Seaview Apartment",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 4,
+      "price_range": "From 1,600,000 VND / night",
+      "short_description": "4-star seaview apartment with wifi, swimming pool, TV and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=49"
+    },
+    {
+      "id": "50",
+      "name": "Maris Beach Hotel Phu Quoc",
+      "city": "Phu Quoc",
+      "address": "Phu Quoc, Kien Giang",
+      "rating": 4,
+      "price_range": "From 720,000 VND / night",
+      "short_description": "4-star beachfront hotel with wifi, parking, swimming pool and breakfast.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=50"
+    }
+  ],
+  "hoian": [
+    {
+      "id": "71",
+      "name": "Du De Homestay",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 4,
+      "price_range": "From 720,000 VND / night",
+      "short_description": "4-star homestay with wifi, parking, breakfast and airport transfer, authentic local experience.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=71"
+    },
+    {
+      "id": "72",
+      "name": "Renaissance Hoi An Resort & Spa",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 5,
+      "price_range": "From 2,100,000 VND / night",
+      "short_description": "5-star luxury resort with wifi, parking, breakfast, airport transfer and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=72"
+    },
+    {
+      "id": "73",
+      "name": "Moire Hoi An",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 5,
+      "price_range": "From 3,973,000 VND / night",
+      "short_description": "5-star premium hotel with wifi, parking, breakfast, airport transfer, bar and swimming pool.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=73"
+    },
+    {
+      "id": "74",
+      "name": "Elites Riverside Hotel & Spa Hoi An",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 4,
+      "price_range": "From 2,167,000 VND / night",
+      "short_description": "4-star riverside hotel with wifi, breakfast, airport transfer, bar and swimming pool.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=74"
+    },
+    {
+      "id": "75",
+      "name": "December Hoi An Villa",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 5,
+      "price_range": "From 4,000,000 VND / night",
+      "short_description": "5-star luxury villa with wifi, breakfast, airport transfer, bar, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=75"
+    },
+    {
+      "id": "76",
+      "name": "Ocean Breeze Villa",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 4,
+      "price_range": "From 1,300,000 VND / night",
+      "short_description": "4-star oceanfront villa with wifi, breakfast, airport transfer, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=76"
+    },
+    {
+      "id": "77",
+      "name": "Serene Nature Hotel & Spa",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 5,
+      "price_range": "From 3,150,000 VND / night",
+      "short_description": "5-star nature spa hotel with wifi, breakfast, airport transfer, bar, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=77"
+    },
+    {
+      "id": "78",
+      "name": "Babylon Hoi An Central Villa",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 4,
+      "price_range": "From 1,550,000 VND / night",
+      "short_description": "4-star central villa with wifi, breakfast, airport transfer, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=78"
+    },
+    {
+      "id": "79",
+      "name": "Truc Loc Villa",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 4,
+      "price_range": "From 1,085,000 VND / night",
+      "short_description": "4-star traditional villa with wifi, breakfast, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=79"
+    },
+    {
+      "id": "80",
+      "name": "An Bang Vu Nhi Homestay",
+      "city": "Hoi An",
+      "address": "Hoi An, Quang Nam",
+      "rating": 4,
+      "price_range": "From 2,095,251 VND / night",
+      "short_description": "4-star beachside homestay with wifi, breakfast, airport transfer and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=80"
+    }
+  ],
+  "hagiang": [
+    {
+      "id": "81",
+      "name": "Nhà Lá Homestay",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 4,
+      "price_range": "From 1,250,000 VND / night",
+      "short_description": "4-star traditional leaf house homestay with wifi, breakfast and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=81"
+    },
+    {
+      "id": "82",
+      "name": "Four Points by Sheraton Ha Giang",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 4,
+      "price_range": "From 1,425,000 VND / night",
+      "short_description": "4-star international hotel with breakfast, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=82"
+    },
+    {
+      "id": "83",
+      "name": "H'mong Village Resort Ha Giang",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 5,
+      "price_range": "From 1,057,540 VND / night",
+      "short_description": "5-star cultural resort with wifi, breakfast, swimming pool and parking.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=83"
+    },
+    {
+      "id": "84",
+      "name": "Lotus Premium Lodge - Group Tours",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 5,
+      "price_range": "From 1,170,000 VND / night",
+      "short_description": "5-star premium lodge with wifi, breakfast, swimming pool, parking, airport transfer and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=84"
+    },
+    {
+      "id": "85",
+      "name": "Yen Bien Luxury Hotel",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 5,
+      "price_range": "From 2,450,000 VND / night",
+      "short_description": "5-star luxury hotel with breakfast, swimming pool, parking, airport transfer and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=85"
+    },
+    {
+      "id": "86",
+      "name": "Silk River Hotel Ha Giang",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 4,
+      "price_range": "From 1,035,000 VND / night",
+      "short_description": "4-star riverside hotel with wifi, breakfast, swimming pool, parking and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=86"
+    },
+    {
+      "id": "87",
+      "name": "Garden Hotel II",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 4,
+      "price_range": "From 1,093,950 VND / night",
+      "short_description": "4-star garden hotel with wifi, breakfast, parking, airport transfer and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=87"
+    },
+    {
+      "id": "88",
+      "name": "Sun Hà Giang Hotel",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 4,
+      "price_range": "From 600,000 VND / night",
+      "short_description": "4-star budget hotel with wifi, breakfast and parking, affordable mountain accommodation.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=88"
+    },
+    {
+      "id": "89",
+      "name": "Sky Bay Lodge",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 5,
+      "price_range": "From 970,000 VND / night",
+      "short_description": "5-star mountain lodge with wifi, breakfast, swimming pool, parking and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=89"
+    },
+    {
+      "id": "90",
+      "name": "Ha Giang Xanh Retreat",
+      "city": "Ha Giang",
+      "address": "Ha Giang Province",
+      "rating": 5,
+      "price_range": "From 935,000 VND / night",
+      "short_description": "5-star eco retreat with wifi, breakfast, swimming pool, parking, airport transfer and bar.",
+      "link": "/hotelinfo/hoteldescription.php?hotel_id=90"
+    }
+  ]
+}

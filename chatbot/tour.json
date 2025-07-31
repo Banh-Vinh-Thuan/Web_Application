@@ -1,0 +1,417 @@
+{
+  "dalat": [
+    {
+    "id": "DL01",
+    "title": "Dalat Dreamy Getaway: Valley of Love - Datanla Waterfall - Langbiang Mountain - Local Flower Gardens",
+    "destination": "Dalat",
+    "duration": "4 days",
+    "price": 5290000,
+    "currency": "₫",
+    "short_description": "Explore the romantic city of Dalat with its cool climate and beautiful landscapes.",
+    "itinerary": "Visit Valley of Love for romantic scenery. Experience the thrilling Datanla Waterfall. Conquer Langbiang Mountain for panoramic views. Discover vibrant local flower gardens.",
+    "link": "/Journey/viewjourney.php?id=dalat"
+    },
+
+    {
+    "id": "DL02",
+    "title": "Dalat Nature & Culture: Tuyen Lam Lake - Truc Lam Zen Monastery - Clay Tunnel - Night Market",
+    "destination": "Dalat",
+    "duration": "4 days",
+    "price": 5690000,
+    "currency": "₫",
+    "short_description": "Immerse yourself in Dalat's natural beauty and cultural heritage.",
+    "itinerary": "Relax at the serene Tuyen Lam Lake. Find peace at Truc Lam Zen Monastery. Explore the unique Clay Tunnel. Experience the vibrant Night Market.",
+    "link": "/Journey/viewjourney.php?id=dalat"
+    },
+    {
+    "id": "DL03",
+    "title": "Dalat Flower & Highlands Adventure: Valley of Love - Langbiang Peak - Dalat Railway - Hydrangea Garden",
+    "destination": "Dalat",
+    "duration": "4 days",
+    "price": 6290000,
+    "currency": "₫",
+    "short_description": "Discover Dalat's floral beauty and highland charm.",
+    "itinerary": "Romantic moments at Valley of Love. Adventurous trek to Langbiang Peak. Scenic ride on Dalat Railway. Colorful blooms at Hydrangea Garden.",
+    "link": "/Journey/viewjourney.php?id=dalat"
+    },
+    {
+    "id": "DL04",
+    "title": "Dalat Chill & Relax: Tuyen Lam Lake - Clay Tunnel - Fresh Garden - Coffee Farm Experience",
+    "destination": "Dalat",
+    "duration": "4 days",
+    "price": 5790000,
+    "currency": "₫",
+    "short_description": "Unwind in Dalat's peaceful atmosphere.",
+    "itinerary": "Tranquil moments at Tuyen Lam Lake. Unique Clay Tunnel exploration. Fresh garden visits. Authentic coffee farm experience.",
+    "link": "/Journey/viewjourney.php?id=dalat"
+    }
+  ],
+  "hagiang": [
+    {
+      "id": "HG01",
+      "title": "Ha Giang Adventure & Culture: Ma Pi Leng Pass - Dong Van Plateau - Lung Cu Flag Tower - Ethnic Villages",
+      "destination": "Ha Giang",
+      "duration": "4 days 3 nights",
+      "price": 6890000,
+      "currency": "₫",
+      "short_description": "Experience the majestic landscapes of Ha Giang. Breathtaking views at Ma Pi Leng Pass, explore the UNESCO Dong Van Karst Plateau, visit the northernmost point at Lung Cu Flag Tower, immerse in ethnic minority cultures.",
+      "itinerary": "Day 1: Arrive in Ha Giang, prepare for adventure. Day 2: Breathtaking views at Ma Pi Leng Pass. Day 3: Explore UNESCO Dong Van Karst Plateau, visit Lung Cu Flag Tower. Day 4: Immerse in ethnic minority cultures and departure.",
+      "link": "/Journey/viewjourney.php?id=hagiang"
+    },
+    {
+      "id": "HG02",
+      "title": "Ha Giang Explorer: Quan Ba Heaven Gate - Dong Van Karst Plateau - Meo Vac - Local Homestay Experience",
+      "destination": "Ha Giang",
+      "duration": "4 days 3 nights",
+      "price": 6990000,
+      "currency": "₫",
+      "short_description": "Discover Ha Giang's hidden gems with authentic experiences. Panoramic views from Quan Ba Heaven Gate, geological wonders of Dong Van Karst Plateau, scenic town of Meo Vac, authentic homestay with local families.",
+      "itinerary": "Day 1: Arrive in Ha Giang, panoramic views from Quan Ba Heaven Gate. Day 2: Geological wonders of Dong Van Karst Plateau. Day 3: Scenic town of Meo Vac exploration. Day 4: Authentic homestay with local families experience.",
+      "link": "/Journey/viewjourney.php?id=hagiang"
+    },
+    {
+      "id": "HG03",
+      "title": "Ha Giang Nature & Culture: Lung Cu Flagpole - Nho Que River Boat Ride - Ma Pi Leng Pass - Minority Villages",
+      "destination": "Ha Giang",
+      "duration": "4 days 3 nights",
+      "price": 6190000,
+      "currency": "₫",
+      "short_description": "Combine natural beauty with cultural immersion. Patriotic visit to Lung Cu Flagpole, scenic boat ride on Nho Que River, spectacular Ma Pi Leng Pass, cultural exchange in minority villages.",
+      "itinerary": "Day 1: Arrive in Ha Giang, patriotic visit to Lung Cu Flagpole. Day 2: Scenic boat ride on Nho Que River. Day 3: Spectacular Ma Pi Leng Pass. Day 4: Cultural exchange in minority villages and departure.",
+      "link": "/Journey/viewjourney.php?id=hagiang"
+    },
+    {
+      "id": "HG04",
+      "title": "Ha Giang Nature & Culture: Dong Van Karst Plateau - Lung Cam Cultural Village - Ma Pi Leng Panorama - Local Craft Workshops",
+      "destination": "Ha Giang",
+      "duration": "4 days 3 nights",
+      "price": 7150000,
+      "currency": "₫",
+      "short_description": "Deep dive into Ha Giang's nature and traditions. UNESCO Dong Van Karst Plateau exploration, cultural immersion in Lung Cam Village, breathtaking Ma Pi Leng panoramic views, hands-on local craft workshops.",
+      "itinerary": "Day 1: Arrive in Ha Giang, UNESCO Dong Van Karst Plateau exploration. Day 2: Cultural immersion in Lung Cam Village. Day 3: Breathtaking Ma Pi Leng panoramic views. Day 4: Hands-on local craft workshops and departure.",
+      "link": "/Journey/viewjourney.php?id=hagiang"
+    }
+  ],
+  "hochiminh": [
+    {
+      "id": "HCM01",
+      "title": "Discover Ho Chi Minh - Cu Chi Tunnels - Mekong Delta",
+      "destination": "Ho Chi Minh City",
+      "duration": "4 days 3 nights",
+      "price": 4590000,
+      "currency": "₫",
+      "short_description": "Explore Vietnam's dynamic southern region. Modern Ho Chi Minh City highlights, historical Cu Chi Tunnels experience, scenic Mekong Delta boat trips, local culture and cuisine.",
+      "itinerary": "Day 1: Arrive in Ho Chi Minh City, explore modern city highlights. Day 2: Historical Cu Chi Tunnels experience. Day 3: Scenic Mekong Delta boat trips. Day 4: Local culture and cuisine experience, departure.",
+      "link": "/Journey/viewjourney.php?id=hcm"
+    },
+    {
+      "id": "HCM02",
+      "title": "Ho Chi Minh City Street Food and Culture Walk",
+      "destination": "Ho Chi Minh City",
+      "duration": "1 day",
+      "price": 890000,
+      "currency": "₫",
+      "short_description": "Taste your way through Saigon's vibrant street food scene. Authentic local street food experiences, cultural walking tours, bustling market visits, traditional cooking demonstrations.",
+      "itinerary": "Full day: Authentic local street food experiences, cultural walking tours, bustling market visits, traditional cooking demonstrations.",
+      "link": "/Journey/viewjourney.php?id=hcm"
+    },
+    {
+      "id": "HCM03",
+      "title": "Museum and Contemporary Art Tour in Ho Chi Minh",
+      "destination": "Ho Chi Minh City",
+      "duration": "2 days 1 night",
+      "price": 980000,
+      "currency": "₫",
+      "short_description": "Discover Ho Chi Minh City's cultural and artistic heritage. War Remnants Museum visit, contemporary art galleries, historical Independence Palace, vibrant arts district exploration.",
+      "itinerary": "Day 1: War Remnants Museum visit, contemporary art galleries. Day 2: Historical Independence Palace, vibrant arts district exploration.",
+      "link": "/Journey/viewjourney.php?id=hcm"
+    },
+    {
+      "id": "HCM04",
+      "title": "Mekong Delta Tour Departing from Ho Chi Minh City",
+      "destination": "Ho Chi Minh City",
+      "duration": "1 day",
+      "price": 1050000,
+      "currency": "₫",
+      "short_description": "Experience the authentic Mekong Delta in one day. Scenic boat rides through waterways, floating markets experience, traditional village visits, local handicraft workshops.",
+      "itinerary": "Full day: Scenic boat rides through waterways, floating markets experience, traditional village visits, local handicraft workshops.",
+      "link": "/Journey/viewjourney.php?id=hcm"
+    }
+  ],
+  "hoian": [
+    {
+      "id": "HOI01",
+      "title": "Hoi An Ancient Town Discovery: Old Quarter - Japanese Bridge - Riverside Market - Lantern Festival",
+      "destination": "Hoi An",
+      "duration": "4 days 3 nights",
+      "price": 6490000,
+      "currency": "₫",
+      "short_description": "Discover the charm of UNESCO World Heritage Hoi An. Walk through the historic Old Quarter, iconic Japanese Covered Bridge, vibrant riverside markets, magical lantern festival experience.",
+      "itinerary": "Day 1: Arrive in Hoi An, walk through historic Old Quarter. Day 2: Visit iconic Japanese Covered Bridge. Day 3: Explore vibrant riverside markets. Day 4: Magical lantern festival experience and departure.",
+      "link": "/Journey/viewjourney.php?id=hoian"
+    },
+    {
+      "id": "HOI02",
+      "title": "Hoi An Cultural Experience: Ancient Town - Riverside Market - Traditional Craft Villages - Lantern Festival",
+      "destination": "Hoi An",
+      "duration": "4 days 3 nights",
+      "price": 6390000,
+      "currency": "₫",
+      "short_description": "Immerse in Hoi An's rich cultural heritage. Explore ancient architecture, bustling riverside markets, traditional craft village visits, colorful lantern festival.",
+      "itinerary": "Day 1: Arrive in Hoi An, explore ancient architecture. Day 2: Visit bustling riverside markets. Day 3: Traditional craft village visits. Day 4: Colorful lantern festival and departure.",
+      "link": "/Journey/viewjourney.php?id=hoian"
+    },
+    {
+      "id": "HOI03",
+      "title": "Hoi An Heritage & Beach: Ancient Town - My Son Sanctuary - An Bang Beach - Traditional Cooking Class",
+      "destination": "Hoi An",
+      "duration": "4 days 3 nights",
+      "price": 6290000,
+      "currency": "₫",
+      "short_description": "Combine cultural heritage with beach relaxation. UNESCO Ancient Town exploration, My Son Cham ruins visit, relaxing An Bang Beach time, hands-on cooking class experience.",
+      "itinerary": "Day 1: Arrive in Hoi An, UNESCO Ancient Town exploration. Day 2: My Son Cham ruins visit. Day 3: Relaxing An Bang Beach time. Day 4: Hands-on cooking class experience and departure.",
+      "link": "/Journey/viewjourney.php?id=hoian"
+    },
+    {
+      "id": "HOI04",
+      "title": "Hoi An Nature & Culture: Cam Thanh Village - Thu Bon River Cruise - Marble Mountains - Local Handicraft Workshops",
+      "destination": "Hoi An",
+      "duration": "4 days 3 nights",
+      "price": 6150000,
+      "currency": "₫",
+      "short_description": "Experience Hoi An's natural beauty and traditions. Peaceful Cam Thanh coconut village, scenic Thu Bon River cruise, spectacular Marble Mountains, traditional handicraft workshops.",
+      "itinerary": "Day 1: Arrive in Hoi An, visit peaceful Cam Thanh coconut village. Day 2: Scenic Thu Bon River cruise. Day 3: Spectacular Marble Mountains. Day 4: Traditional handicraft workshops and departure.",
+      "link": "/Journey/viewjourney.php?id=hoian"
+    }
+  ],
+  "hue": [
+    {
+      "id": "HUE01",
+      "title": "Da Nang - Phong Nha Cave - La Vang - Hue - Ba Na Hills - Hoi An",
+      "destination": "Hue",
+      "duration": "5 days 4 nights",
+      "price": 6990000,
+      "currency": "₫",
+      "short_description": "Comprehensive Central Vietnam exploration. Da Nang city highlights, spectacular Phong Nha Cave system, spiritual La Vang pilgrimage site, imperial Hue discovery, magical Ba Na Hills, charming Hoi An ancient town.",
+      "itinerary": "Day 1: Da Nang city highlights. Day 2: Spectacular Phong Nha Cave system. Day 3: Spiritual La Vang pilgrimage site, Imperial Hue discovery. Day 4: Magical Ba Na Hills. Day 5: Charming Hoi An ancient town.",
+      "link": "/Journey/viewjourney.php?id=hue"
+    },
+    {
+      "id": "HUE02",
+      "title": "Hanoi - Sapa - Fansipan - Ha Long - Ninh Binh - Da Nang - Son Tra - Ba Na Hills - Golden Bridge - Hoi An - La Vang - Hue - Phong Nha",
+      "destination": "Hue",
+      "duration": "10 days 9 nights",
+      "price": 23590000,
+      "currency": "₫",
+      "short_description": "Ultimate Vietnam discovery journey. Vibrant Hanoi exploration, Sapa mountain town and Fansipan peak, majestic Ha Long Bay cruise, Ninh Binh natural wonders, Da Nang and Son Tra Peninsula, famous Ba Na Hills and Golden Bridge, Hoi An ancient charm, spiritual La Vang, imperial Hue heritage, Phong Nha cave adventures.",
+      "itinerary": "Day 1-2: Vibrant Hanoi exploration, Sapa mountain town. Day 3: Fansipan peak. Day 4: Majestic Ha Long Bay cruise. Day 5: Ninh Binh natural wonders. Day 6: Da Nang and Son Tra Peninsula. Day 7: Famous Ba Na Hills and Golden Bridge. Day 8: Hoi An ancient charm. Day 9: Spiritual La Vang, Imperial Hue heritage. Day 10: Phong Nha cave adventures.",
+      "link": "/Journey/viewjourney.php?id=hue"
+    },
+    {
+      "id": "HUE03",
+      "title": "Hue Cultural Discovery - Imperial Citadel - Thien Mu Pagoda - Perfume River - Truong Tien Bridge - Local Cuisine",
+      "destination": "Hue",
+      "duration": "4 days 3 nights",
+      "price": 7590000,
+      "currency": "₫",
+      "short_description": "Deep dive into Hue's imperial heritage. Majestic Imperial Citadel exploration, iconic Thien Mu Pagoda visit, scenic Perfume River cruise, historic Truong Tien Bridge, authentic royal cuisine experience.",
+      "itinerary": "Day 1: Arrive in Hue, majestic Imperial Citadel exploration. Day 2: Iconic Thien Mu Pagoda visit. Day 3: Scenic Perfume River cruise, historic Truong Tien Bridge. Day 4: Authentic royal cuisine experience and departure.",
+      "link": "/Journey/viewjourney.php?id=hue"
+    },
+    {
+      "id": "HUE04",
+      "title": "Hanoi - Overnight Train to Hue - Imperial City - Khai Dinh Tomb - Dong Ba Market - Relaxing Cruise on Perfume River",
+      "destination": "Hue",
+      "duration": "4 days 3 nights",
+      "price": 5290000,
+      "currency": "₫",
+      "short_description": "Classic train journey to the imperial city. Scenic overnight train from Hanoi, Imperial City comprehensive tour, ornate Khai Dinh Royal Tomb, bustling Dong Ba Market, relaxing Perfume River cruise.",
+      "itinerary": "Day 1: Scenic overnight train from Hanoi. Day 2: Imperial City comprehensive tour. Day 3: Ornate Khai Dinh Royal Tomb, bustling Dong Ba Market. Day 4: Relaxing Perfume River cruise and departure.",
+      "link": "/Journey/viewjourney.php?id=hue"
+    }
+  ],
+  "nhatrang": [
+    {
+      "id": "NT01",
+      "title": "Nha Trang - Thap Ba Ponagar - Nhu Tien Beach - VinWonders - Bau Truc Pottery Village",
+      "destination": "Nha Trang",
+      "duration": "3 days 2 nights",
+      "price": 2390000,
+      "currency": "₫",
+      "short_description": "Discover Nha Trang's beaches and cultural heritage. Ancient Thap Ba Ponagar Cham towers, pristine Nhu Tien Beach relaxation, exciting VinWonders theme park, traditional Bau Truc pottery village.",
+      "itinerary": "Day 1: Arrive in Nha Trang, visit ancient Thap Ba Ponagar Cham towers. Day 2: Pristine Nhu Tien Beach relaxation, exciting VinWonders theme park. Day 3: Traditional Bau Truc pottery village and departure.",
+      "link": "/Journey/viewjourney.php?id=nhatrang"
+    },
+    {
+      "id": "NT02",
+      "title": "Nha Trang - Bau Truc Pottery Village - Ancient Nha Trang - Thap Ba Ponagar - Nhu Tien Beach - VinWonders - Pottery & Seashell Workshop Experience",
+      "destination": "Nha Trang",
+      "duration": "3 days 2 nights",
+      "price": 2690000,
+      "currency": "₫",
+      "short_description": "Comprehensive Nha Trang cultural and beach experience. Traditional Bau Truc pottery village, ancient Nha Trang historical sites, iconic Thap Ba Ponagar towers, beautiful Nhu Tien Beach, thrilling VinWonders adventures, hands-on pottery and seashell workshops.",
+      "itinerary": "Day 1: Traditional Bau Truc pottery village, ancient Nha Trang historical sites. Day 2: Iconic Thap Ba Ponagar towers, beautiful Nhu Tien Beach, thrilling VinWonders adventures. Day 3: Hands-on pottery and seashell workshops and departure.",
+      "link": "/Journey/viewjourney.php?id=nhatrang"
+    },
+    {
+      "id": "NT03",
+      "title": "Nha Trang - Hon Mun Island Snorkeling - Institute of Oceanography - Vinpearl Cable Car - Long Son Pagoda - Local Seafood Feast",
+      "destination": "Nha Trang",
+      "duration": "3 days 2 nights",
+      "price": 3190000,
+      "currency": "₫",
+      "short_description": "Marine adventures and cultural exploration. Hon Mun Island snorkeling adventures, educational Institute of Oceanography, scenic Vinpearl cable car ride, peaceful Long Son Pagoda, delicious local seafood experiences.",
+      "itinerary": "Day 1: Hon Mun Island snorkeling adventures. Day 2: Educational Institute of Oceanography, scenic Vinpearl cable car ride. Day 3: Peaceful Long Son Pagoda, delicious local seafood experiences and departure.",
+      "link": "/Journey/viewjourney.php?id=nhatrang"
+    },
+    {
+      "id": "NT04",
+      "title": "Nha Trang - Yang Bay Eco Park - Mud Bath Experience - Dam Market - Thap Ba Ponagar - Coastal Road Discovery",
+      "destination": "Nha Trang",
+      "duration": "3 days 2 nights",
+      "price": 2890000,
+      "currency": "₫",
+      "short_description": "Nature, wellness, and cultural immersion. Yang Bay Eco Park adventures, relaxing therapeutic mud baths, vibrant Dam Market exploration, historic Thap Ba Ponagar, scenic coastal road discovery.",
+      "itinerary": "Day 1: Yang Bay Eco Park adventures. Day 2: Relaxing therapeutic mud baths, vibrant Dam Market exploration. Day 3: Historic Thap Ba Ponagar, scenic coastal road discovery and departure.",
+      "link": "/Journey/viewjourney.php?id=nhatrang"
+    }
+  ],
+  "phuquoc": [
+    {
+      "id": "PQ01",
+      "title": "Phu Quoc Paradise Escape: Sao Beach - Vinpearl Safari - Night Market - Pepper Farm",
+      "destination": "Phu Quoc",
+      "duration": "4 days 3 nights",
+      "price": 6290000,
+      "currency": "₫",
+      "short_description": "Tropical paradise with pristine beaches and adventures. Stunning white sand Sao Beach, exciting Vinpearl Safari wildlife, vibrant night market experiences, famous Phu Quoc pepper farm tours.",
+      "itinerary": "Day 1: Arrive in Phu Quoc, stunning white sand Sao Beach. Day 2: Exciting Vinpearl Safari wildlife. Day 3: Vibrant night market experiences. Day 4: Famous Phu Quoc pepper farm tours and departure.",
+      "link": "/Journey/viewjourney.php?id=phuquoc"
+    },
+    {
+      "id": "PQ02",
+      "title": "Phu Quoc Island Adventure: Phu Quoc National Park - Fish Sauce Factory - Coconut Prison - Sunset Beach",
+      "destination": "Phu Quoc",
+      "duration": "4 days 3 nights",
+      "price": 5790000,
+      "currency": "₫",
+      "short_description": "Island exploration with history and nature. Phu Quoc National Park trekking, traditional fish sauce factory visit, historical Coconut Prison site, spectacular sunset beach moments.",
+      "itinerary": "Day 1: Arrive in Phu Quoc, Phu Quoc National Park trekking. Day 2: Traditional fish sauce factory visit. Day 3: Historical Coconut Prison site. Day 4: Spectacular sunset beach moments and departure.",
+      "link": "/Journey/viewjourney.php?id=phuquoc"
+    },
+    {
+      "id": "PQ03",
+      "title": "Phu Quoc Island Serenity: Sao Beach - Pepper Farm - Night Market - Sunset at Dinh Cau",
+      "destination": "Phu Quoc",
+      "duration": "4 days 3 nights",
+      "price": 6490000,
+      "currency": "₫",
+      "short_description": "Relaxing island getaway with local experiences. Pristine Sao Beach relaxation, aromatic pepper farm tours, lively night market adventures, romantic sunset at Dinh Cau Rock.",
+      "itinerary": "Day 1: Arrive in Phu Quoc, pristine Sao Beach relaxation. Day 2: Aromatic pepper farm tours. Day 3: Lively night market adventures. Day 4: Romantic sunset at Dinh Cau Rock and departure.",
+      "link": "/Journey/viewjourney.php?id=phuquoc"
+    },
+    {
+      "id": "PQ04",
+      "title": "Phu Quoc Relax & Discover: Ong Lang Beach - Pepper Farm - Fish Sauce Village - Night Market",
+      "destination": "Phu Quoc",
+      "duration": "4 days 3 nights",
+      "price": 6390000,
+      "currency": "₫",
+      "short_description": "Peaceful beaches and authentic local culture. Serene Ong Lang Beach, traditional pepper cultivation, authentic fish sauce village, bustling night market exploration.",
+      "itinerary": "Day 1: Arrive in Phu Quoc, serene Ong Lang Beach. Day 2: Traditional pepper cultivation. Day 3: Authentic fish sauce village. Day 4: Bustling night market exploration and departure.",
+      "link": "/Journey/viewjourney.php?id=phuquoc"
+    }
+  ],
+  "phuyen": [
+    {
+      "id": "PY01",
+      "title": "Phu Yen Gems: Da Dia Reef - Bai Xep - Mang Lang Church - Nhan Tower",
+      "destination": "Phu Yen",
+      "duration": "4 days 3 nights",
+      "price": 5990000,
+      "currency": "₫",
+      "short_description": "Discover Phu Yen's natural wonders and cultural heritage. Unique Da Dia Reef basalt formations, hidden gem Bai Xep Beach, historic Mang Lang Church, ancient Nhan Cham Tower.",
+      "itinerary": "Day 1: Arrive in Phu Yen, unique Da Dia Reef basalt formations. Day 2: Hidden gem Bai Xep Beach. Day 3: Historic Mang Lang Church. Day 4: Ancient Nhan Cham Tower and departure.",
+      "link": "/Journey/viewjourney.php?id=phuyen"
+    },
+    {
+      "id": "PY02",
+      "title": "Phu Yen - Mui Dien Sunrise - Vung Ro Bay - Bai Mon Beach - Local Seafood Tasting",
+      "destination": "Phu Yen",
+      "duration": "4 days 3 nights",
+      "price": 7790000,
+      "currency": "₫",
+      "short_description": "Coastal beauty with sunrise and culinary experiences. Breathtaking Mui Dien lighthouse sunrise, scenic Vung Ro Bay exploration, pristine Bai Mon Beach, fresh local seafood tasting.",
+      "itinerary": "Day 1: Arrive in Phu Yen, breathtaking Mui Dien lighthouse sunrise. Day 2: Scenic Vung Ro Bay exploration. Day 3: Pristine Bai Mon Beach. Day 4: Fresh local seafood tasting and departure.",
+      "link": "/Journey/viewjourney.php?id=phuyen"
+    },
+    {
+      "id": "PY03",
+      "title": "Phu Yen - Quy Nhon - Ky Co - Bai Xep - Ganh Da Dia",
+      "destination": "Phu Yen",
+      "duration": "4 days 3 nights",
+      "price": 8490000,
+      "currency": "₫",
+      "short_description": "Extended coastal exploration of Phu Yen region. Charming Quy Nhon city, paradise Ky Co Beach, hidden Bai Xep cove, spectacular Ganh Da Dia reef.",
+      "itinerary": "Day 1: Arrive in Phu Yen, charming Quy Nhon city. Day 2: Paradise Ky Co Beach. Day 3: Hidden Bai Xep cove. Day 4: Spectacular Ganh Da Dia reef and departure.",
+      "link": "/Journey/viewjourney.php?id=phuyen"
+    },
+    {
+      "id": "PY04",
+      "title": "Phu Yen - Tuy Hoa - Ganh Da Dia - Vung Ro Bay - Mang Lang Church",
+      "destination": "Phu Yen",
+      "duration": "5 days 4 nights",
+      "price": 6690000,
+      "currency": "₫",
+      "short_description": "Comprehensive Phu Yen discovery tour. Tuy Hoa city exploration, geological wonder Ganh Da Dia, scenic Vung Ro Bay, historical Mang Lang Church.",
+      "itinerary": "Day 1: Arrive in Phu Yen, Tuy Hoa city exploration. Day 2: Geological wonder Ganh Da Dia. Day 3: Scenic Vung Ro Bay. Day 4: Historical Mang Lang Church. Day 5: Free time and departure.",
+      "link": "/Journey/viewjourney.php?id=phuyen"
+    }
+  ],
+    "northwest": [
+    {
+        "id": "NW01",
+        "title": "Northwest in Rice Harvest Season - Nghia Lo - Mu Cang Chai - Sapa - Fansipan - Lai Chau - Dien Bien - Moc Chau",
+        "destination": "Northwest Vietnam",
+        "duration": "6 days 5 nights",
+        "price": 12179000,
+        "currency": "₫",
+        "short_description": "Epic Northwest Vietnam adventure during harvest season. Nghia Lo valley exploration, spectacular Mu Cang Chai terraces, Sapa mountain town charm, Fansipan peak conquest, Lai Chau ethnic cultures, historic Dien Bien battlefield, Moc Chau plateau beauty.",
+        "itinerary": "Day 1: Nghia Lo valley exploration. Day 2: Mu Cang Chai terraces. Day 3: Sapa charm and Fansipan peak. Day 4: Lai Chau cultural immersion. Day 5: Dien Bien battlefield. Day 6: Moc Chau plateau and departure.",
+        "link": "/Journey/viewjourney.php?id=taybac"
+    },
+    {
+        "id": "NW02",
+        "title": "Hung Temple - Nghia Lo - Tu Le - Mu Cang Chai - Sapa - Fansipan - Dien Bien - Moc Chau",
+        "destination": "Northwest Vietnam",
+        "duration": "4 days 3 nights",
+        "price": 13590000,
+        "currency": "₫",
+        "short_description": "Spiritual and natural wonders of Northwest Vietnam. Sacred Hung Temple pilgrimage, Nghia Lo cultural immersion, Tu Le hot springs, Mu Cang Chai golden terraces, Sapa trekking, Fansipan cable car, Dien Bien historic sites, Moc Chau dairy farms.",
+        "itinerary": "Day 1: Visit Hung Temple and Nghia Lo. Day 2: Tu Le and Mu Cang Chai. Day 3: Sapa, Fansipan, and Dien Bien. Day 4: Moc Chau and return.",
+        "link": "/Journey/viewjourney.php?id=taybac"
+    },
+    {
+        "id": "NW03",
+        "title": "Sapa - Fansipan - Y Ty - Bat Xat Rice Terraces",
+        "destination": "Northwest Vietnam",
+        "duration": "3 days 2 nights",
+        "price": 9405000,
+        "currency": "₫",
+        "short_description": "Intensive mountain and terrace exploration. Sapa town and markets, conquer Fansipan - Roof of Indochina, explore remote Y Ty villages, admire Bat Xat’s stunning rice terraces.",
+        "itinerary": "Day 1: Explore Sapa and local markets. Day 2: Fansipan summit and Y Ty. Day 3: Bat Xat rice terraces and return.",
+        "link": "/Journey/viewjourney.php?id=taybac"
+    },
+    {
+        "id": "NW04",
+        "title": "Moc Chau - Pha Din Pass - Son La - Dien Bien",
+        "destination": "Northwest Vietnam",
+        "duration": "5 days 4 nights",
+        "price": 10545000,
+        "currency": "₫",
+        "short_description": "Western Northwest Vietnam discovery. Enjoy Moc Chau plateau, thrilling drive through Pha Din Pass, visit Son La prison site and Dien Bien Phu battlefield museum.",
+        "itinerary": "Day 1: Moc Chau flower plateau. Day 2: Drive through Pha Din Pass. Day 3: Son La city and historical prison. Day 4: Dien Bien Phu museum. Day 5: Return journey.",
+        "link": "/Journey/viewjourney.php?id=taybac"
+    }
+    ]
+}
