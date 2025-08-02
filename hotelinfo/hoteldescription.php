@@ -263,7 +263,7 @@ $discountedPrice = $originalPrice * 0.93;
                         </a>
                     </div>
 
-                    <!-- Location Map -->
+                    Location Map
                     <div class="content-card map-card" data-aos="fade-left" data-aos-delay="100">
                         <div class="card-header">
                             <h2 class="card-title">📍 Location Map</h2>
