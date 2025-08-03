@@ -546,6 +546,8 @@ if (!isset($travelTips[$destination])) {
 }
 
 $tip = $travelTips[$destination];
+
+// Get current year for calendar
 $currentYear = date('Y');
 $currentMonth = (int)date('n');
 
@@ -556,105 +558,31 @@ $monthNames = [
     9 => 'September', 10 => 'October', 11 => 'November', 12 => 'December'
 ];
 
-// Helper functions
 function getMonthClass($month, $seasonInfo, $currentMonth) {
-    $classes = [];
-    
+    $class = '';
     if (in_array($month, $seasonInfo['good_months'])) {
-        $classes[] = 'good-season';
+        $class = 'good-season';
     } elseif (in_array($month, $seasonInfo['ok_months'])) {
-        $classes[] = 'ok-season';
+        $class = 'ok-season';
     } else {
-        $classes[] = 'bad-season';
+        $class = 'bad-season';
     }
     
     if ($month == $currentMonth) {
-        $classes[] = 'current-month';
+        $class .= ' current-month';
     }
     
-    return implode(' ', $classes);
+    return $class;
 }
 
 function getMonthStatus($month, $seasonInfo) {
     if (in_array($month, $seasonInfo['good_months'])) {
-        return 'Best Time';
+        return 'Best';
     } elseif (in_array($month, $seasonInfo['ok_months'])) {
-        return 'Good Time';
+        return 'Good';
     } else {
         return 'Avoid';
     }
-}
-
-function renderPlaceCard($place) {
-    if (!is_array($place) || !isset($place['day'])) {
-        return '<div class="place-simple"><p>' . htmlspecialchars($place) . '</p></div>';
-    }
-    
-    $html = '<div class="place-card">';
-    $html .= '<div class="place-header"><span class="place-day">' . htmlspecialchars($place['day']) . '</span></div>';
-    $html .= '<div class="place-content">';
-    $html .= '<div class="place-text"><p>' . $place['description'] . '</p></div>';
-    
-    if (isset($place['images']) && count($place['images']) > 0) {
-        $html .= renderPlaceImages($place);
-    }
-    
-    $html .= '</div></div>';
-    return $html;
-}
-
-function renderPlaceImages($place) {
-    if (count($place['images']) == 1) {
-        return '<div class="place-image"><img src="' . htmlspecialchars($place['images'][0]) . '" alt="' . htmlspecialchars($place['day']) . '"></div>';
-    }
-    
-    $html = '<div class="place-image">';
-    $html .= '<div class="photo-carousel" data-images=\'' . json_encode($place['images']) . '\'>';
-    $html .= '<div class="carousel-container"><div class="carousel-track">';
-    
-    foreach ($place['images'] as $index => $image) {
-        $html .= '<div class="carousel-slide">';
-        $html .= '<img src="' . htmlspecialchars($image) . '" alt="' . htmlspecialchars($place['day']) . ' - Photo ' . ($index + 1) . '">';
-        $html .= '</div>';
-    }
-    
-    $html .= '</div>';
-    $html .= '<button class="carousel-controls carousel-prev" aria-label="Previous image">‹</button>';
-    $html .= '<button class="carousel-controls carousel-next" aria-label="Next image">›</button>';
-    $html .= '<div class="carousel-indicators">';
-    
-    foreach ($place['images'] as $index => $image) {
-        $activeClass = $index === 0 ? ' active' : '';
-        $html .= '<div class="carousel-dot' . $activeClass . '" data-slide="' . $index . '"></div>';
-    }
-    
-    $html .= '</div></div></div></div>';
-    return $html;
-}
-
-function renderCuisineGrid($cuisine) {
-    if (isset($cuisine[0]) && is_array($cuisine[0])) {
-        $html = '<div class="cuisine-grid">';
-        foreach ($cuisine as $dish) {
-            $html .= '<div class="cuisine-card">';
-            if (isset($dish['image'])) {
-                $html .= '<div class="cuisine-image">';
-                $html .= '<img src="' . htmlspecialchars($dish['image']) . '" alt="' . htmlspecialchars($dish['name']) . '">';
-                $html .= '</div>';
-            }
-            $html .= '<div class="cuisine-name"><p>' . htmlspecialchars($dish['name']) . '</p></div>';
-            $html .= '</div>';
-        }
-        $html .= '</div>';
-        return $html;
-    }
-    
-    $html = '<div class="cuisine-list">';
-    foreach ($cuisine as $dish) {
-        $html .= '<div class="cuisine-item-simple"><p>' . htmlspecialchars($dish) . '</p></div>';
-    }
-    $html .= '</div>';
-    return $html;
 }
 ?>
 
@@ -666,6 +594,8 @@ function renderCuisineGrid($cuisine) {
     <title><?= htmlspecialchars($tip['title']) ?></title>
     <link rel="stylesheet" href="../css/traveltips.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
+    
+    <!-- Leaflet CSS and JS for maps -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 </head>
@@ -674,23 +604,22 @@ function renderCuisineGrid($cuisine) {
 
 <body>
     <main class="container">
-        <!-- About Section -->
         <section class="section">
             <h1 class="page-title"><?= htmlspecialchars($tip['about_title']) ?></h1>
             <p class="about-content"><?= $tip['about_content'] ?></p>
         </section>
 
-        <!-- Transportation Section -->
         <section class="section">
             <h2><i class="fas fa-route"></i>Transportation</h2>
             <div class="content-grid">
                 <?php foreach ($tip['transportation'] as $transport): ?>
-                    <div class="transport-item"><p><?= $transport ?></p></div>
+                    <div class="transport-item">
+                        <p><?= $transport ?></p>
+                    </div>
                 <?php endforeach; ?>
             </div>
         </section>
 
-        <!-- Best Time to Visit Section -->
         <section class="section calendar-section">
             <h2><i class="fas fa-calendar-alt"></i>Best Time to Visit</h2>
             <div class="calendar-header">
@@ -699,20 +628,32 @@ function renderCuisineGrid($cuisine) {
             </div>
             <div class="calendar-grid">
                 <?php for ($month = 1; $month <= 12; $month++): ?>
-                    <div class="month-item <?= getMonthClass($month, $tip['season_info'], $currentMonth) ?>" data-month="<?= $month ?>">
+                    <div class="month-item <?= getMonthClass($month, $tip['season_info'], $currentMonth) ?>" 
+                         data-month="<?= $month ?>">
                         <div class="month-name"><?= $monthNames[$month] ?></div>
                         <div class="month-status"><?= getMonthStatus($month, $tip['season_info']) ?></div>
                     </div>
                 <?php endfor; ?>
             </div>
             <div class="calendar-legend">
-                <div class="legend-item"><div class="legend-dot good"></div><span>Best Time</span></div>
-                <div class="legend-item"><div class="legend-dot ok"></div><span>Good Time</span></div>
-                <div class="legend-item"><div class="legend-dot bad"></div><span>Avoid</span></div>
+                <div class="legend-item">
+                    <div class="legend-dot good"></div>
+                    <span>Best Time</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot ok"></div>
+                    <span>Good Time</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-dot bad"></div>
+                    <span>Avoid</span>
+                </div>
             </div>
             <div class="content-grid" style="margin-top: 2rem;">
                 <?php foreach ($tip['best_time'] as $time): ?>
-                    <div class="time-item"><p><?= $time ?></p></div>
+                    <div class="time-item">
+                        <p><?= $time ?></p>
+                    </div>
                 <?php endforeach; ?>
                 <div class="time-item">
                     <p><strong>Seasonal Notes:</strong> <?= $tip['season_info']['notes'] ?></p>
@@ -720,22 +661,63 @@ function renderCuisineGrid($cuisine) {
             </div>
         </section>
 
-        <!-- Places to Visit Section -->
         <section class="section">
             <h2><i class="fas fa-map-marker-alt"></i>Places to Visit</h2>
             <div class="places-container">
                 <?php foreach ($tip['places'] as $place): ?>
-                    <?= renderPlaceCard($place) ?>
+                    <?php if (is_array($place) && isset($place['day'])): ?>
+                        <div class="place-card">
+                            <div class="place-header">
+                                <span class="place-day"><?= htmlspecialchars($place['day']) ?></span>
+                            </div>
+                            <div class="place-content">
+                                <div class="place-text">
+                                    <p><?= $place['description'] ?></p>
+                                </div>
+                                <?php if (isset($place['images']) && count($place['images']) > 0): ?>
+                                    <div class="place-image">
+                                        <?php if (count($place['images']) == 1): ?>
+                                            <img src="<?= htmlspecialchars($place['images'][0]) ?>" alt="<?= htmlspecialchars($place['day']) ?>">
+                                        <?php else: ?>
+                                            <div class="photo-carousel" data-images='<?= json_encode($place['images']) ?>'>
+                                                <div class="carousel-container">
+                                                    <div class="carousel-track">
+                                                        <?php foreach ($place['images'] as $index => $image): ?>
+                                                            <div class="carousel-slide">
+                                                                <img src="<?= htmlspecialchars($image) ?>" alt="<?= htmlspecialchars($place['day']) ?> - Photo <?= $index + 1 ?>">
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                    <button class="carousel-controls carousel-prev" aria-label="Previous image">‹</button>
+                                                    <button class="carousel-controls carousel-next" aria-label="Next image">›</button>
+                                                    <div class="carousel-indicators">
+                                                        <?php foreach ($place['images'] as $index => $image): ?>
+                                                            <div class="carousel-dot <?= $index === 0 ? 'active' : '' ?>" data-slide="<?= $index ?>"></div>
+                                                        <?php endforeach; ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    <?php else: ?>
+                        <div class="place-simple">
+                            <p><?= $place ?></p>
+                        </div>
+                    <?php endif; ?>
                 <?php endforeach; ?>
             </div>
         </section>
 
-        <!-- Accommodation & Cuisine Dual Section -->
         <div class="dual-section">
             <section class="section accommodation-section">
                 <h2><i class="fas fa-bed"></i>Accommodation</h2>
                 <div class="accommodation-content">
                     <p><?= $tip['accommodation'] ?></p>
+                    
+                    <!-- Mini Map for Accommodation -->
                     <div class="mini-map-container">
                         <div id="accommodationMap" class="mini-map"></div>
                         <button class="map-expand-btn" onclick="openMapModal()">
@@ -747,11 +729,33 @@ function renderCuisineGrid($cuisine) {
 
             <section class="section cuisine-section">
                 <h2><i class="fas fa-utensils"></i>Local Cuisine</h2>
-                <?= renderCuisineGrid($tip['cuisine']) ?>
+                <div class="cuisine-grid">
+                    <?php if (isset($tip['cuisine'][0]) && is_array($tip['cuisine'][0])): ?>
+                        <?php foreach ($tip['cuisine'] as $dish): ?>
+                            <div class="cuisine-card">
+                                <?php if (isset($dish['image'])): ?>
+                                    <div class="cuisine-image">
+                                        <img src="<?= htmlspecialchars($dish['image']) ?>" alt="<?= htmlspecialchars($dish['name']) ?>">
+                                    </div>
+                                <?php endif; ?>
+                                <div class="cuisine-name">
+                                    <p><?= htmlspecialchars($dish['name']) ?></p>
+                                </div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <div class="cuisine-list">
+                            <?php foreach ($tip['cuisine'] as $dish): ?>
+                                <div class="cuisine-item-simple">
+                                    <p><?= $dish ?></p>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+                    <?php endif; ?>
+                </div>
             </section>
         </div>
 
-        <!-- Shopping & Tips Sections -->
         <section class="section">
             <h2><i class="fas fa-shopping-bag"></i>Shopping & Souvenirs</h2>
             <p><?= $tip['shopping'] ?></p>
@@ -777,62 +781,86 @@ function renderCuisineGrid($cuisine) {
     </div>
     
     <script>
-        // Initialize everything when DOM is loaded
+        // Photo carousel functionality
         document.addEventListener('DOMContentLoaded', function() {
             initializeCarousels();
             initializeMap();
-            initializeCalendarInteraction();
         });
 
-        // Carousel functionality
         function initializeCarousels() {
-            document.querySelectorAll('.photo-carousel').forEach(initializeCarousel);
-        }
-
-        function initializeCarousel(carousel) {
-            const track = carousel.querySelector('.carousel-track');
-            const slides = carousel.querySelectorAll('.carousel-slide');
-            const prevBtn = carousel.querySelector('.carousel-prev');
-            const nextBtn = carousel.querySelector('.carousel-next');
-            const dots = carousel.querySelectorAll('.carousel-dot');
+            const carousels = document.querySelectorAll('.photo-carousel');
             
-            let currentSlide = 0;
-            let autoSlideInterval;
-            
-            const updateCarousel = () => {
-                track.style.transform = `translateX(${-currentSlide * 100}%)`;
-                dots.forEach((dot, index) => dot.classList.toggle('active', index === currentSlide));
-            };
-            
-            const nextSlide = () => {
-                currentSlide = (currentSlide + 1) % slides.length;
-                updateCarousel();
-            };
-            
-            const prevSlide = () => {
-                currentSlide = (currentSlide - 1 + slides.length) % slides.length;
-                updateCarousel();
-            };
-            
-            const goToSlide = (index) => {
-                currentSlide = index;
-                updateCarousel();
-            };
-            
-            const startAutoSlide = () => autoSlideInterval = setInterval(nextSlide, 4000);
-            const stopAutoSlide = () => clearInterval(autoSlideInterval);
-            
-            // Event listeners
-            nextBtn.addEventListener('click', () => { stopAutoSlide(); nextSlide(); startAutoSlide(); });
-            prevBtn.addEventListener('click', () => { stopAutoSlide(); prevSlide(); startAutoSlide(); });
-            dots.forEach((dot, index) => {
-                dot.addEventListener('click', () => { stopAutoSlide(); goToSlide(index); startAutoSlide(); });
+            carousels.forEach(carousel => {
+                const track = carousel.querySelector('.carousel-track');
+                const slides = carousel.querySelectorAll('.carousel-slide');
+                const prevBtn = carousel.querySelector('.carousel-prev');
+                const nextBtn = carousel.querySelector('.carousel-next');
+                const dots = carousel.querySelectorAll('.carousel-dot');
+                
+                let currentSlide = 0;
+                let autoSlideInterval;
+                
+                function updateCarousel() {
+                    const translateX = -currentSlide * 100;
+                    track.style.transform = `translateX(${translateX}%)`;
+                    
+                    // Update dots
+                    dots.forEach((dot, index) => {
+                        dot.classList.toggle('active', index === currentSlide);
+                    });
+                }
+                
+                function nextSlide() {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    updateCarousel();
+                }
+                
+                function prevSlide() {
+                    currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+                    updateCarousel();
+                }
+                
+                function goToSlide(index) {
+                    currentSlide = index;
+                    updateCarousel();
+                }
+                
+                function startAutoSlide() {
+                    autoSlideInterval = setInterval(nextSlide, 4000);
+                }
+                
+                function stopAutoSlide() {
+                    clearInterval(autoSlideInterval);
+                }
+                
+                // Event listeners
+                nextBtn.addEventListener('click', () => {
+                    stopAutoSlide();
+                    nextSlide();
+                    startAutoSlide();
+                });
+                
+                prevBtn.addEventListener('click', () => {
+                    stopAutoSlide();
+                    prevSlide();
+                    startAutoSlide();
+                });
+                
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        stopAutoSlide();
+                        goToSlide(index);
+                        startAutoSlide();
+                    });
+                });
+                
+                // Pause on hover
+                carousel.addEventListener('mouseenter', stopAutoSlide);
+                carousel.addEventListener('mouseleave', startAutoSlide);
+                
+                // Start auto-slide
+                startAutoSlide();
             });
-            
-            carousel.addEventListener('mouseenter', stopAutoSlide);
-            carousel.addEventListener('mouseleave', startAutoSlide);
-            
-            startAutoSlide();
         }
 
         // Map functionality
@@ -842,62 +870,80 @@ function renderCuisineGrid($cuisine) {
         function initializeMap() {
             if (!coordinates) return;
 
+            // Initialize mini map
             miniMap = L.map('accommodationMap', {
-                zoomControl: false, scrollWheelZoom: false, doubleClickZoom: false,
-                boxZoom: false, keyboard: false, dragging: false
-            }).setView([<?= $coordinates['latitude'] ?>, <?= $coordinates['longitude'] ?>], 12);
+                zoomControl: false,
+                scrollWheelZoom: false,
+                doubleClickZoom: false,
+                boxZoom: false,
+                keyboard: false,
+                dragging: false
+            }).setView([coordinates.latitude, coordinates.longitude], 12);
 
             L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '© OpenStreetMap contributors'
             }).addTo(miniMap);
 
+            // Add marker
             const mainIcon = L.divIcon({
                 className: 'custom-marker',
                 html: '<div class="marker-pin main-pin">📍</div>',
-                iconSize: [30, 30], iconAnchor: [15, 30]
+                iconSize: [30, 30],
+                iconAnchor: [15, 30]
             });
 
-            L.marker([<?= $coordinates['latitude'] ?>, <?= $coordinates['longitude'] ?>], { icon: mainIcon })
-                .addTo(miniMap).bindPopup('<?= htmlspecialchars($tip['about_title']) ?>');
+            L.marker([coordinates.latitude, coordinates.longitude], {
+                icon: mainIcon
+            }).addTo(miniMap).bindPopup('<?= htmlspecialchars($tip['about_title']) ?>');
         }
 
         function openMapModal() {
             document.getElementById('mapModal').style.display = 'flex';
             
             setTimeout(() => {
-                if (largeMap) largeMap.remove();
+                if (largeMap) {
+                    largeMap.remove();
+                }
                 
-                largeMap = L.map('largeMap').setView([<?= $coordinates['latitude'] ?>, <?= $coordinates['longitude'] ?>], 13);
+                largeMap = L.map('largeMap').setView([coordinates.latitude, coordinates.longitude], 13);
+
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '© OpenStreetMap contributors'
                 }).addTo(largeMap);
 
+                // Add main location marker
                 const mainIcon = L.divIcon({
                     className: 'custom-marker',
                     html: '<div class="marker-pin main-pin">📍</div>',
-                    iconSize: [40, 40], iconAnchor: [20, 40]
+                    iconSize: [40, 40],
+                    iconAnchor: [20, 40]
                 });
 
-                L.marker([<?= $coordinates['latitude'] ?>, <?= $coordinates['longitude'] ?>], { icon: mainIcon })
-                    .addTo(largeMap).bindPopup('<b><?= htmlspecialchars($tip['about_title']) ?></b><br>Main destination area');
+                L.marker([coordinates.latitude, coordinates.longitude], {
+                    icon: mainIcon
+                }).addTo(largeMap).bindPopup('<b><?= htmlspecialchars($tip['about_title']) ?></b><br>Main destination area');
 
-                // Add sample hotel markers
+                // Add some sample hotel markers around the area
                 const hotelIcon = L.divIcon({
                     className: 'custom-marker',
                     html: '<div class="marker-pin nearby-pin">🏨</div>',
-                    iconSize: [30, 30], iconAnchor: [15, 30]
+                    iconSize: [30, 30],
+                    iconAnchor: [15, 30]
                 });
 
+                // Sample nearby hotels (you can replace with real data)
                 const sampleHotels = [
-                    { lat: <?= $coordinates['latitude'] + 0.01 ?>, lng: <?= $coordinates['longitude'] + 0.01 ?>, name: 'Luxury Hotel A' },
-                    { lat: <?= $coordinates['latitude'] - 0.01 ?>, lng: <?= $coordinates['longitude'] + 0.01 ?>, name: 'Budget Hotel B' },
-                    { lat: <?= $coordinates['latitude'] + 0.01 ?>, lng: <?= $coordinates['longitude'] - 0.01 ?>, name: 'Boutique Hotel C' }
+                    { lat: coordinates.latitude + 0.01, lng: coordinates.longitude + 0.01, name: 'Luxury Hotel A' },
+                    { lat: coordinates.latitude - 0.01, lng: coordinates.longitude + 0.01, name: 'Budget Hotel B' },
+                    { lat: coordinates.latitude + 0.01, lng: coordinates.longitude - 0.01, name: 'Boutique Hotel C' }
                 ];
 
                 sampleHotels.forEach(hotel => {
-                    L.marker([hotel.lat, hotel.lng], { icon: hotelIcon })
-                        .addTo(largeMap).bindPopup(`<b>${hotel.name}</b><br>Accommodation option`);
+                    L.marker([hotel.lat, hotel.lng], {
+                        icon: hotelIcon
+                    }).addTo(largeMap).bindPopup(`<b>${hotel.name}</b><br>Accommodation option`);
                 });
+
             }, 100);
         }
 
@@ -905,22 +951,23 @@ function renderCuisineGrid($cuisine) {
             document.getElementById('mapModal').style.display = 'none';
         }
 
-        // Calendar interaction
-        function initializeCalendarInteraction() {
-            document.querySelectorAll('.month-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const monthName = this.querySelector('.month-name').textContent;
-                    const status = this.querySelector('.month-status').textContent;
-                    alert(`${monthName} <?= $currentYear ?>\nTravel Status: ${status}\n\n<?= addslashes($tip['season_info']['notes']) ?>`);
-                });
-            });
-        }
-
         // Close modal when clicking outside
         window.addEventListener('click', function(event) {
-            if (event.target === document.getElementById('mapModal')) {
+            const modal = document.getElementById('mapModal');
+            if (event.target === modal) {
                 closeMapModal();
             }
+        });
+
+        // Calendar interactivity
+        document.querySelectorAll('.month-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const month = this.dataset.month;
+                const monthName = this.querySelector('.month-name').textContent;
+                const status = this.querySelector('.month-status').textContent;
+                
+                alert(`${monthName} <?= $currentYear ?>\nTravel Status: ${status}\n\n<?= addslashes($tip['season_info']['notes']) ?>`);
+            });
         });
     </script>
     

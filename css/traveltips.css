@@ -1,46 +1,27 @@
 /* Import Font Awesome */
 @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css');
 
-/* Vibrant Color Palette - Multi-color Formal Theme */
+/* Color Palette - Refined White Theme */
 :root {
-    /* Primary Brand Colors */
-    --brand-blue: #0066cc;
-    --brand-light-blue: #3385d6;
-    --brand-hover-blue: #0052a3;
-    
-    /* Accent Colors */
-    --accent-coral: #ff6b6b;
-    --accent-emerald: #4ecdc4;
-    --accent-sunset: #ffa726;
-    --accent-violet: #9c27b0;
-    --accent-mint: #26c6da;
-    --accent-rose: #ec407a;
-    
-    /* Seasonal Colors */
-    --good-season: #4CAF50;
-    --ok-season: #FF9800;
-    --bad-season: #f44336;
-    
-    /* Neutral Colors */
+    --primary-blue: #0066cc;
+    --light-blue: #3385d6;
+    --hover-blue: #0052a3;
+    --gradient-start: #0066cc;
+    --gradient-end: #3385d6;
     --text-dark: #2c3e50;
     --text-light: #ffffff;
-    --background-start: #f8faff;
-    --background-end: #e8f2ff;
-    --card-background: rgba(255, 255, 255, 0.9);
-    --border-light: #e1e8f0;
+    --background-start: #f7f9fc;
+    --background-end: #eef2f7;
+    --card-background: rgba(255, 255, 255, 0.85);
+    --border-light: #dfe6ec;
     --shadow-light: rgba(44, 62, 80, 0.08);
     --shadow-medium: rgba(44, 62, 80, 0.15);
     --shadow-hover: rgba(44, 62, 80, 0.2);
-    --navbar-bg: rgba(255, 255, 255, 0.85);
+    --navbar-bg: rgba(255, 255, 255, 0.8);
+    --good-season: #4CAF50;
+    --ok-season: #FF9800;
+    --bad-season: #f44336;
     --pale-blue: #e8f4fd;
-    
-    /* Gradient Combinations */
-    --gradient-coral: linear-gradient(135deg, #ff6b6b, #ffa726);
-    --gradient-ocean: linear-gradient(135deg, #4ecdc4, #26c6da);
-    --gradient-sunset: linear-gradient(135deg, #ffa726, #ff8a65);
-    --gradient-purple: linear-gradient(135deg, #9c27b0, #673ab7);
-    --gradient-green: linear-gradient(135deg, #4CAF50, #8bc34a);
-    --gradient-blue: linear-gradient(135deg, var(--brand-blue), var(--brand-light-blue));
 }
 
 /* General Styles */
@@ -62,6 +43,7 @@ body {
     min-height: 100vh;
 }
 
+
 /* Modern Header Styles */
 header {
     display: flex;
@@ -79,12 +61,12 @@ header {
     height: 70px;
 }
 
-/* Logo Styles - Keep Blue for "Viettransit" */
+/* Logo Styles */
 .logo {
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--brand-blue);
+    color: var(--primary-blue);
     font-weight: 700;
     font-size: 1.4rem;
     transition: all 0.3s ease;
@@ -102,7 +84,7 @@ header {
     border: 2px solid rgba(0, 102, 204, 0.3);
 }
 
-/* Colorful Navigation */
+/* Evenly Spaced Navigation */
 .navbar {
     display: flex;
     flex: 1;
@@ -124,48 +106,18 @@ header {
     overflow: hidden;
 }
 
-.navbar a:nth-child(1):hover {
-    background: var(--gradient-coral);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-}
-
-.navbar a:nth-child(2):hover {
-    background: var(--gradient-ocean);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
-}
-
-.navbar a:nth-child(3):hover {
-    background: var(--gradient-sunset);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(255, 167, 38, 0.4);
-}
-
-.navbar a:nth-child(4):hover {
-    background: var(--gradient-purple);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(156, 39, 176, 0.4);
-}
-
-.navbar a:nth-child(5):hover {
-    background: var(--gradient-green);
-    color: white;
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(76, 175, 80, 0.4);
+.navbar a:hover {
+    color: var(--primary-blue);
+    background-color: var(--pale-blue);
 }
 
 .navbar a.active {
-    background: var(--gradient-blue);
+    background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
     color: white;
     box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
 }
 
-/* Colorful Icons */
+/* Icons */
 .icons {
     display: flex;
     gap: 12px;
@@ -183,28 +135,12 @@ header {
     border: 1px solid var(--border-light);
 }
 
-.icons a:nth-child(1):hover {
-    background: var(--accent-coral);
-    color: white;
+.icons a:hover {
+    background: var(--pale-blue);
+    color: var(--primary-blue);
     transform: translateY(-2px) scale(1.1);
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
-    border-color: var(--accent-coral);
-}
-
-.icons a:nth-child(2):hover {
-    background: var(--accent-emerald);
-    color: white;
-    transform: translateY(-2px) scale(1.1);
-    box-shadow: 0 4px 12px rgba(78, 205, 196, 0.3);
-    border-color: var(--accent-emerald);
-}
-
-.icons a:nth-child(3):hover {
-    background: var(--accent-sunset);
-    color: white;
-    transform: translateY(-2px) scale(1.1);
-    box-shadow: 0 4px 12px rgba(255, 167, 38, 0.3);
-    border-color: var(--accent-sunset);
+    box-shadow: 0 4px 12px var(--shadow-light);
+    border-color: var(--light-blue);
 }
 
 /* Toggle Menu */
@@ -225,10 +161,10 @@ header {
 }
 
 .fas.fa-bars:hover {
-    background: var(--gradient-coral);
-    color: white;
+    background: var(--pale-blue);
+    color: var(--primary-blue);
     transform: scale(1.1);
-    border-color: var(--accent-coral);
+    border-color: var(--light-blue);
 }
 
 /* Main Container */
@@ -238,9 +174,9 @@ header {
     padding: 0 20px;
 }
 
-/* Colorful Page Title */
+/* Page Title */
 .page-title {
-    background: var(--gradient-coral);
+    background: linear-gradient(45deg, var(--primary-blue), var(--light-blue));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -248,10 +184,9 @@ header {
     margin-bottom: 2rem;
     font-size: 2.8rem;
     font-weight: 800;
-    text-shadow: 0 2px 4px rgba(255, 107, 107, 0.2);
 }
 
-/* Colorful Section Styles */
+/* Modern Section Styles */
 .section {
     background: var(--card-background);
     backdrop-filter: blur(5px);
@@ -266,31 +201,13 @@ header {
     overflow: hidden;
 }
 
-.section::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--gradient-coral);
-    border-radius: 20px 20px 0 0;
-}
-
-.section:nth-child(2)::before { background: var(--gradient-ocean); }
-.section:nth-child(3)::before { background: var(--gradient-sunset); }
-.section:nth-child(4)::before { background: var(--gradient-purple); }
-.section:nth-child(5)::before { background: var(--gradient-green); }
-.section:nth-child(6)::before { background: var(--gradient-blue); }
-.section:nth-child(7)::before { background: var(--gradient-coral); }
-
 .section:hover {
     box-shadow: 0 12px 50px var(--shadow-hover);
     transform: translateY(-5px);
 }
 
 .section h2 {
-    color: var(--accent-coral);
+    color: var(--primary-blue);
     margin-bottom: 2rem;
     font-size: 1.8rem;
     font-weight: 700;
@@ -301,13 +218,6 @@ header {
     padding-bottom: 0.5rem;
 }
 
-.section:nth-child(2) h2 { color: var(--accent-emerald); }
-.section:nth-child(3) h2 { color: var(--accent-sunset); }
-.section:nth-child(4) h2 { color: var(--accent-violet); }
-.section:nth-child(5) h2 { color: var(--good-season); }
-.section:nth-child(6) h2 { color: var(--brand-blue); }
-.section:nth-child(7) h2 { color: var(--accent-rose); }
-
 .section h2::after {
     content: '';
     position: absolute;
@@ -315,28 +225,14 @@ header {
     left: 0;
     width: 50px;
     height: 3px;
-    background: var(--gradient-coral);
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
     border-radius: 2px;
 }
 
-.section:nth-child(2) h2::after { background: var(--gradient-ocean); }
-.section:nth-child(3) h2::after { background: var(--gradient-sunset); }
-.section:nth-child(4) h2::after { background: var(--gradient-purple); }
-.section:nth-child(5) h2::after { background: var(--gradient-green); }
-.section:nth-child(6) h2::after { background: var(--gradient-blue); }
-.section:nth-child(7) h2::after { background: var(--gradient-coral); }
-
 .section h2 i {
-    color: var(--accent-coral);
+    color: var(--light-blue);
     font-size: 1.6rem;
 }
-
-.section:nth-child(2) h2 i { color: var(--accent-emerald); }
-.section:nth-child(3) h2 i { color: var(--accent-sunset); }
-.section:nth-child(4) h2 i { color: var(--accent-violet); }
-.section:nth-child(5) h2 i { color: var(--good-season); }
-.section:nth-child(6) h2 i { color: var(--brand-blue); }
-.section:nth-child(7) h2 i { color: var(--accent-rose); }
 
 /* About Content */
 .about-content {
@@ -346,7 +242,7 @@ header {
     text-align: justify;
 }
 
-/* Colorful Content Grid */
+/* Content Grid */
 .content-grid {
     display: grid;
     gap: 1.5rem;
@@ -357,15 +253,10 @@ header {
     background: var(--card-background);
     padding: 1.5rem;
     border-radius: 12px;
-    border-left: 4px solid var(--accent-emerald);
+    border-left: 4px solid var(--light-blue);
     transition: all 0.3s ease;
     box-shadow: 0 2px 10px var(--shadow-light);
     border: 1px solid var(--border-light);
-}
-
-.transport-item:nth-child(even),
-.time-item:nth-child(even) {
-    border-left-color: var(--accent-coral);
 }
 
 .transport-item:hover,
@@ -374,7 +265,7 @@ header {
     box-shadow: 0 4px 15px var(--shadow-medium);
 }
 
-/* Colorful Calendar Section */
+/* Calendar Section */
 .calendar-section {
     padding: 2.5rem;
 }
@@ -387,10 +278,7 @@ header {
 .calendar-year {
     font-size: 1.8rem;
     font-weight: 700;
-    background: var(--gradient-sunset);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--primary-blue);
 }
 
 .calendar-grid {
@@ -419,25 +307,13 @@ header {
     z-index: 10;
 }
 
-.month-item.good-season { 
-    border-top: 5px solid var(--good-season);
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.05), rgba(139, 195, 74, 0.05));
-}
-
-.month-item.ok-season { 
-    border-top: 5px solid var(--ok-season);
-    background: linear-gradient(135deg, rgba(255, 152, 0, 0.05), rgba(255, 167, 38, 0.05));
-}
-
-.month-item.bad-season { 
-    border-top: 5px solid var(--bad-season);
-    background: linear-gradient(135deg, rgba(244, 67, 54, 0.05), rgba(255, 107, 107, 0.05));
-}
+.month-item.good-season { border-top: 5px solid var(--good-season); }
+.month-item.ok-season { border-top: 5px solid var(--ok-season); }
+.month-item.bad-season { border-top: 5px solid var(--bad-season); }
 
 .month-item.current-month {
     animation: pulse 2s infinite;
-    border: 2px solid var(--accent-mint);
-    background: linear-gradient(135deg, rgba(38, 198, 218, 0.1), rgba(78, 205, 196, 0.1));
+    border: 2px solid var(--primary-blue);
 }
 
 @keyframes pulse {
@@ -457,9 +333,17 @@ header {
     text-transform: uppercase;
 }
 
-.good-season .month-status { color: var(--good-season); }
-.ok-season .month-status { color: var(--ok-season); }
-.bad-season .month-status { color: var(--bad-season); }
+.good-season .month-status {
+    color: var(--good-season);
+}
+
+.ok-season .month-status {
+    color: var(--ok-season);
+}
+
+.bad-season .month-status {
+    color: var(--bad-season);
+}
 
 .calendar-legend {
     display: flex;
@@ -485,7 +369,87 @@ header {
 .legend-dot.ok { background: var(--ok-season); }
 .legend-dot.bad { background: var(--bad-season); }
 
-/* Colorful Photo Carousel */
+/* Daily Calendar Modal */
+#daily-calendar-modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    justify-content: center;
+    align-items: center;
+}
+
+.daily-calendar-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 600px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+    position: relative;
+}
+
+.daily-calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-light);
+}
+
+#calendar-month-year {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+#close-calendar-modal {
+    font-size: 2rem;
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: #888;
+}
+#close-calendar-modal:hover { color: #333; }
+
+.calendar-grid-daily {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+}
+
+.day-header, .day-cell {
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.day-header {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+.day-cell {
+    background: #f4f4f4;
+    transition: all 0.2s;
+}
+
+.day-cell:not(.empty):hover {
+    transform: scale(1.1);
+    font-weight: bold;
+}
+
+.day-cell.good-day { background-color: rgba(76, 175, 80, 0.2); color: #388E3C; }
+.day-cell.ok-day { background-color: rgba(255, 152, 0, 0.2); color: #F57C00; }
+.day-cell.bad-day { background-color: rgba(244, 67, 54, 0.2); color: #D32F2F; }
+.day-cell.current-day { border: 2px solid var(--primary-blue); font-weight: bold; }
+.day-cell.empty { background: transparent; }
+
+/* Photo Carousel */
 .photo-carousel {
     position: relative;
     width: 100%;
@@ -532,15 +496,14 @@ header {
     justify-content: center;
     cursor: pointer;
     font-size: 1.2rem;
-    color: var(--accent-coral);
+    color: var(--primary-blue);
     transition: all 0.3s ease;
     z-index: 10;
 }
 
 .carousel-controls:hover {
-    background: var(--accent-coral);
-    color: white;
-    box-shadow: 0 4px 12px rgba(255, 107, 107, 0.4);
+    background: white;
+    box-shadow: 0 4px 12px var(--shadow-medium);
     transform: translateY(-50%) scale(1.1);
 }
 
@@ -572,11 +535,11 @@ header {
 }
 
 .carousel-dot.active {
-    background: var(--accent-coral);
-    transform: scale(1.5);
+    background: white;
+    transform: scale(1.3);
 }
 
-/* Colorful Places Container */
+/* Places Container - Updated */
 .places-container {
     display: grid;
     gap: 2rem;
@@ -596,28 +559,8 @@ header {
     box-shadow: 0 12px 40px var(--shadow-medium);
 }
 
-.place-card:nth-child(1) .place-header {
-    background: var(--gradient-coral);
-}
-
-.place-card:nth-child(2) .place-header {
-    background: var(--gradient-ocean);
-}
-
-.place-card:nth-child(3) .place-header {
-    background: var(--gradient-sunset);
-}
-
-.place-card:nth-child(4) .place-header {
-    background: var(--gradient-purple);
-}
-
-.place-card:nth-child(5) .place-header {
-    background: var(--gradient-green);
-}
-
 .place-header {
-    background: var(--gradient-coral);
+    background: linear-gradient(135deg, var(--gradient-start), var(--gradient-end));
     padding: 1.2rem 2rem;
 }
 
@@ -664,12 +607,12 @@ header {
     background: var(--card-background);
     padding: 2rem;
     border-radius: 12px;
-    border-left: 4px solid var(--accent-emerald);
+    border-left: 4px solid var(--light-blue);
     box-shadow: 0 2px 10px var(--shadow-light);
     border: 1px solid var(--border-light);
 }
 
-/* Colorful Dual Section Layout */
+/* Dual Section Layout */
 .dual-section {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -682,19 +625,19 @@ header {
     margin: 0;
 }
 
-/* Colorful Mini Map Styles */
+/* Mini Map Styles */
 .mini-map-container {
     margin-top: 1.5rem;
     border-radius: 12px;
     overflow: hidden;
     box-shadow: 0 4px 15px var(--shadow-light);
     border: 1px solid var(--border-light);
-    height: 350px;
+    height: 350px; /* Increased height */
     position: relative;
 }
 
 .mini-map {
-    height: 100%;
+    height: 100%; /* Fill the container */
     width: 100%;
 }
 
@@ -702,13 +645,12 @@ header {
     position: absolute;
     top: 10px;
     right: 10px;
-    background: var(--gradient-mint);
     background: rgba(255, 255, 255, 0.95);
     border: none;
     border-radius: 8px;
     padding: 0.5rem 1rem;
     font-size: 0.85rem;
-    color: var(--accent-mint);
+    color: var(--primary-blue);
     cursor: pointer;
     z-index: 1000;
     transition: all 0.3s ease;
@@ -716,13 +658,12 @@ header {
 }
 
 .map-expand-btn:hover {
-    background: var(--accent-mint);
-    color: white;
+    background: white;
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(38, 198, 218, 0.4);
+    box-shadow: 0 4px 12px var(--shadow-medium);
 }
 
-/* Colorful Map Modal */
+/* Map Modal */
 .map-modal {
     display: none;
     position: fixed;
@@ -749,7 +690,7 @@ header {
 }
 
 .map-modal-header {
-    background: var(--gradient-ocean);
+    background: linear-gradient(90deg, var(--gradient-start), var(--gradient-end));
     color: white;
     padding: 1rem 2rem;
     display: flex;
@@ -783,7 +724,7 @@ header {
     height: calc(100% - 80px);
 }
 
-/* Colorful Cuisine Grid */
+/* Cuisine Grid */
 .cuisine-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -798,22 +739,7 @@ header {
     transition: all 0.3s ease;
     box-shadow: 0 3px 15px var(--shadow-light);
     border: 1px solid var(--border-light);
-    position: relative;
 }
-
-.cuisine-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--gradient-coral);
-}
-
-.cuisine-card:nth-child(2)::before { background: var(--gradient-ocean); }
-.cuisine-card:nth-child(3)::before { background: var(--gradient-sunset); }
-.cuisine-card:nth-child(4)::before { background: var(--gradient-purple); }
 
 .cuisine-card:hover {
     transform: translateY(-6px);
@@ -843,14 +769,10 @@ header {
 
 .cuisine-name p {
     font-weight: 600;
-    color: var(--accent-coral);
+    color: var(--primary-blue);
     font-size: 1rem;
     margin: 0;
 }
-
-.cuisine-card:nth-child(2) .cuisine-name p { color: var(--accent-emerald); }
-.cuisine-card:nth-child(3) .cuisine-name p { color: var(--accent-sunset); }
-.cuisine-card:nth-child(4) .cuisine-name p { color: var(--accent-violet); }
 
 .cuisine-list {
     display: grid;
@@ -861,14 +783,10 @@ header {
     background: var(--card-background);
     padding: 1.2rem;
     border-radius: 8px;
-    border-left: 3px solid var(--accent-emerald);
+    border-left: 3px solid var(--light-blue);
     transition: all 0.3s ease;
     box-shadow: 0 2px 8px var(--shadow-light);
     border: 1px solid var(--border-light);
-}
-
-.cuisine-item-simple:nth-child(even) {
-    border-left-color: var(--accent-coral);
 }
 
 .cuisine-item-simple:hover {
@@ -876,10 +794,10 @@ header {
     box-shadow: 0 4px 12px var(--shadow-medium);
 }
 
-/* Colorful Tips Section */
+/* Tips Section */
 .tips-section {
     background: var(--card-background);
-    border: 2px solid var(--accent-rose);
+    border: 2px solid var(--light-blue);
 }
 
 .tips-content {
@@ -887,113 +805,8 @@ header {
     padding: 1.5rem;
     background: var(--card-background);
     border-radius: 8px;
-    border-left: 4px solid var(--accent-rose);
+    border-left: 4px solid var(--primary-blue);
 }
-
-/* Daily Calendar Modal */
-#daily-calendar-modal {
-    display: none;
-    position: fixed;
-    z-index: 2000;
-    left: 0; top: 0;
-    width: 100%; height: 100%;
-    background-color: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(8px);
-    justify-content: center;
-    align-items: center;
-}
-
-.daily-calendar-content {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-    position: relative;
-}
-
-.daily-calendar-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border-light);
-}
-
-#calendar-month-year {
-    font-size: 1.5rem;
-    font-weight: 600;
-    background: var(--gradient-sunset);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-#close-calendar-modal {
-    font-size: 2rem;
-    cursor: pointer;
-    border: none;
-    background: none;
-    color: var(--accent-coral);
-    transition: all 0.3s ease;
-}
-
-#close-calendar-modal:hover { 
-    color: var(--accent-rose);
-    transform: scale(1.1);
-}
-
-.calendar-grid-daily {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    gap: 8px;
-    text-align: center;
-}
-
-.day-header, .day-cell {
-    padding: 0.5rem;
-    border-radius: 8px;
-}
-
-.day-header {
-    font-weight: 600;
-    color: var(--accent-emerald);
-}
-
-.day-cell {
-    background: #f4f4f4;
-    transition: all 0.2s;
-}
-
-.day-cell:not(.empty):hover {
-    transform: scale(1.1);
-    font-weight: bold;
-}
-
-.day-cell.good-day { 
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.2), rgba(139, 195, 74, 0.2)); 
-    color: #388E3C; 
-}
-
-.day-cell.ok-day { 
-    background: linear-gradient(135deg, rgba(255, 152, 0, 0.2), rgba(255, 167, 38, 0.2)); 
-    color: #F57C00; 
-}
-
-.day-cell.bad-day { 
-    background: linear-gradient(135deg, rgba(244, 67, 54, 0.2), rgba(255, 107, 107, 0.2)); 
-    color: #D32F2F; 
-}
-
-.day-cell.current-day { 
-    border: 2px solid var(--accent-mint); 
-    font-weight: bold;
-    background: linear-gradient(135deg, rgba(38, 198, 218, 0.2), rgba(78, 205, 196, 0.2));
-}
-
-.day-cell.empty { background: transparent; }
 
 /* Responsive Design */
 @media (max-width: 1024px) {
@@ -1003,89 +816,21 @@ header {
     .calendar-grid {
         grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
     }
-    .place-content {
-        grid-template-columns: 1fr;
-        gap: 1.5rem;
-    }
-    .place-image {
-        order: -1;
-    }
 }
 
 @media (max-width: 768px) {
-    .fas.fa-bars { 
-        display: block; 
-    }
-    
-    .navbar { 
-        display: none;
-        position: absolute;
-        top: 100%;
-        left: 0;
-        width: 100%;
-        background: var(--navbar-bg);
-        flex-direction: column;
-        padding: 1rem;
-        box-shadow: 0 4px 20px var(--shadow-medium);
-        border-radius: 0 0 15px 15px;
-    }
-    
-    #toggler:checked ~ .navbar { 
-        display: flex; 
-    }
+    .fas.fa-bars { display: block; }
+    .navbar { display: none; /* Other styles remain */ }
+    #toggler:checked ~ .navbar { display: flex; }
 
-    header { 
-        flex-wrap: wrap; 
-        height: auto;
-        min-height: 70px;
-    }
-    
-    .page-title { 
-        font-size: 2.2rem; 
-    }
-    
-    .section { 
-        padding: 2rem; 
-    }
-    
-    .cuisine-grid {
-        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    }
-    
-    .calendar-grid {
-        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-        gap: 1rem;
-    }
+    header { flex-wrap: wrap; }
+    .page-title { font-size: 2.2rem; }
+    .section { padding: 2rem; }
 }
 
 @media (max-width: 480px) {
-    .section { 
-        padding: 1.5rem; 
-    }
-    
-    .page-title { 
-        font-size: 2rem; 
-    }
-    
-    .container {
-        padding: 0 15px;
-    }
-    
-    .place-content {
-        padding: 1.5rem;
-    }
-    
-    .cuisine-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .calendar-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-    
-    .legend-item {
-        font-size: 0.8rem;
-    }
+    .section { padding: 1.5rem; }
+    .page-title { font-size: 2rem; }
 }
 
 /* Enhanced Animations */
@@ -1110,34 +855,20 @@ header {
     }
 }
 
-/* Colorful Loading Animation */
-@keyframes colorfulPulse {
-    0% { box-shadow: 0 0 0 0 rgba(255, 107, 107, 0.7); }
-    25% { box-shadow: 0 0 0 10px rgba(78, 205, 196, 0.7); }
-    50% { box-shadow: 0 0 0 20px rgba(255, 167, 38, 0.7); }
-    75% { box-shadow: 0 0 0 30px rgba(156, 39, 176, 0.7); }
-    100% { box-shadow: 0 0 0 40px rgba(255, 107, 107, 0); }
-}
-
-.place-card:hover {
-    animation: colorfulPulse 1.5s infinite;
-}
-
 /* Smooth scrolling */
 html {
     scroll-behavior: smooth;
 }
 
-/* Colorful Selection */
+/* Selection color */
 ::selection {
-    background: var(--gradient-coral);
-    background: rgba(255, 107, 107, 0.3);
-    color: var(--text-dark);
+    background: var(--pale-blue);
+    color: var(--primary-blue);
 }
 
 /* Focus styles for accessibility */
 a:focus, button:focus {
-    outline: 2px solid var(--accent-coral);
+    outline: 2px solid var(--primary-blue);
     outline-offset: 2px;
     border-radius: 4px;
 }
@@ -1151,131 +882,52 @@ img:not([src]) {
     opacity: 0;
 }
 
-/* Colorful Scrollbar styling */
+/* Scrollbar styling */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 8px;
 }
 
 ::-webkit-scrollbar-track {
     background: var(--border-light);
-    border-radius: 5px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: var(--gradient-coral);
-    border-radius: 5px;
+    background: var(--light-blue);
+    border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-    background: var(--gradient-ocean);
+    background: var(--primary-blue);
 }
 
 /* Custom marker styles for map */
-.custom-marker { 
-    background: transparent; 
-    border: none; 
-}
-
-.marker-pin { 
-    font-size: 2.5rem; 
-    text-shadow: 0 2px 4px rgba(0,0,0,0.4); 
-}
-
-.main-pin { 
-    color: var(--accent-coral); 
-}
-
-.hotel-pin { 
-    color: var(--accent-emerald); 
-}
-
-.nearby-pin {
-    color: var(--accent-sunset);
-}
+.custom-marker { background: transparent; border: none; }
+.marker-pin { font-size: 2.5rem; text-shadow: 0 2px 4px rgba(0,0,0,0.4); }
+.main-pin { color: var(--primary-blue); }
+.hotel-pin { color: var(--ok-season); }
 
 .leaflet-popup-content-wrapper {
     border-radius: 10px;
     box-shadow: 0 4px 20px var(--shadow-medium);
-    border: 1px solid var(--border-light);
 }
-
 .leaflet-popup-content {
     font-family: 'Segoe UI', sans-serif;
     margin: 15px !important;
     line-height: 1.5;
 }
-
 .popup-hotel-name {
     font-weight: 700;
-    color: var(--accent-coral);
+    color: var(--primary-blue);
     font-size: 1.1rem;
     margin: 0 0 5px 0;
 }
-
 .popup-hotel-rating {
     font-size: 0.9rem;
-    color: var(--accent-sunset);
+    color: #f5a623;
 }
-
 .popup-hotel-price {
     font-size: 1rem;
     font-weight: 600;
     color: var(--text-dark);
     margin-top: 5px;
-}
-
-/* Special effects for interactive elements */
-.transport-item:hover,
-.time-item:hover,
-.cuisine-item-simple:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 255, 0.9));
-}
-
-.month-item:hover {
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 255, 0.95));
-}
-
-/* Gradient text effects for headings */
-.section h2 {
-    background: var(--gradient-coral);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.section:nth-child(2) h2 { background: var(--gradient-ocean); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.section:nth-child(3) h2 { background: var(--gradient-sunset); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.section:nth-child(4) h2 { background: var(--gradient-purple); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.section:nth-child(5) h2 { background: var(--gradient-green); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.section:nth-child(6) h2 { background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-.section:nth-child(7) h2 { background: var(--gradient-coral); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-
-/* Floating action effects */
-.cuisine-card:hover,
-.place-card:hover,
-.month-item:hover {
-    box-shadow: 
-        0 12px 40px var(--shadow-medium),
-        0 0 20px rgba(255, 107, 107, 0.1),
-        0 0 40px rgba(78, 205, 196, 0.1);
-}
-
-/* Colorful button states */
-button, .btn {
-    transition: all 0.3s ease;
-}
-
-button:hover, .btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px var(--shadow-medium);
-}
-
-/* Enhanced link styles */
-a {
-    transition: all 0.3s ease;
-}
-
-a:not(.logo):not(.navbar a):hover {
-    color: var(--accent-coral);
-    text-shadow: 0 1px 3px rgba(255, 107, 107, 0.3);
 }
