@@ -71,40 +71,40 @@ if (empty($tours)) {
 // City descriptions - you may want to move these to database as well
 $cityDescriptions = [
     'dalat' => [
-        "Dalat enchants visitors with its cool climate, pine-covered hills, vibrant flower gardens, and colonial-era villas. Known as the \"City of Eternal Spring,\" Dalat offers a refreshing retreat with scenic lakes, waterfalls, and a romantic atmosphere that draws both nature lovers and honeymooners year-round.",
-        "Register for a Dalat tour with VietTransit, and you can explore the following iconic attractions: Dalat... To learn more about Dalat, please refer to <a href=\"/Journey/traveltip.php?destination=dalat\" style=\"color: blue;\">Dalat Travel Tips</a>."
+        "Dalat delights travelers with its mild climate, pine-covered hills, colorful flower gardens, and charming French-colonial villas. Nicknamed the \"City of Eternal Spring,\" it offers scenic lakes, waterfalls, and a romantic ambiance ideal for couples and nature lovers.",
+        "Book a Dalat tour with VietTransit and discover iconic spots such as Xuan Huong Lake, Valley of Love, and more. For detailed insights, see our <a href=\"/Journey/traveltip.php?destination=dalat\" style=\"color: blue;\">Dalat Travel Tips</a>."
     ],
     'hagiang' => [
-        "Ha Giang is a breathtaking province in northern Vietnam, known for its majestic mountains, winding passes, and vibrant ethnic cultures. This off-the-beaten-path destination offers dramatic landscapes such as the Dong Van Karst Plateau, Ma Pi Leng Pass, and terraced rice fields in Hoang Su Phi.",
-        "Register for a Ha Giang tour with VietTransit, and you can explore the following must-see destinations: Dong Van, Lung Cu Flag Tower, Ma Pi Leng Pass, and more. To learn more about Ha Giang, please refer to <a href=\"/Journey/traveltip.php?destination=hagiang\" style=\"color: blue;\">Ha Giang Travel Tips</a>."
+        "Ha Giang stirs the soul with its rugged mountain landscapes, terraced fields, and rich ethnic diversity. This remote northern province offers unforgettable experiences along the Dong Van Karst Plateau, Ma Pi Leng Pass, and traditional hill tribe villages.",
+        "Book a Ha Giang tour with VietTransit to explore highlights like Lung Cu Flag Tower, Dong Van Old Town, and Ma Pi Leng Pass. See more in our <a href=\"/Journey/traveltip.php?destination=hagiang\" style=\"color: blue;\">Ha Giang Travel Tips</a>."
     ],
     'hcm' => [
-        "Ho Chi Minh City in the spring is alive with vibrant streets, blooming flowers, and the energetic rhythm of daily life. The city comes to life with the aroma of street food, the sounds of motorbikes, and the warm smiles of the locals.",
-        "Register for a Ho Chi Minh City tour with VietTransit, and you can explore the following popular destinations: Ho Chi Minh City... To learn more about Ho Chi Minh City, please refer to <a href=\"/Journey/traveltip.php?destination=hcm\" style=\"color: blue;\">Ho Chi Minh City Travel Tips</a>."
+        "Ho Chi Minh City buzzes with life — from blooming spring flowers to vibrant street culture. Known for its energy, culinary scene, and dynamic cityscape, it's a fascinating blend of modern progress and historical depth.",
+        "Book a Ho Chi Minh City tour with VietTransit to visit iconic landmarks and vibrant neighborhoods. For details, view our <a href=\"/Journey/traveltip.php?destination=hcm\" style=\"color: blue;\">Ho Chi Minh City Travel Tips</a>."
     ],
     'hoian' => [
-        "Hoi An is a charming ancient town famous for its well-preserved architecture, lantern-lit streets, and rich cultural heritage. This UNESCO World Heritage site offers a unique blend of history, art, and local traditions.",
-        "Register for a Hoi An tour with VietTransit, and you can explore the following must-see destinations: Hoi An... To learn more about Hoi An, please refer to <a href=\"/Journey/traveltip.php?destination=hoian\" style=\"color: blue;\">Hoi An Travel Tips</a>."
+        "Hoi An is a beautifully preserved ancient town famed for its lantern-lit evenings, heritage buildings, and cultural fusion. This UNESCO-listed destination charms visitors with its timeless atmosphere and artisan spirit.",
+        "Book a Hoi An tour with VietTransit to walk through its historic streets and riverside quarters. Learn more from our <a href=\"/Journey/traveltip.php?destination=hoian\" style=\"color: blue;\">Hoi An Travel Tips</a>."
     ],
     'hue' => [
-        "Hue, the ancient imperial capital of Vietnam, is a peaceful city rich in history, culture, and architectural beauty. Nestled along the banks of the Perfume River, Hue enchants visitors with its centuries-old citadels, royal tombs, and serene pagodas.",
-        "Register for a Hue tour with VietTransit and immerse yourself in the city's heritage with visits to the Imperial City, Thien Mu Pagoda, and traditional garden houses. To learn more about Hue's royal legacy and tranquil charm, please refer to <a href=\"/Journey/traveltip.php?destination=hue\" style=\"color: blue;\">Hue Travel Tips</a>."
+        "Hue, Vietnam’s former imperial capital, exudes elegance and history. Nestled by the Perfume River, it features ancient citadels, royal tombs, and pagodas, reflecting the grandeur of the Nguyen Dynasty.",
+        "Book a Hue tour with VietTransit and explore the Imperial City, Thien Mu Pagoda, and traditional garden houses. Discover more in our <a href=\"/Journey/traveltip.php?destination=hue\" style=\"color: blue;\">Hue Travel Tips</a>."
     ],
     'nhatrang' => [
-        "Nha Trang, a coastal gem of Vietnam, is renowned for its pristine beaches, turquoise waters, and vibrant marine life. This seaside city offers a perfect blend of natural beauty and cultural heritage.",
-        "Register for a Nha Trang tour with VietTransit and discover highlights such as Tháp Bà Ponagar, Nhũ Tiên Beach, VinWonders, and traditional pottery villages. To learn more about Nha Trang's unique charm and travel experiences, please refer to <a href=\"/Journey/traveltip.php?destination=nhatrang\" style=\"color: blue;\">Nha Trang Travel Tips</a>."
+        "Nha Trang dazzles with its sun-kissed beaches, turquoise waters, and rich marine biodiversity. This coastal city blends natural splendor with cultural landmarks and modern entertainment.",
+        "Book a Nha Trang tour with VietTransit to explore Ponagar Tower, VinWonders, and local craft villages. For more, see our <a href=\"/Journey/traveltip.php?destination=nhatrang\" style=\"color: blue;\">Nha Trang Travel Tips</a>."
     ],
     'phuquoc' => [
-        "Phu Quoc is a tropical paradise renowned for its pristine beaches, crystal-clear waters, and lush green landscapes. This island offers a perfect blend of relaxation and adventure with vibrant coral reefs, pepper farms, and bustling night markets.",
-        "Register for a Phu Quoc tour with VietTransit, and you can explore the following must-see destinations: Phu Quoc... To learn more about Phu Quoc, please refer to <a href=\"/Journey/traveltip.php?destination=phuquoc\" style=\"color: blue;\">Phu Quoc Travel Tips</a>."
+        "Phu Quoc is a tropical island getaway known for its crystal-clear beaches, lush landscapes, and vibrant local life. From coral reefs to night markets, it offers both relaxation and discovery.",
+        "Book a Phu Quoc tour with VietTransit and uncover its beaches, pepper farms, and cultural spots. Learn more from our <a href=\"/Journey/traveltip.php?destination=phuquoc\" style=\"color: blue;\">Phu Quoc Travel Tips</a>."
     ],
     'phuyen' => [
-        "Phu Yen captivates visitors with its pristine beaches, majestic cliffs, and tranquil countryside. In every season, this coastal province offers a peaceful escape with golden sunshine, turquoise waters, and the hospitality of local people.",
-        "Register for a Phu Yen tour with VietTransit, and you can explore the following prominent destinations: Phu Yen... To learn more about Phu Yen, please refer to <a href=\"/Journey/traveltip.php?destination=phuyen\" style=\"color: blue;\">Phu Yen Travel Tips</a>."
+        "Phu Yen charms with its unspoiled beaches, dramatic cliffs, and gentle countryside. It offers a serene coastal escape with golden sunlight, clear waters, and authentic local hospitality.",
+        "Book a Phu Yen tour with VietTransit to discover key attractions and untouched beauty. See more in our <a href=\"/Journey/traveltip.php?destination=phuyen\" style=\"color: blue;\">Phu Yen Travel Tips</a>."
     ],
     'taybac' => [
-        "Northwest in spring is adorned with blooming peach and plum blossoms throughout the forests, accompanied by the sounds of birds, flutes, and the warmth of wine, making the Northwest spring vibrant and colorful.",
-        "Register for a Northwest tour with VietTransit, and you can explore the following prominent destinations: Northwest... To learn more about the Northwest, please refer to <a href=\"/Journey/traveltip.php?destination=taybac\" style=\"color: blue;\">Northwest Travel Tips</a>."
+        "Northwest Vietnam in spring comes alive with peach and plum blossoms, flute music, and vibrant ethnic celebrations. A region rich in culture and color, it offers unforgettable highland experiences.",
+        "Book a Northwest tour with VietTransit to visit blooming villages, traditional markets, and scenic mountain routes. For details, explore our <a href=\"/Journey/traveltip.php?destination=taybac\" style=\"color: blue;\">Northwest Travel Tips</a>."
     ]
 ];
 

@@ -214,7 +214,6 @@ $images = generateImagePaths($numericCityId, $tourId, $cityIdToFolderPrefix);
                 <ul>
                     <li><strong>Duration:</strong> <?= $tour['duration_days'] ?> days</li>
                     <li><strong>Season:</strong> <?= ucfirst($tour['season']) ?></li>
-                    <li><strong>Destination:</strong> <?= htmlspecialchars($cityName) ?></li>
                 </ul>
             </div>
 

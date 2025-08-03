@@ -11,7 +11,7 @@ $travelTips = [
     'taybac' => [
         'title' => 'Tay Bac Travel',
         'about_title' => 'About Northwest Vietnam',
-        'about_content' => 'The Northwest region of Vietnam is known for its majestic mountains, ethnic diversity, and scenic terraced rice fields. Provinces like Lao Cai, Yen Bai, Son La, and Dien Bien offer stunning landscapes and cultural richness.',
+        'about_content' => 'The Northwest region of Vietnam is renowned for its breathtaking natural landscapes and rich cultural heritage. Characterized by towering mountains, verdant valleys, and iconic terraced rice fields, this area is home to a diverse array of ethnic minority communities, each with distinct traditions, costumes, and lifestyles. Key provinces such as Lao Cai, Yen Bai, Son La, and Dien Bien offer visitors an immersive experience into authentic Vietnamese highland culture, complemented by dramatic scenery, traditional festivals, and warm local hospitality.',
         'coordinates' => ['latitude' => 22.3380, 'longitude' => 103.8442],
         'season_info' => [
             'good_months' => [3, 4, 5, 9, 10, 11],
@@ -70,7 +70,7 @@ $travelTips = [
     'phuyen' => [
         'title' => 'Phu Yen Travel',
         'about_title' => 'About Phu Yen',
-        'about_content' => 'Phu Yen, located in the South Central Coast of Vietnam, is known for its untouched natural beauty, peaceful beaches, and cinematic landscapes. This province gained popularity through the film "Yellow Flowers on the Green Grass."',
+        'about_content' => 'Phu Yen, situated along Vietnam’s South Central Coast, is celebrated for its pristine natural beauty, serene coastline, and picturesque landscapes that remain largely unspoiled by mass tourism. The province captivates visitors with its tranquil beaches, lush green hills, and dramatic coastal cliffs. Phu Yen rose to national prominence through its appearance in the acclaimed Vietnamese film "Yellow Flowers on the Green Grass," which showcased its poetic charm and rural simplicity. Today, it continues to attract travelers seeking authenticity, natural serenity, and cultural richness.',
         'coordinates' => ['latitude' => 13.0882, 'longitude' => 109.0929],
         'season_info' => [
             'good_months' => [1, 2, 3, 4, 5, 6, 7, 8],
@@ -129,7 +129,7 @@ $travelTips = [
     'phuquoc' => [
         'title' => 'Phu Quoc Travel',
         'about_title' => 'About Phu Quoc',
-        'about_content' => 'Phu Quoc, Vietnam\'s largest island, is located in the Gulf of Thailand. Known for its pristine beaches, turquoise waters, and luxurious resorts, Phu Quoc is a tropical paradise ideal for relaxation, adventure, and seafood cuisine.',
+        'about_content' => 'Phu Quoc, the largest island in Vietnam, is nestled in the Gulf of Thailand and offers a captivating blend of natural beauty and modern luxury. Renowned for its crystal-clear turquoise waters, powdery white-sand beaches, and lush tropical forests, the island has emerged as a premier destination for both leisure and adventure. Visitors can explore vibrant coral reefs, enjoy world-class resorts and spas, and savor the island’s famed seafood cuisine. With its year-round sunshine and relaxed atmosphere, Phu Quoc stands as a true tropical paradise for travelers seeking both tranquility and excitement.',
         'coordinates' => ['latitude' => 10.2899, 'longitude' => 103.9840],
         'season_info' => [
             'good_months' => [11, 12, 1, 2, 3, 4],
@@ -188,7 +188,7 @@ $travelTips = [
     'nhatrang' => [
         'title' => 'Nha Trang Travel',
         'about_title' => 'About Nha Trang',
-        'about_content' => 'Nha Trang is a coastal city in central Vietnam, known for its beautiful beaches, crystal-clear waters, and vibrant marine life. With a mix of natural beauty and modern tourism, it\'s a popular destination for both local and international travelers.',
+        'about_content' => 'Nha Trang, a coastal gem in central Vietnam, is renowned for its stunning beaches, crystal-clear waters, and thriving marine biodiversity. This dynamic city seamlessly blends natural charm with modern tourism, offering a wide array of activities ranging from water sports and island hopping to cultural exploration and wellness retreats. Its long stretch of coastline, framed by lush mountains and dotted with offshore islets, creates an idyllic setting for relaxation and adventure alike. Popular among both domestic and international visitors, Nha Trang continues to thrive as one of Vietnam’s premier seaside destinations.',
         'coordinates' => ['latitude' => 12.2388, 'longitude' => 109.1967],
         'season_info' => [
             'good_months' => [1, 2, 3, 4, 5, 6, 7, 8],
@@ -247,7 +247,7 @@ $travelTips = [
     'hue' => [
         'title' => 'Hue Travel',
         'about_title' => 'About Hue',
-        'about_content' => 'Hue, the former imperial capital of Vietnam, is located in central Vietnam on the banks of the Perfume River. It is known for its rich cultural heritage, ancient architecture, and royal history from the Nguyen Dynasty.',
+        'about_content' => 'Hue, the former imperial capital of Vietnam, is situated in central Vietnam along the tranquil banks of the Perfume River. Steeped in royal legacy, the city is renowned for its well-preserved historical architecture, including the majestic Imperial City, ancient pagodas, royal tombs, and traditional garden houses. As the heart of the Nguyen Dynasty, Hue served as the political, cultural, and religious center of the country during the 19th and early 20th centuries. Today, it stands as a UNESCO World Heritage Site, offering visitors a profound journey through Vietnam’s regal past, enriched by elegant court music, refined cuisine, and solemn historical landmarks.',
         'coordinates' => ['latitude' => 16.4637, 'longitude' => 107.5909],
         'season_info' => [
             'good_months' => [1, 2, 3, 4],
@@ -306,7 +306,7 @@ $travelTips = [
     'hoian' => [
         'title' => 'Hoi An Travel',
         'about_title' => 'About Hoi An',
-        'about_content' => 'Hoi An is a UNESCO World Heritage Site located in Quang Nam Province, Central Vietnam. Known for its ancient town, lantern-lit streets, and cultural fusion of East and West, Hoi An is a charming destination filled with history and romance.',
+        'about_content' => 'Hoi An, a UNESCO World Heritage Site nestled in Quang Nam Province in Central Vietnam, is celebrated for its exceptionally well-preserved Ancient Town and timeless charm. Once a thriving Southeast Asian trading port from the 15th to 19th centuries, the town reflects a unique blend of Vietnamese, Chinese, Japanese, and European influences in its architecture, culture, and cuisine. Visitors are enchanted by its lantern-lit streets, wooden shop-houses, centuries-old temples, and riverside cafes. Beyond its historical allure, Hoi An offers a romantic and tranquil atmosphere, making it a beloved destination for cultural exploration, culinary experiences, and leisurely strolls through living history.',
         'coordinates' => ['latitude' => 15.8801, 'longitude' => 108.3380],
         'season_info' => [
             'good_months' => [2, 3, 4, 5, 6, 7, 8],
@@ -365,7 +365,7 @@ $travelTips = [
     'hcm' => [
         'title' => 'Ho Chi Minh Travel',
         'about_title' => 'About Ho Chi Minh City',
-        'about_content' => 'Located in Southern Vietnam, Ho Chi Minh City is the country\'s largest and most dynamic metropolis. It\'s a key transportation hub, connecting provinces and serving as an international gateway.',
+        'about_content' => 'Located in Southern Vietnam, Ho Chi Minh City is the nation’s largest and most vibrant metropolis. As a bustling economic and cultural center, the city plays a vital role as a transportation hub, linking southern provinces and serving as a major international gateway. With its dynamic skyline, historical landmarks, and energetic street life, Ho Chi Minh City offers a compelling mix of tradition and modernity. From French colonial architecture and bustling markets to world-class dining and expanding infrastructure, the city continues to drive Vietnam’s rapid urban and economic development.',
         'coordinates' => ['latitude' => 10.8231, 'longitude' => 106.6297],
         'season_info' => [
             'good_months' => [12, 1, 2, 3, 4, 5],
@@ -424,7 +424,7 @@ $travelTips = [
     'hagiang' => [
         'title' => 'Ha Giang Travel',
         'about_title' => 'About Ha Giang',
-        'about_content' => 'Ha Giang is a mountainous province in the northernmost part of Vietnam, known for its rugged landscapes, winding mountain passes, and vibrant ethnic minority cultures. It\'s a dream destination for adventurous travelers seeking off-the-beaten-path experiences.',
+        'about_content' => 'Ha Giang, Vietnam’s northernmost province, is a captivating destination celebrated for its dramatic mountain scenery, winding highland passes, and rich tapestry of ethnic minority cultures. Characterized by towering limestone peaks, deep valleys, and terraced rice fields carved into steep hillsides, the region offers an awe-inspiring landscape that remains largely untouched by mass tourism. Home to communities such as the Hmong, Tay, and Dao, Ha Giang provides a unique cultural immersion through traditional markets, festivals, and colorful attire. Ideal for adventurous travelers, it promises unforgettable off-the-beaten-path experiences along routes like the legendary Ma Pi Leng Pass and the Dong Van Karst Plateau Geopark.',
         'coordinates' => ['latitude' => 22.8230, 'longitude' => 104.9784],
         'season_info' => [
             'good_months' => [3, 4, 5, 9, 10, 11],
@@ -483,7 +483,7 @@ $travelTips = [
     'dalat' => [
         'title' => 'Da Lat Travel',
         'about_title' => 'About Da Lat',
-        'about_content' => 'Da Lat, located in the Central Highlands of Vietnam, is known as the "City of Eternal Spring" due to its cool climate, pine forests, and flower gardens. A former French hill station, Da Lat blends European architecture with romantic scenery.',
+        'about_content' => 'Da Lat, nestled in the Central Highlands of Vietnam, is affectionately known as the "City of Eternal Spring" for its temperate climate, rolling pine-covered hills, and colorful flower gardens that bloom year-round. Originally established as a French colonial hill station, the city retains much of its European charm through elegant villas, cobblestone streets, and a distinctly romantic ambiance. Surrounded by misty valleys, serene lakes, and waterfalls, Da Lat offers a peaceful retreat from the tropical heat of the lowlands. It remains a favored destination for honeymooners, nature lovers, and those seeking a harmonious blend of culture, history, and natural beauty.',
         'coordinates' => ['latitude' => 11.9404, 'longitude' => 108.4583],
         'season_info' => [
             'good_months' => [11, 12, 1, 2, 3],
