@@ -69,29 +69,9 @@ mysqli_close($conn);
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="../css/profile.css">
-    <style>
-        .info-box table { border-collapse: collapse; width: 100%; margin: 20px 0; background-color: #fff; border: 1px solid #3498db; border-radius: 10px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
-        .info-box th, .info-box td { border-bottom: 1px solid #3498db; padding: 12px; text-align: center; }
-        .info-box th { background-color: #eaf6fb; color: #3498db; font-weight: bold; }
-        .info-box tr:nth-child(even) { background-color: #f9f9f9; }
-        .info-box .delete-link a { display: inline-block; padding: 6px 12px; background-color: #e74c3c; color: white; text-decoration: none; border-radius: 4px; }
-        .info-box .delete-link a:hover { background-color: #c0392b; }
-    </style>
 </head>
 <body>
-    <!-- Navbar -->
-    <nav class="navbar">
-        <div class="logo">
-            <a href="LoggedinHome.php">
-                <img src="../images/logo.png" alt="VietTransit Logo">
-                <span>VietTransit</span>
-            </a>
-        </div>
-        <div class="nav-links">
-            <a href="LoggedinHome.php" class="nav-btn">Home</a>
-            <a href="login.php" class="nav-btn">Logout</a>
-        </div>
-    </nav>
+    <?php include __DIR__ . '/../header.php'; ?>
 
     <!-- Profile Header Section -->
     <div class="profile-header">
