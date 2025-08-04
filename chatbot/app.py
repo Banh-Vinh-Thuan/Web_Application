@@ -101,15 +101,22 @@ def load_data():
 
 # --- Model Loading ---
 def load_model():
-    """Load and initialize the DialoGPT model"""
     global model, tokenizer
-    model_name = "microsoft/DialoGPT-medium"
+    # Use a smaller local model
+    model_name = "microsoft/phi-3-mini-4k-instruct"  # or "google/gemma-2b-it"
+    
     logger.info(f"Loading model on device: {device}")
     try:
         tokenizer = AutoTokenizer.from_pretrained(model_name)
+        model = AutoModelForCausalLM.from_pretrained(
+            model_name,
+            device_map="auto",  # Automatically uses GPU if available
+            torch_dtype=torch.float16,  # Use half precision
+            # For 4-bit quantization (reduces memory usage):
+            # load_in_4bit=True  
+        )
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
-        model = AutoModelForCausalLM.from_pretrained(model_name).to(device)
         model.eval()
         logger.info("Model loaded successfully")
     except Exception as e:

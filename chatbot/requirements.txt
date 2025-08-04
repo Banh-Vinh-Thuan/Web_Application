@@ -2,10 +2,11 @@
 flask>=2.3.0                   # Web framework for API endpoints
 flask-cors>=4.0.0              # Enable CORS for frontend communication
 torch>=2.0.0                   # PyTorch for deep learning
-transformers>=4.39.0           # Hugging Face transformers library
-accelerate>=0.21.0             # Hardware acceleration for transformers
+# Replace transformers with:
+transformers>=4.39.0
+accelerate>=0.21.0
+bitsandbytes>=0.41.0           # For 4-bit quantization
 huggingface_hub>=0.20.0        # Hugging Face model hub integration
-bitsandbytes>=0.41.0           # For model quantization (optional optimization)
 numpy>=1.24.0                  # Numerical computing library
 regex>=2023.0.0                # Enhanced regular expressions for text processing
 requests>=2.31.0               # HTTP requests library
