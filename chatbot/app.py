@@ -1,4 +1,4 @@
-# app.py - FINAL-FIXED version
+# app.py - PHIÊN BẢN ĐÃ SỬA LỖI
 import torch
 from flask import Flask, request, jsonify
 from flask_cors import CORS
@@ -15,33 +15,32 @@ logger = logging.getLogger(__name__)
 
 # --- Flask App Configuration ---
 app = Flask(__name__)
-CORS(app) # Allows requests from any origin, necessary for ngrok
+CORS(app) # Allows requests from any origin
 
-# --- Global Variables ---
+# --- Global Variables & Model Loading ---
+MODEL_PATH = "viettransit_model"
+TOKENIZER_PATH = "microsoft/phi-2" # Phải khớp với tokenizer dùng khi train
+device = "cuda" if torch.cuda.is_available() else "cpu"
 model = None
 tokenizer = None
 knowledge_base = ""
 conversation_history = {}
-device = "cuda" if torch.cuda.is_available() else "cpu"
 
 # --- Data Loading ---
 def load_data():
     """Load and prepare knowledge base from JSON files with robust error handling."""
     global knowledge_base
     
-    # --- Default Data (as a fallback) ---
-    default_tours = [{"name": "Default Tour", "description": "An exciting travel package."}]
+    default_tours = [{"title": "Default Tour", "short_description": "An exciting travel package."}]
     default_hotels = [{"name": "Default Hotel", "address": "A comfortable place to stay."}]
 
     tours_data = default_tours
     hotels_data = default_hotels
 
-    # --- Try to load tour data from file ---
     try:
         if os.path.exists('tour.json'):
             with open('tour.json', 'r', encoding='utf-8') as f:
                 loaded_tour_data = json.load(f)
-                # CHANGED: New logic to handle the object-of-lists format
                 if isinstance(loaded_tour_data, dict):
                     all_tours = []
                     for location, tour_list in loaded_tour_data.items():
@@ -59,12 +58,10 @@ def load_data():
     except Exception as e:
         logger.error(f"Error processing tour.json: {e}. Using default tour data.")
 
-    # --- Try to load hotel data from file ---
     try:
         if os.path.exists('hoteladdress.json'):
             with open('hoteladdress.json', 'r', encoding='utf-8') as f:
                 loaded_hotel_data = json.load(f)
-                # CHANGED: New logic to handle the object-of-lists format
                 if isinstance(loaded_hotel_data, dict):
                     all_hotels = []
                     for location, hotel_list in loaded_hotel_data.items():
@@ -82,7 +79,6 @@ def load_data():
     except Exception as e:
         logger.error(f"Error processing hoteladdress.json: {e}. Using default hotel data.")
 
-    # --- Create a structured knowledge base from the final data ---
     tours_summary = "AVAILABLE TOURS:\n"
     for tour in tours_data:
         name = tour.get('title', 'Unknown Tour')
@@ -98,40 +94,42 @@ def load_data():
     knowledge_base = tours_summary + hotels_summary
     logger.info("Knowledge base created successfully.")
 
-
 # --- Model Loading ---
-def load_model():
+def load_model_and_tokenizer():
     global model, tokenizer
-    # Use a smaller local model
-    model_name = "microsoft/phi-3-mini-4k-instruct"  # or "google/gemma-2b-it"
-    
-    logger.info(f"Loading model on device: {device}")
+    logger.info(f"Loading model from {MODEL_PATH} on device: {device}")
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        if not os.path.isdir(MODEL_PATH):
+            logger.error(f"Model directory not found at {MODEL_PATH}. Please run train.py first.")
+            raise FileNotFoundError(f"Model directory not found: {MODEL_PATH}")
+            
         model = AutoModelForCausalLM.from_pretrained(
-            model_name,
-            device_map="auto",  # Automatically uses GPU if available
-            torch_dtype=torch.float16,  # Use half precision
-            # For 4-bit quantization (reduces memory usage):
-            # load_in_4bit=True  
+            MODEL_PATH,
+            device_map="auto",
+            torch_dtype=torch.float16,
         )
+        tokenizer = AutoTokenizer.from_pretrained(TOKENIZER_PATH)
+        
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
+        
         model.eval()
-        logger.info("Model loaded successfully")
+        logger.info("Model and tokenizer loaded successfully")
     except Exception as e:
         logger.error(f"Error loading model: {e}")
         raise e
 
 # --- Text Processing Functions ---
 def clean_response(response_text):
-    """Clean and format the model response"""
-    response_text = re.sub(r'<\|.*?\|>', '', response_text) # Remove special tokens
+    response_text = re.sub(r'<\|.*?\|>', '', response_text)
     response_text = response_text.strip()
+    # Lấy phần trả lời của Assistant sau cùng
+    parts = response_text.split("Assistant:")
+    if len(parts) > 1:
+        return parts[-1].strip()
     return response_text
 
 def generate_fallback_response(user_query):
-    """Generate appropriate fallback responses based on query content"""
     query_lower = user_query.lower()
     if any(word in query_lower for word in ['tour', 'trip', 'travel', 'visit']):
         return "I can help you find the perfect tour package! We have many options across Vietnam. Which destination interests you most?"
@@ -142,6 +140,9 @@ def generate_fallback_response(user_query):
 # --- API Endpoints ---
 @app.route('/api/chat', methods=['POST'])
 def chat():
+    if model is None or tokenizer is None:
+        return jsonify({'error': 'Model is not loaded'}), 503
+
     try:
         data = request.get_json()
         user_query = data.get('query', '').strip()
@@ -152,28 +153,23 @@ def chat():
         if session_id not in conversation_history:
             conversation_history[session_id] = ""
         
-        # Build context with knowledge base and conversation history
         history = conversation_history[session_id]
-        context = f"You are a helpful travel assistant for VietTransit. Use the information below to answer the user's question. Be concise and friendly.\n\n--- Information Base ---\n{knowledge_base}\n\n--- Conversation History ---\n{history}User: {user_query}\nAssistant:"
+        prompt = f"<s>[INST] {user_query} [/INST]" # Sử dụng prompt template giống như khi train
         
-        # Generate response
-        inputs = tokenizer.encode(context, return_tensors="pt", max_length=1024, truncation=True).to(device)
+        inputs = tokenizer(prompt, return_tensors="pt").to(device)
+        
         with torch.no_grad():
             outputs = model.generate(
-                inputs, max_new_tokens=150, do_sample=True, temperature=0.7, top_k=50,
+                **inputs, max_new_tokens=150, do_sample=True, temperature=0.7, top_k=50,
                 pad_token_id=tokenizer.eos_token_id
             )
         
         full_response = tokenizer.decode(outputs[0], skip_special_tokens=True)
-        # Extract only the newly generated part
-        bot_response = full_response.split("Assistant:")[-1].strip()
-        
-        bot_response = clean_response(bot_response)
+        bot_response = clean_response(full_response)
         
         if not bot_response or len(bot_response) < 10:
             bot_response = generate_fallback_response(user_query)
             
-        # Update conversation history
         conversation_history[session_id] += f"User: {user_query}\nAssistant: {bot_response}\n"
         
         return jsonify({'reply': bot_response})
@@ -189,12 +185,13 @@ def health_check():
 def initialize_app():
     logger.info("Initializing VietTransit Chatbot...")
     load_data()
-    load_model()
+    load_model_and_tokenizer()
     logger.info("Application initialized successfully!")
 
 if __name__ == '__main__':
     try:
         initialize_app()
-        app.run(host='0.0.0.0', port=3000, debug=False)
+        # Chạy trên port 3000 để khớp với frontend
+        app.run(host='0.0.0.0', port=3000, debug=False) 
     except Exception as e:
         logger.error(f"Failed to start server: {e}")

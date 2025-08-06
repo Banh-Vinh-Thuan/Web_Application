@@ -70,48 +70,63 @@ if (empty($tours)) {
 
 // City descriptions - you may want to move these to database as well
 $cityDescriptions = [
-    'dalat' => [
-        "Dalat delights travelers with its mild climate, pine-covered hills, colorful flower gardens, and charming French-colonial villas. Nicknamed the \"City of Eternal Spring,\" it offers scenic lakes, waterfalls, and a romantic ambiance ideal for couples and nature lovers.",
-        "Book a Dalat tour with VietTransit and discover iconic spots such as Xuan Huong Lake, Valley of Love, and more. For detailed insights, see our <a href=\"/Journey/traveltip.php?destination=dalat\" style=\"color: blue;\">Dalat Travel Tips</a>."
-    ],
-    'hagiang' => [
-        "Ha Giang stirs the soul with its rugged mountain landscapes, terraced fields, and rich ethnic diversity. This remote northern province offers unforgettable experiences along the Dong Van Karst Plateau, Ma Pi Leng Pass, and traditional hill tribe villages.",
-        "Book a Ha Giang tour with VietTransit to explore highlights like Lung Cu Flag Tower, Dong Van Old Town, and Ma Pi Leng Pass. See more in our <a href=\"/Journey/traveltip.php?destination=hagiang\" style=\"color: blue;\">Ha Giang Travel Tips</a>."
-    ],
-    'hcm' => [
-        "Ho Chi Minh City buzzes with life — from blooming spring flowers to vibrant street culture. Known for its energy, culinary scene, and dynamic cityscape, it's a fascinating blend of modern progress and historical depth.",
-        "Book a Ho Chi Minh City tour with VietTransit to visit iconic landmarks and vibrant neighborhoods. For details, view our <a href=\"/Journey/traveltip.php?destination=hcm\" style=\"color: blue;\">Ho Chi Minh City Travel Tips</a>."
-    ],
-    'hoian' => [
-        "Hoi An is a beautifully preserved ancient town famed for its lantern-lit evenings, heritage buildings, and cultural fusion. This UNESCO-listed destination charms visitors with its timeless atmosphere and artisan spirit.",
-        "Book a Hoi An tour with VietTransit to walk through its historic streets and riverside quarters. Learn more from our <a href=\"/Journey/traveltip.php?destination=hoian\" style=\"color: blue;\">Hoi An Travel Tips</a>."
-    ],
-    'hue' => [
-        "Hue, Vietnam’s former imperial capital, exudes elegance and history. Nestled by the Perfume River, it features ancient citadels, royal tombs, and pagodas, reflecting the grandeur of the Nguyen Dynasty.",
-        "Book a Hue tour with VietTransit and explore the Imperial City, Thien Mu Pagoda, and traditional garden houses. Discover more in our <a href=\"/Journey/traveltip.php?destination=hue\" style=\"color: blue;\">Hue Travel Tips</a>."
-    ],
-    'nhatrang' => [
-        "Nha Trang dazzles with its sun-kissed beaches, turquoise waters, and rich marine biodiversity. This coastal city blends natural splendor with cultural landmarks and modern entertainment.",
-        "Book a Nha Trang tour with VietTransit to explore Ponagar Tower, VinWonders, and local craft villages. For more, see our <a href=\"/Journey/traveltip.php?destination=nhatrang\" style=\"color: blue;\">Nha Trang Travel Tips</a>."
-    ],
-    'phuquoc' => [
-        "Phu Quoc is a tropical island getaway known for its crystal-clear beaches, lush landscapes, and vibrant local life. From coral reefs to night markets, it offers both relaxation and discovery.",
-        "Book a Phu Quoc tour with VietTransit and uncover its beaches, pepper farms, and cultural spots. Learn more from our <a href=\"/Journey/traveltip.php?destination=phuquoc\" style=\"color: blue;\">Phu Quoc Travel Tips</a>."
-    ],
-    'phuyen' => [
-        "Phu Yen charms with its unspoiled beaches, dramatic cliffs, and gentle countryside. It offers a serene coastal escape with golden sunlight, clear waters, and authentic local hospitality.",
-        "Book a Phu Yen tour with VietTransit to discover key attractions and untouched beauty. See more in our <a href=\"/Journey/traveltip.php?destination=phuyen\" style=\"color: blue;\">Phu Yen Travel Tips</a>."
-    ],
-    'taybac' => [
-        "Northwest Vietnam in spring comes alive with peach and plum blossoms, flute music, and vibrant ethnic celebrations. A region rich in culture and color, it offers unforgettable highland experiences.",
-        "Book a Northwest tour with VietTransit to visit blooming villages, traditional markets, and scenic mountain routes. For details, explore our <a href=\"/Journey/traveltip.php?destination=taybac\" style=\"color: blue;\">Northwest Travel Tips</a>."
-    ]
+  'dalat' => [
+      "Nestled in the Central Highlands, Dalat captivates visitors with its eternal spring climate, rolling pine hills, and colonial French charm. The city is a dreamscape of misty mornings, blooming flower valleys, and peaceful lakes like Tuyen Lam and Xuan Huong. It's where romance meets adventure — perfect for couples, families, and nature enthusiasts.",
+      "Embark on a Dalat tour with VietTransit to uncover iconic landmarks such as the Valley of Love, Bao Dai Palace, and the colorful Dalat Flower Garden. Discover helpful travel ideas in our <a href=\"/Journey/traveltip.php?destination=dalat\" style=\"color: #fff; text-decoration: underline;\">Dalat Travel Tips</a>."
+  ],
+  'hagiang' => [
+      "Ha Giang — Vietnam's last frontier — invites the bold-hearted to traverse its winding passes and breathtaking cliffs. From the rugged Ma Pi Leng Pass to the soulful beauty of ethnic minority villages, this remote province delivers a cultural adventure set against majestic limestone karsts and golden rice terraces that touch the sky.",
+      "Join VietTransit's Ha Giang tour to conquer Dong Van Karst Plateau, visit the Lung Cu Flag Tower, and embrace local traditions. Plan your journey with our <a href=\"/Journey/traveltip.php?destination=hagiang\" style=\"color: #fff; text-decoration: underline;\">Ha Giang Travel Tips</a>."
+  ],
+  'hcm' => [
+      "Ho Chi Minh City pulsates with an electric rhythm — where street food aromas mingle with honking motorbikes and sky-piercing buildings. Beneath its modern pace lies a deep historical narrative, with French colonial architecture, wartime relics, and stories at every street corner. A melting pot of energy, flavor, and culture.",
+      "Explore this southern powerhouse with VietTransit tours, from the War Remnants Museum to Ben Thanh Market and vibrant street alleys. Learn how to make the most of your visit in our <a href=\"/Journey/traveltip.php?destination=hcm\" style=\"color: #fff; text-decoration: underline;\">Ho Chi Minh City Travel Tips</a>."
+  ],
+  'hoian' => [
+      "Step into a timeless world in Hoi An, where ochre walls whisper tales of centuries past, and lanterns float softly above ancient streets. This UNESCO World Heritage town is a treasure of Vietnamese, Chinese, and Japanese fusion — from old merchant houses to riverside temples and tailor-made elegance.",
+      "Take a VietTransit journey through Hoi An to explore its rich past, shop for handcrafted goods, and taste world-renowned cuisine. Let our <a href=\"/Journey/traveltip.php?destination=hoian\" style=\"color: #fff; text-decoration: underline;\">Hoi An Travel Tips</a> guide your steps."
+  ],
+  'hue' => [
+      "Hue whispers history through its moss-covered imperial walls, poetic Perfume River, and tranquil garden houses. Once the seat of the Nguyen Dynasty, the city remains an evocative blend of royal grandeur and spiritual serenity, adorned with citadels, tombs, and age-old pagodas.",
+      "Travel with VietTransit through the heart of Vietnam's heritage — explore the Imperial City, Thien Mu Pagoda, and the tombs of kings. For a deeper look at what Hue offers, visit our <a href=\"/Journey/traveltip.php?destination=hue\" style=\"color: #fff; text-decoration: underline;\">Hue Travel Tips</a>."
+  ],
+  'nhatrang' => [
+      "With golden beaches caressed by gentle waves, Nha Trang is Vietnam's coastal gem. It offers a vibrant marine world, luxurious resorts, and thrilling activities — from snorkeling in Hon Mun to soaking in hot mineral springs or admiring Cham architecture at Ponagar Towers.",
+      "Choose a VietTransit tour to experience Nha Trang's tropical beauty, amusement parks, and authentic fishing villages. Get insider tips from our <a href=\"/Journey/traveltip.php?destination=nhatrang\" style=\"color: #fff; text-decoration: underline;\">Nha Trang Travel Tips</a>."
+  ],
+  'phuquoc' => [
+      "Phu Quoc — Vietnam's island paradise — blends lush jungle, white-sand beaches, and a laid-back charm. From snorkeling coral reefs to wandering bustling night markets, it's an escape that balances natural wonders with island culture and comfort.",
+      "Book a Phu Quoc tour with VietTransit and uncover pepper farms, fish sauce factories, secluded beaches, and island hopping adventures. Find more highlights in our <a href=\"/Journey/traveltip.php?destination=phuquoc\" style=\"color: #fff; text-decoration: underline;\">Phu Quoc Travel Tips</a>."
+  ],
+  'phuyen' => [
+      "Often called the 'land of yellow flowers on green grass,' Phu Yen is a cinematic coastal province with raw beauty and quiet charm. From cliffs shaped by lava flows like Ganh Da Dia, to untouched bays and fishing villages, it's where simplicity and serenity shine brightest.",
+      "Discover Phu Yen with VietTransit to explore Mang Lang Church, Bai Xep, and the soul-soothing countryside. See what awaits you in our <a href=\"/Journey/traveltip.php?destination=phuyen\" style=\"color: #fff; text-decoration: underline;\">Phu Yen Travel Tips</a>."
+  ],
+  'taybac' => [
+      "Northwest Vietnam bursts into color with blooming peach blossoms and fluttering ethnic fabrics. In springtime, villages come alive with highland festivals, traditional music, and a rhythm deeply rooted in ancestral land and legend. It's a place for soul-searchers and mountain lovers alike.",
+      "Let VietTransit guide you to the best of Northwest Vietnam — from Moc Chau's plateau to Sapa's cloud-kissed peaks. Dive into culture with our <a href=\"/Journey/traveltip.php?destination=taybac\" style=\"color: #fff; text-decoration: underline;\">Northwest Travel Tips</a>."
+  ]
+];
+
+// City hero images mapping
+$cityHeroImages = [
+    'hcm' => '../images/hero/hcm.jpg',
+    'dalat' => '../images/hero/dalat.jpg',
+    'nhatrang' => '../images/hero/nhatrang.jpg',
+    'hoian' => '../images/hero/hoian.jpg',
+    'phuquoc' => '../images/hero/phuquoc.jpg',
+    'phuyen' => '../images/hero/phuyen.jpg',
+    'hagiang' => '../images/hero/hagiang.jpg',
+    'hue' => '../images/hero/hue.jpg',
+    'taybac' => '../images/hero/taybac.jpg'
 ];
 
 $descriptions = $cityDescriptions[$cityId] ?? [
     "Discover the beauty and culture of " . $displayCity,
     "Join VietTransit for an unforgettable journey through " . $displayCity
 ];
+
+$heroImage = $cityHeroImages[$cityId] ?? '../images/hero/default-hero.jpg';
 
 // Function to calculate original price (reverse the discount)
 function calculateOriginalPrice($currentPrice, $discountPercent = 15) {
@@ -170,29 +185,42 @@ function generateImagePath($cityId, $tourId) {
     
     return "../tourphotoID/{$imageId}.jpg";
 }
+
+// Function to truncate tour name for display
+function truncateTourName($name, $maxLength = 65) {
+    if (strlen($name) > $maxLength) {
+        return substr($name, 0, $maxLength) . '...';
+    }
+    return $name;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title><?= htmlspecialchars($displayCity) ?> Travel</title>
-  <link rel="stylesheet" href="../css/viewjourney.css">
+  <link rel="stylesheet" href="../css/viewjourney.css?v=<?= time() ?>">
   <link rel="icon" type="image/png" href="../images/favicon.png">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.css">
 </head>
 <body>
 <?php include __DIR__ . '/../header.php'; ?>
 
-<div class="main-content">
-  <h1><?= strtoupper(htmlspecialchars($displayCity)) ?> TRAVEL</h1>
-
-  <!-- City Description Section -->
-  <div class="city-description">
-    <?php foreach ($descriptions as $description): ?>
-      <p><?= $description ?></p>
-    <?php endforeach; ?>
+<!-- Hero Section -->
+<div class="hero-section" style="background-image: url('<?= $heroImage ?>');">
+  <div class="hero-overlay">
+    <div class="hero-content">
+      <h1><?= strtoupper(htmlspecialchars($displayCity)) ?> TRAVEL</h1>
+      <div class="hero-description">
+        <?php foreach ($descriptions as $description): ?>
+          <p><?= $description ?></p>
+        <?php endforeach; ?>
+      </div>
+    </div>
   </div>
+</div>
 
+<div class="main-content">
   <div class="content-container">
     <!-- Sidebar Filter -->
     <div class="filter-sidebar">
@@ -263,11 +291,13 @@ function generateImagePath($cityId, $tourId) {
           </div>
           <div class="tour-details">
             <h3><?= htmlspecialchars($tour['tour_name']) ?></h3>
-            <ul>
-              <li><span class="icon">⏰</span> <?= $tour['duration_days'] ?> days</li>
-              <li><span class="icon">🚌</span> <?= ucfirst($transport) ?></li>
-              <li><span class="icon">🚩</span> Departure: <?= htmlspecialchars($tour['departure_point'] ?? 'Ho Chi Minh City') ?></li>
-            </ul>
+            <div class="tour-info">
+              <ul>
+                <li><span class="icon">⏰</span> <?= $tour['duration_days'] ?> days</li>
+                <li><span class="icon">🚌</span> <?= ucfirst($transport) ?></li>
+                <li><span class="icon">🚩</span> Departure: <?= htmlspecialchars($tour['departure_point'] ?? 'Ho Chi Minh City') ?></li>
+              </ul>
+            </div>
             <div class="price-action">
               <p class="price"><?= number_format($tour['price_per_person'], 0, ',', '.') ?> ₫
                 <span class="original-price"><?= number_format($originalPrice, 0, ',', '.') ?> ₫</span>
