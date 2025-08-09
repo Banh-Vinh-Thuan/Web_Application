@@ -1,0 +1,106 @@
+{
+  "responses": [
+    {
+      "intent": "greeting",
+      "keywords": ["hello", "hi", "hey", "good morning", "good afternoon", "good evening"],
+      "patterns": ["greet", "start", "begin"],
+      "responses": [
+        "Hello! Welcome to VietTransit. I can help you find amazing tours and hotels in Vietnam. What would you like to explore?",
+        "Hi there! I'm your VietTransit assistant. Are you looking for tour packages or hotel recommendations?",
+        "Good day! How can I help you plan your perfect Vietnamese adventure today?"
+      ],
+      "quick_actions": ["Show popular destinations", "Find hotels", "Tour packages"]
+    },
+    {
+      "intent": "tours",
+      "keywords": ["tour", "tours", "package", "packages", "trip", "travel", "journey", "adventure"],
+      "patterns": ["sightseeing", "excursion", "visit", "explore"],
+      "responses": [
+        "We offer exciting tour packages to Vietnam's most beautiful destinations! Our popular tours include:\n• Ha Giang Loop Adventure\n• Hoi An Cultural Experience\n• Phu Quoc Island Paradise\n• Tay Bac Mountain Discovery\n• Hue Imperial City Tour\n\nWhich destination interests you most?",
+        "Great choice! Our tour packages cover all of Vietnam's highlights. From the misty mountains of Ha Giang to the pristine beaches of Phu Quoc, we have something for every traveler. What type of experience are you looking for?",
+        "VietTransit offers comprehensive tour packages with local guides, comfortable transportation, and authentic experiences. Would you like to know more about specific destinations or tour types?"
+      ],
+      "quick_actions": ["Mountain tours", "Beach destinations", "Cultural experiences", "City tours"]
+    },
+    {
+      "intent": "hotels",
+      "keywords": ["hotel", "hotels", "accommodation", "stay", "room", "booking", "lodge", "resort"],
+      "patterns": ["place to stay", "where to sleep", "overnight"],
+      "responses": [
+        "We partner with excellent hotels across Vietnam! From luxury resorts in Phu Quoc to boutique hotels in Hoi An, we can help you find the perfect accommodation. Which city are you planning to visit?",
+        "Finding the right hotel is important for a great trip! We offer accommodations in all major Vietnamese destinations:\n• Ho Chi Minh City - Modern business hotels\n• Hanoi - Charming Old Quarter hotels\n• Da Lat - Romantic mountain retreats\n• Nha Trang - Beachfront resorts\n\nWhat's your preferred location?",
+        "Our hotel selection ranges from budget-friendly options to luxury resorts. All our partner hotels are carefully selected for quality, location, and service. What type of accommodation are you looking for?"
+      ],
+      "quick_actions": ["Luxury hotels", "Budget options", "Beach resorts", "City hotels"]
+    },
+    {
+      "intent": "destinations",
+      "keywords": ["destination", "destinations", "place", "places", "where", "city", "cities", "location"],
+      "patterns": ["go to", "visit", "see", "popular", "best"],
+      "responses": [
+        "Vietnam has incredible destinations! Here are our most popular ones:\n• Ha Giang - Spectacular mountain landscapes\n• Hoi An - Ancient town charm\n• Phu Quoc - Tropical island paradise\n• Ho Chi Minh City - Vibrant urban life\n• Hue - Imperial history\n• Da Lat - Cool mountain retreat\n• Nha Trang - Beautiful coastal city\n• Phu Yen - Unspoiled natural beauty\n• Tay Bac - Cultural mountain region\n\nWhich one catches your interest?",
+        "Each Vietnamese destination offers unique experiences! Are you interested in mountains, beaches, cities, or cultural sites?",
+        "Vietnam's diversity is amazing - from northern mountains to southern beaches. What kind of scenery or activities appeal to you most?"
+      ]
+    },
+    {
+      "intent": "specific_locations",
+      "keywords": ["ha giang", "hoi an", "phu quoc", "ho chi minh", "saigon", "hue", "da lat", "dalat", "nha trang", "phu yen", "tay bac", "hanoi"],
+      "patterns": ["loop", "ancient town", "island", "city", "imperial", "mountain", "beach"],
+      "responses": [
+        "Excellent choice! Each of our destinations offers unique experiences. Would you like information about tours, hotels, or both for your chosen location?",
+        "That's a wonderful destination! I can help you with tour packages and accommodation options. What specific information do you need?",
+        "Perfect! We have great options for that location. Are you looking for guided tours, hotel recommendations, or travel tips?"
+      ],
+      "quick_actions": ["View tours", "Find hotels", "Get travel tips", "Check availability"]
+    },
+    {
+      "intent": "pricing",
+      "keywords": ["price", "cost", "expensive", "cheap", "budget", "money", "fee", "rate", "affordable"],
+      "patterns": ["how much", "pricing", "rates"],
+      "responses": [
+        "Our prices are competitive and offer great value! Tour packages typically range from budget to premium options. Hotel rates vary by location and season. For specific pricing, I'd recommend checking our detailed listings or contacting our booking team.",
+        "We offer options for every budget! Our tour packages include various price ranges, and we work with hotels from budget-friendly to luxury. What's your preferred budget range?",
+        "Great value is our priority! Prices depend on destination, season, and accommodation type. We often have special deals and group discounts available. Would you like me to help you find options within your budget?"
+      ],
+      "quick_actions": ["Budget tours", "Mid-range options", "Luxury packages", "Special deals"]
+    },
+    {
+      "intent": "booking",
+      "keywords": ["book", "booking", "reserve", "reservation", "available", "availability"],
+      "patterns": ["make reservation", "check availability", "book now"],
+      "responses": [
+        "I'd be happy to help with your booking! For the best service, please visit our booking pages or contact our reservation team directly. They can check real-time availability and help you secure the best deals.",
+        "Booking is easy with VietTransit! You can book tours and hotels directly through our website. Our team is available 24/7 to assist with your reservations and answer any questions.",
+        "Ready to book your Vietnamese adventure? Our booking system is secure and user-friendly. Would you like me to guide you to the right booking page for your needs?"
+      ],
+      "quick_actions": ["Book tours", "Reserve hotels", "Contact support", "Check availability"]
+    },
+    {
+      "intent": "help",
+      "keywords": ["help", "support", "assistance", "question", "problem", "issue"],
+      "patterns": ["need help", "can you help", "assist me"],
+      "responses": [
+        "I'm here to help! I can assist you with:\n• Finding tour packages\n• Hotel recommendations\n• Destination information\n• General travel questions\n\nWhat specifically would you like help with?",
+        "Of course! I'm your VietTransit assistant. Feel free to ask about tours, hotels, destinations, or any travel-related questions about Vietnam.",
+        "Happy to assist! Whether you need information about destinations, tours, hotels, or booking, I'm here to help make your Vietnam trip planning easier."
+      ]
+    },
+    {
+      "intent": "contact",
+      "keywords": ["contact", "phone", "email", "address", "office", "support team"],
+      "patterns": ["get in touch", "contact us", "reach out"],
+      "responses": [
+        "You can reach our VietTransit team through multiple channels:\n• Website contact form\n• Customer support hotline\n• Email support\n• Live chat (available 24/7)\n\nOur friendly team is always ready to help with your travel needs!",
+        "Our customer support team is available 24/7 to assist you! You can contact us through our website, phone, or email. We're committed to making your Vietnam travel experience exceptional.",
+        "Getting in touch is easy! Visit our contact page for all the ways to reach us. Our multilingual support team can assist you in planning your perfect Vietnamese adventure."
+      ]
+    }
+  ],
+  "default_responses": [
+    "I'm not sure I understand. Could you please rephrase your question? I can help you with tours, hotels, and destinations in Vietnam.",
+    "That's an interesting question! I specialize in helping with Vietnam travel - tours, accommodations, and destination information. How can I assist you with your travel plans?",
+    "I'd love to help, but I'm not quite sure what you're looking for. Are you interested in tour packages, hotel bookings, or destination information?",
+    "Could you be more specific? I'm here to help you plan your Vietnam trip with information about tours, hotels, and amazing destinations."
+  ]
+}
