@@ -7,7 +7,7 @@
   <title>Find Travel Hotel</title>
   <link rel="icon" type="image/png" href="../images/favicon.png">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="../css/findhotel.css">
+  <link rel="stylesheet" href="../css/findtour&hotel.css">
   <script>
     var cityMap = {};
     $(document).ready(function () {
@@ -15,7 +15,7 @@
         var query = $(this).val().trim();
         if (query.length >= 1) {
           $.ajax({
-            url: "get_hotel.php",
+            url: "get_cities.php?type=hotel",
             method: "GET",
             data: { q: query },
             dataType: "json",
@@ -74,12 +74,14 @@
 </head>
 
 <body>
-  <header class="main-header">
+  <?php include __DIR__ . '/../header.php'; ?>
+  
+  <section class="main-header hotel-header">
     <div class="header-content">
-      <h1 style="font-size: 50px">Find your next stay</h1>
-      <p style="font-size: 20px">Search deals on hotels, homes, and much more...</p>
+      <h1>Find your next stay</h1>
+      <p>Search deals on hotels, homes, and much more...</p>
     </div>
-    <form class="search-bar" method="GET">
+    <form class="search-bar hotel-search" method="GET">
       <div class="search-input">
         <input type="text" id="destination" name="city" list="city_list" placeholder="Where do you want to go ?" required>
         <datalist id="city_list"></datalist>
@@ -104,11 +106,11 @@
       </div>
       <button class="search-button" type="submit">Search</button>
     </form>
-  </header>
+  </section>
 
-  <section class="suggestion-section">
+  <section class="suggestion-section hotel-suggestions">
     <h2>Interested in these properties?</h2>
-    <div class="suggestion-list">
+    <div class="suggestion-list hotel-list">
       <?php
         // Assuming database connection
        include '../dbconnect.php';
@@ -117,7 +119,7 @@
         $sql = "SELECT h.hotelid, h.hotel, h.cost, h.ratings, c.city as city_name 
                 FROM hotels h 
                 JOIN cities c ON h.cityid = c.cityid 
-                ORDER BY RAND() LIMIT 4";
+                ORDER BY RAND() LIMIT 6";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -128,17 +130,17 @@
             $rating = htmlspecialchars($row['ratings']);
             $city_name = htmlspecialchars($row['city_name']);
       ?>
-      <div class="suggestion-item">
+      <div class="suggestion-item hotel-item">
         <div class="image-container">
-          <img src="../hotelphotoID/<?php echo $hotel_id; ?>.jpg" alt="<?php echo $hotel_name; ?>">
-          <div class="rating">
+          <img src="../hotelphotoID/<?php echo $hotel_id; ?>.jpg" alt="<?php echo $hotel_name; ?>" class="hotel-image">
+          <div class="rating hotel-rating">
             <span class="score"><?php echo $rating; ?></span>
           </div>
-          <button class="wishlist-button">❤️</button>
+          <button class="wishlist-button hotel-wishlist">❤️</button>
         </div>
         <h3><?php echo $hotel_name; ?></h3>
-        <p class="location"><?php echo $city_name; ?>, Vietnam</p>
-        <div class="review-info">
+        <p class="location hotel-location"><?php echo $city_name; ?>, Vietnam</p>
+        <div class="review-info hotel-review">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span class="review-count"><?php echo $cost; ?></span>
             <a href="../hotelinfo/hoteldescription.php?hotel_id=<?php echo $hotel_id; ?>">Book now</a>

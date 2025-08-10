@@ -10,8 +10,10 @@ $response = [];
 try {
     if (!empty($_GET['q'])) {
         $query = '%' . strtolower(trim($_GET['q'])) . '%';
-
-        // Sửa SELECT để lấy đúng cột: cityid và city
+        
+        // Get the type parameter to determine response format
+        $type = $_GET['type'] ?? 'tour'; // default to tour format
+        
         $stmt = $conn->prepare("SELECT cityid, city FROM cities WHERE LOWER(city) LIKE ?");
         if (!$stmt) {
             throw new Exception('Database prepare error: ' . $conn->error);
@@ -22,10 +24,16 @@ try {
         $result = $stmt->get_result();
 
         while ($row = $result->fetch_assoc()) {
-            $response[] = [
-                'id' => $row['cityid'],  // Dùng cityid làm id
-                'name' => $row['city']
-            ];
+            if ($type === 'hotel') {
+                // Format for hotel (with id and name)
+                $response[] = [
+                    'id' => $row['cityid'],
+                    'name' => $row['city']
+                ];
+            } else {
+                // Format for tour (just city names)
+                $response[] = $row['city'];
+            }
         }
 
         $stmt->close();
@@ -33,7 +41,7 @@ try {
         $response = []; // Empty result
     }
 } catch (Exception $e) {
-    error_log('Error in get_tour.php: ' . $e->getMessage());
+    error_log('Error in get_cities.php: ' . $e->getMessage());
     $response = ['error' => 'Server error occurred'];
     http_response_code(500);
 }

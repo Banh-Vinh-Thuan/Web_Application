@@ -6,7 +6,7 @@
   <title>Find Travel Tour</title>
   <link rel="icon" type="image/png" href="../images/favicon.png">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="../css/findtour.css">
+  <link rel="stylesheet" href="../css/findtour&hotel.css">
   <script>
     $(document).ready(function () {
       // City name to ID mapping (matching viewjourney.php)
@@ -43,7 +43,7 @@
         var query = $(this).val().trim();
         if (query.length >= 1) {
           $.ajax({
-            url: "get_tour.php",
+            url: "get_cities.php?type=tour",
             method: "GET",
             data: { q: query },
             dataType: "json",
@@ -99,19 +99,21 @@
   </script>
 </head>
 <body>
-  <header class="main-header">
+  <?php include __DIR__ . '/../header.php'; ?>
+  
+  <section class="main-header">
     <div class="header-content">
-      <h1 style="font-size: 50px">Find your favorite tour</h1>
-      <p style="font-size: 20px">Discover amazing tours in Vietnam...</p>
+      <h1>Find your favorite tour</h1>
+      <p>Discover amazing tours in Vietnam...</p>
     </div>
     <form class="search-bar" method="GET">
       <div class="search-input">
-        <input type="text" id="city" name="city" list="city_list" placeholder="Where do you want to go ?" required>
+        <input type="text" id="city" name="city" list="city_list" placeholder="Where do you want to go?" required>
         <datalist id="city_list"></datalist>
       </div>
       <button class="search-button" type="submit">Search</button>
     </form>
-  </header>
+  </section>
 
   <section class="suggestion-section">
     <h2>Tour suggestion</h2>
@@ -174,7 +176,7 @@
         $sql = "SELECT t.tourid, t.tour_name, t.duration_days, t.price_per_person, t.cityid, c.city as city_name 
                 FROM tours t 
                 JOIN cities c ON t.cityid = c.cityid 
-                ORDER BY RAND() LIMIT 4";
+                ORDER BY RAND() LIMIT 6";
         $result = $conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -218,7 +220,7 @@
           <button class="wishlist-button">❤️</button>
         </div>
         <h3>
-          <a href="../Journey/viewjourney.php?id=<?php echo $city_string; ?>" style="text-decoration: none; color: inherit;">
+          <a href="../Journey/viewjourney.php?id=<?php echo $city_string; ?>">
             <?php echo $display_name; ?>
           </a>
         </h3>
@@ -226,7 +228,7 @@
         <div class="review-info">
           <div style="display: flex; justify-content: space-between; align-items: center;">
             <span class="review-count"><?php echo $price; ?></span>
-            <a href="../Journey/tour_detail.php?cityid=<?php echo $city_string; ?>&tourid=<?php echo $tour_id; ?>" style="color: #0074D9 !important;">Book now</a>
+            <a href="../Journey/tour_detail.php?cityid=<?php echo $city_string; ?>&tourid=<?php echo $tour_id; ?>">Book now</a>
           </div>
         </div>
       </div>
