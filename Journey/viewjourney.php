@@ -29,6 +29,10 @@ $cityStringToId = [
     'phuyen' => 14,        // Phu Yen
     'hagiang' => 18,       // Ha Giang
     'taybac' => 10,        // Tay Bac (Northern Vietnam)
+    'danang' => 19,         // Da Nang
+    'cantho' => 20,         // Can Tho
+    'hanoi' => 21          // Ha Noi
+
 ];
 
 // City names mapping
@@ -42,6 +46,9 @@ $cityNames = [
     16 => 'Phu Quoc',
     17 => 'Hoi An',
     18 => 'Ha Giang',
+    19 => 'Da Nang',
+    20 => 'Can Tho',
+    21 => 'Ha Noi'
 ];
 
 // Convert string cityId to numeric
@@ -103,6 +110,18 @@ $cityDescriptions = [
   'taybac' => [
       "Northwest Vietnam bursts into color with blooming peach blossoms and fluttering ethnic fabrics. In springtime, villages come alive with highland festivals, traditional music, and a rhythm deeply rooted in ancestral land and legend. It's a place for soul-searchers and mountain lovers alike.",
       "Let VietTransit guide you to the best of Northwest Vietnam — from Moc Chau's plateau to Sapa's cloud-kissed peaks. Dive into culture with our <a href=\"/Journey/traveltip.php?destination=taybac\" style=\"color: #fff; text-decoration: underline;\">Northwest Travel Tips</a>."
+  ],
+  'danang' => [
+    "Da Nang — Vietnam's dynamic coastal hub — is famous for its golden beaches, iconic bridges, and a vibrant mix of modernity and tradition. From the spectacular Golden Bridge in Ba Na Hills to the sacred Marble Mountains and the lively Han River waterfront, Da Nang offers endless discoveries.",
+    "Join a Da Nang tour with VietTransit to explore Son Tra Peninsula, My Khe Beach, and the lantern-lit charm of nearby Hoi An. Plan your journey with our <a href=\"/Journey/traveltip.php?destination=danang\" style=\"color: #fff; text-decoration: underline;\">Da Nang Travel Tips</a>."
+  ],
+  'cantho' => [
+    "Can Tho — the vibrant heart of the Mekong Delta — is where winding waterways and lush orchards shape daily life. Famous for its bustling Cai Rang floating market, charming riverbanks, and warm hospitality, Can Tho blends tradition with a laid-back riverside vibe.",
+    "Sail through the delta with VietTransit to explore floating markets, fruit gardens, and the cultural soul of the South. Discover more in our <a href=\"/Journey/traveltip.php?destination=cantho\" style=\"color: #fff; text-decoration: underline;\">Can Tho Travel Tips</a>."
+  ],
+    'hanoi' => [
+    "Ha Noi — Vietnam's thousand-year-old capital — is a city where ancient heritage and modern life coexist. From the historic Old Quarter and tranquil Hoan Kiem Lake to the majestic Temple of Literature and the bustling night markets, Ha Noi offers a journey through culture, history, and vibrant street life.",
+    "Join a Ha Noi tour with VietTransit to explore Ho Chi Minh Mausoleum, West Lake, and the flavorful world of Vietnamese cuisine. Plan your journey with our <a href=\"/Journey/traveltip.php?destination=hanoi\" style=\"color: #fff; text-decoration: underline;\">Ha Noi Travel Tips</a>."
   ]
 ];
 
@@ -116,7 +135,10 @@ $cityHeroImages = [
     'phuyen' => '../images/hero/phuyen.jpg',
     'hagiang' => '../images/hero/hagiang.jpg',
     'hue' => '../images/hero/hue.jpg',
-    'taybac' => '../images/hero/taybac.jpg'
+    'taybac' => '../images/hero/taybac.jpg',
+    'danang' => '../images/hero/danang.jpg',
+    'cantho' => '../images/hero/cantho.jpg',
+    'hanoi' => '../images/hero/hanoi.jpg'
 ];
 
 $descriptions = $cityDescriptions[$cityId] ?? [
@@ -175,7 +197,10 @@ function generateImagePath($cityId, $tourId) {
         'phuquoc' => [25, 26, 27, 28],
         'hoian' => [29, 30, 31, 32],
         'hagiang' => [33, 34, 35, 36],
-        'taybac' => [1, 2, 3, 4]
+        'taybac' => [1, 2, 3, 4],
+        'danang' => [37, 38, 39, 40],
+        'cantho' => [41, 42, 43, 44],
+        'hanoi'  => [45, 46, 47, 48]
     ];
     
     $imageIds = $imageMap[$cityId] ?? [1, 2, 3, 4];

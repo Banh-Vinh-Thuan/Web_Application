@@ -20,7 +20,10 @@ function generateImagePath($cityid, $tourid) {
         17 => [29, 30, 31, 32],  // Hoi An
         18 => [33, 34, 35, 36],  // Ha Giang
         10 => [1, 2, 3, 4],      // Northern Vietnam/Tay Bac
-        13 => [1, 2, 3, 4]       // Central Vietnam (using same as Northern)
+        13 => [1, 2, 3, 4],       // Central Vietnam (using same as Northern)
+        19 => [37, 38, 39, 40],   // Da Nang
+        20 => [41, 42, 43, 44],   // Can Tho
+        21 => [45, 46, 47, 48]    // Ha Noi
     ];
     
     $imageIds = $imageMap[$cityid] ?? [1, 2, 3, 4];

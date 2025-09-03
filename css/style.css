@@ -589,26 +589,72 @@ header .fa-bars:hover {
     font-weight: 400;
 }
 
-.products .box-container{
-    display: flex;
-    flex-wrap: wrap;
-    gap:1.5rem;
+/* Products Section Layout Improvements */
+.products {
+    background: linear-gradient(135deg, #f8fbff, #e8f4fd);
+    position: relative;
+    overflow: hidden;
 }
 
-.products .box-container .box{
-    flex:1 1 30rem;
-    box-shadow: var(--shadow-light);
-    border-radius: 15px;
-    border: 2px solid rgba(30, 144, 255, 0.1);
+.products::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="1" fill="%231e90ff" opacity="0.08"/><circle cx="80" cy="80" r="1.5" fill="%231e90ff" opacity="0.08"/><circle cx="80" cy="20" r="0.8" fill="%231e90ff" opacity="0.08"/><circle cx="20" cy="80" r="0.8" fill="%231e90ff" opacity="0.08"/><circle cx="50" cy="50" r="1.2" fill="%231e90ff" opacity="0.08"/></svg>');
+    background-size: 120px 120px;
+    z-index: 0;
+}
+
+.products > * {
     position: relative;
-    transition: var(--transition);
-    overflow: hidden;
+    z-index: 1;
+}
+
+.products .box-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem 0;
+}
+.products .box-container .box {
+    flex: none; /* Override flex from original CSS */
+    max-width: 100%;
     background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.1);
+    border: 2px solid rgba(30, 144, 255, 0.08);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    transform: translateY(0);
+}
+
+.products .box-container .box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(30, 144, 255, 0.02), rgba(0, 102, 204, 0.03));
+    opacity: 0;
+    transition: all 0.4s ease;
+    border-radius: 20px;
+    z-index: 0;
+}
+
+.products .box-container .box:hover::before {
+    opacity: 1;
 }
 
 .products .box-container .box:hover {
-    transform: translateY(-10px);
-    box-shadow: var(--shadow-strong);
+    transform: translateY(-12px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(30, 144, 255, 0.2);
     border-color: var(--pink);
 }
 
@@ -626,47 +672,58 @@ header .fa-bars:hover {
     box-shadow: var(--shadow-medium);
 }
 
-.products .box-container .box .image{
+.products .box-container .box .image {
     position: relative;
-    text-align: center;
-    padding-top: 2rem;
-    overflow:hidden;
-    border-radius: 15px 15px 0 0;
+    height: 220px;
+    overflow: hidden;
+    border-radius: 20px 20px 0 0;
+    background: linear-gradient(135deg, #f0f8ff, #e6f3ff);
 }
 
-.products .box-container .box .image img{
-    height:25rem;
-    transition: var(--transition);
+.products .box-container .box .image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 0;
 }
 
-.products .box-container .box:hover .image img{
-    transform: scale(1.1);
+.products .box-container .box:hover .image img {
+    transform: scale(1.15) rotate(1deg);
 }
 
 .products .box-container .box .image .icons {
     position: absolute;
-    bottom: -7rem;
+    bottom: 0;
     left: 0;
     right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), rgba(0,0,0,0.4), transparent);
     display: flex;
-    transition: var(--transition);
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    transform: translateY(80px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .products .box-container .box:hover .image .icons {
-    bottom: 0;
+    transform: translateY(0);
 }
 
 .products .box-container .box .image .icons a {
-    height: 5rem;
-    line-height: 5rem;
-    font-size: 2rem;
-    width: 33.33%;
-    background: var(--gradient-primary);
-    color: #fff;
+    flex: 1;
+    height: 45px;
+    line-height: 45px;
+    font-size: 1.4rem;
+    background: rgba(30, 144, 255, 0.9);
+    color: white;
     text-align: center;
-    transition: var(--transition);
-    font-family: 'Inter', sans-serif;
+    margin: 0 2px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
     font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .products .box-container .box .image .icons .cart-btn {
@@ -676,33 +733,43 @@ header .fa-bars:hover {
 }
 
 .products .box-container .box .image .icons a:hover {
-    background: var(--gradient-accent);
-    transform: scale(1.1);
+    background: rgba(30, 144, 255, 1);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(30, 144, 255, 0.4);
 }
 
-.products .box-container .box .content{
-    padding:2rem;
+.products .box-container .box .image .icons .favorite-btn:hover {
+    background: linear-gradient(135deg, #ff6b6b, #ff5252);
+}
+
+/* Content Area Styling */
+.products .box-container .box .content {
+    padding: 2rem 1.8rem;
     text-align: center;
     background: white;
+    position: relative;
+    z-index: 1;
 }
 
-.products .box-container .box .content h3{
-    font-size: 2.5rem;
-    color:#333;
+.products .box-container .box .content h3 {
+    font-size: 2.2rem;
+    color: #333;
     font-family: 'Playfair Display', serif;
     font-weight: 600;
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+    text-transform: capitalize;
 }
 
 .products .box-container .box .content .price {
-    font-size: 1.6rem;
-    color: #222;
-    font-weight: 600;
-    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: #666;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
     font-style: italic;
-    font-variation-settings: "wght" 600, "ital" 1;
-    padding-top: 1rem;
+    line-height: 1.4;
     text-transform: none;
+    opacity: 0.8;
 }
 
 .products .box-container .box .content .price span {
@@ -961,5 +1028,115 @@ header .fa-bars:hover {
 
     .heading{
         font-size: 3rem;
+    }
+}
+
+@media (max-width: 991px) {
+    .products .box-container {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+    }
+    
+    .products .box-container .box .image {
+        height: 200px;
+    }
+    
+    .products .box-container .box .content h3 {
+        font-size: 2rem;
+    }
+    
+    .products .box-container .box .content .price {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .products .box-container {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 2rem;
+        padding: 1rem 0;
+    }
+    
+    .products .box-container .box .image {
+        height: 200px;
+    }
+    
+    .products .box-container .box .image .icons a {
+        font-size: 1.3rem;
+        height: 40px;
+        line-height: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .products .box-container {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .products .box-container .box {
+        max-width: 100%;
+        margin: 0 auto;
+    }
+    
+    .products .box-container .box .image {
+        height: 220px;
+    }
+    
+    .products .box-container .box .content {
+        padding: 1.5rem;
+    }
+    
+    .products .box-container .box .content h3 {
+        font-size: 1.8rem;
+    }
+    
+    .products .box-container .box .content .price {
+        font-size: 1.2rem;
+    }
+}
+
+/* Special Layout for Exactly 12 Items */
+@media (min-width: 1201px) {
+    .products .box-container {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1200px) {
+    .products .box-container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.8rem;
+    }
+}
+
+/* Animation for boxes appearing */
+.products .box-container .box {
+    opacity: 0;
+    animation: fadeInUp 0.6s ease forwards;
+}
+
+.products .box-container .box:nth-child(1) { animation-delay: 0.1s; }
+.products .box-container .box:nth-child(2) { animation-delay: 0.15s; }
+.products .box-container .box:nth-child(3) { animation-delay: 0.2s; }
+.products .box-container .box:nth-child(4) { animation-delay: 0.25s; }
+.products .box-container .box:nth-child(5) { animation-delay: 0.3s; }
+.products .box-container .box:nth-child(6) { animation-delay: 0.35s; }
+.products .box-container .box:nth-child(7) { animation-delay: 0.4s; }
+.products .box-container .box:nth-child(8) { animation-delay: 0.45s; }
+.products .box-container .box:nth-child(9) { animation-delay: 0.5s; }
+.products .box-container .box:nth-child(10) { animation-delay: 0.55s; }
+.products .box-container .box:nth-child(11) { animation-delay: 0.6s; }
+.products .box-container .box:nth-child(12) { animation-delay: 0.65s; }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }

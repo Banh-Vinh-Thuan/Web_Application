@@ -537,6 +537,183 @@ $travelTips = [
         ],
         'shopping' => 'Popular items include dried fruits, Da Lat wine, jam, fresh flowers, and local handicrafts. The Night Market is ideal for souvenirs and street snacks.',
         'tips' => 'Pack warm clothes, especially for evenings and early mornings. Bring cash for local markets. Watch out for foggy roads if you\'re riding a motorbike. Respect quiet zones at religious and cultural sites.'
+    ],
+
+    'danang' => [
+        'title' => 'Da Nang Travel',
+        'about_title' => 'About Da Nang',
+        'about_content' => 'Da Nang, located on Vietnam’s central coast, is a vibrant city known for its golden beaches, iconic bridges, and a harmonious blend of tradition and modernity. The city serves as a gateway to UNESCO World Heritage Sites such as Hoi An Ancient Town and My Son Sanctuary. With attractions like the Marble Mountains, Ba Na Hills with its famous Golden Bridge, and the Son Tra Peninsula, Da Nang offers both cultural depth and natural beauty. Its friendly atmosphere, delicious cuisine, and dynamic nightlife make it one of Vietnam’s top destinations.',
+        'coordinates' => ['latitude' => 16.0471, 'longitude' => 108.2068],
+        'season_info' => [
+            'good_months' => [2, 3, 4, 5, 8, 9],
+            'ok_months' => [1, 6, 7],
+            'bad_months' => [10, 11, 12],
+            'notes' => 'Feb-May and Aug-Sep are ideal with pleasant weather. Jun-Jul is hot but great for beach lovers. Oct-Dec often brings heavy rains and occasional typhoons.'
+        ],
+        'transportation' => [
+            'Da Nang International Airport connects the city with major domestic and international destinations. Trains and buses from Hanoi, Hue, and Ho Chi Minh City are also available.',
+            'Within the city, taxis, Grab, and motorbike rentals are the most convenient. Cycling along the Han River and beachside boulevards is also popular.'
+        ],
+        'best_time' => [
+            'The best time to visit Da Nang is from February to May when the weather is cool, dry, and ideal for sightseeing and beach activities.',
+            'August and September are also good months, with fewer crowds compared to peak summer.'
+        ],
+        'places' => [
+            [
+                'day' => 'Day 1',
+                'description' => "Start your Da Nang adventure with a visit to the Marble Mountains, exploring caves, pagodas, and viewpoints. Head to My Khe Beach for a relaxing afternoon on golden sands. In the evening, enjoy a walk along the Han River, marvel at the Dragon Bridge, and watch its fiery performance on weekends.",
+                'images' => ['../images/danang_D1.jpg', '../images/danang_D1_1.jpg', '../images/danang_D1_2.jpg', '../images/danang_D1_3.jpg']
+            ],
+            [
+                'day' => 'Day 2',
+                'description' => "Take a day trip to Ba Na Hills and experience the famous Golden Bridge supported by giant stone hands. Ride the cable car, explore the French Village, and enjoy theme park activities. Return to Da Nang for sunset at Son Tra Peninsula’s Linh Ung Pagoda with its towering Lady Buddha statue.",
+                'images' => ['../images/danang_D2.jpg', '../images/danang_D2_1.jpg', '../images/danang_D2_2.jpg', '../images/danang_D2_3.jpg']
+            ],
+            [
+                'day' => 'Day 3',
+                'description' => "Head south to Hoi An Ancient Town, a UNESCO World Heritage Site just 30 km away. Stroll through lantern-lit streets, visit temples, and try traditional tailoring. In the evening, return to Da Nang to explore the bustling night markets or enjoy seafood by the beach.",
+                'images' => ['../images/danang_D3.jpg', '../images/danang_D3_1.jpg', '../images/danang_D3_2.jpg', '../images/danang_D3_3.jpg']
+            ]
+        ],
+        'accommodation' => 'Choose from luxurious beach resorts, city-center hotels with river views, or boutique stays near Han Market.',
+        'cuisine' => [
+            [
+                'name' => 'Mì Quảng (Quang-style noodles)',
+                'image' => '../images/danang_C1.jpg'
+            ],
+            [
+                'name' => 'Bánh tráng cuốn thịt heo (pork with rice paper rolls)',
+                'image' => '../images/danang_C2.jpg'
+            ],
+            [
+                'name' => 'Seafood at local beachside restaurants',
+                'image' => '../images/danang_C3.jpg'
+            ],
+            [
+                'name' => 'Bún chả cá (fishcake noodle soup)',
+                'image' => '../images/danang_C4.jpg'
+            ]
+        ],
+        'shopping' => 'Visit Han Market and Con Market for local produce, dried seafood, and souvenirs. Night markets along the riverfront are perfect for food, fashion, and handicrafts.',
+        'tips' => 'Bring sunscreen for beach days. Be cautious when crossing roads as traffic can be busy. If visiting during typhoon season (Oct-Dec), check weather updates. Try to schedule weekends for the Dragon Bridge fire and water show.'
+    ],
+
+    'cantho' => [
+        'title' => 'Can Tho Travel',
+        'about_title' => 'About Can Tho',
+        'about_content' => 'Can Tho, the largest city in the Mekong Delta, is often called the "Western Capital" of Vietnam. Known for its lush waterways, vibrant floating markets, and fertile rice fields, Can Tho captures the essence of life in the delta. Visitors are drawn to its iconic Cai Rang Floating Market, tranquil canals lined with fruit orchards, and hospitable people. The city blends traditional river culture with modern development, offering both authentic local experiences and urban comforts. It is an ideal destination to experience the charm of Vietnam’s riverine lifestyle.',
+        'coordinates' => ['latitude' => 10.0452, 'longitude' => 105.7469],
+        'season_info' => [
+            'good_months' => [12, 1, 2, 3, 4],
+            'ok_months' => [5, 11],
+            'bad_months' => [6, 7, 8, 9, 10],
+            'notes' => 'Dry season (Dec-Apr) is the best time to visit with clear skies and cooler weather. May-Oct is the rainy season, which can bring floods but also lush greenery and fresh fruits.'
+        ],
+        'transportation' => [
+            'Can Tho International Airport connects to Hanoi, Da Nang, and Ho Chi Minh City with domestic flights. Buses are a common option from Ho Chi Minh City, taking about 3-4 hours via expressway.',
+            'Within the city, taxis, motorbike rentals, and especially boat tours are the most popular ways to get around and explore the canals.'
+        ],
+        'best_time' => [
+            'The ideal time to visit Can Tho is from December to April when the weather is dry and pleasant, perfect for boat trips and exploring orchards.',
+            'Visiting during the rainy season offers abundant tropical fruits and lush landscapes but be prepared for showers.'
+        ],
+        'places' => [
+            [
+                'day' => 'Day 1',
+                'description' => "Begin your journey at Cai Rang Floating Market, the largest in the Mekong Delta, where boats brimming with fruits and vegetables trade at dawn. Then cruise along the canals to visit local orchards and enjoy fresh tropical fruits. In the afternoon, explore Ong Pagoda and take a relaxing walk along Ninh Kieu Wharf with its scenic river views.",
+                'images' => ['../images/cantho_D1.jpg', '../images/cantho_D1_1.jpg', '../images/cantho_D1_2.jpg', '../images/cantho_D1_3.jpg']
+            ],
+            [
+                'day' => 'Day 2',
+                'description' => "Visit Bang Lang Stork Sanctuary to see thousands of storks in their natural habitat. Continue to Binh Thuy Ancient House, a French-colonial style residence blending East and West architecture. In the evening, enjoy a sunset cruise or sample local dishes at riverside restaurants.",
+                'images' => ['../images/cantho_D2.jpg', '../images/cantho_D2_1.jpg', '../images/cantho_D2_2.jpg', '../images/cantho_D2_3.jpg']
+            ],
+            [
+                'day' => 'Day 3',
+                'description' => "Take a day trip deeper into the Mekong Delta to experience smaller floating markets, traditional handicraft villages, and serene countryside landscapes. Return to Can Tho to relax at a café by the Hau River before concluding your trip.",
+                'images' => ['../images/cantho_D3.jpg', '../images/cantho_D3_1.jpg', '../images/cantho_D3_2.jpg', '../images/cantho_D3_3.jpg']
+            ]
+        ],
+        'accommodation' => 'Choose from riverside resorts, boutique hotels near Ninh Kieu Wharf, or homestays in lush orchards along the canals.',
+        'cuisine' => [
+            [
+                'name' => 'Lẩu mắm (fermented fish hotpot)',
+                'image' => '../images/cantho_C1.jpg'
+            ],
+            [
+                'name' => 'Bánh xèo miền Tây (Mekong-style crispy pancake)',
+                'image' => '../images/cantho_C2.jpg'
+            ],
+            [
+                'name' => 'Hủ tiếu gõ (southern noodle soup)',
+                'image' => '../images/cantho_C3.jpg'
+            ],
+            [
+                'name' => 'Fresh tropical fruits (mango, durian, rambutan)',
+                'image' => '../images/cantho_C4.jpg'
+            ]
+        ],
+        'shopping' => 'Visit Can Tho Night Market for souvenirs, snacks, and local crafts. Floating markets are perfect for buying seasonal fruits. Traditional handicrafts and rice paper products are popular take-home items.',
+        'tips' => 'Wake up early to catch the floating markets at their busiest (around 5–7 am). Bring sunscreen and hats for boat trips. Carry cash for purchases at markets. Be cautious during rainy season as canals may flood.'
+    ],
+
+    'hanoi' => [
+        'title' => 'Hanoi Travel',
+        'about_title' => 'About Hanoi',
+        'about_content' => 'Hanoi, the capital of Vietnam, is a city where ancient traditions harmoniously blend with modern development. Known as the "City of Lakes," it features historical landmarks, tree-lined boulevards, French colonial architecture, and vibrant street life. The Old Quarter is a maze of narrow alleys bustling with shops, food stalls, and local markets. Beyond its rich history, Hanoi offers a thriving cultural scene, lively nightlife, and serves as the gateway to northern Vietnam’s iconic destinations such as Ha Long Bay, Ninh Binh, and Sapa.',
+        'coordinates' => ['latitude' => 21.0285, 'longitude' => 105.8542],
+        'season_info' => [
+            'good_months' => [10, 11, 12, 3, 4],
+            'ok_months' => [1, 2, 9],
+            'bad_months' => [5, 6, 7, 8],
+            'notes' => 'Oct–Dec and Mar–Apr are the best times with cool, pleasant weather. Jan–Feb can be chilly and misty but atmospheric during Tet (Lunar New Year). May–Aug is hot and humid, with heavy rains in summer.'
+        ],
+        'transportation' => [
+            'Noi Bai International Airport connects Hanoi to major global and domestic destinations. Trains and buses link the city with other provinces.',
+            'Within Hanoi, taxis, Grab, cyclos, and motorbike rentals are common. Walking around the Old Quarter is the best way to explore its charm.'
+        ],
+        'best_time' => [
+            'The best times to visit Hanoi are in autumn (Oct–Nov) when the weather is cool, dry, and the city is at its most romantic, and in spring (Mar–Apr) with blooming flowers and comfortable temperatures.',
+            'Winter (Dec–Feb) is also popular for cultural festivals, though it can be cold and misty.'
+        ],
+        'places' => [
+            [
+                'day' => 'Day 1',
+                'description' => "Begin with a walk around Hoan Kiem Lake and Ngoc Son Temple, the spiritual heart of Hanoi. Explore the Old Quarter with its bustling streets, traditional guilds, and street food delights. In the afternoon, visit the Temple of Literature, Vietnam’s first university, followed by a cyclo ride around the French Quarter. End the day with a water puppet show, a unique Vietnamese art form.",
+                'images' => ['../images/hanoi_D1.jpg', '../images/hanoi_D1_1.jpg', '../images/hanoi_D1_2.jpg', '../images/hanoi_D1_3.jpg']
+            ],
+            [
+                'day' => 'Day 2',
+                'description' => "Start with Ho Chi Minh Mausoleum, One Pillar Pagoda, and the Presidential Palace area. Continue to the Vietnam Museum of Ethnology for insights into the country’s diverse cultures. In the evening, relax with egg coffee at a rooftop café overlooking Hoan Kiem Lake.",
+                'images' => ['../images/hanoi_D2.jpg', '../images/hanoi_D2_1.jpg', '../images/hanoi_D2_2.jpg', '../images/hanoi_D2_3.jpg']
+            ],
+            [
+                'day' => 'Day 3',
+                'description' => "Take a day trip to nearby attractions: the Perfume Pagoda with its scenic boat ride and cable car, or Bat Trang Ceramic Village to learn traditional pottery-making. Return to Hanoi for shopping at Dong Xuan Market and enjoy the vibrant nightlife around Ta Hien beer street.",
+                'images' => ['../images/hanoi_D3.jpg', '../images/hanoi_D3_1.jpg', '../images/hanoi_D3_2.jpg', '../images/hanoi_D3_3.jpg']
+            ]
+        ],
+        'accommodation' => 'Stay in boutique hotels in the Old Quarter, luxury hotels in the French Quarter, or modern apartments around Tay Ho (West Lake).',
+        'cuisine' => [
+            [
+                'name' => 'Phở Hà Nội (Hanoi beef noodle soup)',
+                'image' => '../images/hanoi_C1.jpg'
+            ],
+            [
+                'name' => 'Bún chả (grilled pork with noodles)',
+                'image' => '../images/hanoi_C2.jpg'
+            ],
+            [
+                'name' => 'Chả cá Lã Vọng (grilled turmeric fish with dill)',
+                'image' => '../images/hanoi_C3.jpg'
+            ],
+            [
+                'name' => 'Cà phê trứng (egg coffee)',
+                'image' => '../images/hanoi_C4.jpg'
+            ]
+        ],
+        'shopping' => 'Dong Xuan Market and the Old Quarter are best for handicrafts, silk, and souvenirs. Weekend night markets offer local goods and street food. Hang Gai Street is famous for silk products.',
+        'tips' => 'Wake up early to enjoy the peaceful side of Hanoi at Hoan Kiem Lake. Bargain politely at markets. Be mindful of traffic when crossing streets. Try local street food but choose busy stalls for freshness.'
     ]
 ];
 

@@ -96,7 +96,10 @@ changeVideoBackground();
             ['id' => 15, 'name' => 'Da Lat', 'image' => 'dalat.jpg', 'url' => 'dalat', 'desc' => 'Where flowers bloom all year round'],
             ['id' => 16, 'name' => 'Phu Quoc', 'image' => 'phuquoc.jpg', 'url' => 'phuquoc', 'desc' => 'Pristine beauty between sky and sea'],
             ['id' => 17, 'name' => 'Hoi An', 'image' => 'hoian.jpg', 'url' => 'hoian', 'desc' => 'Where the past and present walk together'],
-            ['id' => 18, 'name' => 'Ha Giang', 'image' => 'hagiang.jpg', 'url' => 'hagiang', 'desc' => 'Where misty mountains rise between earth and sky']
+            ['id' => 18, 'name' => 'Ha Giang', 'image' => 'hagiang.jpg', 'url' => 'hagiang', 'desc' => 'Where misty mountains rise between earth and sky'],
+            ['id' => 19, 'name' => 'Da Nang', 'image' => 'danang.jpg', 'url' => 'danang', 'desc' => 'The city of bridges and vibrant coastal life'],
+            ['id' => 20, 'name' => 'Can Tho', 'image' => 'cantho.jpg', 'url' => 'cantho', 'desc' => 'The heart of the Mekong Delta, famous for floating markets and waterways'],
+            ['id' => 21, 'name' => 'Ha Noi', 'image' => 'hanoi.jpg', 'url' => 'hanoi', 'desc' => 'The thousand-year-old capital, where tradition meets modernity']
         ];
         
         foreach ($destinations as $dest): ?>
