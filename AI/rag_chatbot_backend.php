@@ -64,7 +64,7 @@ class OptimizedRAGTravelChatbot {
     public function __construct($db) {
         $this->db = $db;
         $this->userId = $_SESSION['user_id'] ?? 1;
-        $this->geminiApiKey = "AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA";
+        $this->geminiApiKey = "";
         $this->geminiApiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
     }
     
