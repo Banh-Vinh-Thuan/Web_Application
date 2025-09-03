@@ -1351,7 +1351,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Updated confirm booking function - replace the existing one
+// Updated confirm booking function - replace the existing one in flight.php
 document.getElementById('confirmBooking').addEventListener('click', function() {
     const selectedFlight = window.selectedFlightData;
     const passengerName = document.getElementById('passenger_name').value.trim();
@@ -1386,8 +1386,8 @@ document.getElementById('confirmBooking').addEventListener('click', function() {
     }
     
     // Phone validation (basic)
-    if (passengerPhone.length < 10) {
-        alert('Please enter a valid phone number (minimum 10 digits)');
+    if (!passengerPhone.trim()) {
+        alert('Please enter your phone number');
         document.getElementById('passenger_phone').focus();
         return;
     }
@@ -1396,7 +1396,7 @@ document.getElementById('confirmBooking').addEventListener('click', function() {
         // Create a form to submit flight data to payment page
         const form = document.createElement('form');
         form.method = 'POST';
-        form.action = '../Flight/flight_payment.php';
+        form.action = './flight_payment.php'; // Updated path - same directory as flight.php
         
         // Add flight data as hidden inputs
         const flightData = {

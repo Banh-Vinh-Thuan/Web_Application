@@ -25,10 +25,9 @@ $cityStringToId = [
     'hoian' => 17,         // Hoi An
     'phuquoc' => 16,       // Phu Quoc
     'northern' => 10,      // Northern Vietnam
-    'central' => 13,       // Central Vietnam
+    'hue' => 13,           // Central Vietnam
     'phuyen' => 14,        // Phu Yen
     'hagiang' => 18,       // Ha Giang
-    'hue' => 19,           // Hue
     'taybac' => 10,        // Tay Bac (Northern Vietnam)
 ];
 
@@ -37,13 +36,12 @@ $cityNames = [
     10 => 'Northern Vietnam',
     11 => 'Ho Chi Minh City',
     12 => 'Nha Trang',
-    13 => 'Central Vietnam',
+    13 => 'Hue',
     14 => 'Phu Yen',
     15 => 'Dalat',
     16 => 'Phu Quoc',
     17 => 'Hoi An',
     18 => 'Ha Giang',
-    19 => 'Hue'
 ];
 
 // Convert string cityId to numeric

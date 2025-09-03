@@ -5,153 +5,139 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Travel Planner - VietTransit</title>
+    <title>AI Travel Assistant</title>
     <link rel="icon" type="image/png" href="../images/favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="../AI/AI_planner.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="AI_planner.css">
 </head>
 <body>
-    <?php include __DIR__ . '/../header.php'; ?>
-
-    <main class="ai-container">
-        <section class="ai-hero">
-            <div class="hero-content">
-                <div class="hero-icon">
-                    <i class="fas fa-robot"></i>
-                </div>
-                <h1 class="hero-title">
-                    AI Travel Planner
-                    <span class="title-accent">🧳✨</span>
-                </h1>
-                <p class="hero-description">
-                    Enter your travel requirements in natural language. We will create a suitable plan for you.
-                </p>
-            </div>
-        </section>
-
-        <section class="ai-main">
-            <div class="content-wrapper">
-                <aside class="ai-sidebar">
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-history"></i> Recent Searches</h3>
-                        <div class="search-history" id="searchHistory">
-                            </div>
-                    </div>
-
-                    <div class="sidebar-section">
-                        <h3><i class="fas fa-lightbulb"></i> Try These</h3>
-                        <div class="suggestions">
-                            <button class="suggestion-btn" data-query="I want to go to the beach for 3 days with a budget of 5 million VND, suggest Vung Tau">
-                                Beach trip for 3 days - 5M VND
-                            </button>
-                            <button class="suggestion-btn" data-query="Couple trip to Phu Quoc for 2 days, romantic and luxurious, budget 15 million">
-                                Romantic Phu Quoc - 2 days
-                            </button>
-                            <button class="suggestion-btn" data-query="Solo backpacking in Ha Giang for 5 days, budget-friendly around 4 million">
-                                Solo Ha Giang - 5 days
-                            </button>
-                            <button class="suggestion-btn" data-query="Family trip to Hoi An, 3 days, cultural activities, budget 8 million">
-                                Cultural Hoi An - 3 days
-                            </button>
-                        </div>
-                    </div>
-                </aside>
-
-                <div class="ai-chat-area">
-                    <div class="chat-messages" id="chatMessages">
-                        <div class="welcome-message">
-                            <div class="message-avatar">
-                                <i class="fas fa-robot"></i>
-                            </div>
-                            <div class="message-content">
-                                <h3>Welcome to AI Travel Planner!</h3>
-                                <p>I'm here to help you plan your perfect trip to Vietnam. Just tell me:</p>
-                                <ul>
-                                    <li>🏝️ Where do you want to go?</li>
-                                    <li>📅 How many days?</li>
-                                    <li>💰 What's your budget?</li>
-                                    <li>👥 Who's traveling with you?</li>
-                                </ul>
-                                <p>Example: <em>"I have 10 million VND, want to go to Da Lat for 4 days with my family. Please suggest me."</em></p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="chat-input-area">
-                        <div class="input-wrapper">
-                            <textarea
-                                id="chatInput"
-                                placeholder="Example: I have 10 million VND, want to go to Da Lat for 4 days with my family. Please suggest me."
-                                rows="3"
-                            ></textarea>
-                            <button id="sendButton" class="send-btn">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
-                        <div class="input-actions">
-                            <button class="action-btn" id="clearChat">
-                                <i class="fas fa-trash"></i>
-                                Clear Chat
-                            </button>
-                            <button class="action-btn" id="voiceInput" disabled>
-                                <i class="fas fa-microphone"></i>
-                                Voice Input
-                            </button>
-                        </div>
+    <!-- Sidebar -->
+    <div id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <a href="../login/Loggedinhome.php" id="sidebarToggle" class="sidebar-toggle" title="Go to home">
+                <i class="fas fa-home"></i>
+            </a>
+            <button id="newChatBtn" class="new-chat-btn">
+                <i class="fas fa-plus"></i>
+                <span>New chat</span>
+            </button>
+        </div>
+        
+        <div class="sidebar-content">
+            <div class="chat-history">
+                <div class="chat-section">
+                    <div class="section-title">Conversations</div>
+                    <div id="chatList" class="chat-list">
+                        <!-- Chat items will be populated by JavaScript -->
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+        
+        <div class="sidebar-footer">
+            <div class="user-info" onclick="toggleUserMenu()">
+                <div class="user-avatar">
+                    <?php 
+                    // Get user info from session with fallbacks
+                    $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 
+                               (isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 
+                               (isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest'));
+                    $userEmail = isset($_SESSION['email']) ? $_SESSION['email'] : 'Free';
+                    
+                    // Display first letter of username
+                    echo strtoupper(substr($userName, 0, 1));
+                    ?>
+                </div>
+                <div class="user-details">
+                    <div class="username"><?php echo htmlspecialchars($userName); ?></div>
+                    <div class="user-email"><?php echo htmlspecialchars($userEmail); ?></div>
+                </div>
+                <div class="user-menu-toggle">
+                    <i class="fas fa-ellipsis-h"></i>
+                </div>
+                <div id="userMenu" class="user-menu">
+                    <div class="menu-item">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </div>
+                    <div class="menu-item" onclick="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-        <section class="ai-results" id="resultsSection" style="display: none;">
-            <div class="results-header">
-                <h2><i class="fas fa-map-marked-alt"></i> Your Travel Plan</h2>
-                <div class="results-actions">
-                    <button class="export-btn" id="exportExcel">
-                        <i class="fas fa-file-excel"></i>
-                        Download Excel
-                    </button>
-                    <button class="export-btn" id="shareLink" disabled>
-                        <i class="fas fa-share"></i>
-                        Share Plan
+    <!-- Main Content -->
+    <div id="mainContent" class="main-content">
+        <div class="chat-container">
+            <!-- Welcome Screen -->
+            <div id="welcomeScreen" class="welcome-screen">
+                <div class="welcome-content">
+                    <div class="ai-logo">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h1>AI Travel Assistant</h1>
+                    <p>Hello <?php echo htmlspecialchars($userName); ?>! I'm your intelligent travel planning assistant powered by advanced AI.</p>
+                    <p class="capability-text">Ask me about destinations, hotels, tours, transportation, or any travel-related questions!</p>
+                </div>
+            </div>
+            
+            <!-- Messages Container -->
+            <div id="messagesContainer" class="messages-container">
+                <div id="messages" class="messages">
+                    <!-- Messages will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Input Area -->
+        <div class="input-container">
+            <div class="input-wrapper">
+                <div class="input-box">
+                    <textarea id="messageInput" class="message-input" placeholder="Ask me anything about travel..." rows="1"></textarea>
+                    <button id="sendBtn" class="send-btn" disabled title="Send message">
+                        <i class="fas fa-paper-plane"></i>
                     </button>
                 </div>
             </div>
-
-            <div class="travel-plan-table">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Day</th>
-                            <th>Location</th>
-                            <th>Activity</th>
-                            <th>Estimated Cost (VND)</th>
-                            <th>Notes</th>
-                        </tr>
-                    </thead>
-                    <tbody id="travelPlanTableBody">
-                        </tbody>
-                </table>
+            <div class="input-footer">
+                <span>AI Travel Assistant powered by Large Language Model. Responses are based on our travel database.</span>
             </div>
+        </div>
+    </div>
 
-            <div class="plan-summary">
-                <div class="summary-card">
-                    <h3><i class="fas fa-calculator"></i> Cost Breakdown</h3>
-                    <div class="cost-details" id="costBreakdown">
-                        </div>
-                </div>
+    <!-- Loading Modal -->
+    <div id="loadingModal" class="loading-modal">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>AI is thinking...</p>
+        </div>
+    </div>
 
-                <div class="summary-card">
-                    <h3><i class="fas fa-info-circle"></i> Travel Tips</h3>
-                    <div class="tips-content" id="travelTips">
-                        </div>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <?php include __DIR__ . '/../footer.php'; ?>
-
-    <script src="../AI/ai-planner.js"></script>
+    <script>
+        // Add logout function
+        function logout() {
+            if (confirm('Are you sure you want to logout?')) {
+                window.location.href = '../Login/login.php';
+            }
+        }
+        
+        function toggleUserMenu() {
+            const userMenu = document.getElementById('userMenu');
+            userMenu.classList.toggle('show');
+        }
+        
+        document.addEventListener('click', function(event) {
+            const userInfo = document.querySelector('.user-info');
+            const userMenu = document.getElementById('userMenu');
+            
+            if (userInfo && !userInfo.contains(event.target)) {
+                userMenu.classList.remove('show');
+            }
+        });
+    </script>
+    <script src="ai-planner.js"></script>
 </body>
 </html>

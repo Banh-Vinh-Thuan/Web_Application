@@ -26,40 +26,36 @@ $cityStringToId = [
     'nhatrang' => 12,      // Nha Trang
     'hoian' => 17,         // Hoi An
     'phuquoc' => 16,       // Phu Quoc
-    'northern' => 10,      // Northern Vietnam
-    'central' => 13,       // Central Vietnam
+    'taybac' => 10,        // Tay Bac (Northern Vietnam)
+    'hue' => 13,       
     'phuyen' => 14,        // Phu Yen
     'hagiang' => 18,       // Ha Giang
-    'hue' => 19,           // Hue
-    'taybac' => 10,        // Tay Bac (Northern Vietnam)
 ];
 
 // City names mapping
 $cityNames = [
-    10 => 'Northern Vietnam',
+    10 => 'Tay Bac',
     11 => 'Ho Chi Minh City',
     12 => 'Nha Trang',
-    13 => 'Central Vietnam',
+    13 => 'Hue',
     14 => 'Phu Yen',
     15 => 'Dalat',
     16 => 'Phu Quoc',
     17 => 'Hoi An',
-    18 => 'Ha Giang',
-    19 => 'Hue'
+    18 => 'Ha Giang'
 ];
 
-// NEW: Mapping from database city IDs to folder prefixes
+// Mapping from database city IDs to folder prefixes - updated to match available cities
 $cityIdToFolderPrefix = [
-    10 => 'taybac',      // Northern Vietnam -> northern1, northern2, etc.
+    10 => 'taybac',       // Tay Bac -> taybac1, taybac2, etc.
     11 => 'hcm',          // Ho Chi Minh City -> hcm1, hcm2, etc.
     12 => 'nhatrang',     // Nha Trang -> nhatrang1, nhatrang2, etc.
-    13 => 'central',      // Central Vietnam -> central1, central2, etc.
+    13 => 'hue',     
     14 => 'phuyen',       // Phu Yen -> phuyen1, phuyen2, etc.
     15 => 'dalat',        // Dalat -> dalat1, dalat2, etc.
     16 => 'phuquoc',      // Phu Quoc -> phuquoc1, phuquoc2, etc.
     17 => 'hoian',        // Hoi An -> hoian1, hoian2, etc.
     18 => 'hagiang',      // Ha Giang -> hagiang1, hagiang2, etc.
-    19 => 'hue'           // Hue -> hue1, hue2, etc.
 ];
 
 // Convert string cityId to numeric

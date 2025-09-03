@@ -77,7 +77,7 @@ changeVideoBackground();
     <div class="icons">
         <img src="../images/icon-4.png" alt="">
         <div class="info">
-            <h3>secure paymens</h3>
+            <h3>secure payments</h3>
             <span>protected by Razorpay</span>
         </div>
     </div>
@@ -123,7 +123,7 @@ changeVideoBackground();
     <div class="box-container">
         <?php
         $reviews = [
-            ['stars' => 5, 'text' => 'Booking my dream trip to the stunning landscapes of Tây Bắc with VietTransit was a breeze – seamless and stress-free!', 'img' => 'pic-1.jpg', 'name' => 'Thanh Trung', 'location' => 'Ho Chi Minh'],
+            ['stars' => 5, 'text' => 'Booking my dream trip to the stunning landscapes of Tây Bắc with VietTransit was a breeze — seamless and stress-free!', 'img' => 'pic-1.jpg', 'name' => 'Thanh Trung', 'location' => 'Ho Chi Minh'],
             ['stars' => 5, 'text' => 'Thanks to VietTransit, I explored the breathtaking beauty of Phu Yen with ease, and the deals were unbeatable!', 'img' => 'pic-2.png', 'name' => 'Thuong Vo', 'location' => 'Ha Noi'],
             ['stars' => 5, 'text' => 'Made my adventure to the charming Da Lat unforgettable, with expert guidance and fantastic itineraries.', 'img' => 'pic-3.jpg', 'name' => 'Thinh Le', 'location' => 'Binh Phuoc']
         ];
