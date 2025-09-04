@@ -18,7 +18,7 @@
   },
   {
     "hotelid": 2,
-    "name": "Mường Thanh Resort",
+    "name": "Muong Thanh Grand Dien Bien Phu",
     "coordinates": {
       "latitude": 21.382884806127418,
       "longitude": 103.02028355109904
@@ -35,7 +35,7 @@
   },
   {
     "hotelid": 3,
-    "name": "Lò Văn Hặc Hotel",
+    "name": "Bảo An Hotel",
     "coordinates": {
       "latitude": 21.39315447274772, 
       "longitude": 103.01116001062003
@@ -52,7 +52,7 @@
   },
   {
     "hotelid": 4,
-    "name": "Phan Đình Giót Hotel",
+    "name": "Pha Din Hotel",
     "coordinates": {
       "latitude": 21.38764107028578, 
       "longitude": 103.01715589527737
@@ -69,7 +69,7 @@
   },
   {
     "hotelid": 5,
-    "name": "Than Uyên Mountain Lodge",
+    "name": "Long Giang Hotel",
     "coordinates": {
       "latitude": 22.173158288158444,
       "longitude": 103.754797002697
@@ -103,7 +103,7 @@
   },
   {
     "hotelid": 7,
-    "name": "Thủy Sơn Lakeside Hotel",
+    "name": "Hoang Nham Luxury Hotel",
     "coordinates": {
       "latitude": 22.391280038711667, 
       "longitude": 103.46742720879837
@@ -120,12 +120,12 @@
   },
   {
     "hotelid": 8,
-    "name": "Lê Duẩn Central Hotel",
+    "name": "Le Champ Tu Le Resort Hot Spring & Spa",
     "coordinates": {
-      "latitude": 22.40156119076922, 
-      "longitude": 103.4624908664699
+      "latitude": 21.78865306495667,
+      "longitude": 104.31097462481068
     },
-    "address": "179 Lê Duẩn, Tân Phong, Lai Châu, 390000, Việt Nam",
+    "address": "Nuoc Nong Village, QL32 Commune, Tú Lệ, Văn Chấn, Lào Cai, Việt Nam",
     "rating": 4.0,
     "price": 1150000,
     "image": "8/8.1.jpg",
@@ -137,12 +137,12 @@
   },
   {
     "hotelid": 9,
-    "name": "Yên Bái Riverside Hotel",
+    "name": "Suoi Giang Tea Cultural Space",
     "coordinates": {
-      "latitude": 21.716704959966837, 
-      "longitude": 104.91522590877946
+      "latitude": 21.619064110567486, 
+      "longitude": 104.59163951131458
     },
-    "address": "56 Ngô Sĩ Liên, P.Đồng Tâm, Yên Bái, Việt Nam",
+    "address": "Cây trà Tổ, Suối Giàng, Văn Chấn, Yên Bái, Việt Nam",
     "rating": 4.2,
     "price": 1250000,
     "image": "9/9.1.jpg",
@@ -154,12 +154,12 @@
   },
   {
     "hotelid": 10,
-    "name": "Phan Thiết Beach Resort",
+    "name": "Garrya Mù Cang Chải",
     "coordinates": {
-      "latitude": 10.956282054957832,
-      "longitude": 108.22775504055349
+      "latitude": 21.805942775083675,
+      "longitude": 104.14395773830233
     },
-    "address": "201/4 Nguyễn Đình Chiểu, Phường Hàm Tiến, Thành phố Phan Thiết, Bình Thuận, Việt Nam",
+    "address": "Bản Pu Nhu, Xa Pung Luong, Mu Cang Chai, Tỉnh Lao Cai, Yen Bai, Viet Nam, 33500, Việt Nam",
     "rating": 4.6,
     "price": 1800000,
     "image": "10/10.1.jpg",
@@ -171,7 +171,7 @@
   },
   {
     "hotelid": 11,
-    "name": "Phạm Ngũ Lão Backpacker Hotel",
+    "name": "Havana Airport Hotel",
     "coordinates": {
       "latitude": 10.767755967904131,
       "longitude": 106.69133473739916
@@ -188,10 +188,10 @@
   },
   {
     "hotelid": 12,
-    "name": "Trần Hưng Đạo Boutique Hotel",
+    "name": "SAZI RESIN HOTEL",
     "coordinates": {
-      "latitude": 10.766305269021975,
-      "longitude": 106.69338981041305
+      "latitude": 10.772098784934387, 
+      "longitude": 106.69090634548063
     },
     "address": "100/25/19, Đ. Trần Hưng Đạo, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 71012, Việt Nam",
     "rating": 4.1,
@@ -205,12 +205,12 @@
   },
   {
     "hotelid": 13,
-    "name": "Phạm Ngũ Lão Central Hotel",
+    "name": "Cozrum Homes The Gallery Residence",
     "coordinates": {
-      "latitude": 10.76780192793399, 
-      "longitude": 106.69080430856359
+      "latitude": 10.808152575183911, 
+      "longitude": 106.6869402957388
     },
-    "address": "313 Đ. Phạm Ngũ Lão, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 700000, Việt Nam",
+    "address": "49/26a, Nguyễn Văn Đậu, Phường 5, Bình Thạnh, Hồ Chí Minh 700000, Việt Nam",
     "rating": 3.9,
     "price": 750000,
     "image": "13/13.1.jpg",
@@ -224,10 +224,10 @@
     "hotelid": 14,
     "name": "Đặng Thị Nhu Luxury Hotel",
     "coordinates": {
-      "latitude": 10.769645888029734, 
-      "longitude": 106.69728709322101
+      "latitude": 10.769986285708146, 
+      "longitude": 106.68824050922942
     },
-    "address": "20 Đ. Đặng Thị Nhu, Phường Nguyễn Thái Bình, Quận 1, Hồ Chí Minh 700000, Việt Nam",
+    "address": "122F-122F1 Bùi Thị Xuân, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 700000, Việt Nam",
     "rating": 4.3,
     "price": 1100000,
     "image": "14/14.1.jpg",
@@ -1561,6 +1561,603 @@
       { "name": "Ha Giang City Center", "distance": "2.0 km" },
       { "name": "Local Market", "distance": "1.7 km" },
       { "name": "Km 0 Milestone", "distance": "2.3 km" }
+    ]
+  },
+  {
+    "hotelid": 91,
+    "name": "La Beach Hotel",
+    "coordinates": {
+      "latitude": 16.07458419690752, 
+      "longitude": 108.24221345350496
+    },
+    "address": "22 Lê Bình, Phước Mỹ, Sơn Trà, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 179357,
+    "image": "91/91.1.jpg",
+    "nearby_attractions": [
+      { "name": "Biển Mỹ Khê", "distance": "0.5 km" },
+      { "name": "Cầu Rồng", "distance": "2.0 km" },
+      { "name": "Chợ Hàn", "distance": "3.0 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "5.5 km" }
+    ]
+  },
+  {
+    "hotelid": 92,
+    "name": "Alibaba Hotel Da Nang",
+    "coordinates": {
+      "latitude": 16.072260674272133,
+      "longitude": 108.24286933815989
+    },
+    "address": "168 Hồ Nghinh, Phước Mỹ, Sơn Trà, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 202809,
+    "image": "92/92.1.jpg",
+    "nearby_attractions": [
+      { "name": "Biển Mỹ Khê", "distance": "0.6 km" },
+      { "name": "Cầu Rồng", "distance": "2.2 km" },
+      { "name": "Cầu Sông Hàn", "distance": "2.5 km" },
+      { "name": "Chợ Hàn", "distance": "3.0 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "6.0 km" }
+    ]
+  },
+  {
+    "hotelid": 93,
+    "name": "Orchide'es Ocean Hotel",
+    "coordinates": {
+      "latitude": 16.068996387320322, 
+      "longitude": 108.24422223815986
+    },
+    "address": "07 Dương Đình Nghệ, Phước Mỹ Sơn Trà, Da Nang City, Việt Nam",
+    "rating": 4.0,
+    "price": 163857,
+    "image": "93/93.1.jpg",
+    "nearby_attractions": [
+      { "name": "Biển Mỹ Khê", "distance": "0.4 km" },
+      { "name": "Công viên Biển Đông", "distance": "1.0 km" },
+      { "name": "Cầu Rồng", "distance": "2.0 km" },
+      { "name": "Cầu Sông Hàn", "distance": "2.2 km" },
+      { "name": "Chợ Hàn", "distance": "2.8 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "5.5 km" }
+    ]
+  },
+  {
+    "hotelid": 94,
+    "name": "Khách sạn Raon Danang Beach - Ở 24H",
+    "coordinates": {
+      "latitude": 16.050939596382072,
+      "longitude": 108.24630368234064
+    },
+    "address": "Lô 7 An Thượng 32, Bắc Mỹ Phú, Ngũ Hành Sơn, Đà Nẵng 550000, Việt Nam",
+    "rating": 4.0,
+    "price": 315695,
+    "image": "94/94.1.jpg",
+    "nearby_attractions": [
+      { "name": "Biển Mỹ Khê", "distance": "0.5 km" },
+      { "name": "Phố du lịch An Thượng", "distance": "0.2 km" },
+      { "name": "Cầu Rồng", "distance": "2.5 km" },
+      { "name": "Cầu Trần Thị Lý", "distance": "2.0 km" },
+      { "name": "Chợ Hàn", "distance": "3.5 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "5.0 km" }
+    ]
+  },
+  {
+    "hotelid": 95,
+    "name": "Pariat River Front Hotel Da Nang",
+    "coordinates": {
+      "latitude": 16.065531682874486,
+      "longitude": 108.22403502466851
+    },
+    "address": "204 Bạch Đằng, Phước Ninh, Hải Châu, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 348129,
+    "image": "95/95.1.jpg",
+    "nearby_attractions": [
+      { "name": "Cầu Sông Hàn", "distance": "0.4 km" },
+      { "name": "Chợ Hàn", "distance": "0.5 km" },
+      { "name": "Cầu Rồng", "distance": "1.0 km" },
+      { "name": "Bảo tàng Điêu khắc Chăm", "distance": "1.2 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "3.5 km" },
+      { "name": "Biển Mỹ Khê", "distance": "3.0 km" }
+    ]
+  },
+  {
+    "hotelid": 96,
+    "name": "Davue Hotel Da Nang",
+    "coordinates": {
+      "latitude": 16.053763293455557,
+      "longitude": 108.24592692281448
+    },
+    "address": "57-59 Đỗ Bí, Bắc Mỹ Phú, Ngũ Hành Sơn, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 231896,
+    "image": "96/96.1.jpg",
+    "nearby_attractions": [
+      { "name": "Phố du lịch An Thượng", "distance": "0.1 km" },
+      { "name": "Biển Mỹ Khê", "distance": "0.4 km" },
+      { "name": "Cầu Trần Thị Lý", "distance": "1.8 km" },
+      { "name": "Cầu Rồng", "distance": "2.3 km" },
+      { "name": "Chợ Hàn", "distance": "3.2 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "5.2 km" }
+    ]
+  },
+  {
+    "hotelid": 97,
+    "name": "RHM Luxury Hotel And Suite",
+    "coordinates": {
+      "latitude": 16.03738153302418,
+      "longitude": 108.24011811673788
+    },
+    "address": "02 An Tư Công Chúa, Bắc Mỹ An, Ngũ Hành Sơn, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 461645,
+    "image": "97/97.1.jpg",
+    "nearby_attractions": [
+      { "name": "Biển Bắc Mỹ An", "distance": "0.3 km" },
+      { "name": "Phố du lịch An Thượng", "distance": "0.6 km" },
+      { "name": "Biển Mỹ Khê", "distance": "1.5 km" },
+      { "name": "Cầu Trần Thị Lý", "distance": "2.5 km" },
+      { "name": "Cầu Rồng", "distance": "3.0 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "5.5 km" }
+    ]
+  },
+  {
+    "hotelid": 98,
+    "name": "Khách sạn Doha Central Bliss Danang by Haviland",
+    "coordinates": {
+      "latitude": 16.06026481593449,
+      "longitude": 108.2141119841946
+    },
+    "address": "193 Đ. Nguyễn Văn Linh, Phước Ninh, Hải Châu, Đà Nẵng, Việt Nam",
+    "rating": 5.0,
+    "price": 276182,
+    "image": "98/98.1.jpg",
+    "nearby_attractions": [
+      { "name": "Cầu Rồng", "distance": "0.5 km" },
+      { "name": "Bảo tàng Điêu khắc Chăm", "distance": "0.6 km" },
+      { "name": "Chợ Hàn", "distance": "1.2 km" },
+      { "name": "Cầu Sông Hàn", "distance": "1.5 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "2.5 km" },
+      { "name": "Biển Mỹ Khê", "distance": "2.8 km" }
+    ]
+  },
+  {
+    "hotelid": 99,
+    "name": "The Herriott Hotel & Suite",
+    "coordinates": {
+      "latitude": 16.071893694044203,
+      "longitude": 108.23892848790238
+    },
+    "address": "Lê Văn Quý, An Hải Bắc, Sơn Trà, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 334800,
+    "image": "99/99.1.jpg",
+    "nearby_attractions": [
+      { "name": "Biển Mỹ Khê", "distance": "0.8 km" },
+      { "name": "Cầu Sông Hàn", "distance": "1.0 km" },
+      { "name": "Công viên Biển Đông", "distance": "1.2 km" },
+      { "name": "Cầu Rồng", "distance": "2.0 km" },
+      { "name": "Chợ Hàn", "distance": "2.2 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "5.0 km" }
+    ]
+  },
+  {
+    "hotelid": 100,
+    "name": "Khách sạn Mường Thanh Grand Đà Nẵng",
+    "coordinates": {
+      "latitude": 16.06483368197715,
+      "longitude": 108.23303696514213
+    },
+    "address": "962 Ngô Quyền, An Hải Nam, Sơn Trà, Đà Nẵng, Việt Nam",
+    "rating": 4.0,
+    "price": 677571,
+    "image": "100/100.1.jpg",
+    "nearby_attractions": [
+      { "name": "Cầu Sông Hàn", "distance": "0.3 km" },
+      { "name": "Chợ Hàn", "distance": "1.0 km" },
+      { "name": "Biển Mỹ Khê", "distance": "1.2 km" },
+      { "name": "Cầu Rồng", "distance": "1.5 km" },
+      { "name": "Công viên Biển Đông", "distance": "1.8 km" },
+      { "name": "Sân bay Quốc tế Đà Nẵng", "distance": "4.5 km" }
+    ]
+  },
+  {
+    "hotelid": 101,
+    "name": "LION 3 HOTEL",
+    "coordinates": {
+      "latitude": 10.044809748925587,
+      "longitude": 105.78527045340051
+    },
+    "address": "14-16 Đ. Phạm Ngọc Thạch, Cái Khế, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 4.0,
+    "price": 442052,
+    "image": "101/101.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "1.0 km" },
+      { "name": "Chợ Cần Thơ", "distance": "1.2 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "1.3 km" },
+      { "name": "Chùa Ông", "distance": "1.5 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.7 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "9.0 km" }
+    ]
+  },
+  {
+    "hotelid": 102,
+    "name": "LION 8 HOTEL",
+    "coordinates": {
+      "latitude": 10.043841842751965,
+      "longitude": 105.78688148223688
+    },
+    "address": "79B Đ. Phạm Ngọc Thạch, Cái Khế, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 4.0,
+    "price": 233506,
+    "image": "102/102.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "1 km" },
+      { "name": "Chợ Cần Thơ", "distance": "1.2 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "1.3 km" },
+      { "name": "Chùa Ông", "distance": "1.5 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.7 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "9 km" }
+    ]
+  },
+  {
+    "hotelid": 103,
+    "name": "West Hotel",
+    "coordinates": {
+      "latitude": 10.028837694357026, 
+      "longitude": 105.78703054547036
+    },
+    "address": "88-90-92 Đ. Hai Bà Trưng, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 4.0,
+    "price": 648947,
+    "image": "103/103.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "0.2 km" },
+      { "name": "Chợ Cần Thơ", "distance": "0.5 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "0.4 km" },
+      { "name": "Chùa Ông", "distance": "0.6 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "0.7 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "10 km" }
+    ]
+  },
+  {
+    "hotelid": 104,
+    "name": "LION HOTEL",
+    "coordinates": {
+      "latitude": 10.044692913201917,
+      "longitude": 105.7784841659376
+    },
+    "address": "65 Hùng Vương, P, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 4.0,
+    "price": 362337,
+    "image": "104/104.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "1.0 km" },
+      { "name": "Chợ Cần Thơ", "distance": "1.2 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "1.3 km" },
+      { "name": "Chùa Ông", "distance": "1.5 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.7 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "9.0 km" }
+    ]
+  },
+  {
+    "hotelid": 105,
+    "name": "FIT Hotel",
+    "coordinates": {
+      "latitude": 10.048422796686792,
+      "longitude": 105.7859292491781
+    },
+    "address": "D3-23 Trần Quang Khải, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 5.0,
+    "price": 325097,
+    "image": "105/105.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "0.8 km" },
+      { "name": "Chợ Cần Thơ", "distance": "1.0 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "1.1 km" },
+      { "name": "Chùa Ông", "distance": "1.3 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.5 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "9.5 km" }
+    ]
+  },
+  {
+    "hotelid": 106,
+    "name": "Cantho Eco Resort",
+    "coordinates": {
+      "latitude": 9.959150964807868, 
+      "longitude": 105.68889292270961
+    },
+    "address": "Km7+, QL61C, Nhơn Thuận, Nhơn Nghĩa, Phong Điền, Cần Thơ, Việt Nam",
+    "rating": 5.0,
+    "price": 700520,
+    "image": "106/106.1.jpg",
+    "nearby_attractions": [
+      { "name": "Thiền viện Trúc Lâm Phương Nam", "distance": "5 km" },
+      { "name": "Chợ nổi Phong Điền", "distance": "7 km" },
+      { "name": "Vườn trái cây Vàm Xáng", "distance": "8 km" },
+      { "name": "Làng du lịch Mỹ Khánh", "distance": "10 km" },
+      { "name": "Bến Ninh Kiều", "distance": "17 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "20 km" }
+    ]
+  },
+  {
+    "hotelid": 107,
+    "name": "Wink Hotel",
+    "coordinates": {
+      "latitude": 10.033292320466456,
+      "longitude": 105.78672125340042
+    },
+    "address": "14 Phan Đình Phùng, phường, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 5.0,
+    "price": 752857,
+    "image": "107/107.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "0.5 km" },
+      { "name": "Chợ Cần Thơ", "distance": "0.7 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "0.6 km" },
+      { "name": "Chùa Ông", "distance": "0.8 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.0 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "10 km" }
+    ]
+  },
+  {
+    "hotelid": 108,
+    "name": "Hotel 101 Can Tho",
+    "coordinates": {
+      "latitude": 10.032841150302593, 
+      "longitude": 105.78376173805553
+    },
+    "address": "101 Võ Văn Tần, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 5.0,
+    "price": 362337,
+    "image": "108/108.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "0.7 km" },
+      { "name": "Chợ Cần Thơ", "distance": "0.8 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "0.6 km" },
+      { "name": "Chùa Ông", "distance": "0.9 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.2 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "10 km" }
+    ]
+  },
+  {
+    "hotelid": 109,
+    "name": "Charmant Suites a Boutique Hotel",
+    "coordinates": {
+      "latitude": 10.034512002231724, 
+      "longitude": 105.78663732271046
+    },
+    "address": "45 Đ. Ngô Quyền, Thới Bình, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 5.0,
+    "price": 1146285,
+    "image": "109/109.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "0.5 km" },
+      { "name": "Chợ Cần Thơ", "distance": "0.6 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "0.4 km" },
+      { "name": "Chùa Ông", "distance": "0.7 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "1.0 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "10 km" }
+    ]
+  },
+  {
+    "hotelid": 110,
+    "name": "TTC Hotel",
+    "coordinates": {
+      "latitude": 10.035898642242257,
+      "longitude": 105.78921495340062
+    },
+    "address": "2 Đ. Hai Bà Trưng, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
+    "rating": 4.0,
+    "price": 1077273,
+    "image": "110/110.1.jpg",
+    "nearby_attractions": [
+      { "name": "Bến Ninh Kiều", "distance": "0.3 km" },
+      { "name": "Chợ Cần Thơ", "distance": "0.5 km" },
+      { "name": "Cầu đi bộ Ninh Kiều", "distance": "0.4 km" },
+      { "name": "Chùa Ông", "distance": "0.6 km" },
+      { "name": "Bảo tàng Cần Thơ", "distance": "0.8 km" },
+      { "name": "Sân bay Quốc tế Cần Thơ", "distance": "9.5 km" }
+    ]
+  },
+  {
+    "hotelid": 111,
+    "name": "3T Hotel",
+    "coordinates": {
+      "latitude": 21.029029666310425, 
+      "longitude": 105.84107682478938
+    },
+    "address": "41 P. Nguyễn Thái Học, Văn Miếu – Quốc Tử Giám, Ba Đình, Hà Nội, Việt Nam",
+    "rating": 5.0,
+    "price": 611948,
+    "image": "111/111.1.jpg",
+    "nearby_attractions": [
+      { "name": "Văn Miếu – Quốc Tử Giám", "distance": "0.2 km" },
+      { "name": "Bảo tàng Dân tộc học Việt Nam", "distance": "1.5 km" },
+      { "name": "Hồ Hoàn Kiếm", "distance": "4.0 km" },
+      { "name": "Chợ Đồng Xuân", "distance": "3.5 km" },
+      { "name": "Lăng Bác – Quảng trường Ba Đình", "distance": "2.0 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "28 km" }
+    ]
+  },
+  {
+    "hotelid": 112,
+    "name": "iRest Signature Ba Dinh Lakeside",
+    "coordinates": {
+      "latitude": 21.027299554225557,
+      "longitude": 105.81001946711679
+    },
+    "address": "62 P. Phạm Huy Thông, Ngọc Khánh, Ba Đình, Hà Nội, Việt Nam",
+    "rating": 5.0,
+    "price": 561315,
+    "image": "112/112.1.jpg",
+    "nearby_attractions": [
+      { "name": "Hồ Ngọc Khánh", "distance": "0.1 km" },
+      { "name": "Văn Miếu – Quốc Tử Giám", "distance": "1.2 km" },
+      { "name": "Lăng Bác – Quảng trường Ba Đình", "distance": "1.5 km" },
+      { "name": "Chợ Ngọc Hà", "distance": "1.8 km" },
+      { "name": "Bảo tàng Dân tộc học Việt Nam", "distance": "2.0 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "28 km" }
+    ]
+  },
+  {
+    "hotelid": 113,
+    "name": "The Bloom Classic",
+    "coordinates": {
+      "latitude": 21.03257574910759,
+      "longitude": 105.79008102478961
+    },
+    "address": "58 P. Trương Công Giai, Dịch Vọng, Cầu Giấy, Hà Nội, Việt Nam",
+    "rating": 5.0,
+    "price": 590369,
+    "image": "113/113.1.jpg",
+    "nearby_attractions": [
+      { "name": "Công viên Cầu Giấy", "distance": "0.5 km" },
+      { "name": "Vincom Cầu Giấy", "distance": "1.2 km" },
+      { "name": "Trung tâm Triển lãm Quốc gia", "distance": "1.5 km" },
+      { "name": "Hồ Yên Hòa", "distance": "1.8 km" },
+      { "name": "Chùa Trấn Quốc", "distance": "3.5 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "25 km" }
+    ]
+  },
+  {
+    "hotelid": 114,
+    "name": "Millennium Hanoi Hotel",
+    "coordinates": {
+      "latitude": 21.028244209979654, 
+      "longitude": 105.84282126711688
+    },
+    "address": "246A P. Hàng Bông, Cửa Nam, Hoàn Kiếm, Hà Nội, Việt Nam",
+    "rating": 3.0,
+    "price": 417413,
+    "image": "114/114.1.jpg",
+    "nearby_attractions": [
+      { "name": "Hồ Hoàn Kiếm", "distance": "0.3 km" },
+      { "name": "Đền Ngọc Sơn", "distance": "0.4 km" },
+      { "name": "Chợ Đồng Xuân", "distance": "0.7 km" },
+      { "name": "Nhà hát Lớn Hà Nội", "distance": "0.5 km" },
+      { "name": "Phố cổ Hà Nội", "distance": "1.0 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "28 km" }
+    ]
+  },
+  {
+    "hotelid": 115,
+    "name": "Millennium Hanoi Hotel",
+    "coordinates": {
+      "latitude": 21.015793456412645, 
+      "longitude": 105.84748231922781
+    },
+    "address": "23 P. Nguyễn Đình Chiểu, Nguyễn Du, Hai Bà Trưng, Hà Nội, Việt Nam",
+    "rating": 2.0,
+    "price": 746501,
+    "image": "115/115.1.jpg",
+    "nearby_attractions": [
+      { "name": "Hồ Bảy Mẫu", "distance": "0.5 km" },
+      { "name": "Chùa Trấn Quốc", "distance": "1.5 km" },
+      { "name": "Vincom Bà Triệu", "distance": "0.7 km" },
+      { "name": "Nhà hát lớn Hà Nội", "distance": "1.2 km" },
+      { "name": "Phố Hàng Bài", "distance": "1.0 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "27 km" }
+    ]
+  },
+  {
+    "hotelid": 116,
+    "name": "Millennium Hanoi Hotel",
+    "coordinates": {
+      "latitude": 21.019813574315773,
+      "longitude": 105.82571888060791
+    },
+    "address": "134 P. Nguyễn Hy Quang, Chợ Dừa, Đống Đa, Hà Nội, Việt Nam",
+    "rating": 3.0,
+    "price": 440.223,
+    "image": "116/116.1.jpg",
+    "nearby_attractions": [
+      { "name": "Chùa Quán Sứ", "distance": "0.5 km" },
+      { "name": "Hồ Hoàng Cầu", "distance": "0.8 km" },
+      { "name": "Văn Miếu – Quốc Tử Giám", "distance": "1.2 km" },
+      { "name": "Chợ Đồng Xuân", "distance": "2.5 km" },
+      { "name": "Hồ Hoàn Kiếm", "distance": "2.7 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "27 km" }
+    ]
+  },
+  {
+    "hotelid": 117,
+    "name": "Eli Rina Hotel",
+    "coordinates": {
+      "latitude": 21.028226710440812,
+      "longitude": 105.83730026711693
+    },
+    "address": "P. Nguyễn Khuyến, Văn Miếu – Quốc Tử Giám, Đống Đa, Hà Nội, Việt Nam",
+    "rating": 3.0,
+    "price": 646.773,
+    "image": "117/117.1.jpg",
+    "nearby_attractions": [
+      { "name": "Văn Miếu – Quốc Tử Giám", "distance": "0.2 km" },
+      { "name": "Chùa Một Cột", "distance": "1.2 km" },
+      { "name": "Bảo tàng Dân tộc học Việt Nam", "distance": "1.5 km" },
+      { "name": "Hồ Hoàng Cầu", "distance": "0.7 km" },
+      { "name": "Lăng Bác – Quảng trường Ba Đình", "distance": "2.0 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "28 km" }
+    ]
+  },
+  {
+    "hotelid": 118,
+    "name": "Lotus Village Hotel",
+    "coordinates": {
+      "latitude": 21.034186059376214, 
+      "longitude": 105.84868436897081
+    },
+    "address": "68a P. Hàng Bồ, Phố cổ Hà Nội, Hoàn Kiếm, Hà Nội, Việt Nam",
+    "rating": 4.0,
+    "price": 505372,
+    "image": "118/118.1.jpg",
+    "nearby_attractions": [
+      { "name": "Hồ Hoàn Kiếm", "distance": "0.3 km" },
+      { "name": "Đền Ngọc Sơn", "distance": "0.4 km" },
+      { "name": "Phố cổ Hà Nội", "distance": "0.2 km" },
+      { "name": "Chợ Đồng Xuân", "distance": "0.5 km" },
+      { "name": "Nhà hát Lớn Hà Nội", "distance": "0.7 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "28 km" }
+    ]
+  },
+  {
+    "hotelid": 119,
+    "name": "Crescendo Urban Stay",
+    "coordinates": {
+      "latitude": 21.073953594569492, 
+      "longitude": 105.82435465362687
+    },
+    "address": "Hanoi City, Đ. Âu Cơ, Quảng An, Tây Hồ, Hà Nội, Việt Nam",
+    "rating": 4.0,
+    "price": 521766,
+    "image": "119/119.1.jpg",
+    "nearby_attractions": [
+      { "name": "Hồ Tây", "distance": "0.3 km" },
+      { "name": "Chùa Trấn Quốc", "distance": "0.8 km" },
+      { "name": "Lăng Bác – Quảng trường Ba Đình", "distance": "3.5 km" },
+      { "name": "Văn Miếu – Quốc Tử Giám", "distance": "4.0 km" },
+      { "name": "Bảo tàng Dân tộc học Việt Nam", "distance": "4.5 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "25 km" }
+    ]
+  },
+  {
+    "hotelid": 120,
+    "name": "Eli Rina Hotel",
+    "coordinates": {
+      "latitude": 21.023155271395254, 
+      "longitude": 105.84809312293552
+    },
+    "address": "84 P. Thợ Nhuộm, Trần Hưng Đạo, Hoàn Kiếm, Hà Nội, Việt Nam",
+    "rating": 5.0,
+    "price": 1333000,
+    "image": "120/120.1.jpg",
+    "nearby_attractions": [
+      { "name": "Hồ Hoàn Kiếm", "distance": "0.3 km" },
+      { "name": "Chợ Đồng Xuân", "distance": "0.5 km" },
+      { "name": "Nhà hát Lớn Hà Nội", "distance": "0.6 km" },
+      { "name": "Phố cổ Hà Nội", "distance": "0.4 km" },
+      { "name": "Văn Miếu – Quốc Tử Giám", "distance": "2.0 km" },
+      { "name": "Sân bay Quốc tế Nội Bài", "distance": "28 km" }
     ]
   }
 ]

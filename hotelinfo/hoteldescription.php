@@ -169,8 +169,9 @@ $discountedPrice = $originalPrice * 0.93;
                                 $amenities = $hotel['amenities'] ?? '';
                                 $amenities_list = array_map('trim', explode(',', $amenities));
                                 $amenity_icons = [
-                                    'Wifi' => '🛜', 'Tivi' => '🖥️', 'Parking' => '🅿️', 'Bar' => '🍹',
-                                    'Pool' => '🏞️', 'Airport' => '✈️', 'Spa' => '💆🏻‍♀️', 'Breakfast' => '🍳'
+                                    'WiFi'          => '📶',   'Parking'       => '🅿️',  'Bar'           => '🍹',  
+                                    'Pool'          => '🏊‍♂️', 'Gym'           => '🏋️',  'Restaurant'    => '🍽️',  
+                                    'Airport Shuttle'=> '✈️',  'Laundry'       => '🧺',  'Near Beach'    => '🏖️', 'Rooftop'       => '🌇'
                                 ];
                                 $displayed_amenities = [];
                                 foreach ($amenities_list as $amenity) {

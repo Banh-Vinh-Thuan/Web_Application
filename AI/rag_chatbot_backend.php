@@ -58,7 +58,13 @@ class OptimizedRAGTravelChatbot {
         'taybac' => ['id' => 10, 'name' => 'Tay Bac'],
         'northwest' => ['id' => 10, 'name' => 'Tay Bac'], 
         'sapa' => ['id' => 10, 'name' => 'Tay Bac'], 
-        'fansipan' => ['id' => 10, 'name' => 'Tay Bac']
+        'fansipan' => ['id' => 10, 'name' => 'Tay Bac'],
+        'danang' => ['id' => 19, 'name' => 'Da Nang'],
+        'da nang' => ['id' => 19, 'name' => 'Da Nang'],
+        'cantho' => ['id' => 20, 'name' => 'Can Tho'],
+        'can tho' => ['id' => 20, 'name' => 'Can Tho'],
+        'hanoi' => ['id' => 21, 'name' => 'Hanoi'],
+        'ha noi' => ['id' => 21, 'name' => 'Hanoi']
     ];
     
     public function __construct($db) {

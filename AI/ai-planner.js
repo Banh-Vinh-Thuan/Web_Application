@@ -26,6 +26,9 @@ function viewTourDetails(tourId, cityId) {
         16: 'phuquoc',
         17: 'hoian',
         18: 'hagiang',
+        19: 'danang',
+        20: 'cantho',
+        21: 'hanoi'
     };
     
     const cityString = cityIdToString[cityId] || 'hcm';
@@ -857,6 +860,9 @@ class TravelChatbot {
             16: 'phuquoc',
             17: 'hoian',
             18: 'hagiang',
+            19: 'danang',
+            20: 'cantho',
+            21: 'hoinoi'
         };
         
         const cityString = cityIdToString[cityId] || 'hcm';
@@ -870,7 +876,10 @@ class TravelChatbot {
             'phuquoc': [25, 26, 27, 28],
             'hoian': [29, 30, 31, 32],
             'hagiang': [33, 34, 35, 36],
-            'taybac': [1, 2, 3, 4]
+            'taybac': [1, 2, 3, 4],
+            'danang': [37, 38, 39, 40],
+            'cantho': [41, 42, 43, 44],
+            'hoinoi': [45, 46, 47, 48]
         };
             
         const imageIds = imageMap[cityString] || [1, 2, 3, 4];
