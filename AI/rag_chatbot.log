@@ -1,0 +1,605 @@
+[2025-09-08 04:49:28] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 04:49:28] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 04:49:33] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 04:49:33] [INFO] Processing message {"userId":1,"messageLength":2}
+[2025-09-08 04:49:33] [DEBUG] Simple greeting detected 
+[2025-09-08 04:49:33] [DEBUG] Greeting response generated 
+[2025-09-08 04:49:33] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 04:49:44] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 04:49:44] [INFO] Processing message {"userId":1,"messageLength":27}
+[2025-09-08 04:49:44] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":13,"name":"Hue"}],"duration":null,"budget":null,"preferences":[],"is_international":false}}
+[2025-09-08 04:49:44] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":13,"duration":null,"budget":null}}
+[2025-09-08 04:49:44] [DEBUG] City tour match found {"count":4}
+[2025-09-08 04:49:44] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 04:49:46] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":1923.99}
+[2025-09-08 04:49:48] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 04:49:48] [INFO] Message processed successfully {"userId":1,"processingTime":"3088.46ms"}
+[2025-09-08 04:50:03] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 04:50:03] [INFO] Processing message {"userId":1,"messageLength":26}
+[2025-09-08 04:50:03] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"preferences":[],"is_international":false}}
+[2025-09-08 04:50:03] [DEBUG] Hotels retrieved {"count":6,"cityId":12}
+[2025-09-08 04:50:03] [DEBUG] Hotels found {"count":6}
+[2025-09-08 04:50:03] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":0,"hotels":6,"cities":1}}
+[2025-09-08 04:50:05] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1986.88}
+[2025-09-08 04:50:06] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 04:50:06] [INFO] Message processed successfully {"userId":1,"processingTime":"3120.51ms"}
+[2025-09-08 04:50:35] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 04:50:35] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:20:35] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:20:35] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:20:52] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:20:52] [INFO] Processing message {"userId":1,"messageLength":33}
+[2025-09-08 08:20:52] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":2500000,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:20:52] [DEBUG] Tours grouped by city retrieved {"total_tours":5,"cities":3,"filters":{"duration":null,"budget":2500000,"priceCondition":null}}
+[2025-09-08 08:20:52] [DEBUG] General tour search completed {"total_found":5,"selected":5,"cities":3,"duration":null,"budget":2500000,"price_condition":null}
+[2025-09-08 08:20:52] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":5,"hotels":0,"cities":0}}
+[2025-09-08 08:20:55] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":3208.02}
+[2025-09-08 08:20:57] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:20:57] [INFO] Message processed successfully {"userId":1,"processingTime":"5169.96ms"}
+[2025-09-08 08:21:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:21:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:21:47] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:21:47] [INFO] Processing message {"userId":1,"messageLength":36}
+[2025-09-08 08:21:47] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":2500000,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:21:47] [DEBUG] Tours grouped by city retrieved {"total_tours":5,"cities":3,"filters":{"duration":null,"budget":2500000,"priceCondition":null}}
+[2025-09-08 08:21:47] [DEBUG] General tour search completed {"total_found":5,"selected":5,"cities":3,"duration":null,"budget":2500000,"price_condition":null}
+[2025-09-08 08:21:47] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":5,"hotels":0,"cities":0}}
+[2025-09-08 08:21:49] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":1996.93}
+[2025-09-08 08:21:50] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:21:50] [INFO] Message processed successfully {"userId":1,"processingTime":"3763.54ms"}
+[2025-09-08 08:22:38] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:22:38] [INFO] Processing message {"userId":1,"messageLength":42}
+[2025-09-08 08:22:38] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":15,"name":"Da Lat"}],"duration":null,"budget":2500000,"rating":null,"price_condition":"over","preferences":[],"is_international":false}}
+[2025-09-08 08:22:38] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":15,"duration":null,"budget":2500000,"priceCondition":"over"}}
+[2025-09-08 08:22:38] [DEBUG] Exact tour match found {"count":4}
+[2025-09-08 08:22:38] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 08:22:41] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":2489.19}
+[2025-09-08 08:22:42] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:22:42] [INFO] Message processed successfully {"userId":1,"processingTime":"4150.49ms"}
+[2025-09-08 08:22:56] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:22:56] [INFO] Processing message {"userId":1,"messageLength":201}
+[2025-09-08 08:22:56] [DEBUG] Intent and entities extracted {"intent":"price_inquiry","entities":{"cities":[{"name":"Unfortunately","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true}}
+[2025-09-08 08:22:56] [DEBUG] International destination detected {"city":"Unfortunately"}
+[2025-09-08 08:22:56] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-08 08:23:03] [INFO] International plan generated {"city":"Unfortunately","duration_ms":7029.42}
+[2025-09-08 08:23:03] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:23:03] [INFO] Message processed successfully {"userId":1,"processingTime":"7048.89ms"}
+[2025-09-08 08:23:22] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:23:22] [INFO] Processing message {"userId":1,"messageLength":21}
+[2025-09-08 08:23:22] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":2,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:23:22] [DEBUG] Tours grouped by city retrieved {"total_tours":2,"cities":2,"filters":{"duration":2,"budget":null,"priceCondition":null}}
+[2025-09-08 08:23:22] [DEBUG] General tour search completed {"total_found":2,"selected":2,"cities":2,"duration":2,"budget":null,"price_condition":null}
+[2025-09-08 08:23:22] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":2,"hotels":0,"cities":0}}
+[2025-09-08 08:23:24] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":2263.37}
+[2025-09-08 08:23:26] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:23:26] [INFO] Message processed successfully {"userId":1,"processingTime":"4129.78ms"}
+[2025-09-08 08:23:37] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:23:37] [INFO] Processing message {"userId":1,"messageLength":16}
+[2025-09-08 08:23:37] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":3,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:23:37] [DEBUG] Tours grouped by city retrieved {"total_tours":9,"cities":4,"filters":{"duration":3,"budget":null,"priceCondition":null}}
+[2025-09-08 08:23:37] [DEBUG] General tour search completed {"total_found":9,"selected":9,"cities":4,"duration":3,"budget":null,"price_condition":null}
+[2025-09-08 08:23:37] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":9,"hotels":0,"cities":0}}
+[2025-09-08 08:23:41] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":4399.96}
+[2025-09-08 08:23:43] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:23:43] [INFO] Message processed successfully {"userId":1,"processingTime":"6160.41ms"}
+[2025-09-08 08:24:36] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:24:36] [INFO] Processing message {"userId":1,"messageLength":45}
+[2025-09-08 08:24:36] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":5000000,"rating":null,"price_condition":null,"preferences":["budget"],"is_international":false}}
+[2025-09-08 08:24:36] [DEBUG] Tours grouped by city retrieved {"total_tours":14,"cities":4,"filters":{"duration":null,"budget":5000000,"priceCondition":null}}
+[2025-09-08 08:24:36] [DEBUG] General tour search completed {"total_found":14,"selected":14,"cities":4,"duration":null,"budget":5000000,"price_condition":null}
+[2025-09-08 08:24:36] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":14,"hotels":0,"cities":0}}
+[2025-09-08 08:24:38] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":2058.89}
+[2025-09-08 08:24:39] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:24:39] [INFO] Message processed successfully {"userId":1,"processingTime":"3671.68ms"}
+[2025-09-08 08:31:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:31:31] [INFO] Processing message {"userId":1,"messageLength":33}
+[2025-09-08 08:31:31] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":1000000,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:31:31] [DEBUG] Tours grouped by city retrieved {"total_tours":2,"cities":1,"filters":{"duration":null,"budget":1000000,"priceCondition":null}}
+[2025-09-08 08:31:31] [DEBUG] General tour search completed {"total_found":2,"selected":2,"cities":1,"duration":null,"budget":1000000,"price_condition":null}
+[2025-09-08 08:31:31] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":2,"hotels":0,"cities":0}}
+[2025-09-08 08:31:33] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":2274.31}
+[2025-09-08 08:31:35] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:31:35] [INFO] Message processed successfully {"userId":1,"processingTime":"4083.7ms"}
+[2025-09-08 08:32:39] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:32:40] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:32:42] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:32:42] [INFO] Processing message {"userId":1,"messageLength":2}
+[2025-09-08 08:32:42] [DEBUG] Simple greeting detected 
+[2025-09-08 08:32:42] [DEBUG] Greeting response generated 
+[2025-09-08 08:32:42] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:32:59] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:32:59] [INFO] Processing message {"userId":1,"messageLength":37}
+[2025-09-08 08:32:59] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":4000000,"rating":null,"price_condition":"over","preferences":[],"is_international":false}}
+[2025-09-08 08:32:59] [DEBUG] Tours grouped by city retrieved {"total_tours":39,"cities":11,"filters":{"duration":null,"budget":4000000,"priceCondition":"over"}}
+[2025-09-08 08:32:59] [DEBUG] General tour search completed {"total_found":39,"selected":15,"cities":11,"duration":null,"budget":4000000,"price_condition":"over"}
+[2025-09-08 08:32:59] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":15,"hotels":0,"cities":0}}
+[2025-09-08 08:33:04] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":5135.18}
+[2025-09-08 08:33:06] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:33:06] [INFO] Message processed successfully {"userId":1,"processingTime":"6798.63ms"}
+[2025-09-08 08:54:49] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:54:49] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:55:02] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:55:02] [INFO] Processing message {"userId":1,"messageLength":37}
+[2025-09-08 08:55:02] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":4000000,"rating":null,"price_condition":"over","preferences":[],"is_international":false}}
+[2025-09-08 08:55:02] [DEBUG] Tours grouped by city retrieved {"total_tours":39,"cities":11,"filters":{"duration":null,"budget":4000000,"priceCondition":"over"}}
+[2025-09-08 08:55:02] [DEBUG] General tour search completed {"total_found":39,"selected":15,"cities":11,"duration":null,"budget":4000000,"price_condition":"over"}
+[2025-09-08 08:55:02] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":15,"hotels":0,"cities":0}}
+[2025-09-08 08:55:08] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":5933.39}
+[2025-09-08 08:55:10] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:55:10] [INFO] Message processed successfully {"userId":1,"processingTime":"7719.47ms"}
+[2025-09-08 08:55:32] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:55:32] [INFO] Processing message {"userId":1,"messageLength":66}
+[2025-09-08 08:55:32] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[],"duration":null,"budget":4000000,"rating":5,"price_condition":"over","preferences":[],"is_international":false}}
+[2025-09-08 08:55:32] [DEBUG] Hotels grouped by city retrieved {"total_hotels":1,"cities":1,"filters":{"rating":5,"budget":4000000,"priceCondition":"over"}}
+[2025-09-08 08:55:32] [DEBUG] General hotel search completed {"total_found":1,"selected":1,"cities":1,"rating":5,"budget":4000000,"price_condition":"over"}
+[2025-09-08 08:55:32] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":0,"hotels":1,"cities":0}}
+[2025-09-08 08:55:35] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":2880.46}
+[2025-09-08 08:55:37] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:55:37] [INFO] Message processed successfully {"userId":1,"processingTime":"4685.4ms"}
+[2025-09-08 08:56:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:56:13] [INFO] Processing message {"userId":1,"messageLength":36}
+[2025-09-08 08:56:13] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:56:13] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":11,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 08:56:13] [DEBUG] City tour match found {"count":4}
+[2025-09-08 08:56:13] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 08:56:15] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":2119.02}
+[2025-09-08 08:56:16] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:56:16] [INFO] Message processed successfully {"userId":1,"processingTime":"3371.52ms"}
+[2025-09-08 08:59:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 08:59:13] [INFO] Processing message {"userId":1,"messageLength":29}
+[2025-09-08 08:59:13] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":null,"budget":4000000,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 08:59:13] [DEBUG] Tours grouped by city retrieved {"total_tours":9,"cities":3,"filters":{"duration":null,"budget":4000000,"priceCondition":null}}
+[2025-09-08 08:59:13] [DEBUG] General tour search completed {"total_found":9,"selected":9,"cities":3,"duration":null,"budget":4000000,"price_condition":null}
+[2025-09-08 08:59:13] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":9,"hotels":0,"cities":0}}
+[2025-09-08 08:59:17] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":3673.42}
+[2025-09-08 08:59:18] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 08:59:18] [INFO] Message processed successfully {"userId":1,"processingTime":"4814.12ms"}
+[2025-09-08 13:56:22] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 13:56:22] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 13:56:37] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 13:56:37] [INFO] Processing message {"userId":1,"messageLength":34}
+[2025-09-08 13:56:37] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 13:56:37] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":11,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 13:56:37] [DEBUG] City tour match found {"count":4}
+[2025-09-08 13:56:37] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 13:56:40] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":2417.87}
+[2025-09-08 13:56:41] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 13:56:41] [INFO] Message processed successfully {"userId":1,"processingTime":"3603.87ms"}
+[2025-09-08 14:14:23] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:14:23] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:14:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:14:34] [INFO] Processing message {"userId":1,"messageLength":34}
+[2025-09-08 14:14:34] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 14:14:34] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":11,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:14:34] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":11,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:14:34] [DEBUG] Mixed Vietnamese city search completed {"city":"Ho Chi Minh City","tours":4,"hotels":6}
+[2025-09-08 14:14:34] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-08 14:14:37] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":3272.55}
+[2025-09-08 14:14:38] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:14:38] [INFO] Message processed successfully {"userId":1,"processingTime":"4431.82ms"}
+[2025-09-08 14:18:17] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:18:17] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:18:33] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:18:33] [INFO] Processing message {"userId":1,"messageLength":20}
+[2025-09-08 14:18:33] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":19,"name":"Da Nang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 14:18:33] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":19,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:18:33] [DEBUG] City tour match found {"count":4}
+[2025-09-08 14:18:33] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 14:18:35] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":1985.73}
+[2025-09-08 14:18:36] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:18:36] [INFO] Message processed successfully {"userId":1,"processingTime":"3027.17ms"}
+[2025-09-08 14:18:44] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:18:44] [INFO] Processing message {"userId":1,"messageLength":21}
+[2025-09-08 14:18:44] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[{"id":20,"name":"Can Tho"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 14:18:44] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":20,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:18:44] [DEBUG] Hotels found {"count":6}
+[2025-09-08 14:18:44] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":0,"hotels":6,"cities":1}}
+[2025-09-08 14:18:46] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1935.97}
+[2025-09-08 14:18:48] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:18:48] [INFO] Message processed successfully {"userId":1,"processingTime":"3268.16ms"}
+[2025-09-08 14:20:40] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:20:40] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:20:51] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:20:51] [INFO] Processing message {"userId":1,"messageLength":26}
+[2025-09-08 14:20:51] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":13,"name":"Hue"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 14:20:51] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":13,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:20:51] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":13,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:20:51] [DEBUG] Mixed Vietnamese city search completed {"city":"Hue","tours":4,"hotels":6}
+[2025-09-08 14:20:51] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-08 14:20:54] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":2979.21}
+[2025-09-08 14:20:55] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:20:55] [INFO] Message processed successfully {"userId":1,"processingTime":"4012.3ms"}
+[2025-09-08 14:33:47] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:33:47] [INFO] Processing message {"userId":1,"messageLength":2}
+[2025-09-08 14:33:47] [DEBUG] Simple greeting detected 
+[2025-09-08 14:33:47] [DEBUG] Greeting response generated 
+[2025-09-08 14:33:47] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:34:01] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:34:01] [INFO] Processing message {"userId":1,"messageLength":35}
+[2025-09-08 14:34:01] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 14:34:01] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":11,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:34:01] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":11,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:34:01] [DEBUG] Mixed Vietnamese city search completed {"city":"Ho Chi Minh City","tours":4,"hotels":6}
+[2025-09-08 14:34:01] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-08 14:34:03] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":2069.93}
+[2025-09-08 14:34:04] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:34:04] [INFO] Message processed successfully {"userId":1,"processingTime":"3346.49ms"}
+[2025-09-08 14:52:30] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:52:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:52:45] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 14:52:45] [INFO] Processing message {"userId":1,"messageLength":37}
+[2025-09-08 14:52:45] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 14:52:45] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 14:52:45] [DEBUG] City tour match found {"count":4}
+[2025-09-08 14:52:45] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 14:52:47] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":2460.67}
+[2025-09-08 14:52:48] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 14:52:48] [INFO] Message processed successfully {"userId":1,"processingTime":"3580.8ms"}
+[2025-09-08 15:04:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 15:04:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 15:04:49] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 15:04:49] [INFO] Processing message {"userId":1,"messageLength":44}
+[2025-09-08 15:04:49] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 15:04:49] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:04:49] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:04:49] [DEBUG] Multi-city mixed search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-08 15:04:49] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-08 15:04:51] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":2261.19}
+[2025-09-08 15:04:52] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 15:04:52] [INFO] Message processed successfully {"userId":1,"processingTime":"3477ms"}
+[2025-09-08 15:05:16] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 15:05:16] [INFO] Processing message {"userId":1,"messageLength":44}
+[2025-09-08 15:05:16] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 15:05:16] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:05:16] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:05:16] [DEBUG] Multi-city mixed search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-08 15:05:16] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-08 15:05:19] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":2504.18}
+[2025-09-08 15:05:20] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 15:05:20] [INFO] Message processed successfully {"userId":1,"processingTime":"3653.2ms"}
+[2025-09-08 15:12:39] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 15:12:39] [INFO] Processing message {"userId":1,"messageLength":32}
+[2025-09-08 15:12:39] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 15:12:39] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":11,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:12:39] [DEBUG] City tour match found {"count":4}
+[2025-09-08 15:12:39] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-08 15:12:41] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":1755.53}
+[2025-09-08 15:12:42] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 15:12:42] [INFO] Message processed successfully {"userId":1,"processingTime":"2849.24ms"}
+[2025-09-08 15:12:58] [INFO] Chatbot initialized {"userId":1}
+[2025-09-08 15:12:58] [INFO] Processing message {"userId":1,"messageLength":26}
+[2025-09-08 15:12:58] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":13,"name":"Hue"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-08 15:12:58] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":13,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:12:58] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":13,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-08 15:12:58] [DEBUG] Multi-city mixed search completed {"tour_cities":["Hue"],"hotel_cities":["Hue"],"tours_found":4,"hotels_found":6}
+[2025-09-08 15:12:58] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-08 15:13:01] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":2649.4}
+[2025-09-08 15:13:02] [DEBUG] Conversation saved {"userId":1}
+[2025-09-08 15:13:02] [INFO] Message processed successfully {"userId":1,"processingTime":"3633.65ms"}
+[2025-09-09 02:20:46] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:20:47] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:21:00] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:21:00] [INFO] Processing message {"userId":1,"messageLength":34}
+[2025-09-09 02:21:00] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":18,"name":"Ha Giang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:21:00] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":18,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:21:00] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":18,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:21:00] [DEBUG] Multi-city mixed search completed {"tour_cities":["Ha Giang"],"hotel_cities":["Ha Giang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 02:21:00] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 02:21:04] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":4132.2}
+[2025-09-09 02:21:06] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:21:06] [INFO] Message processed successfully {"userId":1,"processingTime":"6400.18ms"}
+[2025-09-09 02:22:30] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:22:30] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:22:43] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:22:43] [INFO] Processing message {"userId":1,"messageLength":47}
+[2025-09-09 02:22:43] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:22:43] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:22:43] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:22:43] [DEBUG] Multi-city mixed search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 02:22:43] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 02:22:46] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":3553.66}
+[2025-09-09 02:22:48] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:22:48] [INFO] Message processed successfully {"userId":1,"processingTime":"5321.03ms"}
+[2025-09-09 02:25:17] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:25:17] [INFO] Processing message {"userId":1,"messageLength":47}
+[2025-09-09 02:25:17] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:25:17] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:25:17] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:25:17] [DEBUG] Multi-city mixed search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 02:25:17] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 02:25:20] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":3227.08}
+[2025-09-09 02:25:22] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:25:22] [INFO] Message processed successfully {"userId":1,"processingTime":"5182.88ms"}
+[2025-09-09 02:25:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:25:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:25:41] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:25:41] [INFO] Processing message {"userId":1,"messageLength":47}
+[2025-09-09 02:25:41] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:25:41] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:25:41] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:25:41] [DEBUG] Multi-city mixed search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 02:25:41] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 02:25:44] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":3165.47}
+[2025-09-09 02:25:46] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:25:46] [INFO] Message processed successfully {"userId":1,"processingTime":"4928.83ms"}
+[2025-09-09 02:29:22] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:29:22] [INFO] Processing message {"userId":1,"messageLength":16}
+[2025-09-09 02:29:22] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":13,"name":"Hue"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:29:22] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":13,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:29:22] [DEBUG] City tour match found {"count":4}
+[2025-09-09 02:29:22] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-09 02:29:24] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":2743.26}
+[2025-09-09 02:29:26] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:29:26] [INFO] Message processed successfully {"userId":1,"processingTime":"4551.14ms"}
+[2025-09-09 02:29:37] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:29:37] [INFO] Processing message {"userId":1,"messageLength":20}
+[2025-09-09 02:29:37] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[{"id":15,"name":"Da Lat"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:29:37] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":15,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:29:37] [DEBUG] Hotels found {"count":6}
+[2025-09-09 02:29:37] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":0,"hotels":6,"cities":1}}
+[2025-09-09 02:29:39] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":2535.31}
+[2025-09-09 02:29:41] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:29:41] [INFO] Message processed successfully {"userId":1,"processingTime":"4295.66ms"}
+[2025-09-09 02:35:59] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:35:59] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:36:11] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:36:11] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 02:36:11] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:36:11] [DEBUG] Parsed multi-city service request {"original_message":"show tour in nha trang and hotel in can tho","city_service_map":[{"city":{"id":12,"name":"Nha Trang"},"services":["tours","hotels"]}]}
+[2025-09-09 02:36:11] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:36:11] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:36:11] [DEBUG] Service-specific multi-city search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 02:36:11] [DEBUG] Data retrieval completed {"match_level":"service_specific_multi_city","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 02:36:14] [INFO] Vietnamese response generated {"match_level":"service_specific_multi_city","duration_ms":3097.12}
+[2025-09-09 02:36:16] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:36:16] [INFO] Message processed successfully {"userId":1,"processingTime":"5037.73ms"}
+[2025-09-09 02:37:09] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:37:09] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:37:10] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:37:10] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:37:16] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:37:16] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 02:37:16] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false}}
+[2025-09-09 02:37:16] [DEBUG] Parsed multi-city service request {"original_message":"show tour in nha trang and hotel in can tho","city_service_map":[{"city":{"id":12,"name":"Nha Trang"},"services":["tours","hotels"]}]}
+[2025-09-09 02:37:16] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":12,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:37:16] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":12,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 02:37:16] [DEBUG] Service-specific multi-city search completed {"tour_cities":["Nha Trang"],"hotel_cities":["Nha Trang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 02:37:16] [DEBUG] Data retrieval completed {"match_level":"service_specific_multi_city","is_international":false,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 02:37:20] [INFO] Vietnamese response generated {"match_level":"service_specific_multi_city","duration_ms":3344.72}
+[2025-09-09 02:37:22] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:37:22] [INFO] Message processed successfully {"userId":1,"processingTime":"5206.72ms"}
+[2025-09-09 02:41:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:41:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:41:35] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:41:35] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:41:41] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:41:41] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 02:41:41] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"},{"id":20,"name":"Can Tho"},{"name":"show tour in nha trang","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show tour in nha trang and hotel in can tho"}}
+[2025-09-09 02:41:41] [DEBUG] International destination detected {"city":"Nha Trang"}
+[2025-09-09 02:41:41] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 02:41:48] [INFO] International plan generated {"city":"your destination","duration_ms":7446.86}
+[2025-09-09 02:41:48] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:41:48] [INFO] Message processed successfully {"userId":1,"processingTime":"7463.33ms"}
+[2025-09-09 02:42:10] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:42:10] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 02:42:10] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 02:42:10] [DEBUG] International destination detected {"city":"Ho Chi Minh City"}
+[2025-09-09 02:42:10] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 02:42:17] [INFO] International plan generated {"city":"your destination","duration_ms":7534.85}
+[2025-09-09 02:42:17] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 02:42:17] [INFO] Message processed successfully {"userId":1,"processingTime":"7549.64ms"}
+[2025-09-09 02:56:04] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:56:04] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:56:14] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:56:14] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 02:56:14] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 02:59:01] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:59:01] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:59:14] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 02:59:14] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 02:59:14] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 03:19:56] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:19:56] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:19:58] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:19:58] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:20:02] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:20:02] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 03:20:02] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 03:27:33] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:27:33] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:27:39] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 03:27:39] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 03:27:39] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 04:01:42] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:01:42] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:01:46] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:01:46] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 04:01:46] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 04:01:46] [DEBUG] International destination detected {"city":"Ho Chi Minh City"}
+[2025-09-09 04:01:46] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:01:52] [INFO] International plan generated {"city":"your destination","duration_ms":5943.91}
+[2025-09-09 04:01:52] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:01:52] [INFO] Message processed successfully {"userId":1,"processingTime":"5968.79ms"}
+[2025-09-09 04:07:03] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:07:03] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:07:08] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:07:08] [INFO] Processing message {"userId":1,"messageLength":52}
+[2025-09-09 04:07:08] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"},{"id":18,"name":"Ha Giang"},{"name":"show your tours in ho chi minh","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show your tours in ho chi minh and hotel in ha giang"}}
+[2025-09-09 04:07:08] [DEBUG] International destination detected {"city":"Ho Chi Minh City"}
+[2025-09-09 04:07:08] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:07:14] [INFO] International plan generated {"city":"your destination","duration_ms":5840.34}
+[2025-09-09 04:07:14] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:07:14] [INFO] Message processed successfully {"userId":1,"processingTime":"5850.6ms"}
+[2025-09-09 04:10:32] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:10:32] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 04:10:32] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"},{"id":20,"name":"Can Tho"},{"name":"show tour in nha trang","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show tour in nha trang and hotel in can tho"}}
+[2025-09-09 04:10:57] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:10:57] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 04:10:57] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"},{"id":20,"name":"Can Tho"},{"name":"show tour in nha trang","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show tour in nha trang and hotel in can tho"}}
+[2025-09-09 04:11:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:11:13] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 04:11:13] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"},{"id":20,"name":"Can Tho"},{"name":"show tour in nha trang","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show tour in nha trang and hotel in can tho"}}
+[2025-09-09 04:12:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:12:13] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-09 04:12:13] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":12,"name":"Nha Trang"},{"id":20,"name":"Can Tho"},{"name":"show tour in nha trang","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show tour in nha trang and hotel in can tho"}}
+[2025-09-09 04:12:13] [DEBUG] International destination detected {"city":"Nha Trang"}
+[2025-09-09 04:12:13] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:12:19] [INFO] International plan generated {"city":"your destination","duration_ms":6353.35}
+[2025-09-09 04:12:19] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:12:19] [INFO] Message processed successfully {"userId":1,"processingTime":"6392.4ms"}
+[2025-09-09 04:12:36] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:12:36] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:12:39] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:12:39] [INFO] Processing message {"userId":1,"messageLength":31}
+[2025-09-09 04:12:39] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"Find hotels in Ho Chi Minh City"}}
+[2025-09-09 04:12:39] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":11,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:12:39] [DEBUG] Hotels found {"count":6}
+[2025-09-09 04:12:39] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":0,"hotels":6,"cities":1}}
+[2025-09-09 04:12:41] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1991.78}
+[2025-09-09 04:12:42] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:12:42] [INFO] Message processed successfully {"userId":1,"processingTime":"3117.55ms"}
+[2025-09-09 04:12:53] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:12:53] [INFO] Processing message {"userId":1,"messageLength":19}
+[2025-09-09 04:12:53] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":21,"name":"Hanoi"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"show tour in ha noi"}}
+[2025-09-09 04:12:53] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":21,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:12:53] [DEBUG] City tour match found {"count":4}
+[2025-09-09 04:12:53] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-09 04:12:55] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":1921.05}
+[2025-09-09 04:12:56] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:12:56] [INFO] Message processed successfully {"userId":1,"processingTime":"3061.35ms"}
+[2025-09-09 04:13:07] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:13:07] [INFO] Processing message {"userId":1,"messageLength":40}
+[2025-09-09 04:13:07] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":20,"name":"Can Tho"},{"id":21,"name":"Hanoi"},{"name":"find tour in can tho","id":null},{"name":"hotel in ha noi","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tour in can tho and hotel in ha noi"}}
+[2025-09-09 04:13:07] [DEBUG] International destination detected {"city":"Can Tho"}
+[2025-09-09 04:13:07] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:13:14] [INFO] International plan generated {"city":"your destination","duration_ms":7156.4}
+[2025-09-09 04:13:14] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:13:14] [INFO] Message processed successfully {"userId":1,"processingTime":"7162.63ms"}
+[2025-09-09 04:13:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:13:31] [INFO] Processing message {"userId":1,"messageLength":30}
+[2025-09-09 04:13:31] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":20,"name":"Can Tho"},{"name":"find tour","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tour and hotel in can tho"}}
+[2025-09-09 04:13:31] [DEBUG] International destination detected {"city":"Can Tho"}
+[2025-09-09 04:13:31] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:13:39] [INFO] International plan generated {"city":"your destination","duration_ms":7601.14}
+[2025-09-09 04:13:39] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:13:39] [INFO] Message processed successfully {"userId":1,"processingTime":"7608.6ms"}
+[2025-09-09 04:14:22] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:14:22] [INFO] Processing message {"userId":1,"messageLength":30}
+[2025-09-09 04:14:22] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":20,"name":"Can Tho"},{"name":"find tour","id":null},{"name":"hotel in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tour and hotel in can tho"}}
+[2025-09-09 04:14:22] [DEBUG] International destination detected {"city":"Can Tho"}
+[2025-09-09 04:14:22] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:14:29] [INFO] International plan generated {"city":"your destination","duration_ms":6864.22}
+[2025-09-09 04:14:29] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:14:29] [INFO] Message processed successfully {"userId":1,"processingTime":"6874.15ms"}
+[2025-09-09 04:14:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:14:31] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:14:34] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:14:34] [INFO] Processing message {"userId":1,"messageLength":40}
+[2025-09-09 04:14:34] [DEBUG] Intent and entities extracted {"intent":"destination_info","entities":{"cities":[{"id":18,"name":"Ha Giang"},{"name":"What","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"What is the best time to visit Ha Giang?"}}
+[2025-09-09 04:14:34] [DEBUG] International destination detected {"city":"Ha Giang"}
+[2025-09-09 04:14:34] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:14:39] [INFO] International plan generated {"city":"What","duration_ms":5903.04}
+[2025-09-09 04:14:39] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:14:39] [INFO] Message processed successfully {"userId":1,"processingTime":"5909.08ms"}
+[2025-09-09 04:14:59] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:14:59] [INFO] Processing message {"userId":1,"messageLength":24}
+[2025-09-09 04:14:59] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":11,"name":"Ho Chi Minh City"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"find tour in ho chi minh"}}
+[2025-09-09 04:14:59] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":11,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:14:59] [DEBUG] City tour match found {"count":4}
+[2025-09-09 04:14:59] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-09 04:15:01] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":2056.52}
+[2025-09-09 04:15:02] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:15:02] [INFO] Message processed successfully {"userId":1,"processingTime":"3295.98ms"}
+[2025-09-09 04:15:09] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:15:09] [INFO] Processing message {"userId":1,"messageLength":19}
+[2025-09-09 04:15:09] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[{"id":21,"name":"Hanoi"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"fin hotel in ha noi"}}
+[2025-09-09 04:15:09] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":21,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:15:09] [DEBUG] Hotels found {"count":6}
+[2025-09-09 04:15:09] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":0,"hotels":6,"cities":1}}
+[2025-09-09 04:15:12] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":2636.22}
+[2025-09-09 04:15:13] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:15:13] [INFO] Message processed successfully {"userId":1,"processingTime":"3751.67ms"}
+[2025-09-09 04:15:41] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:15:41] [INFO] Processing message {"userId":1,"messageLength":29}
+[2025-09-09 04:15:41] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":17,"name":"Hoi An"},{"name":"find tour","id":null},{"name":"hotel in hoi an","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tour and hotel in hoi an"}}
+[2025-09-09 04:15:41] [DEBUG] International destination detected {"city":"Hoi An"}
+[2025-09-09 04:15:41] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:15:48] [INFO] International plan generated {"city":"your destination","duration_ms":7005.47}
+[2025-09-09 04:15:48] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:15:48] [INFO] Message processed successfully {"userId":1,"processingTime":"7013.1ms"}
+[2025-09-09 04:19:38] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:19:38] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:19:43] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:19:43] [INFO] Processing message {"userId":1,"messageLength":29}
+[2025-09-09 04:19:43] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":17,"name":"Hoi An"},{"name":"find tour","id":null},{"name":"hotel in hoi an","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tour and hotel in hoi an"}}
+[2025-09-09 04:19:43] [DEBUG] International destination detected {"city":"Hoi An"}
+[2025-09-09 04:19:43] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:19:49] [INFO] International plan generated {"city":"your destination","duration_ms":5744.49}
+[2025-09-09 04:19:49] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:19:49] [INFO] Message processed successfully {"userId":1,"processingTime":"5755.95ms"}
+[2025-09-09 04:26:10] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:26:10] [INFO] Processing message {"userId":1,"messageLength":31}
+[2025-09-09 04:26:10] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":20,"name":"Can Tho"},{"name":"find tour","id":null},{"name":"hotels in can tho","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tour and hotels in can tho"}}
+[2025-09-09 04:26:10] [DEBUG] International destination detected {"city":"Can Tho"}
+[2025-09-09 04:26:10] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:26:17] [INFO] International plan generated {"city":"your destination","duration_ms":7189.36}
+[2025-09-09 04:26:17] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:26:17] [INFO] Message processed successfully {"userId":1,"processingTime":"7232.95ms"}
+[2025-09-09 04:26:33] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:26:33] [INFO] Processing message {"userId":1,"messageLength":28}
+[2025-09-09 04:26:33] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":13,"name":"Hue"},{"name":"find tours","id":null},{"name":"hotels in hue","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tours and hotels in hue"}}
+[2025-09-09 04:26:33] [DEBUG] International destination detected {"city":"Hue"}
+[2025-09-09 04:26:33] [DEBUG] Data retrieval completed {"match_level":"international_gemini","is_international":true,"data_counts":{"tours":0,"hotels":0,"cities":0}}
+[2025-09-09 04:26:41] [INFO] International plan generated {"city":"your destination","duration_ms":7330.08}
+[2025-09-09 04:26:41] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:26:41] [INFO] Message processed successfully {"userId":1,"processingTime":"7337.69ms"}
+[2025-09-09 04:35:15] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:35:15] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:35:24] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:35:24] [INFO] Processing message {"userId":1,"messageLength":32}
+[2025-09-09 04:35:24] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":18,"name":"Ha Giang"},{"name":"find tours","id":null},{"name":"hotel in ha giang","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tours and hotel in ha giang"}}
+[2025-09-09 04:35:25] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":18,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:35:25] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":18,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:35:25] [DEBUG] Multi-city mixed search completed {"tour_cities":["Ha Giang"],"hotel_cities":["Ha Giang"],"tours_found":4,"hotels_found":6}
+[2025-09-09 04:35:25] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":true,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 04:35:28] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":3192.1}
+[2025-09-09 04:35:29] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:35:29] [INFO] Message processed successfully {"userId":1,"processingTime":"4324.24ms"}
+[2025-09-09 04:35:40] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:35:40] [INFO] Processing message {"userId":1,"messageLength":16}
+[2025-09-09 04:35:40] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":13,"name":"Hue"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"find tour in hue"}}
+[2025-09-09 04:35:40] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":13,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:35:40] [DEBUG] City tour match found {"count":4}
+[2025-09-09 04:35:40] [DEBUG] Data retrieval completed {"match_level":"same_city","is_international":false,"data_counts":{"tours":4,"hotels":0,"cities":1}}
+[2025-09-09 04:35:42] [INFO] Vietnamese response generated {"match_level":"same_city","duration_ms":1870.72}
+[2025-09-09 04:35:43] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:35:43] [INFO] Message processed successfully {"userId":1,"processingTime":"2943.35ms"}
+[2025-09-09 04:35:49] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:35:49] [INFO] Processing message {"userId":1,"messageLength":21}
+[2025-09-09 04:35:49] [DEBUG] Intent and entities extracted {"intent":"hotel_search","entities":{"cities":[{"id":14,"name":"Phu Yen"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"find hotel in phu yen"}}
+[2025-09-09 04:35:49] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":14,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:35:49] [DEBUG] Hotels found {"count":6}
+[2025-09-09 04:35:49] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":0,"hotels":6,"cities":1}}
+[2025-09-09 04:35:50] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1919.33}
+[2025-09-09 04:35:52] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:35:52] [INFO] Message processed successfully {"userId":1,"processingTime":"3036.03ms"}
+[2025-09-09 04:36:05] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:36:05] [INFO] Processing message {"userId":1,"messageLength":32}
+[2025-09-09 04:36:05] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":16,"name":"Phu Quoc"},{"name":"find tours","id":null},{"name":"hotel in phu quoc","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"find tours and hotel in phu quoc"}}
+[2025-09-09 04:36:05] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":16,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:36:05] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":16,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:36:05] [DEBUG] Multi-city mixed search completed {"tour_cities":["Phu Quoc"],"hotel_cities":["Phu Quoc"],"tours_found":4,"hotels_found":6}
+[2025-09-09 04:36:05] [DEBUG] Data retrieval completed {"match_level":"mixed_city_match","is_international":true,"data_counts":{"tours":4,"hotels":6,"cities":1}}
+[2025-09-09 04:36:09] [INFO] Vietnamese response generated {"match_level":"mixed_city_match","duration_ms":3367.9}
+[2025-09-09 04:36:10] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:36:10] [INFO] Message processed successfully {"userId":1,"processingTime":"4692.98ms"}
+[2025-09-09 04:38:28] [INFO] Chatbot initialized {"userId":1}
+[2025-09-09 04:38:28] [INFO] Processing message {"userId":1,"messageLength":32}
+[2025-09-09 04:38:28] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":10,"name":"Tay Bac"},{"id":15,"name":"Da Lat"},{"name":"show tours in tay bac","id":null}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":true,"raw_message":"show tours in tay bac and da lat"}}
+[2025-09-09 04:38:28] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":10,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:38:28] [DEBUG] Tours retrieved {"count":4,"filters":{"cityId":15,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-09 04:38:28] [DEBUG] Multi-city tour search completed {"cities":["Tay Bac","Da Lat"],"tours_by_city":{"Tay Bac":4,"Da Lat":4},"total_tours":8}
+[2025-09-09 04:38:28] [DEBUG] Data retrieval completed {"match_level":"multi_city_tours","is_international":true,"data_counts":{"tours":8,"hotels":0,"cities":1}}
+[2025-09-09 04:38:32] [INFO] Vietnamese response generated {"match_level":"multi_city_tours","duration_ms":3608.4}
+[2025-09-09 04:38:33] [DEBUG] Conversation saved {"userId":1}
+[2025-09-09 04:38:33] [INFO] Message processed successfully {"userId":1,"processingTime":"4817.36ms"}

@@ -152,40 +152,7 @@ changeVideoBackground();
     </div>
 </section>
 
-<!-- START: Chatbot HTML Structure - Updated for Better Integration -->
-<div id="chatbot-fab" class="chatbot-fab">
-    <i class="fas fa-comment-dots"></i>
-    <span class="notification-badge" id="chatbot-notification" style="display: none;">1</span>
-</div>
-
-<div id="chatbot-window" class="chatbot-window hidden">
-    <div class="chatbot-header">
-        <div class="chatbot-title">
-            <i class="fas fa-robot"></i>
-            <h3>VietTransit Assistant</h3>
-            <span class="status-indicator online" id="chatbot-status"></span>
-        </div>
-        <button id="chatbot-close-btn" class="close-btn">&times;</button>
-    </div>
-    <div id="chatbot-messages" class="chatbot-messages">
-        <!-- Messages will be dynamically inserted here -->
-    </div>
-    <div class="chatbot-input-area">
-        <input type="text" id="chatbot-input" placeholder="Ask about tours or hotels..." maxlength="500">
-        <button id="chatbot-send-btn" class="send-btn" title="Send message">
-            <i class="fas fa-paper-plane"></i>
-        </button>
-    </div>
-    <div class="chatbot-footer">
-        <small>Powered by VietTransit AI</small>
-    </div>
-</div>
-<!-- END: Chatbot HTML Structure -->
-
 <?php include __DIR__ . '/../footer.php'; ?>
-
-<!-- Load the updated chatbot JavaScript file -->
-<script src="../chatbot/chatbot.js"></script>
 
 </body>
 </html>

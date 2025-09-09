@@ -131,7 +131,7 @@ function restoreChatDataAfterBooking() {
 class TravelChatbot {
     constructor() {
         // Fixed API endpoint 
-        this.apiEndpoint = './rag_chatbot_backend.php';
+        this.apiEndpoint = './rag_chatbot_backend_refactored.php';
         this.currentChatId = null;
         this.isTyping = false;
         this.conversationHistory = [];
@@ -804,31 +804,150 @@ class TravelChatbot {
 
     addDataCards(messageElement, response) {
         const cardContainer = document.createElement('div');
-        cardContainer.className = 'data-cards';
+        
+        // Determine layout based on content type and quantity
+        const hasTours = this.hasToursInResponse(response);
+        const hasHotels = this.hasHotelsInResponse(response);
+        const tourCount = this.getTourCount(response);
+        const hotelCount = this.getHotelCount(response);
+        
+        // Set appropriate CSS class based on content
+        if (hasTours && hasHotels) {
+            // Mixed content: tours on left, hotels on right
+            cardContainer.className = 'data-cards mixed-content';
+            this.createMixedLayout(cardContainer, response, tourCount, hotelCount);
+        } else if (hasTours && tourCount > 3) {
+            // Multiple tours: 2-column grid
+            cardContainer.className = 'data-cards tours-grid';
+            this.createToursGrid(cardContainer, response, tourCount);
+        } else if (hasHotels && hotelCount > 3) {
+            // Multiple hotels: 2-column grid  
+            cardContainer.className = 'data-cards tours-grid'; // Reuse same grid style
+            this.createHotelsGrid(cardContainer, response, hotelCount);
+        } else {
+            // Default single column layout
+            cardContainer.className = 'data-cards';
+            this.createDefaultLayout(cardContainer, response);
+        }
+        
+        if (cardContainer.children.length > 0) {
+            messageElement.querySelector('.message-content').appendChild(cardContainer);
+        }
+    }
+
+    // Helper methods to check response content
+    hasToursInResponse(response) {
+        if (response.type === 'tour_search') return true;
+        if (response.type === 'destination_info' && response.data?.tours?.length > 0) return true;
+        if (Array.isArray(response.data) && response.data.some(item => item.tour_name || item.tourid)) return true;
+        return false;
+    }
+
+    hasHotelsInResponse(response) {
+        if (response.type === 'hotel_search') return true;
+        if (response.type === 'destination_info' && response.data?.hotels?.length > 0) return true;
+        if (Array.isArray(response.data) && response.data.some(item => item.hotel || item.hotelid)) return true;
+        return false;
+    }
+
+    getTourCount(response) {
+        if (response.type === 'tour_search' && Array.isArray(response.data)) {
+            return response.data.length;
+        }
+        if (response.type === 'destination_info' && response.data?.tours) {
+            return response.data.tours.length;
+        }
+        if (Array.isArray(response.data)) {
+            return response.data.filter(item => item.tour_name || item.tourid).length;
+        }
+        return 0;
+    }
+
+    getHotelCount(response) {
+        if (response.type === 'hotel_search' && Array.isArray(response.data)) {
+            return response.data.length;
+        }
+        if (response.type === 'destination_info' && response.data?.hotels) {
+            return response.data.hotels.length;
+        }
+        if (Array.isArray(response.data)) {
+            return response.data.filter(item => item.hotel || item.hotelid).length;
+        }
+        return 0;
+    }
+
+    // Create mixed layout (tours + hotels side by side)
+    createMixedLayout(container, response, tourCount, hotelCount) {
+        const maxInitialItems = 4; // Show max 4 items initially per section
+        
+        // Tours section
+        if (this.hasToursInResponse(response)) {
+            const toursSection = document.createElement('div');
+            toursSection.className = 'mixed-section tours-section';
+            
+            const toursHeader = document.createElement('h4');
+            toursHeader.innerHTML = `<i class="fas fa-map-signs"></i> Tour Packages (${tourCount})`;
+            toursSection.appendChild(toursHeader);
+            
+            const tours = this.extractToursFromResponse(response);
+            this.renderItemsWithPagination(toursSection, tours, 'tour', maxInitialItems);
+            
+            container.appendChild(toursSection);
+        }
+        
+        // Hotels section
+        if (this.hasHotelsInResponse(response)) {
+            const hotelsSection = document.createElement('div');
+            hotelsSection.className = 'mixed-section hotels-section';
+            
+            const hotelsHeader = document.createElement('h4');
+            hotelsHeader.innerHTML = `<i class="fas fa-bed"></i> Accommodations (${hotelCount})`;
+            hotelsSection.appendChild(hotelsHeader);
+            
+            const hotels = this.extractHotelsFromResponse(response);
+            this.renderItemsWithPagination(hotelsSection, hotels, 'hotel', maxInitialItems);
+            
+            container.appendChild(hotelsSection);
+        }
+    }
+
+    // Create tours grid (2 columns)
+    createToursGrid(container, response, tourCount) {
+        const maxInitialItems = 6; // Show 6 tours initially (3x2 grid)
+        const tours = this.extractToursFromResponse(response);
+        
+        this.renderItemsWithPagination(container, tours, 'tour', maxInitialItems, true);
+    }
+
+    // Create hotels grid (2 columns)
+    createHotelsGrid(container, response, hotelCount) {
+        const maxInitialItems = 6; // Show 6 hotels initially
+        const hotels = this.extractHotelsFromResponse(response);
+        
+        this.renderItemsWithPagination(container, hotels, 'hotel', maxInitialItems, true);
+    }
+
+    // Create default single column layout
+    createDefaultLayout(container, response) {
+        const maxInitialItems = 3; // Show 3 items initially
         
         if (response.type === 'tour_search' && Array.isArray(response.data)) {
-            response.data.forEach(tour => {
-                const card = this.createTourCard(tour);
-                cardContainer.appendChild(card);
-            });
+            this.renderItemsWithPagination(container, response.data, 'tour', maxInitialItems);
         }
         else if (response.type === 'hotel_search' && Array.isArray(response.data)) {
-            response.data.forEach(hotel => {
-                const card = this.createHotelCard(hotel);
-                cardContainer.appendChild(card);
-            });
+            this.renderItemsWithPagination(container, response.data, 'hotel', maxInitialItems);
         }
         else if (response.type === 'destination_info' && response.data) {
             if (response.data.tours && response.data.tours.length > 0) {
                 response.data.tours.forEach(tour => {
                     const card = this.createTourCard(tour);
-                    cardContainer.appendChild(card);
+                    container.appendChild(card);
                 });
             }
             if (response.data.hotels && response.data.hotels.length > 0) {
                 response.data.hotels.forEach(hotel => {
                     const card = this.createHotelCard(hotel);
-                    cardContainer.appendChild(card);
+                    container.appendChild(card);
                 });
             }
         }
@@ -836,19 +955,141 @@ class TravelChatbot {
             response.data.forEach(item => {
                 if (item.tour_name || item.tourid) {
                     const card = this.createTourCard(item);
-                    cardContainer.appendChild(card);
+                    container.appendChild(card);
                 } else if (item.hotel || item.hotelid) {
                     const card = this.createHotelCard(item);
-                    cardContainer.appendChild(card);
+                    container.appendChild(card);
                 }
             });
         }
+    }
+
+    // Extract tours from various response formats
+    extractToursFromResponse(response) {
+        if (response.type === 'tour_search' && Array.isArray(response.data)) {
+            return response.data;
+        }
+        if (response.type === 'destination_info' && response.data?.tours) {
+            return response.data.tours;
+        }
+        if (Array.isArray(response.data)) {
+            return response.data.filter(item => item.tour_name || item.tourid);
+        }
+        return [];
+    }
+
+    // Extract hotels from various response formats
+    extractHotelsFromResponse(response) {
+        if (response.type === 'hotel_search' && Array.isArray(response.data)) {
+            return response.data;
+        }
+        if (response.type === 'destination_info' && response.data?.hotels) {
+            return response.data.hotels;
+        }
+        if (Array.isArray(response.data)) {
+            return response.data.filter(item => item.hotel || item.hotelid);
+        }
+        return [];
+    }
+
+    // Render items with pagination/show more functionality
+    renderItemsWithPagination(container, items, type, maxInitial, isGrid = false) {
+        if (!items || items.length === 0) return;
         
-        if (cardContainer.children.length > 0) {
-            messageElement.querySelector('.message-content').appendChild(cardContainer);
+        const containerId = `container_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+        
+        // Create wrapper for cards
+        const cardsWrapper = document.createElement('div');
+        cardsWrapper.className = isGrid ? 'cards-grid-wrapper' : 'cards-list-wrapper';
+        cardsWrapper.id = containerId;
+        
+        // Render initial items
+        items.slice(0, maxInitial).forEach((item, index) => {
+            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            card.classList.add('visible');
+            if (type === 'tour') {
+                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
+                    '<span class="card-category-badge tour">Tour</span>');
+            } else {
+                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
+                    '<span class="card-category-badge hotel">Hotel</span>');
+            }
+            cardsWrapper.appendChild(card);
+        });
+        
+        // Render hidden items
+        items.slice(maxInitial).forEach((item, index) => {
+            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            card.classList.add('hidden');
+            if (type === 'tour') {
+                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
+                    '<span class="card-category-badge tour">Tour</span>');
+            } else {
+                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
+                    '<span class="card-category-badge hotel">Hotel</span>');
+            }
+            cardsWrapper.appendChild(card);
+        });
+        
+        container.appendChild(cardsWrapper);
+        
+        // Add show more/less buttons if needed
+        if (items.length > maxInitial) {
+            const toggleContainer = document.createElement('div');
+            toggleContainer.className = 'card-show-toggle';
+            
+            const showMoreBtn = document.createElement('button');
+            showMoreBtn.className = 'show-more-btn';
+            showMoreBtn.innerHTML = `<i class="fas fa-chevron-down"></i> Show ${items.length - maxInitial} More ${type === 'tour' ? 'Tours' : 'Hotels'}`;
+            
+            const showLessBtn = document.createElement('button');
+            showLessBtn.className = 'show-less-btn hidden';
+            showLessBtn.innerHTML = `<i class="fas fa-chevron-up"></i> Show Less`;
+            
+            // Show more functionality
+            showMoreBtn.addEventListener('click', () => {
+                const hiddenCards = cardsWrapper.querySelectorAll('.data-card.hidden');
+                hiddenCards.forEach(card => {
+                    card.classList.remove('hidden');
+                    card.classList.add('visible');
+                });
+                showMoreBtn.classList.add('hidden');
+                showLessBtn.classList.remove('hidden');
+                
+                // Smooth scroll to show new content
+                setTimeout(() => {
+                    const lastCard = cardsWrapper.lastElementChild;
+                    if (lastCard) {
+                        lastCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
+                    }
+                }, 100);
+            });
+            
+            // Show less functionality
+            showLessBtn.addEventListener('click', () => {
+                const allCards = cardsWrapper.querySelectorAll('.data-card');
+                allCards.forEach((card, index) => {
+                    if (index >= maxInitial) {
+                        card.classList.add('hidden');
+                        card.classList.remove('visible');
+                    }
+                });
+                showLessBtn.classList.add('hidden');
+                showMoreBtn.classList.remove('hidden');
+                
+                // Scroll back to top of cards
+                setTimeout(() => {
+                    cardsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 100);
+            });
+            
+            toggleContainer.appendChild(showMoreBtn);
+            toggleContainer.appendChild(showLessBtn);
+            container.appendChild(toggleContainer);
         }
     }
-    
+
+        
     generateTourImagePath(cityId, tourId) {
         const cityIdToString = {
             10: 'taybac',
@@ -922,7 +1163,7 @@ class TravelChatbot {
                     <span class="card-badge discount">-15%</span>
                 </div>
                 <div class="card-info">
-                    <div class="card-title">
+                    <div class="card-title" title="${this.escapeHtml(tourName)}">
                         ${this.escapeHtml(tourName)}
                     </div>
                     <div class="card-details">
@@ -939,20 +1180,15 @@ class TravelChatbot {
                         <div class="detail-item">
                             <i class="fas fa-money-bill-wave"></i>
                             <span class="detail-label">Price:</span>
-                            <span class="detail-value">${this.formatPrice(price)} VND per person</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-calendar-alt"></i>
-                            <span class="detail-label">Best season:</span>
-                            <span class="detail-value">${this.escapeHtml(season)}</span>
+                            <span class="detail-value">${this.formatPrice(price)} VND</span>
                         </div>
                     </div>
                     <div class="card-actions">
-                        <button class="card-btn card-btn-primary" onclick="bookTour(${tourId}, ${cityId})">
+                        <button class="card-btn card-btn-primary" onclick="bookTour(${tourId}, ${cityId})" title="Book this tour">
                             <i class="fas fa-calendar-plus"></i>
-                            Book Tour
+                            Book
                         </button>
-                        <button class="card-btn card-btn-secondary" onclick="viewTourDetails(${tourId}, ${cityId})">
+                        <button class="card-btn card-btn-secondary" onclick="viewTourDetails(${tourId}, ${cityId})" title="View tour details">
                             <i class="fas fa-info-circle"></i>
                             Details
                         </button>
@@ -993,7 +1229,7 @@ class TravelChatbot {
                     <span class="card-badge rating">${rating.toFixed(1)}</span>
                 </div>
                 <div class="card-info">
-                    <div class="card-title">
+                    <div class="card-title" title="${this.escapeHtml(hotelName)}">
                         ${this.escapeHtml(hotelName)}
                     </div>
                     <div class="card-details">
@@ -1011,16 +1247,16 @@ class TravelChatbot {
                         <div class="detail-item">
                             <i class="fas fa-money-bill-wave"></i>
                             <span class="detail-label">Price:</span>
-                            <span class="detail-value">${this.formatPrice(cost)} VND per night</span>
+                            <span class="detail-value">${this.formatPrice(cost)} VND/night</span>
                         </div>
                         ` : ''}
                     </div>
                     <div class="card-actions">
-                        <button class="card-btn card-btn-primary" onclick="bookHotel(${hotelId})">
+                        <button class="card-btn card-btn-primary" onclick="bookHotel(${hotelId})" title="Book this hotel">
                             <i class="fas fa-bed"></i>
-                            Book Hotel
+                            Book
                         </button>
-                        <button class="card-btn card-btn-secondary" onclick="viewHotelDetails(${hotelId})">
+                        <button class="card-btn card-btn-secondary" onclick="viewHotelDetails(${hotelId})" title="View hotel details">
                             <i class="fas fa-info-circle"></i>
                             Details
                         </button>
@@ -1030,7 +1266,7 @@ class TravelChatbot {
         `;
         return card;
     }
-    
+        
     getCityIdFromName(cityName) {
         const cityMapping = {
             'Ho Chi Minh': 11, 'Ho Chi Minh City': 11, 'Saigon': 11,

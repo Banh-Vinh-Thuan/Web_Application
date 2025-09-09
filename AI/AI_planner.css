@@ -473,36 +473,254 @@ body {
 
 /* ENHANCED DATA CARDS WITH IMAGES */
 .data-cards {
+    display: grid;
+    gap: 16px;
+    margin-top: 12px;
+    width: 100%;
+    grid-template-columns: 1fr; /* Default single column */
+}
+
+/* Two column layout for multiple tours */
+.data-cards.tours-grid {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* Side-by-side layout for mixed content (tours + hotels) */
+.data-cards.mixed-content {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.mixed-section {
+    flex: 1;
+    min-width: 400px;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    margin-top: 12px; /* Space between message text and cards */
-    width: 100%;
 }
 
+.mixed-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 8px;
+    padding-bottom: 4px;
+    border-bottom: 2px solid #10a37f;
+    display: inline-block;
+}
+
+/* Show more/less functionality */
+.card-show-toggle {
+    text-align: center;
+    margin-top: 16px;
+}
+
+.show-more-btn, .show-less-btn {
+    background: linear-gradient(135deg, #10a37f, #0d8f6f);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(16, 163, 127, 0.3);
+}
+
+.show-more-btn:hover, .show-less-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 163, 127, 0.4);
+    background: linear-gradient(135deg, #0d8f6f, #0a7c61);
+}
+
+/* Hidden cards that can be shown with "Show More" */
+.data-card.hidden {
+    display: none;
+}
+
+.data-card.visible {
+    display: block;
+}
+
+/* Responsive alignment for cards */
 .message.user .data-cards {
-    align-items: flex-end; /* Align user data cards to the right */
+    align-items: flex-end;
 }
 
 .message.assistant .data-cards {
-    align-items: flex-start; /* Align assistant data cards to the left */
-    margin-left: 36px; /* Offset to align with message text (24px avatar + 12px gap) */
+    align-items: flex-start;
+    margin-left: 36px;
 }
 
+.message.assistant .data-cards.mixed-content {
+    margin-left: 36px;
+}
+
+/* Enhanced card styling for better visual hierarchy */
 .data-card {
     background: #ffffff;
     border: 1px solid #e9ecef;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
-    max-width: 600px; 
-    width: 100%;
+    max-width: 100%;
+    position: relative;
 }
 
 .data-card:hover {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-    transform: translateY(-2px);
+    transform: translateY(-3px);
+    border-color: #10a37f;
+}
+
+/* Category badge for mixed content */
+.card-category-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(16, 163, 127, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    z-index: 2;
+}
+
+.card-category-badge.tour {
+    background: rgba(16, 163, 127, 0.9);
+}
+
+.card-category-badge.hotel {
+    background: rgba(52, 152, 219, 0.9);
+}
+
+/* Compact card layout for grid display */
+.data-cards.tours-grid .data-card,
+.mixed-section .data-card {
+    max-width: none;
+}
+
+.data-cards.tours-grid .card-content,
+.mixed-section .card-content {
+    height: 180px; /* Slightly taller for better proportion in grid */
+}
+
+.data-cards.tours-grid .card-image,
+.mixed-section .card-image {
+    height: 180px;
+}
+
+/* Enhanced card info layout for grid */
+.data-cards.tours-grid .card-info,
+.mixed-section .card-info {
+    padding: 14px;
+}
+
+.data-cards.tours-grid .card-title,
+.mixed-section .card-title {
+    font-size: 15px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    -webkit-line-clamp: 2;
+}
+
+/* Compact details for grid layout */
+.data-cards.tours-grid .detail-item,
+.mixed-section .detail-item {
+    font-size: 12px;
+    gap: 6px;
+    margin-bottom: 3px;
+}
+
+.data-cards.tours-grid .detail-label,
+.mixed-section .detail-label {
+    min-width: 50px;
+    font-size: 11px;
+}
+
+.data-cards.tours-grid .detail-value,
+.mixed-section .detail-value {
+    font-size: 12px;
+}
+
+/* Compact price section */
+.data-cards.tours-grid .current-price,
+.mixed-section .current-price {
+    font-size: 16px;
+}
+
+/* Compact action buttons */
+.data-cards.tours-grid .card-btn,
+.mixed-section .card-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+/* Loading indicator for dynamic content */
+.cards-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 8px;
+    color: #6c757d;
+    font-style: italic;
+}
+
+.cards-loading .spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid #e9ecef;
+    border-top: 2px solid #10a37f;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+/* Pagination for large datasets */
+.cards-pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 16px;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+}
+
+.pagination-btn {
+    background: #ffffff;
+    border: 1px solid #dee2e6;
+    color: #333333;
+    padding: 8px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    transition: all 0.2s ease;
+}
+
+.pagination-btn:hover:not(:disabled) {
+    background: #10a37f;
+    color: white;
+    border-color: #10a37f;
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.pagination-info {
+    font-size: 12px;
+    color: #6c757d;
+    margin: 0 8px;
 }
 
 .card-content {
@@ -1042,9 +1260,29 @@ body {
     .message.assistant .data-cards {
         margin-left: 0;
     }
+
+     .data-cards.tours-grid {
+        grid-template-columns: 1fr; /* Single column on mobile */
+    }
+    
+    .data-cards.mixed-content {
+        flex-direction: column;
+    }
+    
+    .mixed-section {
+        min-width: 100%;
+    }
+    
+    .message.assistant .data-cards {
+        margin-left: 0;
+    }
+    
+    .message.assistant .data-cards.mixed-content {
+        margin-left: 0;
+    }
     
     .data-card {
-        max-width: 100%; /* Full width on mobile */
+        max-width: 100%; 
     }
     .card-content {
         flex-direction: column;
@@ -1053,7 +1291,7 @@ body {
     
     .card-image {
         width: 100%;
-        height: 140px;
+        height: 160px;
     }
     
     .card-info {
@@ -1100,6 +1338,20 @@ body {
     .data-cards {
         gap: 12px;
         margin-top: 8px;
+    }
+
+    .show-more-btn, .show-less-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+    }
+    
+    .mixed-section h4 {
+        font-size: 14px;
+    }
+    
+    .card-category-badge {
+        font-size: 9px;
+        padding: 3px 6px;
     }
     
     .card-image {
