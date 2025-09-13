@@ -480,9 +480,127 @@ body {
     grid-template-columns: 1fr; /* Default single column */
 }
 
+/* Single section layout cho tours hoặc hotels riêng lẻ */
+.data-cards.single-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.single-section {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+}
+
+/* Fix for single section headers being covered by category badges */
+.single-section h4 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333333;
+    margin-bottom: 12px; 
+    padding-bottom: 8px; 
+    border-bottom: 2px solid #10a37f;
+    display: inline-block;
+    position: relative;
+    z-index: 15; 
+    background: #ffffff; 
+    padding-right: 12px; 
+}
+
+/* Adjust card category badge positioning for single sections */
+.single-section .card-category-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    background: rgba(16, 163, 127, 0.9);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 600;
+    text-transform: uppercase;
+    backdrop-filter: blur(4px);
+    z-index: 2; 
+}
+
+/* Cards wrapper cho single section - hiển thị dạng grid */
+.single-section .cards-grid-wrapper,
+.single-section .cards-list-wrapper {
+    margin-top: 8px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+}
+
+/* Single section card styling - giống mixed-section */
+.single-section .data-card {
+    max-width: none;
+}
+
+.single-section .card-content {
+    height: 180px;
+}
+
+.single-section .card-image {
+    height: 180px;
+}
+
+.single-section .card-info {
+    padding: 14px;
+}
+
+.single-section .card-title {
+    font-size: 15px;
+    line-height: 1.3;
+    margin-bottom: 6px;
+    -webkit-line-clamp: 2;
+}
+
+.single-section .detail-item {
+    font-size: 12px;
+    gap: 6px;
+    margin-bottom: 3px;
+}
+
+.single-section .detail-label {
+    min-width: 50px;
+    font-size: 11px;
+}
+
+.single-section .detail-value {
+    font-size: 12px;
+}
+
+.single-section .current-price {
+    font-size: 16px;
+}
+
+.single-section .card-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+}
+
+/* Responsive cho single section */
+@media (max-width: 768px) {
+    .single-section .cards-grid-wrapper,
+    .single-section .cards-list-wrapper {
+        grid-template-columns: 1fr; 
+    }
+
+     .single-section h4 {
+        font-size: 14px;
+        margin-bottom: 8px;
+        padding-bottom: 6px;
+    }
+}
+
 /* Two column layout for multiple tours */
 .data-cards.tours-grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
 }
 
 /* Side-by-side layout for mixed content (tours + hotels) */
@@ -508,6 +626,164 @@ body {
     padding-bottom: 4px;
     border-bottom: 2px solid #10a37f;
     display: inline-block;
+}
+
+/* MULTI-CITY LAYOUT - MAIN FIX */
+.data-cards.multi-city-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 24px;
+    margin-top: 15px;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.multi-city-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 16px;
+    border: 1px solid #e9ecef;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    min-height: 200px;
+}
+
+.multi-city-column.left-column {
+    border-left: 4px solid #10a37f;
+}
+
+.multi-city-column.right-column {
+    border-left: 4px solid #3498db;
+}
+
+.multi-city-column h4 {
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #dee2e6;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #333333;
+}
+
+.left-column h4 {
+    color: #10a37f;
+}
+
+.right-column h4 {
+    color: #3498db;
+}
+
+.multi-city-column h4 i {
+    font-size: 14px;
+}
+
+/* Cards within multi-city columns - Vertically stacked */
+.multi-city-column .data-card {
+    margin-bottom: 12px;
+    background: #ffffff;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.multi-city-column .data-card:last-child {
+    margin-bottom: 0;
+}
+
+.multi-city-column .data-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+}
+
+/* Adjust card layout for multi-city display */
+.multi-city-column .card-content {
+    height: auto;
+    flex-direction: column;
+}
+
+.multi-city-column .card-image {
+    width: 100%;
+    height: 140px;
+}
+
+.multi-city-column .card-info {
+    padding: 12px;
+}
+
+.multi-city-column .card-title {
+    font-size: 14px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+    -webkit-line-clamp: 2;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.multi-city-column .detail-item {
+    font-size: 12px;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.multi-city-column .detail-label {
+    min-width: 50px;
+    font-size: 11px;
+}
+
+.multi-city-column .detail-value {
+    font-size: 12px;
+}
+
+.multi-city-column .card-actions {
+    gap: 6px;
+}
+
+.multi-city-column .card-btn {
+    padding: 6px 8px;
+    font-size: 11px;
+}
+
+/* Category badges for multi-city cards */
+.multi-city-column .card-category-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: rgba(16, 163, 127, 0.9);
+    color: white;
+    padding: 3px 6px;
+    border-radius: 10px;
+    font-size: 9px;
+    font-weight: 600;
+    text-transform: uppercase;
+    z-index: 2;
+}
+
+.multi-city-column .card-category-badge.hotel {
+    background: rgba(52, 152, 219, 0.9);
+}
+
+/* Empty state for columns with no data */
+.multi-city-column.empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+.multi-city-column.empty::before {
+    content: "No results found";
+    font-size: 14px;
 }
 
 /* Show more/less functionality */
@@ -555,6 +831,10 @@ body {
 }
 
 .message.assistant .data-cards.mixed-content {
+    margin-left: 36px;
+}
+
+.message.assistant .data-cards.multi-city-layout {
     margin-left: 36px;
 }
 
@@ -1183,6 +1463,17 @@ body {
 }
 
 /* Responsive Design - MAINTAIN FIXED POSITIONS */
+@media (max-width: 992px) {
+    .data-cards.multi-city-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .multi-city-column {
+        width: 100%;
+    }
+}
+
 @media (max-width: 768px) {
     body {
         margin-left: 0;
@@ -1256,12 +1547,15 @@ body {
     }
 
     /* Mobile Card Styles */
-
     .message.assistant .data-cards {
         margin-left: 0;
     }
 
-     .data-cards.tours-grid {
+    .message.assistant .data-cards.multi-city-layout {
+        margin-left: 0;
+    }
+
+    .data-cards.tours-grid {
         grid-template-columns: 1fr; /* Single column on mobile */
     }
     
@@ -1271,14 +1565,6 @@ body {
     
     .mixed-section {
         min-width: 100%;
-    }
-    
-    .message.assistant .data-cards {
-        margin-left: 0;
-    }
-    
-    .message.assistant .data-cards.mixed-content {
-        margin-left: 0;
     }
     
     .data-card {
@@ -1318,6 +1604,24 @@ body {
     
     .current-price {
         font-size: 16px;
+    }
+
+    /* Multi-city responsive */
+    .multi-city-column {
+        padding: 12px;
+    }
+    
+    .multi-city-column h4 {
+        font-size: 14px;
+        margin-bottom: 10px;
+    }
+    
+    .multi-city-column .card-image {
+        height: 120px;
+    }
+    
+    .multi-city-column .card-info {
+        padding: 10px;
     }
 }
 
@@ -1373,6 +1677,12 @@ body {
     
     .detail-value {
         font-size: 11px;
+    }
+
+    .single-section h4 {
+        font-size: 14px;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
     }
 }
 

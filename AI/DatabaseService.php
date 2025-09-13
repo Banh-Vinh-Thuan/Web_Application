@@ -2,20 +2,13 @@
 require_once './Logger.php';
 require_once './CacheService.php';
 
-/**
- * Enhanced Database service for travel data operations with natural language support
- */
 class DatabaseService {
     private $db;
     
     public function __construct($db) {
         $this->db = $db;
     }
-    
-    /**
-     * Find city ID by name (case-insensitive, supports partial matching)
-     * Essential for natural language queries like "hoi an", "Ho Chi Minh", etc.
-     */
+
     public function findCityByName($cityName) {
         try {
             $cacheKey = "city_search_" . strtolower($cityName);
@@ -51,10 +44,6 @@ class DatabaseService {
         }
     }
     
-    /**
-     * Smart search for tours and hotels combined
-     * Handles queries like "find tour and hotel in hoi an"
-     */
     public function findToursAndHotels($cityName, $filters = []) {
         $city = $this->findCityByName($cityName);
         if (!$city) {

@@ -1,9 +1,6 @@
 <?php
 require_once './Logger.php';
 
-/**
- * Gemini service for AI interactions
- */
 class GeminiService {
     private $apiKey;
     private $apiUrl;

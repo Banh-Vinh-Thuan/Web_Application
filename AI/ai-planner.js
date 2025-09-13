@@ -17,18 +17,8 @@ function viewTourDetails(tourId, cityId) {
     }
     
     const cityIdToString = {
-        10: 'taybac',
-        11: 'hcm', 
-        12: 'nhatrang',
-        13: 'hue',
-        14: 'phuyen', 
-        15: 'dalat',
-        16: 'phuquoc',
-        17: 'hoian',
-        18: 'hagiang',
-        19: 'danang',
-        20: 'cantho',
-        21: 'hanoi'
+        10: 'taybac',   11: 'hcm',   12: 'nhatrang',   13: 'hue',   14: 'phuyen',   15: 'dalat',   16: 'phuquoc',  17: 'hoian',
+        18: 'hagiang',  19: 'danang',20: 'cantho',     21: 'hanoi'
     };
     
     const cityString = cityIdToString[cityId] || 'hcm';
@@ -805,27 +795,28 @@ class TravelChatbot {
     addDataCards(messageElement, response) {
         const cardContainer = document.createElement('div');
         
-        // Determine layout based on content type and quantity
         const hasTours = this.hasToursInResponse(response);
         const hasHotels = this.hasHotelsInResponse(response);
         const tourCount = this.getTourCount(response);
         const hotelCount = this.getHotelCount(response);
         
-        // Set appropriate CSS class based on content
-        if (hasTours && hasHotels) {
-            // Mixed content: tours on left, hotels on right
+        // **NEW**: Handle multi-city tour/hotel searches
+        if (response.layout_type === 'multi_city_tours') {
+            this.createMultiCityLayout(cardContainer, response, 'tour');
+        } else if (response.layout_type === 'multi_city_hotels') {
+            this.createMultiCityLayout(cardContainer, response, 'hotel');
+        }
+        // Handle existing layouts
+        else if (hasTours && hasHotels && (response.layout_type === 'mixed_content' || response.match_level === 'mixed_search')) {
             cardContainer.className = 'data-cards mixed-content';
             this.createMixedLayout(cardContainer, response, tourCount, hotelCount);
-        } else if (hasTours && tourCount > 3) {
-            // Multiple tours: 2-column grid
-            cardContainer.className = 'data-cards tours-grid';
-            this.createToursGrid(cardContainer, response, tourCount);
-        } else if (hasHotels && hotelCount > 3) {
-            // Multiple hotels: 2-column grid  
-            cardContainer.className = 'data-cards tours-grid'; // Reuse same grid style
-            this.createHotelsGrid(cardContainer, response, hotelCount);
+        } else if (hasTours) {
+            cardContainer.className = 'data-cards single-section';
+            this.createSingleToursSection(cardContainer, response, tourCount);
+        } else if (hasHotels) {
+            cardContainer.className = 'data-cards single-section';
+            this.createSingleHotelsSection(cardContainer, response, hotelCount);
         } else {
-            // Default single column layout
             cardContainer.className = 'data-cards';
             this.createDefaultLayout(cardContainer, response);
         }
@@ -833,6 +824,40 @@ class TravelChatbot {
         if (cardContainer.children.length > 0) {
             messageElement.querySelector('.message-content').appendChild(cardContainer);
         }
+    }
+
+    // Create single tours section with header (like mixed layout style)
+    createSingleToursSection(container, response, tourCount) {
+        const maxInitialItems = 6; // Show 6 tours initially
+        
+        const toursSection = document.createElement('div');
+        toursSection.className = 'single-section tours-section';
+        
+        const toursHeader = document.createElement('h4');
+        toursHeader.innerHTML = `<i class="fas fa-map-signs"></i> Tour Packages (${tourCount})`;
+        toursSection.appendChild(toursHeader);
+        
+        const tours = this.extractToursFromResponse(response);
+        this.renderItemsWithPagination(toursSection, tours, 'tour', maxInitialItems, true);
+        
+        container.appendChild(toursSection);
+    }
+
+    // Create single hotels section with header (like mixed layout style)
+    createSingleHotelsSection(container, response, hotelCount) {
+        const maxInitialItems = 6; // Show 6 hotels initially
+        
+        const hotelsSection = document.createElement('div');
+        hotelsSection.className = 'single-section hotels-section';
+        
+        const hotelsHeader = document.createElement('h4');
+        hotelsHeader.innerHTML = `<i class="fas fa-bed"></i> Accommodations (${hotelCount})`;
+        hotelsSection.appendChild(hotelsHeader);
+        
+        const hotels = this.extractHotelsFromResponse(response);
+        this.renderItemsWithPagination(hotelsSection, hotels, 'hotel', maxInitialItems, true);
+        
+        container.appendChild(hotelsSection);
     }
 
     // Helper methods to check response content
@@ -876,6 +901,52 @@ class TravelChatbot {
         return 0;
     }
 
+    // Create multi-city layout (e.g., tours in city 1 vs. tours in city 2)
+    createMultiCityLayout(container, response, type) {
+        const items = type === 'tour' ? this.extractToursFromResponse(response) : this.extractHotelsFromResponse(response);
+        if (items.length === 0) return;
+
+        // Separate items by city_group instead of column_position
+        const cities = [...new Set(items.map(item => item.city_group))];
+        const city1Items = items.filter(item => item.city_group === cities[0]);
+        const city2Items = items.filter(item => item.city_group === cities[1]);
+
+        // Add CSS class for multi-city styling
+        container.className = 'multi-city-layout';
+
+        // Create left column (City 1)
+        const leftColumnDiv = document.createElement('div');
+        leftColumnDiv.className = 'multi-city-column left-column';
+        
+        if (cities[0]) {
+            const leftHeader = document.createElement('h4');
+            leftHeader.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${this.escapeHtml(cities[0])} (${city1Items.length})`;
+            leftColumnDiv.appendChild(leftHeader);
+        }
+
+        city1Items.forEach(item => {
+            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            leftColumnDiv.appendChild(card);
+        });
+        container.appendChild(leftColumnDiv);
+
+        // Create right column (City 2)  
+        const rightColumnDiv = document.createElement('div');
+        rightColumnDiv.className = 'multi-city-column right-column';
+
+        if (cities[1]) {
+            const rightHeader = document.createElement('h4');
+            rightHeader.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${this.escapeHtml(cities[1])} (${city2Items.length})`;
+            rightColumnDiv.appendChild(rightHeader);
+        }
+
+        city2Items.forEach(item => {
+            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            rightColumnDiv.appendChild(card);
+        });
+        container.appendChild(rightColumnDiv);
+    }
+
     // Create mixed layout (tours + hotels side by side)
     createMixedLayout(container, response, tourCount, hotelCount) {
         const maxInitialItems = 4; // Show max 4 items initially per section
@@ -909,22 +980,6 @@ class TravelChatbot {
             
             container.appendChild(hotelsSection);
         }
-    }
-
-    // Create tours grid (2 columns)
-    createToursGrid(container, response, tourCount) {
-        const maxInitialItems = 6; // Show 6 tours initially (3x2 grid)
-        const tours = this.extractToursFromResponse(response);
-        
-        this.renderItemsWithPagination(container, tours, 'tour', maxInitialItems, true);
-    }
-
-    // Create hotels grid (2 columns)
-    createHotelsGrid(container, response, hotelCount) {
-        const maxInitialItems = 6; // Show 6 hotels initially
-        const hotels = this.extractHotelsFromResponse(response);
-        
-        this.renderItemsWithPagination(container, hotels, 'hotel', maxInitialItems, true);
     }
 
     // Create default single column layout
@@ -1109,18 +1164,18 @@ class TravelChatbot {
         const cityString = cityIdToString[cityId] || 'hcm';
         
         const imageMap = {
-            'hcm': [5, 6, 7, 8],
-            'nhatrang': [9, 10, 11, 12],
-            'hue': [13, 14, 15, 16],
-            'phuyen': [17, 18, 19, 20],
-            'dalat': [21, 22, 23, 24],
-            'phuquoc': [25, 26, 27, 28],
-            'hoian': [29, 30, 31, 32],
-            'hagiang': [33, 34, 35, 36],
-            'taybac': [1, 2, 3, 4],
-            'danang': [37, 38, 39, 40],
-            'cantho': [41, 42, 43, 44],
-            'hoinoi': [45, 46, 47, 48]
+        'taybac' :[1, 2, 3, 4, 93, 94, 95, 96],
+        'hcm' :[5, 6, 7, 8, 89, 90, 91, 92],
+        'nhatrang' :[85, 86, 87, 88, 9, 10, 11, 12],
+        'hue' :[13, 14, 15, 16, 81, 82, 83, 84],
+        'phuyen' :[77, 78, 79, 80, 17, 18, 19, 20,],
+        'dalat' :[21, 22, 23, 24, 73, 74, 75, 76],        
+        'phuquoc' :[25, 26, 27, 28, 69, 70, 71, 72],
+        'hoian' :[29, 30, 31, 32, 65, 66, 67, 68],   
+        'hagiang' :[61, 62, 63, 64, 33, 34, 35, 36],
+        'danang' :[37, 38, 39, 40, 57, 58, 59, 60],
+        'cantho' :[53, 54, 55, 56, 41, 42, 43, 44,],
+        'hanoi'  :[45, 46, 47, 48, 49, 50, 51, 52]
         };
             
         const imageIds = imageMap[cityString] || [1, 2, 3, 4];

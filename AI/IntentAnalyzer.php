@@ -118,6 +118,16 @@ class IntentAnalyzer {
         if (preg_match('/(?:tour|tours).*(?:and|&).*(?:hotel|hotels)|(?:hotel|hotels).*(?:and|&).*(?:tour|tours)/', $message)) {
             $scores['mixed_search'] += 10;
         }
+
+        // Multi-city tour detection
+        if (preg_match('/(?:tour|tours).*(?:in|at).*(?:and|&).*(?:in|at)/', $message)) {
+            $scores['tour_search'] += 8; // Favor tour_search over mixed_search
+        }
+        
+        // Multi-city hotel detection  
+        if (preg_match('/(?:hotel|hotels).*(?:in|at).*(?:and|&).*(?:in|at)/', $message)) {
+            $scores['hotel_search'] += 8; // Favor hotel_search over mixed_search
+        }
         
         // Enhanced listing queries
         if (preg_match('/(?:list|show|find|all)\s+(?:tours?|hotels?)/', $message)) {
@@ -305,47 +315,7 @@ class IntentAnalyzer {
                 }
             }
         }
-        
-        // Look for capitalized words (potential international cities)
-        preg_match_all('/\b\p{Lu}[\p{Ll}]+(?:\s+\p{Lu}[\p{Ll}]+)*\b/u', $message, $matches);
-        if (!empty($matches[0])) {
-            $commonWords = ['show', 'tour', 'hotel', 'find', 'list', 'and', 'the', 'in', 'to', 'for', 'with'];
-            
-            foreach ($matches[0] as $potentialCity) {
-                $normalizedPotential = self::normalizeCityName($potentialCity);
-                
-                // Skip if already found or common word
-                if (self::cityAlreadyFound($foundCities, $normalizedPotential) || 
-                    in_array($normalizedPotential, $commonWords) || 
-                    strlen($potentialCity) <= 2) {
-                    continue;
-                }
-                
-                $foundCities[] = ['name' => $potentialCity, 'id' => null];
-                $hasInternational = true;
-            }
-        }
-        
-        // Handle "city1 and city2" pattern
-        if (preg_match('/([a-zA-ZÀ-ÿ\s]+?)(?:\s+(?:and|và)\s+)([a-zA-ZÀ-ÿ\s]+)/iu', $message, $matches)) {
-            $cities = [trim($matches[1]), trim($matches[2])];
-            
-            foreach ($cities as $cityName) {
-                if (strlen($cityName) > 2) {
-                    $normalized = self::normalizeCityName($cityName);
-                    
-                    if (!self::cityAlreadyFound($foundCities, $normalized)) {
-                        if (isset($vietnameseCities[$normalized])) {
-                            $foundCities[] = $vietnameseCities[$normalized];
-                        } else {
-                            $foundCities[] = ['name' => $cityName, 'id' => null];
-                            $hasInternational = true;
-                        }
-                    }
-                }
-            }
-        }
-        
+
         return empty($foundCities) ? null : [
             'cities' => $foundCities,
             'has_international' => $hasInternational

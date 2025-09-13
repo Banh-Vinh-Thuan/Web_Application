@@ -7,7 +7,7 @@
       "longitude": 103.01454278614617
     },
     "address": "41 Đ. Nguyễn Chí Thanh, Phường Mường Thanh, Điện Biên Phủ, Điện Biên 03415, Việt Nam",
-    "rating": 4.2,
+    "rating": 3,
     "price": 1200000,
     "image": "1/1.1.jpg",
     "nearby_attractions": [
@@ -24,7 +24,7 @@
       "longitude": 103.02028355109904
     },
     "address": "Tổ 11 đường Hoàng Văn Thái, Phường Mường Thanh, Điện Biên Phủ, Điện Biên, Việt Nam",
-    "rating": 4.0,
+    "rating": 4,
     "price": 1100000,
     "image": "2/2.1.jpg",
     "nearby_attractions": [
@@ -41,7 +41,7 @@
       "longitude": 103.01116001062003
     },
     "address": "8 Lò Văn Hặc, Street, Điện Biên Phủ, Điện Biên 380000, Việt Nam",
-    "rating": 3.8,
+    "rating": 2,
     "price": 900000,
     "image": "3/3.1.jpg",
     "nearby_attractions": [
@@ -58,7 +58,7 @@
       "longitude": 103.01715589527737
     },
     "address": "Tổ 7 Đường Phan Đình Giót, Phường Mường Thanh, Điện Biên Phủ, Điện Biên 32000, Việt Nam",
-    "rating": 4.1,
+    "rating": 3,
     "price": 1050000,
     "image": "4/4.1.jpg",
     "nearby_attractions": [
@@ -75,7 +75,7 @@
       "longitude": 103.754797002697
     },
     "address": "5QF3+5QQ, tập thể Nông trường Than Uyên, Tân Uyên, Lai Châu, Việt Nam",
-    "rating": 4.3,
+    "rating": 4,
     "price": 1300000,
     "image": "5/5.1.jpg",
     "nearby_attractions": [
@@ -92,7 +92,7 @@
       "longitude": 104.66260801060544
     },
     "address": "Đường Hoàng Quốc Việt, Phiêng Luông, Mộc Châu, Sơn La, Việt Nam",
-    "rating": 4.4,
+    "rating": 4,
     "price": 1400000,
     "image": "6/6.1.jpg",
     "nearby_attractions": [
@@ -109,7 +109,7 @@
       "longitude": 103.46742720879837
     },
     "address": "Công Viên Thủy Sơn, 027 đường bờ hồ, Tân Phong, Lai Châu, 30000, Việt Nam",
-    "rating": 4.5,
+    "rating": 5,
     "price": 1500000,
     "image": "7/7.1.jpg",
     "nearby_attractions": [
@@ -126,7 +126,7 @@
       "longitude": 104.31097462481068
     },
     "address": "Nuoc Nong Village, QL32 Commune, Tú Lệ, Văn Chấn, Lào Cai, Việt Nam",
-    "rating": 4.0,
+    "rating": 2,
     "price": 1150000,
     "image": "8/8.1.jpg",
     "nearby_attractions": [
@@ -143,7 +143,7 @@
       "longitude": 104.59163951131458
     },
     "address": "Cây trà Tổ, Suối Giàng, Văn Chấn, Yên Bái, Việt Nam",
-    "rating": 4.2,
+    "rating": 3,
     "price": 1250000,
     "image": "9/9.1.jpg",
     "nearby_attractions": [
@@ -160,7 +160,7 @@
       "longitude": 104.14395773830233
     },
     "address": "Bản Pu Nhu, Xa Pung Luong, Mu Cang Chai, Tỉnh Lao Cai, Yen Bai, Viet Nam, 33500, Việt Nam",
-    "rating": 4.6,
+    "rating": 5,
     "price": 1800000,
     "image": "10/10.1.jpg",
     "nearby_attractions": [
@@ -177,8 +177,8 @@
       "longitude": 106.69133473739916
     },
     "address": "Đ. Phạm Ngũ Lão, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam",
-    "rating": 4.0,
-    "price": 800000,
+    "rating": 4,
+    "price": 410349,
     "image": "11/11.1.jpg",
     "nearby_attractions": [
       {"name": "Ben Thanh Market", "distance": "0.3 km"},
@@ -188,14 +188,14 @@
   },
   {
     "hotelid": 12,
-    "name": "SAZI RESIN HOTEL",
+    "name": "Sazi Resin Hotel Bui Thi Xuan",
     "coordinates": {
       "latitude": 10.772098784934387, 
       "longitude": 106.69090634548063
     },
     "address": "100/25/19, Đ. Trần Hưng Đạo, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 71012, Việt Nam",
-    "rating": 4.1,
-    "price": 900000,
+    "rating": 3,
+    "price": 736970,
     "image": "12/12.1.jpg",
     "nearby_attractions": [
       {"name": "War Remnants Museum", "distance": "0.4 km"},
@@ -211,8 +211,8 @@
       "longitude": 106.6869402957388
     },
     "address": "49/26a, Nguyễn Văn Đậu, Phường 5, Bình Thạnh, Hồ Chí Minh 700000, Việt Nam",
-    "rating": 3.9,
-    "price": 750000,
+    "rating": 4,
+    "price": 429252,
     "image": "13/13.1.jpg",
     "nearby_attractions": [
       {"name": "Backpacker District", "distance": "0.0 km"},
@@ -222,14 +222,14 @@
   },
   {
     "hotelid": 14,
-    "name": "Đặng Thị Nhu Luxury Hotel",
+    "name": "Asian Ruby Hotel & Apartment - Bui Thi Xuan",
     "coordinates": {
       "latitude": 10.769986285708146, 
       "longitude": 106.68824050922942
     },
     "address": "122F-122F1 Bùi Thị Xuân, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 700000, Việt Nam",
-    "rating": 4.3,
-    "price": 1100000,
+    "rating": 2,
+    "price": 519481,
     "image": "14/14.1.jpg",
     "nearby_attractions": [
       {"name": "Bitexco Tower", "distance": "0.3 km"},
@@ -239,14 +239,14 @@
   },
   {
     "hotelid": 15,
-    "name": "Bùi Thị Xuân Business Hotel",
+    "name": "The One Premium Hotel",
     "coordinates": {
       "latitude": 10.771283305936207, 
       "longitude": 106.6895779239062
     },
     "address": "84A Đ. Bùi Thị Xuân, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh 71000, Việt Nam",
-    "rating": 4.2,
-    "price": 1000000,
+    "rating": 2,
+    "price": 612987,
     "image": "15/15.1.jpg",
     "nearby_attractions": [
       {"name": "Diamond Plaza", "distance": "0.2 km"},
@@ -256,14 +256,14 @@
   },
   {
     "hotelid": 16,
-    "name": "Lê Thánh Tôn Premium Hotel",
+    "name": "Justay Pink Church",
     "coordinates": {
       "latitude": 10.773109283027111, 
       "longitude": 106.69692221041313
     },
     "address": "202 Đ. Lê Thánh Tôn, Phường Bến Thành, Quận 1, Hồ Chí Minh 70000, Việt Nam",
-    "rating": 4.4,
-    "price": 1200000,
+    "rating": 4,
+    "price": 566234,
     "image": "16/16.1.jpg",
     "nearby_attractions": [
       {"name": "Vincom Center", "distance": "0.1 km"},
@@ -273,14 +273,14 @@
   },
   {
     "hotelid": 17,
-    "name": "Bùi Viện Street Hotel",
+    "name": "Cozrum Homes - Selina Residence",
     "coordinates": {
       "latitude": 10.76830953971065, 
       "longitude": 106.69419979802822
     },
     "address": "Market, 40/23 Đ. Bùi Viện, Phường Bến Thành, Quận 1, Hồ Chí Minh 700000, Việt Nam",
-    "rating": 3.8,
-    "price": 700000,
+    "rating": 3,
+    "price": 387862,
     "image": "17/17.1.jpg",
     "nearby_attractions": [
       {"name": "Bui Vien Walking Street", "distance": "0.0 km"},
@@ -290,14 +290,14 @@
   },
   {
     "hotelid": 18,
-    "name": "Trần Hưng Đạo Economy Hotel",
+    "name": "Cactusland Hotel & Apartment",
     "coordinates": {
       "latitude": 10.766228569136025, 
       "longitude": 106.69540080856348
     },
     "address": "135/46 Đ. Trần Hưng Đạo, Phường Cầu Ông Lãnh, Quận 1, Hồ Chí Minh, Việt Nam",
-    "rating": 3.7,
-    "price": 650000,
+    "rating": 4,
+    "price": 736970,
     "image": "18/18.1.jpg",
     "nearby_attractions": [
       {"name": "Cao Dai Temple", "distance": "0.3 km"},
@@ -307,14 +307,14 @@
   },
   {
     "hotelid": 19,
-    "name": "Lê Thánh Tôn Boutique Hotel",
+    "name": "The Passion Airport Hotel Apartment",
     "coordinates": {
       "latitude": 10.773731482482054, 
       "longitude": 106.69849998157743
     },
     "address": "191 Đ. Lê Thánh Tôn, Phường Bến Thành, Quận 1, Hồ Chí Minh 700000, Việt Nam",
-    "rating": 4.5,
-    "price": 1300000,
+    "rating": 5,
+    "price": 488312,
     "image": "19/19.1.jpg",
     "nearby_attractions": [
       {"name": "Dong Khoi Street", "distance": "0.2 km"},
@@ -324,14 +324,14 @@
   },
   {
     "hotelid": 20,
-    "name": "Bùi Viện Hostel",
+    "name": "Cozrum Homes - Autumn House",
     "coordinates": {
       "latitude": 10.768446072829288, 
       "longitude": 106.69465100146861
     },
     "address": "12/5 Đ. Bùi Viện, Phường Phạm Ngũ Lão, Quận 1, Hồ Chí Minh, Việt Nam",
-    "rating": 3.6,
-    "price": 500000,
+    "rating": 3,
+    "price": 413706,
     "image": "20/20.1.jpg",
     "nearby_attractions": [
       {"name": "Backpacker Street", "distance": "0.0 km"},
@@ -347,7 +347,7 @@
       "longitude": 109.19561082392497
     },
     "address": "2 Nguyễn Thị Minh Khai, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.7,
+    "rating": 5,
     "price": 2000000,
     "image": "21/21.1.jpg",
     "nearby_attractions": [
@@ -364,7 +364,7 @@
       "longitude": 109.195565573925
     },
     "address": "2 Nguyễn Thị Minh Khai, Lộc Thọ, Nha Trang, Khánh Hòa 65000, Việt Nam",
-    "rating": 4.6,
+    "rating": 4,
     "price": 1900000,
     "image": "22/22.1.jpg",
     "nearby_attractions": [
@@ -381,7 +381,7 @@
       "longitude": 109.19499108159627
     },
     "address": "19 Biệt Thự, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.8,
+    "rating": 3,
     "price": 2200000,
     "image": "23/23.1.jpg",
     "nearby_attractions": [
@@ -398,7 +398,7 @@
       "longitude": 109.19560009508935
     },
     "address": "2 Nguyễn Thị Minh Khai, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.9,
+    "rating": 4,
     "price": 2500000,
     "image": "24/24.1.jpg",
     "nearby_attractions": [
@@ -415,7 +415,7 @@
       "longitude": 109.19718869878827
     },
     "address": "78-80 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.3,
+    "rating": 2,
     "price": 1600000,
     "image": "25/25.1.jpg",
     "nearby_attractions": [
@@ -432,7 +432,7 @@
       "longitude": 109.2019721950899
     },
     "address": "10 Đ. Củ Chi, Vĩnh Hải, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.4,
+    "rating": 3,
     "price": 1700000,
     "image": "26/26.1.jpg",
     "nearby_attractions": [
@@ -449,7 +449,7 @@
       "longitude": 109.19916182207535
     },
     "address": "96A5 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.2,
+    "rating": 4,
     "price": 1500000,
     "image": "27/27.1.jpg",
     "nearby_attractions": [
@@ -466,7 +466,7 @@
       "longitude": 109.19453412392497
     },
     "address": "32/6 Hùng Vương, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.1,
+    "rating": 2,
     "price": 1400000,
     "image": "28/28.1.jpg",
     "nearby_attractions": [
@@ -483,7 +483,7 @@
       "longitude": 109.1999072355684
     },
     "address": "100/8B, 100 Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.5,
+    "rating": 5,
     "price": 1800000,
     "image": "29/29.1.jpg",
     "nearby_attractions": [
@@ -500,7 +500,7 @@
       "longitude": 109.19990070858213
     },
     "address": "100/8C - 100/C9, Trần Phú, Lộc Thọ, Nha Trang, Khánh Hòa 650000, Việt Nam",
-    "rating": 4.6,
+    "rating": 3,
     "price": 1900000,
     "image": "30/30.1.jpg",
     "nearby_attractions": [
@@ -517,7 +517,7 @@
       "longitude": 107.59807656447627
     },
     "address": "5 kiệt 57 Nguyễn Công Trứ, Phú Hội, Huế, Thành phố Huế 530000, Việt Nam",
-    "rating": 4.3,
+    "rating": 3,
     "price": 1300000,
     "image": "31/31.1.jpg",
     "nearby_attractions": [
@@ -534,7 +534,7 @@
       "longitude": 107.5935949274545
     },
     "address": "27 Duy Tân, An Cựu, Huế, Thành phố Huế 530000, Việt Nam",
-    "rating": 4.0,
+    "rating": 4,
     "price": 1100000,
     "image": "32/32.1.jpg",
     "nearby_attractions": [
@@ -551,7 +551,7 @@
       "longitude": 107.56073159325331
     },
     "address": "18a Lương Ngọc Quyến, Tây Lộc, Huế, Thành phố Huế 49000, Việt Nam",
-    "rating": 4.4,
+    "rating": 2,
     "price": 1400000,
     "image": "33/33.1.jpg",
     "nearby_attractions": [
@@ -568,7 +568,7 @@
       "longitude": 107.59624583515769
     },
     "address": "91 Võ Thị Sáu, Phú Hội, Huế, Thành phố Huế 530000, Việt Nam",
-    "rating": 4.2,
+    "rating": 4,
     "price": 1200000,
     "image": "34/34.1.jpg",
     "nearby_attractions": [
@@ -585,7 +585,7 @@
       "longitude": 107.57139704898825
     },
     "address": "73 Đường Thạch Hãn, Thuận Hoà, Huế, Thành phố Huế 52000, Việt Nam",
-    "rating": 4.1,
+    "rating": 3,
     "price": 1150000,
     "image": "35/35.1.jpg",
     "nearby_attractions": [
@@ -602,7 +602,7 @@
       "longitude": 107.59710497786263
     },
     "address": "31 Kiệt 42 Nguyễn Công Trứ, Phú Hội, Huế, Thành phố Huế 49000, Việt Nam",
-    "rating": 4.5,
+    "rating": 5,
     "price": 1310381,
     "image": "36/36.1.jpg",
     "nearby_attractions": [
@@ -619,7 +619,7 @@
       "longitude": 107.59688220666544
     },
     "address": "28 Kiệt 42 Nguyễn Công Trứ, Phú Hội, Huế, Thành phố Huế, Việt Nam",
-    "rating": 4.5,
+    "rating": 5,
     "price": 1176005,
     "image": "37/37.1.jpg",
     "nearby_attractions": [
@@ -636,7 +636,7 @@
       "longitude": 107.59487543551664
     },
     "address": "city, 17 Bến Nghé, Street, Huế, Thành phố Huế 530000, Việt Nam",
-    "rating": 4.0,
+    "rating": 3,
     "price": 1001352,
     "image": "38/38.1.jpg",
     "nearby_attractions": [
@@ -653,7 +653,7 @@
       "longitude": 107.58436514898324
     },
     "address": "1 Kiệt 28 Lê Thánh Tôn, Phú Hậu, Huế, Thành phố Huế, Việt Nam",
-    "rating": 4.3,
+    "rating": 4,
     "price": 985000,
     "image": "39/39.1.jpg",
     "nearby_attractions": [
@@ -670,7 +670,7 @@
       "longitude": 107.59273379321148
     },
     "address": "4 Kiệt 34 Nguyễn Tri Phương, Phú Hội, Huế, Thành phố Huế 530000, Việt Nam",
-    "rating": 4.4,
+    "rating": 2,
     "price": 1090000,
     "image": "40/40.1.jpg",
     "nearby_attractions": [
@@ -687,7 +687,7 @@
       "longitude": 104.00884694901302
     },
     "address": "Sunset Town, 9 Đường MILAN, An Thới, Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.7,
+    "rating": 2,
     "price": 1685000,
     "image": "41/41.1.jpg",
     "nearby_attractions": [
@@ -704,7 +704,7 @@
       "longitude": 104.07951329319984
     },
     "address": "Resort, The Pier, Km 11 TL48, Ấp Cây Sao, Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.6,
+    "rating": 3,
     "price": 1850000,
     "image": "42/42.1.jpg",
     "nearby_attractions": [
@@ -721,7 +721,7 @@
       "longitude": 104.00975942019762
     },
     "address": "22H5+JW An Thới, Tp. Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.2,
+    "rating": 4,
     "price": 970000,
     "image": "43/43.1.jpg",
     "nearby_attractions": [
@@ -738,7 +738,7 @@
       "longitude": 104.00982686382024
     },
     "address": "Sunset Town, Ward, Phú Quốc, Kiên Giang 925000, Việt Nam",
-    "rating": 4.5,
+    "rating": 2,
     "price": 1220000,
     "image": "44/44.1.jpg",
     "nearby_attractions": [
@@ -755,7 +755,7 @@
       "longitude": 104.00777880485133
     },
     "address": "302 - 304 đường Sorrento, An Thới, Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.3,
+    "rating": 3,
     "price": 1050000,
     "image": "45/45.1.jpg",
     "nearby_attractions": [
@@ -772,7 +772,7 @@
       "longitude": 104.00946536620562
     },
     "address": "22H5+CQC The Sea, Sun Grand City Hillside Residence, An Thới, Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.6,
+    "rating": 3,
     "price": 1450000,
     "image": "46/46.1.jpg",
     "nearby_attractions": [
@@ -789,7 +789,7 @@
       "longitude": 104.00972690855532
     },
     "address": "Đường Burano, Sunset Town, Phú Quốc, Kiên Giang 920000, Việt Nam",
-    "rating": 4.4,
+    "rating": 4,
     "price": 1290000,
     "image": "47/47.1.jpg",
     "nearby_attractions": [
@@ -806,7 +806,7 @@
       "longitude": 104.00557800855526
     },
     "address": "Primavera, Pos 41,43 Sun Premier Village, Phú Quốc, Kiên Giang 92500, Việt Nam",
-    "rating": 4.7,
+    "rating": 5,
     "price": 1650000,
     "image": "48/48.1.jpg",
     "nearby_attractions": [
@@ -823,7 +823,7 @@
       "longitude": 104.00932219506215
     },
     "address": "Sun Grand City Hillside Residence, Đường TAORMINA, An Thới, Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.4,
+    "rating": 2,
     "price": 1380000,
     "image": "49/49.1.jpg",
     "nearby_attractions": [
@@ -840,7 +840,7 @@
       "longitude": 103.96613592389953
     },
     "address": "152 Đường Trần Hưng Đạo, Cửa Lấp, Phú Quốc, Kiên Giang, Việt Nam",
-    "rating": 4.5,
+    "rating": 4,
     "price": 1120000,
     "image": "50/50.1.jpg",
     "nearby_attractions": [
@@ -857,7 +857,7 @@
       "longitude": 108.43347285089165
     },
     "address": "17 Đ. Thủ Khoa Huân, Phường 1, Đà Lạt, Lâm Đồng 670000, Việt Nam",
-    "rating": 4.3,
+    "rating": 4,
     "price": 950000,
     "image": "51/51.1.jpg",
     "nearby_attractions": [
@@ -874,7 +874,7 @@
       "longitude": 108.43373614900491
     },
     "address": "35 Đường Bà Triệu, Phường 3, Đà Lạt, Lâm Đồng, Việt Nam",
-    "rating": 4.2,
+    "rating": 4,
     "price": 880000,
     "image": "52/52.1.jpg",
     "nearby_attractions": [
@@ -891,7 +891,7 @@
       "longitude": 108.45883582202734
     },
     "address": "52 Khe Sanh, Phường 10, Đà Lạt, Lâm Đồng 670000, Việt Nam",
-    "rating": 4.1,
+    "rating": 3,
     "price": 780000,
     "image": "53/53.1.jpg",
     "nearby_attractions": [
@@ -908,7 +908,7 @@
       "longitude": 108.42915190665732
     },
     "address": "15c Lê Hồng Phong, Phường 4, Đà Lạt, Lâm Đồng 670000, Việt Nam",
-    "rating": 4.0,
+    "rating": 2,
     "price": 720000,
     "image": "54/54.1.jpg",
     "nearby_attractions": [
@@ -925,7 +925,7 @@
       "longitude": 108.44122483366623
     },
     "address": "04. Golf Valley, Phường 2, Ward 2, Lâm Đồng 66109, Việt Nam",
-    "rating": 4.6,
+    "rating": 5,
     "price": 1550000,
     "image": "55/55.1.jpg",
     "nearby_attractions": [
@@ -942,7 +942,7 @@
       "longitude": 108.43528665086389
     },
     "address": "WCQP+73X, Phường 1, Đà Lạt, Lâm Đồng, Việt Nam",
-    "rating": 4.1,
+    "rating": 2,
     "price": 650000,
     "image": "56/56.1.jpg",
     "nearby_attractions": [
@@ -959,7 +959,7 @@
       "longitude": 108.45368423551159
     },
     "address": "5/1, D. Sương Nguyệt Anh, Phường 9, Đà Lạt, Lâm Đồng 670000, Việt Nam",
-    "rating": 4.3,
+    "rating": 3,
     "price": 850000,
     "image": "57/57.1.jpg",
     "nearby_attractions": [
@@ -976,7 +976,7 @@
       "longitude": 108.44228832392066
     },
     "address": "52 Đường Lương Thế Vinh, Phường 3, Đà Lạt, Lâm Đồng 670000, Việt Nam",
-    "rating": 4.4,
+    "rating": 4,
     "price": 900000,
     "image": "58/58.1.jpg",
     "nearby_attractions": [
@@ -993,7 +993,7 @@
       "longitude": 108.43958990857845
     },
     "address": "42 Đường Bùi Thị Xuân, Phường 2, Đà Lạt, Lâm Đồng 670000, Việt Nam",
-    "rating": 4.2,
+    "rating": 5,
     "price": 780000,
     "image": "59/59.1.jpg",
     "nearby_attractions": [
@@ -1010,7 +1010,7 @@
       "longitude": 108.43399483741399
     },
     "address": "70b Ba Tháng Hai, Phường 1, Đà Lạt, Lâm Đồng 67000, Việt Nam",
-    "rating": 4.5,
+    "rating": 5,
     "price": 950000,
     "image": "60/60.1.jpg",
     "nearby_attractions": [
@@ -1027,7 +1027,7 @@
       "longitude": 109.29890523066419
     },
     "address": "16 Đường Nguyễn Văn Huyên, Bình Kiến, Tuy Hòa, Phú Yên, Việt Nam",
-    "rating": 4.3,
+    "rating": 4,
     "price": 850000,
     "image": "61/61.1.jpg",
     "nearby_attractions": [
@@ -1044,7 +1044,7 @@
       "longitude": 109.30756786435423
     },
     "address": "4835+G2H, Phường7, Tp. Tuy Hòa, Phú Yên 560000, Việt Nam",
-    "rating": 4.0,
+    "rating": 5,
     "price": 900000,
     "image": "62/62.1.jpg",
     "nearby_attractions": [
@@ -1061,7 +1061,7 @@
       "longitude": 109.29275516249322
     },
     "address": "Thôn Giai Sơn, Tuy An, Phú Yên 56000, Việt Nam",
-    "rating": 4.1,
+    "rating": 2,
     "price": 950000,
     "image": "63/63.1.jpg",
     "nearby_attractions": [
@@ -1071,16 +1071,16 @@
     ]
   },
   {
-    "hotelid": 62,
-    "name": "Tuy Hòa Central Hotel",
+    "hotelid": 64,
+    "name": "Hoa Hiep Seaside Hotel",
     "coordinates": {
       "latitude": 13.104089410701487,
       "longitude": 109.30756786435423
     },
     "address": "4835+G2H, Phường 7, Tp. Tuy Hòa, Phú Yên 560000, Việt Nam",
-    "rating": 4.0,
-    "price": 720000,
-    "image": "62/62.1.jpg",
+    "rating": 3,
+    "price": 800000,
+    "image": "64/64.1.jpg",
     "nearby_attractions": [
       { "name": "Bãi biển Tuy Hòa", "distance": "1.2 km" },
       { "name": "Tháp Nhạn", "distance": "2.0 km" },
@@ -1088,16 +1088,16 @@
     ]
   },
   {
-    "hotelid": 63,
-    "name": "Giai Sơn Eco Stay",
+    "hotelid": 65,
+    "name": "Hung Vuong Avenue Hotel",
     "coordinates": {
       "latitude": 13.217583191601973,
       "longitude": 109.29275516249322
     },
     "address": "Thôn Giai Sơn, Tuy An, Phú Yên 56000, Việt Nam",
-    "rating": 4.3,
-    "price": 760000,
-    "image": "63/63.1.jpg",
+    "rating": 5,
+    "price": 850000,
+    "image": "65/65.1.jpg",
     "nearby_attractions": [
       { "name": "Gành Đá Dĩa", "distance": "7.0 km" },
       { "name": "Nhà thờ Mằng Lăng", "distance": "5.5 km" },
@@ -1105,16 +1105,16 @@
     ]
   },
   {
-    "hotelid": 64,
-    "name": "Hoà Hiệp Seaside Hotel",
+    "hotelid": 66,
+    "name": "Nguyen Tat Thanh Garden Hotel",
     "coordinates": {
       "latitude": 13.005043860754185,
       "longitude": 109.3560256643648
     },
     "address": "2934+WC, Hoà Hiệp Trung, Đông Hòa, Phú Yên, Việt Nam",
-    "rating": 4.2,
-    "price": 800000,
-    "image": "64/64.1.jpg",
+    "rating": 2,
+    "price": 690000,
+    "image": "66/66.1.jpg",
     "nearby_attractions": [
       { "name": "Hoà Hiệp Beach", "distance": "0.4 km" },
       { "name": "Núi Chóp Chài", "distance": "2.5 km" },
@@ -1122,16 +1122,16 @@
     ]
   },
   {
-    "hotelid": 65,
-    "name": "Hùng Vương Avenue Hotel",
+    "hotelid": 67,
+    "name": "Doc Lap Riverside Hotel",
     "coordinates": {
       "latitude": 13.096953820122218,
       "longitude": 109.31192369318973
     },
     "address": "294 ĐL Hùng Vương, Phường 7, Tuy Hòa, Phú Yên, Việt Nam",
-    "rating": 4.1,
-    "price": 850000,
-    "image": "65/65.1.jpg",
+    "rating": 3,
+    "price": 810000,
+    "image": "67/67.1.jpg",
     "nearby_attractions": [
       { "name": "Bãi biển Tuy Hòa", "distance": "1.0 km" },
       { "name": "Tháp Nhạn", "distance": "1.5 km" },
@@ -1139,16 +1139,16 @@
     ]
   },
   {
-    "hotelid": 66,
-    "name": "Nguyễn Tất Thành Garden Hotel",
+    "hotelid": 68,
+    "name": "Hoa Hiep Oceanfront Villa",
     "coordinates": {
       "latitude": 13.086126829986124,
       "longitude": 109.2962413931696
     },
     "address": "Nguyễn Tất Thành/Hẻm 83 Vào hẻm 100m, Phường 2, Tuy Hòa, Phú Yên 56100, Việt Nam",
-    "rating": 4.0,
-    "price": 690000,
-    "image": "66/66.1.jpg",
+    "rating": 4,
+    "price": 790000,
+    "image": "68/68.1.jpg",
     "nearby_attractions": [
       { "name": "Tháp Nhạn", "distance": "1.3 km" },
       { "name": "Bãi biển Tuy Hòa", "distance": "2.0 km" },
@@ -1156,16 +1156,16 @@
     ]
   },
   {
-    "hotelid": 67,
-    "name": "Độc Lập Riverside Hotel",
+    "hotelid": 69,
+    "name": "Can Vuong Heritage Hotel",
     "coordinates": {
       "latitude": 13.096429221002243,
       "longitude": 109.32125559319229
     },
     "address": "51 Độc Lập, Phường 7, Tuy Hòa, Phú Yên, Việt Nam",
-    "rating": 4.2,
-    "price": 810000,
-    "image": "67/67.1.jpg",
+    "rating": 5,
+    "price": 920000,
+    "image": "69/69.1.jpg",
     "nearby_attractions": [
       { "name": "Công viên ven biển", "distance": "0.4 km" },
       { "name": "Tháp Nhạn", "distance": "1.6 km" },
@@ -1173,54 +1173,20 @@
     ]
   },
   {
-    "hotelid": 68,
-    "name": "Hoà Hiệp Oceanfront Villa",
+    "hotelid": 70,
+    "name": "Le Duan Riverside Hotel",
     "coordinates": {
       "latitude": 12.988700422583767,
       "longitude": 109.38965329318674
     },
     "address": "X9QQ+9R, Hoà Hiệp Trung, Đông Hòa, Phú Yên, Việt Nam",
-    "rating": 4.3,
-    "price": 790000,
-    "image": "68/68.1.jpg",
+    "rating": 4,
+    "price": 740000,
+    "image": "70/70.1.jpg",
     "nearby_attractions": [
       { "name": "Hoà Hiệp Beach", "distance": "0.3 km" },
       { "name": "Đèo Cả", "distance": "3.5 km" },
       { "name": "Hòn Nưa", "distance": "7.0 km" }
-    ]
-  },
-  {
-    "hotelid": 69,
-    "name": "Cần Vương Heritage Hotel",
-    "coordinates": {
-      "latitude": 13.093002723428357, 
-      "longitude": 109.29907226436278
-    },
-    "address": "32 Cần Vương, Phường 2, Tuy Hòa, Phú Yên 56114, Việt Nam",
-    "rating": 4.4,
-    "price": 920000,
-    "image": "69/69.1.jpg",
-    "nearby_attractions": [
-      {"name": "Bãi biển Tuy Hòa", "distance": "0.5 km"},
-      {"name": "Tháp Nhạn", "distance": "1.0 km"},
-      {"name": "Công viên ven biển", "distance": "0.7 km"}
-    ]
-  },
-  {
-    "hotelid": 70,
-    "name": "Le Duan Riverside Hotel",
-    "coordinates": {
-      "latitude": 13.10669841034932,
-      "longitude": 109.31022346436984
-    },
-    "address": "407 Lê Duẩn, Phường 9, Tuy Hòa, Phú Yên, Việt Nam",
-    "rating": 4.0,
-    "price": 740000,
-    "image": "70/70.1.jpg",
-    "nearby_attractions": [
-      { "name": "Tuy Hoa Beach", "distance": "1.5 km" },
-      { "name": "Nhan Tower", "distance": "1.8 km" },
-      { "name": "City Park", "distance": "1.2 km" }
     ]
   },
   {
@@ -1231,7 +1197,7 @@
       "longitude": 108.36299583550353
     },
     "address": "96 Trương Minh Hùng, Cửa Đại, Hội An, Quảng Nam 564060, Việt Nam",
-    "rating": 4.2,
+    "rating": 3,
     "price": 870000,
     "image": "71/71.1.jpg",
     "nearby_attractions": [
@@ -1248,7 +1214,7 @@
       "longitude": 108.38912787783697
     },
     "address": "Block 6, Phuoc Hai, Cửa Đại, Hội An, Quảng Nam 51300, Việt Nam",
-    "rating": 4.1,
+    "rating": 4,
     "price": 800000,
     "image": "72/72.1.jpg",
     "nearby_attractions": [
@@ -1265,7 +1231,7 @@
       "longitude": 108.33291559317206
     },
     "address": "Xuyen Trung Block, Ward, Quảng Nam, Việt Nam",
-    "rating": 4.0,
+    "rating": 2,
     "price": 750000,
     "image": "73/73.1.jpg",
     "nearby_attractions": [
@@ -1282,7 +1248,7 @@
       "longitude": 108.36133723548382
     },
     "address": "89 Cửa Đại, Cẩm Châu, Hội An, Quảng Nam, Việt Nam",
-    "rating": 4.3,
+    "rating": 2,
     "price": 820000,
     "image": "74/74.1.jpg",
     "nearby_attractions": [
@@ -1299,7 +1265,7 @@
       "longitude": 108.3161233931918
     },
     "address": "99 Phạm Văn Đồng, Tân An, Hội An, Quảng Nam 51000, Việt Nam",
-    "rating": 4.1,
+    "rating": 5,
     "price": 790000,
     "image": "75/75.1.jpg",
     "nearby_attractions": [
@@ -1316,7 +1282,7 @@
       "longitude": 108.34883139319528
     },
     "address": "11 Nguyễn Phan Vinh, Cẩm An, Hội An, Quảng Nam 560000, Việt Nam",
-    "rating": 4.4,
+    "rating": 3,
     "price": 890000,
     "image": "76/76.1.jpg",
     "nearby_attractions": [
@@ -1333,7 +1299,7 @@
       "longitude": 108.3574418066594
     },
     "address": "510 Trần Nhân Tông, Cẩm Thanh, Hội An, Quảng Nam 51000, Việt Nam",
-    "rating": 4.2,
+    "rating": 4,
     "price": 810000,
     "image": "77/77.1.jpg",
     "nearby_attractions": [
@@ -1350,7 +1316,7 @@
       "longitude": 108.32916412201774
     },
     "address": "38 Phan Đình Phùng, Sơn Phong, Hội An, Quảng Nam 560000, Việt Nam",
-    "rating": 4.3,
+    "rating": 5,
     "price": 860000,
     "image": "78/78.1.jpg",
     "nearby_attractions": [
@@ -1367,7 +1333,7 @@
       "longitude": 108.32076306247909
     },
     "address": "43 18 Tháng 8, Phường Minh An, Hội An, Quảng Nam, Việt Nam",
-    "rating": 4.5,
+    "rating": 5,
     "price": 930000,
     "image": "79/79.1.jpg",
     "nearby_attractions": [
@@ -1384,7 +1350,7 @@
       "longitude": 108.34159599321502
     },
     "address": "Kiệt 90 Nguyễn Phan Vinh, Cẩm An, Hội An, Quảng Nam, Việt Nam",
-    "rating": 4.4,
+    "rating": 4,
     "price": 880000,
     "image": "80/80.1.jpg",
     "nearby_attractions": [
@@ -1401,7 +1367,7 @@
       "longitude": 104.94448005298932
     },
     "address": "Thôn Tha, Hà Giang, 310000, Việt Nam",
-    "rating": 4.4,
+    "rating": 3,
     "price": 690000,
     "image": "81/81.1.jpg",
     "nearby_attractions": [
@@ -1418,7 +1384,7 @@
       "longitude": 104.98898456432893
     },
     "address": "Tran Phu Street, Đ. Trần Phú, Ward, Hà Giang, 310000, Việt Nam",
-    "rating": 4.0,
+    "rating": 2,
     "price": 720000,
     "image": "82/82.1.jpg",
     "nearby_attractions": [
@@ -1435,7 +1401,7 @@
       "longitude": 105.02800516433452
     },
     "address": "Khu Tráng Kìm, Quản Bạ, Hà Giang, Việt Nam",
-    "rating": 4.3,
+    "rating": 5,
     "price": 780000,
     "image": "83/83.1.jpg",
     "nearby_attractions": [
@@ -1452,7 +1418,7 @@
       "longitude": 104.97963222015066
     },
     "address": "239 Nguyễn Văn Linh, P. Quang Trung, Hà Giang, 310000, Việt Nam",
-    "rating": 4.1,
+    "rating": 4,
     "price": 730000,
     "image": "84/84.1.jpg",
     "nearby_attractions": [
@@ -1469,7 +1435,7 @@
       "longitude": 104.9837900220112
     },
     "address": "517 Nguyễn Trãi, P. Nguyễn Trãi, Hà Giang, Việt Nam",
-    "rating": 4.0,
+    "rating": 2,
     "price": 700000,
     "image": "85/85.1.jpg",
     "nearby_attractions": [
@@ -1486,7 +1452,7 @@
       "longitude": 104.97928844899486
     },
     "address": "90 Nguyễn Trãi, P. Nguyễn Trãi, Hà Giang, 100000, Việt Nam",
-    "rating": 4.2,
+    "rating": 3,
     "price": 710000,
     "image": "86/86.1.jpg",
     "nearby_attractions": [
@@ -1503,7 +1469,7 @@
       "longitude": 104.98424113553584
     },
     "address": "43 Nguyễn Thái Học, P. Minh Khai, Hà Giang, 310000, Việt Nam",
-    "rating": 4.1,
+    "rating": 5,
     "price": 740000,
     "image": "87/87.1.jpg",
     "nearby_attractions": [
@@ -1520,7 +1486,7 @@
       "longitude": 104.98649747782586
     },
     "address": "31 Nguyễn Văn Cừ, P. Minh Khai, Hà Giang, Việt Nam",
-    "rating": 4.0,
+    "rating": 4,
     "price": 710000,
     "image": "88/88.1.jpg",
     "nearby_attractions": [
@@ -1537,7 +1503,7 @@
       "longitude": 104.96920270667351
     },
     "address": "Thôn Tiến Thắng, Phương Thiện, Hà Giang, 20000, Việt Nam",
-    "rating": 4.3,
+    "rating": 2,
     "price": 680000,
     "image": "89/89.1.jpg",
     "nearby_attractions": [
@@ -1554,7 +1520,7 @@
       "longitude": 104.96498155085328
     },
     "address": "Tổ 2, Hà Giang, 311000, Việt Nam",
-    "rating": 4.0,
+    "rating": 5,
     "price": 700000,
     "image": "90/90.1.jpg",
     "nearby_attractions": [
@@ -1571,8 +1537,8 @@
       "longitude": 108.24221345350496
     },
     "address": "22 Lê Bình, Phước Mỹ, Sơn Trà, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 179357,
+    "rating": 2,
+    "price": 192857,
     "image": "91/91.1.jpg",
     "nearby_attractions": [
       { "name": "Biển Mỹ Khê", "distance": "0.5 km" },
@@ -1589,8 +1555,8 @@
       "longitude": 108.24286933815989
     },
     "address": "168 Hồ Nghinh, Phước Mỹ, Sơn Trà, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 202809,
+    "rating": 4,
+    "price": 218074,
     "image": "92/92.1.jpg",
     "nearby_attractions": [
       { "name": "Biển Mỹ Khê", "distance": "0.6 km" },
@@ -1608,8 +1574,8 @@
       "longitude": 108.24422223815986
     },
     "address": "07 Dương Đình Nghệ, Phước Mỹ Sơn Trà, Da Nang City, Việt Nam",
-    "rating": 4.0,
-    "price": 163857,
+    "rating": 4,
+    "price": 176190,
     "image": "93/93.1.jpg",
     "nearby_attractions": [
       { "name": "Biển Mỹ Khê", "distance": "0.4 km" },
@@ -1622,14 +1588,14 @@
   },
   {
     "hotelid": 94,
-    "name": "Khách sạn Raon Danang Beach - Ở 24H",
+    "name": "Raon Danang Beach Hotel - Stay 24H",
     "coordinates": {
       "latitude": 16.050939596382072,
       "longitude": 108.24630368234064
     },
     "address": "Lô 7 An Thượng 32, Bắc Mỹ Phú, Ngũ Hành Sơn, Đà Nẵng 550000, Việt Nam",
-    "rating": 4.0,
-    "price": 315695,
+    "rating": 5,
+    "price": 339457,
     "image": "94/94.1.jpg",
     "nearby_attractions": [
       { "name": "Biển Mỹ Khê", "distance": "0.5 km" },
@@ -1648,8 +1614,8 @@
       "longitude": 108.22403502466851
     },
     "address": "204 Bạch Đằng, Phước Ninh, Hải Châu, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 348129,
+    "rating": 3,
+    "price": 374332,
     "image": "95/95.1.jpg",
     "nearby_attractions": [
       { "name": "Cầu Sông Hàn", "distance": "0.4 km" },
@@ -1668,8 +1634,8 @@
       "longitude": 108.24592692281448
     },
     "address": "57-59 Đỗ Bí, Bắc Mỹ Phú, Ngũ Hành Sơn, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 231896,
+    "rating": 3,
+    "price": 249351,
     "image": "96/96.1.jpg",
     "nearby_attractions": [
       { "name": "Phố du lịch An Thượng", "distance": "0.1 km" },
@@ -1688,8 +1654,8 @@
       "longitude": 108.24011811673788
     },
     "address": "02 An Tư Công Chúa, Bắc Mỹ An, Ngũ Hành Sơn, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 461645,
+    "rating": 4,
+    "price": 496393,
     "image": "97/97.1.jpg",
     "nearby_attractions": [
       { "name": "Biển Bắc Mỹ An", "distance": "0.3 km" },
@@ -1702,14 +1668,14 @@
   },
   {
     "hotelid": 98,
-    "name": "Khách sạn Doha Central Bliss Danang by Haviland",
+    "name": "Doha Central Bliss Danang by Haviland",
     "coordinates": {
       "latitude": 16.06026481593449,
       "longitude": 108.2141119841946
     },
     "address": "193 Đ. Nguyễn Văn Linh, Phước Ninh, Hải Châu, Đà Nẵng, Việt Nam",
     "rating": 5.0,
-    "price": 276182,
+    "price": 2296970,
     "image": "98/98.1.jpg",
     "nearby_attractions": [
       { "name": "Cầu Rồng", "distance": "0.5 km" },
@@ -1728,8 +1694,8 @@
       "longitude": 108.23892848790238
     },
     "address": "Lê Văn Quý, An Hải Bắc, Sơn Trà, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 334800,
+    "rating": 2,
+    "price": 360000,
     "image": "99/99.1.jpg",
     "nearby_attractions": [
       { "name": "Biển Mỹ Khê", "distance": "0.8 km" },
@@ -1748,8 +1714,8 @@
       "longitude": 108.23303696514213
     },
     "address": "962 Ngô Quyền, An Hải Nam, Sơn Trà, Đà Nẵng, Việt Nam",
-    "rating": 4.0,
-    "price": 677571,
+    "rating": 5,
+    "price": 728571,
     "image": "100/100.1.jpg",
     "nearby_attractions": [
       { "name": "Cầu Sông Hàn", "distance": "0.3 km" },
@@ -1768,8 +1734,8 @@
       "longitude": 105.78527045340051
     },
     "address": "14-16 Đ. Phạm Ngọc Thạch, Cái Khế, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 4.0,
-    "price": 442052,
+    "rating": 3,
+    "price": 475325,
     "image": "101/101.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "1.0 km" },
@@ -1788,8 +1754,8 @@
       "longitude": 105.78688148223688
     },
     "address": "79B Đ. Phạm Ngọc Thạch, Cái Khế, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 4.0,
-    "price": 233506,
+    "rating": 3,
+    "price": 251082,
     "image": "102/102.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "1 km" },
@@ -1808,8 +1774,8 @@
       "longitude": 105.78703054547036
     },
     "address": "88-90-92 Đ. Hai Bà Trưng, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 4.0,
-    "price": 648947,
+    "rating": 4,
+    "price": 697792,
     "image": "103/103.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "0.2 km" },
@@ -1822,14 +1788,14 @@
   },
   {
     "hotelid": 104,
-    "name": "LION HOTEL",
+    "name": "LION 1 HOTEL",
     "coordinates": {
       "latitude": 10.044692913201917,
       "longitude": 105.7784841659376
     },
     "address": "65 Hùng Vương, P, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 4.0,
-    "price": 362337,
+    "rating": 4,
+    "price": 349567,
     "image": "104/104.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "1.0 km" },
@@ -1848,8 +1814,8 @@
       "longitude": 105.7859292491781
     },
     "address": "D3-23 Trần Quang Khải, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 5.0,
-    "price": 325097,
+    "rating": 5,
+    "price": 349567,
     "image": "105/105.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "0.8 km" },
@@ -1868,8 +1834,8 @@
       "longitude": 105.68889292270961
     },
     "address": "Km7+, QL61C, Nhơn Thuận, Nhơn Nghĩa, Phong Điền, Cần Thơ, Việt Nam",
-    "rating": 5.0,
-    "price": 700520,
+    "rating": 2,
+    "price": 753247,
     "image": "106/106.1.jpg",
     "nearby_attractions": [
       { "name": "Thiền viện Trúc Lâm Phương Nam", "distance": "5 km" },
@@ -1888,8 +1854,8 @@
       "longitude": 105.78672125340042
     },
     "address": "14 Phan Đình Phùng, phường, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 5.0,
-    "price": 752857,
+    "rating": 2,
+    "price": 809524,
     "image": "107/107.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "0.5 km" },
@@ -1908,8 +1874,8 @@
       "longitude": 105.78376173805553
     },
     "address": "101 Võ Văn Tần, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 5.0,
-    "price": 362337,
+    "rating": 3,
+    "price": 389610,
     "image": "108/108.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "0.7 km" },
@@ -1928,8 +1894,8 @@
       "longitude": 105.78663732271046
     },
     "address": "45 Đ. Ngô Quyền, Thới Bình, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 5.0,
-    "price": 1146285,
+    "rating": 5,
+    "price": 1232564,
     "image": "109/109.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "0.5 km" },
@@ -1948,8 +1914,8 @@
       "longitude": 105.78921495340062
     },
     "address": "2 Đ. Hai Bà Trưng, Tân An, Ninh Kiều, Cần Thơ, Việt Nam",
-    "rating": 4.0,
-    "price": 1077273,
+    "rating": 4,
+    "price": 1158358,
     "image": "110/110.1.jpg",
     "nearby_attractions": [
       { "name": "Bến Ninh Kiều", "distance": "0.3 km" },
@@ -1968,8 +1934,8 @@
       "longitude": 105.84107682478938
     },
     "address": "41 P. Nguyễn Thái Học, Văn Miếu – Quốc Tử Giám, Ba Đình, Hà Nội, Việt Nam",
-    "rating": 5.0,
-    "price": 611948,
+    "rating": 4,
+    "price": 658000,
     "image": "111/111.1.jpg",
     "nearby_attractions": [
       { "name": "Văn Miếu – Quốc Tử Giám", "distance": "0.2 km" },
@@ -1989,7 +1955,7 @@
     },
     "address": "62 P. Phạm Huy Thông, Ngọc Khánh, Ba Đình, Hà Nội, Việt Nam",
     "rating": 5.0,
-    "price": 561315,
+    "price": 603564,
     "image": "112/112.1.jpg",
     "nearby_attractions": [
       { "name": "Hồ Ngọc Khánh", "distance": "0.1 km" },
@@ -2009,7 +1975,7 @@
     },
     "address": "58 P. Trương Công Giai, Dịch Vọng, Cầu Giấy, Hà Nội, Việt Nam",
     "rating": 5.0,
-    "price": 590369,
+    "price": 634805,
     "image": "113/113.1.jpg",
     "nearby_attractions": [
       { "name": "Công viên Cầu Giấy", "distance": "0.5 km" },
@@ -2028,8 +1994,8 @@
       "longitude": 105.84282126711688
     },
     "address": "246A P. Hàng Bông, Cửa Nam, Hoàn Kiếm, Hà Nội, Việt Nam",
-    "rating": 3.0,
-    "price": 417413,
+    "rating": 3,
+    "price": 448831,
     "image": "114/114.1.jpg",
     "nearby_attractions": [
       { "name": "Hồ Hoàn Kiếm", "distance": "0.3 km" },
@@ -2042,14 +2008,14 @@
   },
   {
     "hotelid": 115,
-    "name": "Millennium Hanoi Hotel",
+    "name": "Le Grand Hanoi Hotel - The Central Park",
     "coordinates": {
       "latitude": 21.015793456412645, 
       "longitude": 105.84748231922781
     },
     "address": "23 P. Nguyễn Đình Chiểu, Nguyễn Du, Hai Bà Trưng, Hà Nội, Việt Nam",
     "rating": 2.0,
-    "price": 746501,
+    "price": 802689,
     "image": "115/115.1.jpg",
     "nearby_attractions": [
       { "name": "Hồ Bảy Mẫu", "distance": "0.5 km" },
@@ -2062,14 +2028,14 @@
   },
   {
     "hotelid": 116,
-    "name": "Millennium Hanoi Hotel",
+    "name": "Le Grand Hanoi - The Sun",
     "coordinates": {
       "latitude": 21.019813574315773,
       "longitude": 105.82571888060791
     },
     "address": "134 P. Nguyễn Hy Quang, Chợ Dừa, Đống Đa, Hà Nội, Việt Nam",
-    "rating": 3.0,
-    "price": 440.223,
+    "rating": 2,
+    "price": 473.358,
     "image": "116/116.1.jpg",
     "nearby_attractions": [
       { "name": "Chùa Quán Sứ", "distance": "0.5 km" },
@@ -2088,8 +2054,8 @@
       "longitude": 105.83730026711693
     },
     "address": "P. Nguyễn Khuyến, Văn Miếu – Quốc Tử Giám, Đống Đa, Hà Nội, Việt Nam",
-    "rating": 3.0,
-    "price": 646.773,
+    "rating": 3,
+    "price": 695.455,
     "image": "117/117.1.jpg",
     "nearby_attractions": [
       { "name": "Văn Miếu – Quốc Tử Giám", "distance": "0.2 km" },
@@ -2108,8 +2074,8 @@
       "longitude": 105.84868436897081
     },
     "address": "68a P. Hàng Bồ, Phố cổ Hà Nội, Hoàn Kiếm, Hà Nội, Việt Nam",
-    "rating": 4.0,
-    "price": 505372,
+    "rating": 4,
+    "price": 543411,
     "image": "118/118.1.jpg",
     "nearby_attractions": [
       { "name": "Hồ Hoàn Kiếm", "distance": "0.3 km" },
@@ -2128,8 +2094,8 @@
       "longitude": 105.82435465362687
     },
     "address": "Hanoi City, Đ. Âu Cơ, Quảng An, Tây Hồ, Hà Nội, Việt Nam",
-    "rating": 4.0,
-    "price": 521766,
+    "rating": 4,
+    "price": 561039,
     "image": "119/119.1.jpg",
     "nearby_attractions": [
       { "name": "Hồ Tây", "distance": "0.3 km" },
@@ -2142,14 +2108,14 @@
   },
   {
     "hotelid": 120,
-    "name": "Eli Rina Hotel",
+    "name": "Signature By M Village Tho Nhuom",
     "coordinates": {
       "latitude": 21.023155271395254, 
       "longitude": 105.84809312293552
     },
     "address": "84 P. Thợ Nhuộm, Trần Hưng Đạo, Hoàn Kiếm, Hà Nội, Việt Nam",
-    "rating": 5.0,
-    "price": 1333000,
+    "rating": 3,
+    "price": 1433333,
     "image": "120/120.1.jpg",
     "nearby_attractions": [
       { "name": "Hồ Hoàn Kiếm", "distance": "0.3 km" },

@@ -1,14 +1,10 @@
 <?php
 require_once './Logger.php';
 
-/**
- * Service for handling greeting messages and responses
- */
 class GreetingService {
     
-    /**
-     * Check if message is a simple greeting
-     */
+    // Check if message is a simple greeting
+
     public static function isSimpleGreeting($message) {
         $message = strtolower(trim($message));
         $greetings = [

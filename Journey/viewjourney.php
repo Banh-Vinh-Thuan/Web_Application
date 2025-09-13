@@ -24,7 +24,6 @@ $cityStringToId = [
     'nhatrang' => 12,      // Nha Trang
     'hoian' => 17,         // Hoi An
     'phuquoc' => 16,       // Phu Quoc
-    'northern' => 10,      // Northern Vietnam
     'hue' => 13,           // Central Vietnam
     'phuyen' => 14,        // Phu Yen
     'hagiang' => 18,       // Ha Giang
@@ -189,18 +188,18 @@ function determineTransport($tourName, $departure, $cityId) {
 function generateImagePath($cityId, $tourId) {
     // Map city string to image folder pattern
     $imageMap = [
-        'hcm' => [5, 6, 7, 8],
-        'nhatrang' => [9, 10, 11, 12],
-        'hue' => [13, 14, 15, 16],
-        'phuyen' => [17, 18, 19, 20],
-        'dalat' => [21, 22, 23, 24],
-        'phuquoc' => [25, 26, 27, 28],
-        'hoian' => [29, 30, 31, 32],
-        'hagiang' => [33, 34, 35, 36],
-        'taybac' => [1, 2, 3, 4],
-        'danang' => [37, 38, 39, 40],
-        'cantho' => [41, 42, 43, 44],
-        'hanoi'  => [45, 46, 47, 48]
+        'taybac' => [1, 2, 3, 4, 93, 94, 95, 96],
+        'hcm' => [5, 6, 7, 8, 89, 90, 91, 92],
+        'nhatrang' => [85, 86, 87, 88, 9, 10, 11, 12],
+        'hue' => [13, 14, 15, 16, 81, 82, 83, 84],
+        'phuyen' => [77, 78, 79, 80, 17, 18, 19, 20,],
+        'dalat' => [21, 22, 23, 24, 73, 74, 75, 76],        
+        'phuquoc' => [25, 26, 27, 28, 69, 70, 71, 72],
+        'hoian' => [29, 30, 31, 32, 65, 66, 67, 68],   
+        'hagiang' => [61, 62, 63, 64, 33, 34, 35, 36],
+        'danang' => [37, 38, 39, 40, 57, 58, 59, 60],
+        'cantho' => [53, 54, 55, 56, 41, 42, 43, 44,],
+        'hanoi'  => [45, 46, 47, 48, 49, 50, 51, 52]
     ];
     
     $imageIds = $imageMap[$cityId] ?? [1, 2, 3, 4];

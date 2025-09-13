@@ -1,8 +1,5 @@
 <?php
 
-/**
- * User service for multi-user support
- */
 class UserService {
     public static function getCurrentUserId() {
         // Try JWT token first (if implemented)
