@@ -2243,3 +2243,172 @@
 [2025-09-13 03:34:31] [INFO] Vietnamese response generated {"match_level":"multi_city_tours","duration_ms":2248.29}
 [2025-09-13 03:34:32] [DEBUG] Conversation saved {"userId":1}
 [2025-09-13 03:34:32] [INFO] Message processed successfully {"userId":1,"processingTime":"3405.13ms"}
+[2025-09-15 07:24:27] [INFO] Chatbot initialized {"userId":1}
+[2025-09-15 07:24:27] [INFO] Chatbot initialized {"userId":1}
+[2025-09-15 07:24:33] [INFO] Chatbot initialized {"userId":1}
+[2025-09-15 07:24:33] [INFO] Processing message {"userId":1,"messageLength":24}
+[2025-09-15 07:24:33] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[],"duration":1,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"tour with duration 1 day"}}
+[2025-09-15 07:24:33] [DEBUG] Tours grouped by city retrieved {"total_tours":10,"cities":6,"filters":{"duration":1,"budget":null,"priceCondition":null}}
+[2025-09-15 07:24:33] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":6,"hotels":0,"cities":0}}
+[2025-09-15 07:24:35] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":1890.81}
+[2025-09-15 07:24:37] [DEBUG] Conversation saved {"userId":1}
+[2025-09-15 07:24:37] [INFO] Message processed successfully {"userId":1,"processingTime":"3085.05ms"}
+[2025-09-16 03:02:02] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:02:02] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:02:21] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:02:21] [INFO] Processing message {"userId":1,"messageLength":46}
+[2025-09-16 03:02:21] [DEBUG] Intent and entities extracted {"intent":"general","entities":{"cities":[],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":["beach"],"is_international":false,"raw_message":"can you list beach in viet nam except vung tau"}}
+[2025-09-16 03:02:22] [INFO] Embedding generated successfully {"duration_ms":746.5}
+[2025-09-16 03:02:22] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:02:22] [DEBUG] Tours retrieved {"count":6,"filters":{"cityId":null,"duration":null,"budget":null,"priceCondition":null}}
+[2025-09-16 03:02:22] [DEBUG] Hotels retrieved {"count":6,"filters":{"cityId":null,"rating":null,"budget":null,"priceCondition":null}}
+[2025-09-16 03:02:22] [DEBUG] Data retrieval completed {"match_level":"general","is_international":false,"data_counts":{"tours":6,"hotels":6,"cities":0}}
+[2025-09-16 03:02:22] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:02:22] [INFO] Message processed successfully {"userId":1,"processingTime":"810.38ms"}
+[2025-09-16 03:30:27] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:30:27] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:30:32] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:30:32] [INFO] Processing message {"userId":1,"messageLength":14}
+[2025-09-16 03:30:32] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":15,"name":"Da Lat"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"tour in da lat"}}
+[2025-09-16 03:30:33] [INFO] Embedding generated successfully {"duration_ms":710.76}
+[2025-09-16 03:30:33] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:30:33] [DEBUG] Tours retrieved {"count":6,"filters":{"cityId":15,"limit":6,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:30:33] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":6,"hotels":0,"cities":1}}
+[2025-09-16 03:30:35] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":2062.35}
+[2025-09-16 03:30:36] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:30:36] [INFO] Message processed successfully {"userId":1,"processingTime":"3855.79ms"}
+[2025-09-16 03:30:58] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:30:58] [INFO] Processing message {"userId":1,"messageLength":19}
+[2025-09-16 03:30:58] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":21,"name":"Hanoi"},{"id":13,"name":"Hue"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"tour ha noi and hue"}}
+[2025-09-16 03:30:59] [INFO] Embedding generated successfully {"duration_ms":651.82}
+[2025-09-16 03:30:59] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:30:59] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":21,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:30:59] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":13,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:30:59] [DEBUG] Data retrieval completed {"match_level":"multi_city_tours","is_international":false,"data_counts":{"tours":6,"hotels":0,"cities":1}}
+[2025-09-16 03:31:01] [INFO] Vietnamese response generated {"match_level":"multi_city_tours","duration_ms":1919.37}
+[2025-09-16 03:31:02] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:31:02] [INFO] Message processed successfully {"userId":1,"processingTime":"4171.61ms"}
+[2025-09-16 03:31:38] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:31:38] [INFO] Processing message {"userId":1,"messageLength":48}
+[2025-09-16 03:31:38] [DEBUG] Intent and entities extracted {"intent":"general","entities":{"cities":[],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":["beach"],"is_international":false,"raw_message":"tell me what is beach in vietnam except vung tau"}}
+[2025-09-16 03:31:38] [INFO] Embedding generated successfully {"duration_ms":675.16}
+[2025-09-16 03:31:38] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:31:38] [DEBUG] Tours retrieved {"count":50,"filters":{"limit":50,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:31:38] [DEBUG] Hotels retrieved {"count":50,"filters":{"limit":50,"orderBy":"ratings DESC, cost ASC"}}
+[2025-09-16 03:31:38] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":6,"hotels":6,"cities":0}}
+[2025-09-16 03:31:40] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":1259.24}
+[2025-09-16 03:31:41] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:31:41] [INFO] Message processed successfully {"userId":1,"processingTime":"2936.24ms"}
+[2025-09-16 03:39:47] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:39:47] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:39:59] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:39:59] [INFO] Processing message {"userId":1,"messageLength":45}
+[2025-09-16 03:39:59] [DEBUG] Intent and entities extracted {"intent":"mixed_search","entities":{"cities":[{"id":20,"name":"Can Tho"},{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"introduce tour can tho and hotel in nha trang"}}
+[2025-09-16 03:40:00] [INFO] Embedding generated successfully {"duration_ms":863.45}
+[2025-09-16 03:40:00] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:40:00] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":20,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:40:00] [DEBUG] Hotels retrieved {"count":3,"filters":{"cityId":12,"limit":3,"orderBy":"ratings DESC, cost ASC"}}
+[2025-09-16 03:40:00] [DEBUG] Data retrieval completed {"match_level":"mixed_search","is_international":false,"data_counts":{"tours":3,"hotels":3,"cities":0}}
+[2025-09-16 03:40:02] [INFO] Vietnamese response generated {"match_level":"mixed_search","duration_ms":1906.81}
+[2025-09-16 03:40:03] [ERROR] Failed to generate AI suggestions {"error":"Gemini API error (503): The model is overloaded. Please try again later."}
+[2025-09-16 03:40:03] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:40:03] [INFO] Message processed successfully {"userId":1,"processingTime":"3584.4ms"}
+[2025-09-16 03:41:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:41:13] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-16 03:41:13] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":19,"name":"Da Nang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"What are the most popular tours in Da Nang?"}}
+[2025-09-16 03:41:14] [INFO] Embedding generated successfully {"duration_ms":722.91}
+[2025-09-16 03:41:14] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:41:14] [DEBUG] Tours retrieved {"count":6,"filters":{"cityId":19,"limit":6,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:41:14] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":6,"hotels":0,"cities":1}}
+[2025-09-16 03:41:16] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":2210.24}
+[2025-09-16 03:41:17] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:41:17] [INFO] Message processed successfully {"userId":1,"processingTime":"4004.32ms"}
+[2025-09-16 03:41:50] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:41:50] [INFO] Processing message {"userId":1,"messageLength":48}
+[2025-09-16 03:41:50] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":17,"name":"Hoi An"}],"duration":2,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"Tell me about a tour in Hoi An that lasts 2 days"}}
+[2025-09-16 03:41:50] [INFO] Embedding generated successfully {"duration_ms":732.65}
+[2025-09-16 03:41:50] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:41:50] [DEBUG] Tours retrieved {"count":2,"filters":{"cityId":17,"duration":2,"limit":6,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:41:50] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":2,"hotels":0,"cities":1}}
+[2025-09-16 03:41:52] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1527.99}
+[2025-09-16 03:41:53] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:41:53] [INFO] Message processed successfully {"userId":1,"processingTime":"3706.01ms"}
+[2025-09-16 03:43:37] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:43:37] [INFO] Processing message {"userId":1,"messageLength":31}
+[2025-09-16 03:43:37] [DEBUG] Intent and entities extracted {"intent":"destination_info","entities":{"cities":[],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"What tours do you have in Paris"}}
+[2025-09-16 03:43:38] [INFO] Embedding generated successfully {"duration_ms":668.07}
+[2025-09-16 03:43:38] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:43:38] [DEBUG] Tours retrieved {"count":50,"filters":{"limit":50,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:43:38] [DEBUG] Hotels retrieved {"count":50,"filters":{"limit":50,"orderBy":"ratings DESC, cost ASC"}}
+[2025-09-16 03:43:38] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":6,"hotels":6,"cities":0}}
+[2025-09-16 03:43:39] [INFO] Vietnamese response generated {"match_level":"general_search","duration_ms":1217.76}
+[2025-09-16 03:43:40] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:43:40] [INFO] Message processed successfully {"userId":1,"processingTime":"3065.16ms"}
+[2025-09-16 03:43:53] [INFO] Chatbot initialized {"userId":1}
+[2025-09-16 03:43:53] [INFO] Processing message {"userId":1,"messageLength":31}
+[2025-09-16 03:43:53] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":17,"name":"Hoi An"}],"duration":10,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"Show me a 10-day tour in Hoi An"}}
+[2025-09-16 03:43:54] [INFO] Embedding generated successfully {"duration_ms":642.84}
+[2025-09-16 03:43:54] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-16 03:43:54] [DEBUG] Tours retrieved {"count":0,"filters":{"cityId":17,"duration":10,"limit":6,"orderBy":"price_per_person ASC"}}
+[2025-09-16 03:43:54] [DEBUG] Data retrieval completed {"match_level":"no_city_match","is_international":false,"data_counts":{"tours":0,"hotels":0,"cities":1}}
+[2025-09-16 03:43:54] [DEBUG] Conversation saved {"userId":1}
+[2025-09-16 03:43:54] [INFO] Message processed successfully {"userId":1,"processingTime":"652.94ms"}
+[2025-09-18 02:44:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-18 02:44:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-18 02:44:39] [INFO] Chatbot initialized {"userId":1}
+[2025-09-18 02:44:39] [INFO] Processing message {"userId":1,"messageLength":73}
+[2025-09-18 02:44:39] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":3,"budget":2500000,"rating":null,"price_condition":null,"preferences":["budget"],"is_international":false,"raw_message":"show tour nha trang with duration 3 days and budget less than 2500000 VND"}}
+[2025-09-18 02:44:40] [INFO] Embedding generated successfully {"duration_ms":911.42}
+[2025-09-18 02:44:40] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-18 02:44:40] [DEBUG] Tours retrieved {"count":1,"filters":{"cityId":12,"duration":3,"budget":2500000,"limit":6,"orderBy":"price_per_person ASC"}}
+[2025-09-18 02:44:40] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":1,"hotels":0,"cities":1}}
+[2025-09-18 02:44:42] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1345.18}
+[2025-09-18 02:44:43] [DEBUG] Conversation saved {"userId":1}
+[2025-09-18 02:44:43] [INFO] Message processed successfully {"userId":1,"processingTime":"3521.44ms"}
+[2025-09-20 03:51:56] [INFO] Chatbot initialized {"userId":1}
+[2025-09-20 03:51:56] [INFO] Chatbot initialized {"userId":1}
+[2025-09-20 03:52:13] [INFO] Chatbot initialized {"userId":1}
+[2025-09-20 03:52:13] [INFO] Processing message {"userId":1,"messageLength":65}
+[2025-09-20 03:52:13] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":12,"name":"Nha Trang"}],"duration":3,"budget":2500000,"rating":null,"price_condition":"under","preferences":["budget"],"is_international":false,"raw_message":"Show Nha Trang tours for 3 days with a budget under 2,500,000 VND"}}
+[2025-09-20 03:52:14] [INFO] Embedding generated successfully {"duration_ms":757.75}
+[2025-09-20 03:52:14] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-20 03:52:14] [DEBUG] Tours retrieved {"count":1,"filters":{"cityId":12,"duration":3,"budget":2500000,"limit":6,"price_condition":"under","orderBy":"price_per_person ASC"}}
+[2025-09-20 03:52:14] [DEBUG] Data retrieval completed {"match_level":"exact","is_international":false,"data_counts":{"tours":1,"hotels":0,"cities":1}}
+[2025-09-20 03:52:15] [INFO] Vietnamese response generated {"match_level":"exact","duration_ms":1145.62}
+[2025-09-20 03:52:16] [DEBUG] Conversation saved {"userId":1}
+[2025-09-20 03:52:16] [INFO] Message processed successfully {"userId":1,"processingTime":"3060.8ms"}
+[2025-09-20 04:02:18] [INFO] Chatbot initialized {"userId":1}
+[2025-09-20 04:02:18] [INFO] Processing message {"userId":1,"messageLength":25}
+[2025-09-20 04:02:18] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":15,"name":"Da Lat"},{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"tour da lat and nha trang"}}
+[2025-09-20 04:02:19] [INFO] Embedding generated successfully {"duration_ms":700.11}
+[2025-09-20 04:02:19] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-20 04:02:19] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":15,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-20 04:02:19] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":12,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-20 04:02:19] [DEBUG] Data retrieval completed {"match_level":"multi_city_tours","is_international":false,"data_counts":{"tours":6,"hotels":0,"cities":1}}
+[2025-09-20 04:02:21] [INFO] Vietnamese response generated {"match_level":"multi_city_tours","duration_ms":2327.55}
+[2025-09-20 04:02:22] [DEBUG] Conversation saved {"userId":1}
+[2025-09-20 04:02:22] [INFO] Message processed successfully {"userId":1,"processingTime":"4198.77ms"}
+[2025-09-20 04:02:38] [INFO] Chatbot initialized {"userId":1}
+[2025-09-20 04:02:38] [INFO] Processing message {"userId":1,"messageLength":43}
+[2025-09-20 04:02:38] [DEBUG] Intent and entities extracted {"intent":"tour_search","entities":{"cities":[{"id":15,"name":"Da Lat"},{"id":12,"name":"Nha Trang"}],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"do you have other tour da lat and nha trang"}}
+[2025-09-20 04:02:38] [INFO] Embedding generated successfully {"duration_ms":692.29}
+[2025-09-20 04:02:38] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-20 04:02:38] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":15,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-20 04:02:38] [DEBUG] Tours retrieved {"count":3,"filters":{"cityId":12,"limit":3,"orderBy":"price_per_person ASC"}}
+[2025-09-20 04:02:38] [DEBUG] Data retrieval completed {"match_level":"multi_city_tours","is_international":false,"data_counts":{"tours":6,"hotels":0,"cities":1}}
+[2025-09-20 04:02:39] [ERROR] Failed to generate Vietnamese response {"error":"Gemini API error (429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 200\nPlease retry in 47.052545586s.","match_level":"multi_city_tours"}
+[2025-09-20 04:02:39] [ERROR] Context generation error {"error":"Gemini API error (429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 200\nPlease retry in 47.052545586s."}
+[2025-09-20 04:02:39] [DEBUG] Conversation saved {"userId":1}
+[2025-09-20 04:02:39] [INFO] Message processed successfully {"userId":1,"processingTime":"1239.56ms"}
+[2025-09-20 04:02:59] [INFO] Chatbot initialized {"userId":1}
+[2025-09-20 04:02:59] [INFO] Processing message {"userId":1,"messageLength":19}
+[2025-09-20 04:02:59] [DEBUG] Intent and entities extracted {"intent":"general","entities":{"cities":[],"duration":null,"budget":null,"rating":null,"price_condition":null,"preferences":[],"is_international":false,"raw_message":"1 plus 1 equal to ?"}}
+[2025-09-20 04:03:00] [INFO] Embedding generated successfully {"duration_ms":691.04}
+[2025-09-20 04:03:00] [INFO] Semantic search returned no results. Falling back to intent-based search. 
+[2025-09-20 04:03:00] [DEBUG] Tours retrieved {"count":50,"filters":{"limit":50,"orderBy":"price_per_person ASC"}}
+[2025-09-20 04:03:00] [DEBUG] Hotels retrieved {"count":50,"filters":{"limit":50,"orderBy":"ratings DESC, cost ASC"}}
+[2025-09-20 04:03:00] [DEBUG] Data retrieval completed {"match_level":"general_search","is_international":false,"data_counts":{"tours":6,"hotels":6,"cities":0}}
+[2025-09-20 04:03:00] [ERROR] Failed to generate Vietnamese response {"error":"Gemini API error (429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 200\nPlease retry in 25.546020929s.","match_level":"general_search"}
+[2025-09-20 04:03:00] [ERROR] Context generation error {"error":"Gemini API error (429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 200\nPlease retry in 25.546020929s."}
+[2025-09-20 04:03:00] [DEBUG] Conversation saved {"userId":1}
+[2025-09-20 04:03:00] [INFO] Message processed successfully {"userId":1,"processingTime":"1265.55ms"}

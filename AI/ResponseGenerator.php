@@ -1,9 +1,6 @@
 <?php
 require_once './Logger.php';
 
-/**
- * Service for generating contextual responses based on retrieved data
- */
 class ResponseGenerator {
     private $geminiService;
     
@@ -11,9 +8,6 @@ class ResponseGenerator {
         $this->geminiService = $geminiService;
     }
     
-    /**
-     * Generate contextual response based on user message and retrieved data
-     */
     public function generateContextualResponse($userMessage, $retrievalResult, $conversationHistory) {
         try {
             // Handle international destinations with Gemini
@@ -63,17 +57,13 @@ class ResponseGenerator {
         }
     }
     
-    /**
-     * Extract city name from user message
-     */
+    // Extract city name from user message
     private function extractCityNameFromMessage($message) {
         preg_match_all('/\b\p{Lu}[\p{Ll}]+(?:\s+\p{Lu}[\p{Ll}]+)*\b/u', $message, $matches);
         return !empty($matches[0]) ? $matches[0][0] : 'your destination';
     }
     
-    /**
-     * Build context for Vietnamese destinations
-     */
+    // Build context for Vietnamese destinations
     private function buildVietnameseContext($data) {
         $context = "Available travel data in Vietnam:\n\n";
         
@@ -99,10 +89,7 @@ class ResponseGenerator {
         
         return $context;
     }
-    
-    /**
-     * Process Gemini response and format for frontend
-     */
+
     private function processGeminiResponse($geminiText, $retrievalResult, $userMessage) {
         $type = 'general';
         $displayData = [];

@@ -9,6 +9,73 @@ class DatabaseService {
         $this->db = $db;
     }
 
+    public function searchItems($itemType, $filters = []) {
+        $tableAlias = $itemType === 'tour' ? 't' : 'h';
+        $tableName = $itemType === 'tour' ? 'tours' : 'hotels';
+        $idField = $itemType === 'tour' ? 'tourid' : 'hotelid';
+
+        $sql = "SELECT {$tableAlias}.*, c.city as city_name 
+                FROM {$tableName} {$tableAlias} 
+                LEFT JOIN cities c ON {$tableAlias}.cityid = c.cityid 
+                WHERE 1=1";
+        
+        $params = [];
+        $types = "";
+
+        // Common filters
+        if (!empty($filters['cityId'])) {
+            $sql .= " AND {$tableAlias}.cityid = ?";
+            $params[] = $filters['cityId'];
+            $types .= 'i';
+        }
+        if (!empty($filters['budget'])) {
+            $condition = $filters['price_condition'] ?? 'under';
+            $operator = ($condition === 'over') ? '>=' : '<=';
+            $priceField = $itemType === 'tour' ? 'price_per_person' : 'cost';
+            $sql .= " AND {$tableAlias}.{$priceField} {$operator} ?";
+            $params[] = $filters['budget'];
+            $types .= 'd'; // Use 'd' for decimal/float
+        }
+
+        // Item-specific filters
+        if ($itemType === 'tour' && !empty($filters['duration'])) {
+            $sql .= " AND {$tableAlias}.duration_days = ?";
+            $params[] = $filters['duration'];
+            $types .= 'i';
+        }
+        if ($itemType === 'hotel' && !empty($filters['rating'])) {
+            $sql .= " AND {$tableAlias}.ratings >= ?";
+            $params[] = $filters['rating'];
+            $types .= 'd';
+        }
+
+        // Ordering
+        $orderBy = $filters['orderBy'] ?? "{$tableAlias}.{$idField} ASC";
+        $sql .= " ORDER BY " . $this->db->real_escape_string($orderBy);
+
+        // Limit
+        $limit = $filters['limit'] ?? 10;
+        $sql .= " LIMIT ?";
+        $params[] = $limit;
+        $types .= 'i';
+        
+        try {
+            $stmt = $this->db->prepare($sql);
+            if (!$stmt) throw new Exception("Prepare failed: " . $this->db->error);
+            if (!empty($params)) $stmt->bind_param($types, ...$params);
+            
+            $stmt->execute();
+            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+
+            Logger::debug(ucfirst($itemType) . "s retrieved", ['count' => count($result), 'filters' => $filters]);
+            return $result;
+        } catch (Exception $e) {
+            Logger::error("Failed to get " . $itemType, ['error' => $e->getMessage()]);
+            return [];
+        }
+    }
+
     public function findCityByName($cityName) {
         try {
             $cacheKey = "city_search_" . strtolower($cityName);
@@ -81,9 +148,7 @@ class DatabaseService {
         return $result;
     }
     
-    /**
-     * Get similar city names for suggestions when exact match fails
-     */
+    // Get similar city names for suggestions when exact match fails
     public function getSimilarCityNames($cityName, $limit = 3) {
         try {
             $searchTerm = '%' . $cityName . '%';
@@ -389,122 +454,29 @@ class DatabaseService {
     
     // Keep all existing methods from original file
     public function getTours($cityId = null, $duration = null, $budget = null, $limit = 6, $priceCondition = null) {
-        try {
-            $sql = "SELECT t.*, c.city as city_name FROM tours t 
-                    LEFT JOIN cities c ON t.cityid = c.cityid WHERE 1=1";
-            $params = [];
-            $types = "";
-            
-            if ($cityId !== null) {
-                $sql .= " AND t.cityid = ?";
-                $params[] = $cityId;
-                $types .= 'i';
-            }
-            
-            if ($duration !== null) {
-                $sql .= " AND t.duration_days = ?";
-                $params[] = $duration;
-                $types .= 'i';
-            }
-            
-            if ($budget !== null) {
-                if ($priceCondition === 'under') {
-                    $sql .= " AND t.price_per_person <= ?";
-                    $order = "ASC";
-                } elseif ($priceCondition === 'over') {
-                    $sql .= " AND t.price_per_person >= ?";
-                    $order = "DESC";
-                } else {
-                    $sql .= " AND t.price_per_person <= ?";
-                    $order = "ASC";
-                }
-                $params[] = $budget;
-                $types .= 'i';
-            } else {
-                $order = "ASC";
-            }
-
-            $sql .= " ORDER BY t.price_per_person $order LIMIT ?";
-            $params[] = $limit;
-            $types .= 'i';
-            
-            $stmt = $this->db->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Prepare failed: " . $this->db->error);
-            }
-            
-            if (!empty($params)) {
-                $stmt->bind_param($types, ...$params);
-            }
-            
-            $stmt->execute();
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            
-            Logger::debug("Tours retrieved", ['count' => count($result), 'filters' => compact('cityId', 'duration', 'budget', 'priceCondition')]);
-            
-            return $result;
-        } catch (Exception $e) {
-            Logger::error("Failed to get tours", ['error' => $e->getMessage()]);
-            return [];
-        }
+        $orderDirection = ($priceCondition === 'over') ? 'DESC' : 'ASC';
+        $filters = [
+            'cityId' => $cityId,
+            'duration' => $duration,
+            'budget' => $budget,
+            'limit' => $limit,
+            'price_condition' => $priceCondition,
+            'orderBy' => "price_per_person $orderDirection"
+        ];
+        // array_filter loại bỏ các giá trị null, đảm bảo chỉ các bộ lọc có giá trị được truyền đi
+        return $this->searchItems('tour', array_filter($filters, fn($value) => $value !== null));
     }
     
     public function getHotels($cityId = null, $limit = 6, $rating = null, $budget = null, $priceCondition = null) {
-        try {
-            $sql = "SELECT h.*, c.city as city_name FROM hotels h 
-                    LEFT JOIN cities c ON h.cityid = c.cityid WHERE 1=1";
-            $params = [];
-            $types = "";
-            
-            if ($cityId !== null) {
-                $sql .= " AND h.cityid = ?";
-                $params[] = $cityId;
-                $types .= 'i';
-            }
-            
-            if ($rating !== null) {
-                $sql .= " AND h.ratings >= ?";
-                $params[] = $rating;
-                $types .= 'i';
-            }
-            
-            if ($budget !== null) {
-                if ($priceCondition === 'under') {
-                    $sql .= " AND h.cost <= ?";
-                } elseif ($priceCondition === 'over') {
-                    $sql .= " AND h.cost >= ?";
-                } else {
-                    $sql .= " AND h.cost <= ?";
-                }
-                $params[] = $budget;
-                $types .= 'i';
-            }
-            
-            $sql .= " ORDER BY h.ratings DESC, h.cost ASC LIMIT ?";
-            $params[] = $limit;
-            $types .= 'i';
-            
-            $stmt = $this->db->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Prepare failed: " . $this->db->error);
-            }
-            
-            if (!empty($params)) {
-                $stmt->bind_param($types, ...$params);
-            }
-            
-            $stmt->execute();
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            
-            Logger::debug("Hotels retrieved", ['count' => count($result), 'filters' => compact('cityId', 'rating', 'budget', 'priceCondition')]);
-            
-            return $result;
-        } catch (Exception $e) {
-            Logger::error("Failed to get hotels", ['error' => $e->getMessage()]);
-            return [];
-        }
+        $filters = [
+            'cityId' => $cityId,
+            'rating' => $rating,
+            'budget' => $budget,
+            'limit' => $limit,
+            'price_condition' => $priceCondition,
+            'orderBy' => 'ratings DESC, cost ASC'
+        ];
+        return $this->searchItems('hotel', array_filter($filters, fn($value) => $value !== null));
     }
     
     public function getCities($cityId = null) {
@@ -548,133 +520,37 @@ class DatabaseService {
     }
     
     public function getToursGroupedByCity($duration = null, $budget = null, $priceCondition = null, $limit = 50) {
-        try {
-            $sql = "SELECT t.*, c.city as city_name FROM tours t 
-                    LEFT JOIN cities c ON t.cityid = c.cityid WHERE 1=1";
-            $params = [];
-            $types = "";
-            
-            if ($duration !== null) {
-                $sql .= " AND t.duration_days = ?";
-                $params[] = $duration;
-                $types .= 'i';
+        // 1. Lấy dữ liệu phẳng bằng hàm searchItems
+        $tours = $this->getTours(null, $duration, $budget, $limit, $priceCondition);
+        
+        // 2. Thực hiện logic nhóm kết quả
+        $groupedResults = [];
+        foreach ($tours as $tour) {
+            $cityName = $tour['city_name'] ?? 'Unknown';
+            if (!isset($groupedResults[$cityName])) {
+                $groupedResults[$cityName] = [];
             }
-            
-            if ($budget !== null) {
-                if ($priceCondition === 'under') {
-                    $sql .= " AND t.price_per_person <= ?";
-                } elseif ($priceCondition === 'over') {
-                    $sql .= " AND t.price_per_person >= ?";
-                } else {
-                    $sql .= " AND t.price_per_person <= ?";
-                }
-                $params[] = $budget;
-                $types .= 'i';
-            }
-            
-            $sql .= " ORDER BY c.city, t.price_per_person ASC LIMIT ?";
-            $params[] = $limit;
-            $types .= 'i';
-            
-            $stmt = $this->db->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Prepare failed: " . $this->db->error);
-            }
-            
-            if (!empty($params)) {
-                $stmt->bind_param($types, ...$params);
-            }
-            
-            $stmt->execute();
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            
-            // Group by city
-            $groupedResults = [];
-            foreach ($result as $tour) {
-                $cityName = $tour['city_name'] ?? 'Unknown';
-                if (!isset($groupedResults[$cityName])) {
-                    $groupedResults[$cityName] = [];
-                }
-                $groupedResults[$cityName][] = $tour;
-            }
-            
-            Logger::debug("Tours grouped by city retrieved", [
-                'total_tours' => count($result), 
-                'cities' => count($groupedResults),
-                'filters' => compact('duration', 'budget', 'priceCondition')
-            ]);
-            
-            return $groupedResults;
-        } catch (Exception $e) {
-            Logger::error("Failed to get tours grouped by city", ['error' => $e->getMessage()]);
-            return [];
+            $groupedResults[$cityName][] = $tour;
         }
+        
+        return $groupedResults;
     }
     
     public function getHotelsGroupedByCity($rating = null, $budget = null, $priceCondition = null, $limit = 50) {
-        try {
-            $sql = "SELECT h.*, c.city as city_name FROM hotels h 
-                    LEFT JOIN cities c ON h.cityid = c.cityid WHERE 1=1";
-            $params = [];
-            $types = "";
-            
-            if ($rating !== null) {
-                $sql .= " AND h.ratings >= ?";
-                $params[] = $rating;
-                $types .= 'i';
+        // 1. Lấy dữ liệu phẳng bằng hàm searchItems
+        $hotels = $this->getHotels(null, $limit, $rating, $budget, $priceCondition);
+        
+        // 2. Thực hiện logic nhóm kết quả
+        $groupedResults = [];
+        foreach ($hotels as $hotel) {
+            $cityName = $hotel['city_name'] ?? 'Unknown';
+            if (!isset($groupedResults[$cityName])) {
+                $groupedResults[$cityName] = [];
             }
-            
-            if ($budget !== null) {
-                if ($priceCondition === 'under') {
-                    $sql .= " AND h.cost <= ?";
-                } elseif ($priceCondition === 'over') {
-                    $sql .= " AND h.cost >= ?";
-                } else {
-                    $sql .= " AND h.cost <= ?";
-                }
-                $params[] = $budget;
-                $types .= 'i';
-            }
-            
-            $sql .= " ORDER BY c.city, h.ratings DESC, h.cost ASC LIMIT ?";
-            $params[] = $limit;
-            $types .= 'i';
-            
-            $stmt = $this->db->prepare($sql);
-            if (!$stmt) {
-                throw new Exception("Prepare failed: " . $this->db->error);
-            }
-            
-            if (!empty($params)) {
-                $stmt->bind_param($types, ...$params);
-            }
-            
-            $stmt->execute();
-            $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
-            $stmt->close();
-            
-            // Group by city
-            $groupedResults = [];
-            foreach ($result as $hotel) {
-                $cityName = $hotel['city_name'] ?? 'Unknown';
-                if (!isset($groupedResults[$cityName])) {
-                    $groupedResults[$cityName] = [];
-                }
-                $groupedResults[$cityName][] = $hotel;
-            }
-            
-            Logger::debug("Hotels grouped by city retrieved", [
-                'total_hotels' => count($result), 
-                'cities' => count($groupedResults),
-                'filters' => compact('rating', 'budget', 'priceCondition')
-            ]);
-            
-            return $groupedResults;
-        } catch (Exception $e) {
-            Logger::error("Failed to get hotels grouped by city", ['error' => $e->getMessage()]);
-            return [];
+            $groupedResults[$cityName][] = $hotel;
         }
+        
+        return $groupedResults;
     }
     
     public function getSystemStats() {
@@ -776,6 +652,69 @@ class DatabaseService {
             Logger::error("Failed to get chat history", ['error' => $e->getMessage()]);
             return [];
         }
+    }
+
+    public function findSimilarItemsByVector($queryVector, $limit = 10, $filters = []) {
+        try {
+            // Bước 1: Lấy tất cả các vector từ DB (kém hiệu quả với DB lớn, nhưng là cách mô phỏng)
+            // Trong thực tế, bạn nên lọc trước bằng SQL nếu có thể (ví dụ: lọc theo city_id)
+            $sql = "SELECT id, item_id, item_type, vector_embedding FROM item_vectors";
+            // TODO: Thêm điều kiện WHERE dựa trên $filters nếu cần
+            
+            $stmt = $this->db->prepare($sql);
+            $stmt->execute();
+            $allVectors = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+            $stmt->close();
+
+            if (empty($allVectors)) {
+                return [];
+            }
+
+            // Bước 2: Tính toán Cosine Similarity trong PHP
+            $similarities = [];
+            foreach ($allVectors as $row) {
+                // Vector được lưu dưới dạng JSON string hoặc binary, cần giải mã
+                $itemVector = json_decode($row['vector_embedding'], true); 
+                if (is_array($itemVector)) {
+                     $similarities[] = [
+                        'item_id' => $row['item_id'],
+                        'item_type' => $row['item_type'],
+                        'score' => $this->cosineSimilarity($queryVector, $itemVector)
+                    ];
+                }
+            }
+
+            // Bước 3: Sắp xếp và lấy top N kết quả
+            usort($similarities, function($a, $b) {
+                return $b['score'] <=> $a['score'];
+            });
+
+            return array_slice($similarities, 0, $limit);
+
+        } catch (Exception $e) {
+            Logger::error("Failed to find similar items by vector", ['error' => $e->getMessage()]);
+            return [];
+        }
+    }
+
+    private function cosineSimilarity(array $vec1, array $vec2): float {
+        $dotProduct = 0.0;
+        $mag1 = 0.0;
+        $mag2 = 0.0;
+        $count = count($vec1);
+
+        if ($count !== count($vec2)) {
+            return 0.0; // Vectors must have the same dimension
+        }
+
+        for ($i = 0; $i < $count; $i++) {
+            $dotProduct += $vec1[$i] * $vec2[$i];
+            $mag1 += $vec1[$i] * $vec1[$i];
+            $mag2 += $vec2[$i] * $vec2[$i];
+        }
+
+        $magnitude = sqrt($mag1) * sqrt($mag2);
+        return $magnitude === 0.0 ? 0.0 : $dotProduct / $magnitude;
     }
 }
 

@@ -1,18 +1,16 @@
 <?php
 require_once './Logger.php';
+require_once './config.php';
 
 class GeminiService {
     private $apiKey;
     private $apiUrl;
     
     public function __construct() {
-        $this->apiKey = "AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA";
-        $this->apiUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+        $this->apiKey = Config::GEMINI_API_KEY;
+        $this->apiUrl = Config::GEMINI_API_URL;
     }
-    
-    /**
-     * Generate international travel plan
-     */
+
     public function generateInternationalPlan($userMessage, $cityName, $conversationHistory = []) {
         $conversationContext = $this->buildConversationContext($conversationHistory);
         
@@ -171,30 +169,28 @@ Format as simple text, one per line, no numbering or bullets.";
     }
     
     private function buildContextualPrompt($userMessage, $databaseContext, $conversationContext, $retrievalResult) {
-        $prompt = "You are a helpful Vietnam travel assistant. Provide concise, accurate, and friendly responses.
+        $prompt = "You are a helpful Vietnam travel assistant. Your primary goal is to provide accurate information based STRICTLY on the data provided.
 
 {$conversationContext}
 
-Available data:
+---BEGIN AVAILABLE DATA---
 {$databaseContext}
+---END AVAILABLE DATA---
 
 User's question: {$userMessage}
 
-Response guidelines:
-- Be conversational and helpful
-- Use specific data when available (mention tour names, prices, locations)
-- Keep responses focused and not too lengthy
-- Provide practical travel advice
-- If you have limited data, acknowledge it honestly
-- Format prices in Vietnamese currency (VND)
+**CRITICAL RESPONSE GUIDELINES:**
+1.  **Strict Grounding:** Base your entire response ONLY on the information within the 'AVAILABLE DATA' section.
+2.  **Do Not Invent:** NEVER invent details, prices, names, durations, or features that are not explicitly listed in the available data.
+3.  **Acknowledge Limits:** If the user asks for information that is not in the provided data, you MUST state that you do not have that specific information. For example, say 'I do not have information about tours for 5 days, but I found these options:'
+4.  **Be Conversational:** While being strict with data, maintain a friendly and helpful tone.
+5.  **Format prices:** Use Vietnamese currency (VND) when mentioning prices.
 
-";
+Please provide your response now, following all guidelines.";
 
         if (isset($retrievalResult['fallback_message']) && !empty($retrievalResult['fallback_message'])) {
-            $prompt .= "\nContext: " . $retrievalResult['fallback_message'] . "\n";
+            $prompt .= "\n\nHint: " . $retrievalResult['fallback_message'];
         }
-
-        $prompt .= "\nPlease respond:";
         
         return $prompt;
     }
@@ -225,7 +221,7 @@ Response guidelines:
             CURLOPT_HTTPHEADER => [
                 'Content-Type: application/json',
             ],
-            CURLOPT_TIMEOUT => 30,
+            CURLOPT_TIMEOUT => Config::API_TIMEOUT,
         ]);
         
         $response = curl_exec($ch);

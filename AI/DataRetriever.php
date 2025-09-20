@@ -1,30 +1,58 @@
 <?php
 require_once './Logger.php';
+require_once './EmbeddingService.php';
 
 class DataRetriever {
     private $dbService;
-    private $cityMappings;
+    private $embeddingService;
     
     public function __construct($dbService) {
         $this->dbService = $dbService;
-        $this->cityMappings = [
-            'hoi an' => 'Hoi An',
-            'ho chi minh' => 'Ho Chi Minh City', 
-            'saigon' => 'Ho Chi Minh City',
-            'da nang' => 'Da Nang',
-            'da lat' => 'Da Lat',
-            'dalat' => 'Da Lat'
-        ];
+        $this->embeddingService = new EmbeddingService();
     }
     
     public function retrieveRelevantData($intent, $entities, $message) {
         $result = $this->initializeResult($entities);
         
+        $queryVector = $this->embeddingService->generateEmbedding($message);
+        $semanticResults = [];
+        if ($queryVector) {
+            // Lấy 20 kết quả tương đồng nhất để có không gian cho việc lọc sau này
+            $similarItems = $this->dbService->findSimilarItemsByVector($queryVector, 20);
+            
+            // Tách ID tour và hotel
+            $tourIds = [];
+            $hotelIds = [];
+            foreach ($similarItems as $item) {
+                if ($item['item_type'] === 'tour') $tourIds[] = $item['item_id'];
+                if ($item['item_type'] === 'hotel') $hotelIds[] = $item['item_id'];
+            }
+
+            // Lấy thông tin chi tiết từ các ID này, áp dụng các bộ lọc từ entities
+            if (!empty($tourIds)) {
+                $semanticResults['tours'] = $this->dbService->getToursByIds($tourIds, $entities);
+            }
+            if (!empty($hotelIds)) {
+                $semanticResults['hotels'] = $this->dbService->getHotelsByIds($hotelIds, $entities);
+            }
+        }
+
         // Early return for international destinations
         if ($this->isInternationalOnly($entities)) {
             return $this->handleInternationalDestination($entities);
         }
+
+        if (!empty($semanticResults['tours']) || !empty($semanticResults['hotels'])) {
+            $result['data']['tours'] = array_slice($semanticResults['tours'] ?? [], 0, 6);
+            $result['data']['hotels'] = array_slice($semanticResults['hotels'] ?? [], 0, 6);
+            $result['match_level'] = 'semantic_match';
+            $result['fallback_message'] = "Dựa trên yêu cầu của bạn, tôi đã tìm thấy một số lựa chọn phù hợp:";
+            $result['layout_type'] = 'mixed_content';
+            return $result;
+        }
         
+        Logger::info("Semantic search returned no results. Falling back to intent-based search.");
+
         // Handle Vietnamese destinations
         if ($this->hasVietnameseCities($entities)) {
             $this->processVietnameseDestinations($result, $entities, $intent, $message);
@@ -426,49 +454,54 @@ class DataRetriever {
     }
     
     private function processGeneralSearch(&$result, $entities, $intent, $message) {
-        switch ($intent) {
-            case 'mixed_search':
-                $this->handleGeneralMixedSearch($result, $entities);
-                break;
-            case 'tour_search':
-                $this->handleGeneralTourSearch($result, $entities);
-                break;
-            case 'hotel_search':
-                $this->handleGeneralHotelSearch($result, $entities);
-                break;
-            default:
-                $this->handleGeneralSearch($result, $entities);
-                break;
+        $needsTours = in_array($intent, ['mixed_search', 'tour_search']);
+        $needsHotels = in_array($intent, ['mixed_search', 'hotel_search']);
+        
+        // Fallback to both if intent is not specific
+        if ($intent === 'destination_info' || $intent === 'general') {
+            $needsTours = true;
+            $needsHotels = true;
         }
-    }
-    
-    private function handleGeneralMixedSearch(&$result, $entities) {
-        $toursByCity = $this->dbService->getToursGroupedByCity(
-            $entities['duration'],
-            $entities['budget'],
-            $entities['price_condition'],
-            25
-        );
-        
-        $hotelsByCity = $this->dbService->getHotelsGroupedByCity(
-            $entities['rating'],
-            $entities['budget'],
-            $entities['price_condition'],
-            25
-        );
-        
-        $result['data']['tours'] = $this->selectDiverseResults($toursByCity, 6, 'tourid'); // FIXED: Limit to 6
-        $result['data']['hotels'] = $this->selectDiverseResults($hotelsByCity, 6, 'hotelid'); // FIXED: Limit to 6
-        
+
+        $this->_fetchGeneralData($result, $entities, $needsTours, $needsHotels);
+
         if (!empty($result['data']['tours']) || !empty($result['data']['hotels'])) {
-            $result['match_level'] = 'mixed_general_search';
-            $result['layout_type'] = 'mixed_content';
-            $result['fallback_message'] = 'Here are tours and hotels available across Vietnam:';
+            $result['match_level'] = 'general_search';
+            $result['layout_type'] = ($needsTours && $needsHotels) ? 'mixed_content' : 'default';
+            $result['fallback_message'] = 'Here are some options available across Vietnam that match your request:';
             $result['suggestions'] = $this->getGeneralSuggestions();
         } else {
             $result['match_level'] = 'no_results';
-            $result['fallback_message'] = "I couldn't find tours or hotels matching your criteria.";
+            $result['fallback_message'] = "I couldn't find anything matching your criteria across Vietnam.";
             $result['suggestions'] = $this->getDefaultSuggestions();
+        }
+    }
+    
+    private function _fetchGeneralData(&$result, $entities, $needsTours, $needsHotels) {
+        $limit = 6; // Centralize the limit
+
+        if ($needsTours) {
+            $toursByCity = $this->dbService->getToursGroupedByCity(
+                $entities['duration'],
+                $entities['budget'],
+                $entities['price_condition'],
+                50 // Fetch more initially to allow for diverse selection
+            );
+            if (!empty($toursByCity)) {
+                $result['data']['tours'] = $this->selectDiverseResults($toursByCity, $limit, 'tourid');
+            }
+        }
+
+        if ($needsHotels) {
+            $hotelsByCity = $this->dbService->getHotelsGroupedByCity(
+                $entities['rating'],
+                $entities['budget'],
+                $entities['price_condition'],
+                50 // Fetch more initially
+            );
+            if (!empty($hotelsByCity)) {
+                $result['data']['hotels'] = $this->selectDiverseResults($hotelsByCity, $limit, 'hotelid');
+            }
         }
     }
     
@@ -598,54 +631,6 @@ class DataRetriever {
     private function handleDestinationInfo(&$result, $entities, $message) {
         $this->handleSingleCitySearch($result, $entities, 'mixed');
         $result['match_level'] = 'destination_info';
-    }
-    
-    private function handleGeneralTourSearch(&$result, $entities) {
-        $toursByCity = $this->dbService->getToursGroupedByCity(
-            $entities['duration'],
-            $entities['budget'],
-            $entities['price_condition'],
-            50
-        );
-        
-        if (!empty($toursByCity)) {
-            $result['data']['tours'] = $this->selectDiverseResults($toursByCity, 6, 'tourid'); // FIXED: Limit to 6
-            $result['match_level'] = 'general_search';
-            $result['fallback_message'] = 'Here are available tours across Vietnam:';
-            $result['suggestions'] = $this->getGeneralSuggestions();
-        } else {
-            $result['match_level'] = 'no_results';
-            $result['fallback_message'] = "I couldn't find tours matching your criteria.";
-            $result['suggestions'] = $this->getDefaultSuggestions();
-        }
-    }
-    
-    private function handleGeneralHotelSearch(&$result, $entities) {
-        $hotelsByCity = $this->dbService->getHotelsGroupedByCity(
-            $entities['rating'],
-            $entities['budget'],
-            $entities['price_condition'],
-            50
-        );
-        
-        if (!empty($hotelsByCity)) {
-            $result['data']['hotels'] = $this->selectDiverseResults($hotelsByCity, 6, 'hotelid'); // FIXED: Limit to 6
-            $result['match_level'] = 'general_search';
-            $result['fallback_message'] = 'Here are available hotels across Vietnam:';
-            $result['suggestions'] = $this->getGeneralSuggestions();
-        } else {
-            $result['match_level'] = 'no_results';
-            $result['fallback_message'] = "I couldn't find hotels matching your criteria.";
-            $result['suggestions'] = $this->getDefaultSuggestions();
-        }
-    }
-    
-    private function handleGeneralSearch(&$result, $entities) {
-        $result['data']['tours'] = $this->dbService->getTours(null, null, null, 6); // FIXED: Limit to 6
-        $result['data']['hotels'] = $this->dbService->getHotels(null, 6); // FIXED: Limit to 6
-        $result['match_level'] = 'general';
-        $result['fallback_message'] = 'Here\'s what we offer for travel in Vietnam:';
-        $result['suggestions'] = $this->getGeneralSuggestions();
     }
 }
 ?>

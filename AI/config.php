@@ -11,6 +11,10 @@ class Config {
     const GEMINI_API_KEY = "AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA";
     const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
     
+    // Configuration for Embedding API
+    const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
+    const GEMINI_EMBEDDING_MODEL = "models/text-embedding-004";
+
     // Cache configuration
     const CACHE_DEFAULT_TTL = 300; // 5 minutes
     const CACHE_CITIES_TTL = 600; // 10 minutes
@@ -28,10 +32,7 @@ class Config {
     // API timeouts
     const API_TIMEOUT = 30;
     const DB_TIMEOUT = 10;
-    
-    /**
-     * Get database connection
-     */
+
     public static function getDatabaseConnection() {
         $conn = mysqli_connect(
             self::DB_HOST, 

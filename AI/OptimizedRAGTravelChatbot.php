@@ -7,61 +7,27 @@ require_once './GreetingService.php';
 require_once './IntentAnalyzer.php';
 require_once './DataRetriever.php';
 require_once './ResponseGenerator.php';
+require_once './config.php';
 
-/**
- * Main RAG Travel Chatbot class
- */
 class OptimizedRAGTravelChatbot {
     private $dbService;
     private $geminiService;
     private $userId;
     private $dataRetriever;
     private $responseGenerator;
-    
-    // Vietnamese cities mapping - Updated with Quy Nhon
-    private $vietnameseCities = [
-        'ho chi minh' => ['id' => 11, 'name' => 'Ho Chi Minh City'], 
-        'saigon' => ['id' => 11, 'name' => 'Ho Chi Minh City'],
-        'hcmc' => ['id' => 11, 'name' => 'Ho Chi Minh City'],
-        'nha trang' => ['id' => 12, 'name' => 'Nha Trang'], 
-        'nhatrang' => ['id' => 12, 'name' => 'Nha Trang'],
-        'hue' => ['id' => 13, 'name' => 'Hue'], 
-        'phu yen' => ['id' => 14, 'name' => 'Phu Yen'],
-        'phuyen' => ['id' => 14, 'name' => 'Phu Yen'], 
-        'da lat' => ['id' => 15, 'name' => 'Da Lat'],
-        'dalat' => ['id' => 15, 'name' => 'Da Lat'],
-        'phu quoc' => ['id' => 16, 'name' => 'Phu Quoc'], 
-        'phuquoc' => ['id' => 16, 'name' => 'Phu Quoc'],
-        'hoi an' => ['id' => 17, 'name' => 'Hoi An'],
-        'hoian' => ['id' => 17, 'name' => 'Hoi An'],
-        'ha giang' => ['id' => 18, 'name' => 'Ha Giang'],
-        'hagiang' => ['id' => 18, 'name' => 'Ha Giang'],
-        'tay bac' => ['id' => 10, 'name' => 'Tay Bac'],
-        'taybac' => ['id' => 10, 'name' => 'Tay Bac'],
-        'northwest' => ['id' => 10, 'name' => 'Tay Bac'], 
-        'sapa' => ['id' => 10, 'name' => 'Tay Bac'], 
-        'fansipan' => ['id' => 10, 'name' => 'Tay Bac'],
-        'danang' => ['id' => 19, 'name' => 'Da Nang'],
-        'da nang' => ['id' => 19, 'name' => 'Da Nang'],
-        'cantho' => ['id' => 20, 'name' => 'Can Tho'],
-        'can tho' => ['id' => 20, 'name' => 'Can Tho'],
-        'hanoi' => ['id' => 21, 'name' => 'Hanoi'],
-        'ha noi' => ['id' => 21, 'name' => 'Hanoi'],
-    ];
-    
+    private $vietnameseCities;
+       
     public function __construct($db) {
         $this->dbService = new DatabaseService($db);
         $this->geminiService = new GeminiService();
         $this->userId = UserService::getCurrentUserId();
+        $this->vietnameseCities = Config::getVietnameseCities();
         $this->dataRetriever = new DataRetriever($this->dbService);
         $this->responseGenerator = new ResponseGenerator($this->geminiService);
         
         Logger::info("Chatbot initialized", ['userId' => $this->userId]);
     }
-    
-    /**
-     * Main message processing method
-     */
+
     public function processMessage($message, $conversationHistory = []) {
         $startTime = microtime(true);
         

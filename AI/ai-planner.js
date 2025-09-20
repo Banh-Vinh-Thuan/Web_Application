@@ -1188,138 +1188,97 @@ class TravelChatbot {
         return `../hotelphotoID/${hotelId}.jpg`;
     }
 
-    createTourCard(tour) {
+    // Generic card creation function to reduce duplication
+    _createBaseCard(itemType, cardData) {
         const card = document.createElement('div');
-        card.className = 'data-card tour-card';
-        
-        const price = parseFloat(tour.price_per_person || 0);
-        const duration = parseInt(tour.duration_days || 0);
-        
-        let tourName = 'Tour Package';
-        if (tour.tour_name && tour.tour_name.trim() !== '') {
-            tourName = tour.tour_name.trim();
-        } else if (tour.name && tour.name.trim() !== '') {
-            tourName = tour.name.trim();
-        } else if (tour.title && tour.title.trim() !== '') {
-            tourName = tour.title.trim();
-        }
-        
-        const cityName = tour.city || tour.city_name || 'Vietnam';
-        const season = tour.season || 'All year';
-        const tourId = tour.tourid || tour.id || 0;
-        const cityId = tour.cityid || this.getCityIdFromName(cityName) || 11;
-        
-        const imagePath = this.generateTourImagePath(cityId, tourId);
-        
+        card.className = `data-card ${itemType}-card`;
+
+        const detailsHTML = cardData.details.map(detail => `
+            <div class="detail-item">
+                <i class="fas ${detail.icon}"></i>
+                <span class="detail-label">${detail.label}:</span>
+                <span class="detail-value">${this.escapeHtml(detail.value)}</span>
+            </div>
+        `).join('');
+
+        const actionsHTML = cardData.actions.map(action => `
+            <button class="card-btn ${action.class}" onclick="${action.handler}" title="${action.title}">
+                <i class="fas ${action.icon}"></i>
+                ${action.text}
+            </button>
+        `).join('');
+
         card.innerHTML = `
             <div class="card-content">
                 <div class="card-image">
-                    <img src="${imagePath}" alt="${this.escapeHtml(tourName)}" onerror="this.src='../images/default-tour.jpg'">
-                    <span class="card-badge discount">-15%</span>
+                    <img src="${cardData.imagePath}" alt="${this.escapeHtml(cardData.title)}" onerror="this.src='../images/default-${itemType}.jpg'">
+                    ${cardData.badgeHTML || ''}
                 </div>
                 <div class="card-info">
-                    <div class="card-title" title="${this.escapeHtml(tourName)}">
-                        ${this.escapeHtml(tourName)}
+                    <div class="card-title" title="${this.escapeHtml(cardData.title)}">
+                        ${this.escapeHtml(cardData.title)}
                     </div>
-                    <div class="card-details">
-                        <div class="detail-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span class="detail-label">Location:</span>
-                            <span class="detail-value">${this.escapeHtml(cityName)}</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-clock"></i>
-                            <span class="detail-label">Duration:</span>
-                            <span class="detail-value">${duration} ${duration === 1 ? 'day' : 'days'}</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <span class="detail-label">Price:</span>
-                            <span class="detail-value">${this.formatPrice(price)} VND</span>
-                        </div>
-                    </div>
-                    <div class="card-actions">
-                        <button class="card-btn card-btn-primary" onclick="bookTour(${tourId}, ${cityId})" title="Book this tour">
-                            <i class="fas fa-calendar-plus"></i>
-                            Book
-                        </button>
-                        <button class="card-btn card-btn-secondary" onclick="viewTourDetails(${tourId}, ${cityId})" title="View tour details">
-                            <i class="fas fa-info-circle"></i>
-                            Details
-                        </button>
-                    </div>
+                    <div class="card-details">${detailsHTML}</div>
+                    <div class="card-actions">${actionsHTML}</div>
                 </div>
             </div>
         `;
         return card;
     }
 
+    createTourCard(tour) {
+        const tourId = tour.tourid || tour.id || 0;
+        const cityName = tour.city || tour.city_name || 'Vietnam';
+        const cityId = tour.cityid || this.getCityIdFromName(cityName) || 11;
+        const duration = parseInt(tour.duration_days || 0);
+
+        const cardData = {
+            title: tour.tour_name || tour.name || 'Tour Package',
+            imagePath: this.generateTourImagePath(cityId, tourId),
+            badgeHTML: '<span class="card-badge discount">-15%</span>',
+            details: [
+                { icon: 'fa-map-marker-alt', label: 'Location', value: cityName },
+                { icon: 'fa-clock', label: 'Duration', value: `${duration} ${duration === 1 ? 'day' : 'days'}` },
+                { icon: 'fa-money-bill-wave', label: 'Price', value: `${this.formatPrice(tour.price_per_person || 0)} VND` }
+            ],
+            actions: [
+                { class: 'card-btn-primary', handler: `bookTour(${tourId}, ${cityId})`, title: 'Book this tour', icon: 'fa-calendar-plus', text: 'Book' },
+                { class: 'card-btn-secondary', handler: `viewTourDetails(${tourId}, ${cityId})`, title: 'View tour details', icon: 'fa-info-circle', text: 'Details' }
+            ]
+        };
+
+        return this._createBaseCard('tour', cardData);
+    }
+
     createHotelCard(hotel) {
-        const card = document.createElement('div');
-        card.className = 'data-card hotel-card';
-        
-        const cost = parseFloat(hotel.cost || 0);
-        const rating = parseFloat(hotel.ratings || 4);
-        
-        let hotelName = 'Hotel';
-        if (hotel.hotel && hotel.hotel.trim() !== '') {
-            hotelName = hotel.hotel.trim();
-        } else if (hotel.name && hotel.name.trim() !== '') {
-            hotelName = hotel.name.trim();
-        } else if (hotel.hotel_name && hotel.hotel_name.trim() !== '') {
-            hotelName = hotel.hotel_name.trim();
-        } else if (hotel.title && hotel.title.trim() !== '') {
-            hotelName = hotel.title.trim();
-        }
-        
-        const cityName = hotel.city || hotel.city_name || 'Vietnam';
         const hotelId = hotel.hotelid || hotel.id || 0;
+        const hotelName = hotel.hotel || hotel.hotel_name || hotel.name || 'Hotel';
+        const rating = parseFloat(hotel.ratings || 4).toFixed(1);
+        const cost = parseFloat(hotel.cost || 0);
+
+        const cardData = {
+            title: hotelName,
+            imagePath: this.generateHotelImagePath(hotelId),
+            badgeHTML: `<span class="card-badge rating">${rating}</span>`,
+            details: [
+                { icon: 'fa-map-marker-alt', label: 'Location', value: hotel.city || hotel.city_name || 'Vietnam' },
+                { icon: 'fa-star', label: 'Rating', value: `${rating}/5.0` }
+            ],
+            actions: [
+                { class: 'card-btn-primary', handler: `bookHotel(${hotelId})`, title: 'Book this hotel', icon: 'fa-bed', text: 'Book' },
+                { class: 'card-btn-secondary', handler: `viewHotelDetails(${hotelId})`, title: 'View hotel details', icon: 'fa-info-circle', text: 'Details' }
+            ]
+        };
         
-        const imagePath = this.generateHotelImagePath(hotelId);
-        
-        card.innerHTML = `
-            <div class="card-content">
-                <div class="card-image">
-                    <img src="${imagePath}" alt="${this.escapeHtml(hotelName)}" onerror="this.src='../images/default-hotel.jpg'">
-                    <span class="card-badge rating">${rating.toFixed(1)}</span>
-                </div>
-                <div class="card-info">
-                    <div class="card-title" title="${this.escapeHtml(hotelName)}">
-                        ${this.escapeHtml(hotelName)}
-                    </div>
-                    <div class="card-details">
-                        <div class="detail-item">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <span class="detail-label">Location:</span>
-                            <span class="detail-value">${this.escapeHtml(cityName)}</span>
-                        </div>
-                        <div class="detail-item">
-                            <i class="fas fa-star"></i>
-                            <span class="detail-label">Rating:</span>
-                            <span class="detail-value">${rating.toFixed(1)}/5.0</span>
-                        </div>
-                        ${cost > 0 ? `
-                        <div class="detail-item">
-                            <i class="fas fa-money-bill-wave"></i>
-                            <span class="detail-label">Price:</span>
-                            <span class="detail-value">${this.formatPrice(cost)} VND/night</span>
-                        </div>
-                        ` : ''}
-                    </div>
-                    <div class="card-actions">
-                        <button class="card-btn card-btn-primary" onclick="bookHotel(${hotelId})" title="Book this hotel">
-                            <i class="fas fa-bed"></i>
-                            Book
-                        </button>
-                        <button class="card-btn card-btn-secondary" onclick="viewHotelDetails(${hotelId})" title="View hotel details">
-                            <i class="fas fa-info-circle"></i>
-                            Details
-                        </button>
-                    </div>
-                </div>
-            </div>
-        `;
-        return card;
+        if (cost > 0) {
+            cardData.details.push({ 
+                icon: 'fa-money-bill-wave', 
+                label: 'Price', 
+                value: `${this.formatPrice(cost)} VND/night` 
+            });
+        }
+
+        return this._createBaseCard('hotel', cardData);
     }
         
     getCityIdFromName(cityName) {
