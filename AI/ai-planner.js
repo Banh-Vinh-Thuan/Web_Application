@@ -1,3 +1,4 @@
+
 // Enhanced Global Functions with Proper URL Construction and Data Persistence
 function bookTour(tourId, cityId) {
     if (!tourId || !cityId) {
@@ -120,7 +121,6 @@ function restoreChatDataAfterBooking() {
 
 class TravelChatbot {
     constructor() {
-        // Fixed API endpoint 
         this.apiEndpoint = './rag_chatbot_backend_refactored.php';
         this.currentChatId = null;
         this.isTyping = false;
@@ -128,6 +128,7 @@ class TravelChatbot {
         this.chatHistoryList = [];
         this.editingChatId = null;
         this.initialized = false;
+        this.lastSuccessfulResponse = null;
         
         this.initializeElements();
         this.bindEvents();
@@ -136,7 +137,6 @@ class TravelChatbot {
     }
     
     initializeElements() {
-        // Wait for DOM elements to be available
         this.waitForElements().then(() => {
             this.welcomeScreen = document.getElementById('welcomeScreen');
             this.messagesContainer = document.getElementById('messagesContainer');
@@ -149,7 +149,6 @@ class TravelChatbot {
             
             this.initialized = true;
             
-            // Initialize after elements are found
             this.bindEvents();
             this.loadChatHistory();
             this.checkForRestoredData();
@@ -202,7 +201,6 @@ class TravelChatbot {
             return;
         }
         
-        // Remove existing listeners to prevent duplicates
         if (this.sendBtn._boundClickHandler) {
             this.sendBtn.removeEventListener('click', this.sendBtn._boundClickHandler);
         }
@@ -210,7 +208,6 @@ class TravelChatbot {
             this.messageInput.removeEventListener('keypress', this.messageInput._boundKeyHandler);
         }
         
-        // Bind new listeners
         this.sendBtn._boundClickHandler = () => this.sendMessage();
         this.sendBtn.addEventListener('click', this.sendBtn._boundClickHandler);
         
@@ -222,18 +219,14 @@ class TravelChatbot {
         };
         this.messageInput.addEventListener('keypress', this.messageInput._boundKeyHandler);
         
-        // Input validation
         this.messageInput.addEventListener('input', () => this.validateInput());
         
-        // New chat button
         if (this.newChatBtn) {
             this.newChatBtn.addEventListener('click', () => this.startNewChat());
         }
         
-        // Auto-resize textarea
         this.messageInput.addEventListener('input', () => this.autoResizeTextarea());
         
-        // Global click handler
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.suggestion-btn')) {
                 this.removeSuggestions();
@@ -244,12 +237,10 @@ class TravelChatbot {
             }
         });
 
-        // Save data before page unload
         window.addEventListener('beforeunload', () => {
             this.saveCurrentChatToHistory();
         });
 
-        // Auto-save every 30 seconds
         if (!this.autoSaveInterval) {
             this.autoSaveInterval = setInterval(() => {
                 if (this.conversationHistory.length > 0) {
@@ -262,80 +253,681 @@ class TravelChatbot {
     }
     
     addBulkDeleteControls() {
-        const sidebar = document.querySelector('.chat-sidebar');
-        if (!sidebar || sidebar.querySelector('.bulk-delete-controls')) return;
-
+        if (this.chatList.querySelector('.bulk-delete-controls')) {
+            return;
+        }
+        
         const bulkControls = document.createElement('div');
         bulkControls.className = 'bulk-delete-controls';
         bulkControls.innerHTML = `
-            <button class="bulk-delete-btn" onclick="window.travelChatbot.showBulkDeleteDialog()" title="Delete multiple chats">
-                <i class="fas fa-trash-alt"></i>
-                Clear History
-            </button>
+            <div class="bulk-actions">
+                <button class="bulk-btn clear-all-btn" onclick="window.travelChatbot.clearAllHistory()">
+                    <i class="fas fa-trash-alt"></i> Clear All History
+                </button>
+            </div>
         `;
         
-        const newChatBtn = sidebar.querySelector('#newChatBtn');
-        if (newChatBtn && newChatBtn.parentNode) {
-            newChatBtn.parentNode.insertBefore(bulkControls, newChatBtn.nextSibling);
-        }
+        this.chatList.insertBefore(bulkControls, this.chatList.firstChild);
     }
 
-    showBulkDeleteDialog() {
-        if (this.chatHistoryList.length === 0) {
-            alert('No chat history to delete.');
+    async clearAllHistory() {
+        if (!confirm('Are you sure you want to delete ALL chat history? This cannot be undone.')) {
             return;
         }
-
-        const options = [
-            'Delete all conversations',
-            'Delete conversations older than 7 days',
-            'Delete conversations older than 30 days',
-            'Cancel'
-        ];
-
-        const choice = prompt(`Choose an option:\n${options.map((opt, i) => `${i + 1}. ${opt}`).join('\n')}\n\nEnter number (1-4):`);
         
-        if (!choice || choice === '4') return;
-
-        const now = new Date().getTime();
-        let toDelete = [];
-
-        switch(choice) {
-            case '1':
-                if (confirm('Are you sure you want to delete ALL conversations? This cannot be undone.')) {
-                    toDelete = [...this.chatHistoryList];
-                }
-                break;
-            case '2':
-                const weekAgo = now - (7 * 24 * 60 * 60 * 1000);
-                toDelete = this.chatHistoryList.filter(chat => chat.timestamp < weekAgo);
-                break;
-            case '3':
-                const monthAgo = now - (30 * 24 * 60 * 60 * 1000);
-                toDelete = this.chatHistoryList.filter(chat => chat.timestamp < monthAgo);
-                break;
-        }
-
-        if (toDelete.length > 0) {
-            if (confirm(`Delete ${toDelete.length} conversation(s)?`)) {
-                this.bulkDeleteChats(toDelete.map(chat => chat.id));
-            }
-        } else {
-            alert('No conversations match the selected criteria.');
+        try {
+            this.chatHistoryList = [];
+            localStorage.removeItem('chatHistory');
+            
+            const response = await fetch('./clear_all_chats.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: 1
+                })
+            });
+            
+            this.updateChatHistorySidebar();
+            this.startNewChat();
+            
+            console.log('All chat history cleared');
+            
+        } catch (error) {
+            console.error('Error clearing chat history:', error);
+            alert('Failed to clear history. Please try again.');
         }
     }
 
-    bulkDeleteChats(chatIds) {
-        this.chatHistoryList = this.chatHistoryList.filter(chat => !chatIds.includes(chat.id));
-        localStorage.setItem('chatHistory', JSON.stringify(this.chatHistoryList));
-        
-        if (chatIds.includes(this.currentChatId)) {
-            this.startNewChat();
-        } else {
-            this.updateChatHistorySidebar();
+    // Core Card Layout Logic - NEW IMPLEMENTATION
+    addDataCards(messageElement, response) {
+        const cardContainer = document.createElement('div');
+        cardContainer.className = 'data-cards';
+
+        const tours = this.extractToursFromResponse(response);
+        const hotels = this.extractHotelsFromResponse(response);
+
+        console.log('Data cards input:', {
+            total_tours: tours.length,
+            total_hotels: hotels.length,
+            response_type: response.type
+        });
+
+        // Apply filters before rendering
+        const filteredTours = this.applyFiltersToData(tours, response);
+        const filteredHotels = this.applyFiltersToData(hotels, response);
+
+        // Get unique cities
+        const tourCities = [...new Set(filteredTours.map(t => t.city_group || t.city || t.city_name))];
+        const hotelCities = [...new Set(filteredHotels.map(h => h.city_group || h.city || h.city_name))];
+
+        console.log('Cities detected:', {
+            tour_cities: tourCities,
+            hotel_cities: hotelCities
+        });
+
+        // Determine layout based on content - PASS RESPONSE OBJECT
+        const layout = this.determineCardLayout(filteredTours, filteredHotels, tourCities, hotelCities, response);
+
+        console.log('Layout determined:', layout);
+
+        // Render cards based on layout
+        this.renderCardsWithLayout(cardContainer, layout, filteredTours, filteredHotels);
+
+        if (cardContainer.children.length > 0) {
+            messageElement.querySelector('.message-content').appendChild(cardContainer);
         }
     }
     
+    determineCardLayout(tours, hotels, tourCities, hotelCities, response) {
+        const hasTours = tours.length > 0;
+        const hasHotels = hotels.length > 0;
+        
+        // Check if this query has filtering conditions (price, duration, rating)
+        const hasFilterConditions = this.detectFilterConditions(response);
+        
+        console.log('Layout analysis:', {
+            hasTours,
+            hasHotels,
+            tourCount: tours.length,
+            hotelCount: hotels.length,
+            hasFilterConditions
+        });
+
+        // Case 1: Mixed content (tours and hotels) - Tours always on left
+        if (hasTours && hasHotels) {
+            if (hasFilterConditions) {
+                // Apply conditional distribution when filtering
+                return this.createFilteredMixedLayout(tours, hotels);
+            } else {
+                // Default: 3-3 distribution
+                return {
+                    type: 'mixed-content',
+                    leftColumn: { type: 'tour', data: tours.slice(0, 3), city: tourCities[0] || 'Various' },
+                    rightColumn: { type: 'hotel', data: hotels.slice(0, 3), city: hotelCities[0] || 'Various' }
+                };
+            }
+        }
+
+        // Case 2: Only tours
+        if (hasTours && !hasHotels) {
+            if (hasFilterConditions) {
+                // Apply conditional distribution when filtering
+                return this.createFilteredSingleTypeLayout(tours, 'tour');
+            } else {
+                // Default: Split 6 tours into 3-3
+                const totalTours = tours.slice(0, 6);
+                return {
+                    type: 'tours-split',
+                    leftColumn: { type: 'tour', data: totalTours.slice(0, 3), city: 'Tours' },
+                    rightColumn: { type: 'tour', data: totalTours.slice(3, 6), city: 'Tours' }
+                };
+            }
+        }
+
+        // Case 3: Only hotels
+        if (hasHotels && !hasTours) {
+            if (hasFilterConditions) {
+                // Apply conditional distribution when filtering
+                return this.createFilteredSingleTypeLayout(hotels, 'hotel');
+            } else {
+                // Default: Split 6 hotels into 3-3
+                const totalHotels = hotels.slice(0, 6);
+                return {
+                    type: 'hotels-split',
+                    leftColumn: { type: 'hotel', data: totalHotels.slice(0, 3), city: 'Hotels' },
+                    rightColumn: { type: 'hotel', data: totalHotels.slice(3, 6), city: 'Hotels' }
+                };
+            }
+        }
+
+        // Default fallback - single column
+        return {
+            type: 'single-column',
+            leftColumn: { type: hasTours ? 'tour' : 'hotel', data: (hasTours ? tours : hotels).slice(0, 6) }
+        };
+    }
+
+    detectFilterConditions(response) {
+        // Check if response indicates filtering was applied
+        if (response && response.filters_applied) {
+            return true;
+        }
+        
+        // Check conversation history for filter keywords
+        const recentMessages = this.conversationHistory.slice(-2);
+        const userMessage = recentMessages.find(msg => msg.role === 'user')?.message?.toLowerCase() || '';
+        
+        // Filter condition keywords
+        const filterKeywords = [
+            // Price filters
+            'price', 'budget', 'cost', 'cheap', 'expensive', 'under', 'over', 'below', 'above',
+            'million', 'triệu', 'vnd', 'dollar',
+            
+            // Duration filters  
+            'day', 'days', 'ngày', '1 day', '2 day', '3 day', '4 day', '5 day', '6 day', '7 day',
+            
+            // Rating filters
+            'star', 'rating', 'rated', 'sao', '1 star', '2 star', '3 star', '4 star', '5 star',
+            
+            // Quality filters
+            'luxury', 'premium', 'budget', 'basic', 'high-end', 'low-cost'
+        ];
+        
+        const hasFilterKeywords = filterKeywords.some(keyword => userMessage.includes(keyword));
+        
+        console.log('Filter detection:', {
+            userMessage: userMessage.substring(0, 100),
+            hasFilterKeywords,
+            matchedKeywords: filterKeywords.filter(k => userMessage.includes(k))
+        });
+        
+        return hasFilterKeywords;
+    }
+
+    createFilteredMixedLayout(tours, hotels) {
+        const totalItems = tours.length + hotels.length;
+        
+        if (totalItems === 1) {
+            // 1 item total: put in left column
+            const item = tours.length > 0 ? tours[0] : hotels[0];
+            const type = tours.length > 0 ? 'tour' : 'hotel';
+            return {
+                type: 'filtered-mixed-single',
+                leftColumn: { type: type, data: [item], city: 'Results' },
+                rightColumn: { type: type, data: [], city: 'Results' }
+            };
+        } else if (totalItems === 2) {
+            // 2 items total: 1 left, 1 right
+            if (tours.length === 1 && hotels.length === 1) {
+                return {
+                    type: 'filtered-mixed-balanced',
+                    leftColumn: { type: 'tour', data: [tours[0]], city: 'Tours' },
+                    rightColumn: { type: 'hotel', data: [hotels[0]], city: 'Hotels' }
+                };
+            } else if (tours.length === 2) {
+                return {
+                    type: 'filtered-mixed-tours',
+                    leftColumn: { type: 'tour', data: [tours[0]], city: 'Tours' },
+                    rightColumn: { type: 'tour', data: [tours[1]], city: 'Tours' }
+                };
+            } else {
+                return {
+                    type: 'filtered-mixed-hotels',
+                    leftColumn: { type: 'hotel', data: [hotels[0]], city: 'Hotels' },
+                    rightColumn: { type: 'hotel', data: [hotels[1]], city: 'Hotels' }
+                };
+            }
+        } else if (totalItems === 3) {
+            // 3 items total: 2 left, 1 right
+            if (tours.length >= 2) {
+                // Prioritize tours on left
+                const rightItem = tours.length > 2 ? tours[2] : (hotels.length > 0 ? hotels[0] : null);
+                const rightType = tours.length > 2 ? 'tour' : 'hotel';
+                
+                return {
+                    type: 'filtered-mixed-3items',
+                    leftColumn: { type: 'tour', data: tours.slice(0, 2), city: 'Tours' },
+                    rightColumn: { type: rightType, data: rightItem ? [rightItem] : [], city: rightType === 'tour' ? 'Tours' : 'Hotels' }
+                };
+            } else {
+                // More hotels than tours
+                return {
+                    type: 'filtered-mixed-3items',
+                    leftColumn: { type: 'hotel', data: hotels.slice(0, 2), city: 'Hotels' },
+                    rightColumn: { type: tours.length > 0 ? 'tour' : 'hotel', data: tours.length > 0 ? [tours[0]] : [hotels[2]], city: tours.length > 0 ? 'Tours' : 'Hotels' }
+                };
+            }
+        } else {
+            // 4+ items: distribute as evenly as possible, max 3 per side
+            const leftCount = Math.min(3, Math.ceil(totalItems / 2));
+            const rightCount = Math.min(3, totalItems - leftCount);
+            
+            // Prioritize tours on left side
+            let leftData = [];
+            let rightData = [];
+            let leftType = 'tour';
+            let rightType = 'hotel';
+            
+            if (tours.length >= leftCount) {
+                leftData = tours.slice(0, leftCount);
+                if (tours.length > leftCount) {
+                    rightData = tours.slice(leftCount, leftCount + rightCount);
+                    rightType = 'tour';
+                } else {
+                    rightData = hotels.slice(0, rightCount);
+                    rightType = 'hotel';
+                }
+            } else {
+                leftData = [...tours, ...hotels.slice(0, leftCount - tours.length)];
+                rightData = hotels.slice(leftCount - tours.length, leftCount - tours.length + rightCount);
+                leftType = 'mixed';
+                rightType = 'hotel';
+            }
+            
+            return {
+                type: 'filtered-mixed-multiple',
+                leftColumn: { type: leftType, data: leftData, city: 'Results' },
+                rightColumn: { type: rightType, data: rightData, city: 'Results' }
+            };
+        }
+    }
+
+    createFilteredSingleTypeLayout(items, type) {
+        const totalItems = items.length;
+        
+        if (totalItems === 1) {
+            // 1 item: put in left column
+            return {
+                type: `filtered-${type}-single`,
+                leftColumn: { type: type, data: [items[0]], city: type === 'tour' ? 'Tours' : 'Hotels' },
+                rightColumn: { type: type, data: [], city: type === 'tour' ? 'Tours' : 'Hotels' }
+            };
+        } else if (totalItems === 2) {
+            // 2 items: 1 left, 1 right
+            return {
+                type: `filtered-${type}-double`,
+                leftColumn: { type: type, data: [items[0]], city: type === 'tour' ? 'Tours' : 'Hotels' },
+                rightColumn: { type: type, data: [items[1]], city: type === 'tour' ? 'Tours' : 'Hotels' }
+            };
+        } else if (totalItems === 3) {
+            // 3 items: 2 left, 1 right
+            return {
+                type: `filtered-${type}-triple`,
+                leftColumn: { type: type, data: items.slice(0, 2), city: type === 'tour' ? 'Tours' : 'Hotels' },
+                rightColumn: { type: type, data: [items[2]], city: type === 'tour' ? 'Tours' : 'Hotels' }
+            };
+        } else {
+            // 4+ items: distribute evenly, max 3 per side
+            const leftCount = Math.min(3, Math.ceil(totalItems / 2));
+            const rightCount = Math.min(3, totalItems - leftCount);
+            
+            return {
+                type: `filtered-${type}-multiple`,
+                leftColumn: { type: type, data: items.slice(0, leftCount), city: type === 'tour' ? 'Tours' : 'Hotels' },
+                rightColumn: { type: type, data: items.slice(leftCount, leftCount + rightCount), city: type === 'tour' ? 'Tours' : 'Hotels' }
+            };
+        }
+    }
+
+    cityMatches(itemCity, queryCity) {
+        if (!itemCity || !queryCity) return false;
+        
+        const itemCityLower = itemCity.toString().toLowerCase().trim();
+        const queryCityLower = queryCity.toString().toLowerCase().trim();
+        
+        // Direct match
+        if (itemCityLower === queryCityLower) return true;
+        
+        // Substring match
+        if (itemCityLower.includes(queryCityLower) || queryCityLower.includes(itemCityLower)) {
+            return true;
+        }
+        
+        // City aliases mapping
+        const cityMappings = {
+            'ho chi minh': ['saigon', 'hcm', 'ho chi minh city', 'hcmc'],
+            'hanoi': ['ha noi', 'hà nội'],
+            'da nang': ['danang', 'đà nẵng'], 
+            'hoi an': ['hoian', 'hội an'],
+            'hue': ['huế'],
+            'da lat': ['dalat', 'đà lạt'],
+            'phu quoc': ['phuquoc', 'phú quốc'],
+            'can tho': ['cantho', 'cần thơ'],
+            'ha giang': ['hagiang', 'hà giang'],
+            'phu yen': ['phuyen', 'phú yên'],
+            'tay bac': ['taybac', 'tây bắc', 'northwest'],
+            'nha trang': ['nhatrang']
+        };
+        
+        for (const [standard, variations] of Object.entries(cityMappings)) {
+            if (queryCityLower.includes(standard)) {
+                for (const variation of variations) {
+                    if (itemCityLower.includes(variation)) {
+                        return true;
+                    }
+                }
+            }
+            
+            // Check reverse mapping
+            for (const variation of variations) {
+                if (queryCityLower.includes(variation) && itemCityLower.includes(standard)) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+
+    renderCardsWithLayout(container, layout, tours, hotels) {
+        container.className = 'data-cards two-column-layout';
+
+        // Create left column
+        if (layout.leftColumn && layout.leftColumn.data.length > 0) {
+            const leftColumn = this.createColumnElement('left', layout.leftColumn, layout.type);
+            container.appendChild(leftColumn);
+        }
+
+        // Create right column
+        if (layout.rightColumn && layout.rightColumn.data.length > 0) {
+            const rightColumn = this.createColumnElement('right', layout.rightColumn, layout.type);
+            container.appendChild(rightColumn);
+        }
+    }
+
+    createColumnElement(side, columnData, layoutType) {
+        const column = document.createElement('div');
+        column.className = `card-column ${side}-column ${columnData.type}-column`;
+
+        // Create header
+        const header = this.createColumnHeader(columnData, layoutType);
+        if (header) {
+            column.appendChild(header);
+        }
+
+        // Create cards wrapper
+        const cardsWrapper = document.createElement('div');
+        cardsWrapper.className = 'column-cards';
+
+        // Add cards
+        columnData.data.forEach(item => {
+            const card = columnData.type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            cardsWrapper.appendChild(card);
+        });
+
+        column.appendChild(cardsWrapper);
+        return column;
+    }
+
+    createColumnHeader(columnData, layoutType) {
+        // Don't show headers for simple splits without filtering
+        const simpleLayouts = ['tours-split', 'hotels-split'];
+        if (simpleLayouts.includes(layoutType)) {
+            return null;
+        }
+        
+        // Don't show headers for single item results
+        if (layoutType.includes('single') && columnData.data.length <= 1) {
+            return null;
+        }
+        
+        const header = document.createElement('h4');
+        header.className = 'column-header';
+
+        let icon, text;
+        if (columnData.type === 'tour' || columnData.type === 'mixed') {
+            icon = 'fa-map-signs';
+            if (layoutType.startsWith('filtered-')) {
+                text = `Found ${columnData.data.length} ${columnData.data.length === 1 ? 'tour' : 'tours'}`;
+            } else {
+                text = `Tours (${columnData.data.length})`;
+            }
+        } else {
+            icon = 'fa-bed';
+            if (layoutType.startsWith('filtered-')) {
+                text = `Found ${columnData.data.length} ${columnData.data.length === 1 ? 'hotel' : 'hotels'}`;
+            } else {
+                text = `Hotels (${columnData.data.length})`;
+            }
+        }
+
+        header.innerHTML = `<i class="fas ${icon}"></i> ${text}`;
+        return header;
+    }
+
+    // Helper functions
+    applyFiltersToData(data, response) {
+        let filtered = [...data];
+
+        // If this is multi-city data, preserve the city grouping
+        if (response.data && response.data.multi_city) {
+            // Data is already properly grouped on the backend
+            return filtered.slice(0, 6);
+        }
+
+        // For non-multi-city, limit to maximum 6 total items
+        return filtered.slice(0, 6);
+    }
+
+    extractToursFromResponse(response) {
+        if (response.data && Array.isArray(response.data.tours)) {
+            return response.data.tours;
+        }
+        if (response.type === 'destination_info' && response.data?.tours) {
+            return response.data.tours;
+        }
+        if (Array.isArray(response.data)) {
+            return response.data.filter(item => item.tour_name || item.tourid);
+        }
+        return [];
+    }
+
+    extractHotelsFromResponse(response) {
+        if (response.data && Array.isArray(response.data.hotels)) {
+            return response.data.hotels;
+        }
+        if (response.type === 'destination_info' && response.data?.hotels) {
+            return response.data.hotels;
+        }
+        if (Array.isArray(response.data)) {
+            return response.data.filter(item => item.hotel || item.hotelid);
+        }
+        return [];
+    }
+
+    // Card creation functions (preserved from original)
+    generateTourImagePath(cityId, tourId) {
+        const cityIdToString = {
+            10: 'taybac', 11: 'hcm', 12: 'nhatrang', 13: 'hue', 14: 'phuyen', 
+            15: 'dalat',  16: 'phuquoc', 17: 'hoian', 18: 'hagiang', 19: 'danang',
+            20: 'cantho', 21: 'hanoi'
+        };
+        
+        const cityString = cityIdToString[cityId] || 'hcm';
+        
+        const imageMap = {
+            'taybac': [1, 2, 3, 4, 93, 94, 95, 96],
+            'hcm': [5, 6, 7, 8, 89, 90, 91, 92],
+            'nhatrang': [85, 86, 87, 88, 9, 10, 11, 12],
+            'hue': [13, 14, 15, 16, 81, 82, 83, 84],
+            'phuyen': [77, 78, 79, 80, 17, 18, 19, 20],
+            'dalat': [21, 22, 23, 24, 73, 74, 75, 76],        
+            'phuquoc': [25, 26, 27, 28, 69, 70, 71, 72],
+            'hoian': [29, 30, 31, 32, 65, 66, 67, 68],   
+            'hagiang': [61, 62, 63, 64, 33, 34, 35, 36],
+            'danang': [37, 38, 39, 40, 57, 58, 59, 60],
+            'cantho': [53, 54, 55, 56, 41, 42, 43, 44],
+            'hanoi': [45, 46, 47, 48, 49, 50, 51, 52]
+        };
+            
+        const imageIds = imageMap[cityString] || [1, 2, 3, 4];
+        const imageId = imageIds[(tourId - 1) % imageIds.length];
+            
+        return `../tourphotoID/${imageId}.jpg`;
+    }
+
+    generateHotelImagePath(hotelId) {
+        return `../hotelphotoID/${hotelId}.jpg`;
+    }
+
+    createTourCard(tour) {
+        const tourId = tour.tourid || tour.id || 0;
+        const cityName = tour.city || tour.city_name || 'Vietnam';
+        const cityId = tour.cityid || this.getCityIdFromName(cityName) || 11;
+        const duration = parseInt(tour.duration_days || 0);
+        const tourName = tour.tour_name || 'Tour Package';
+
+        const card = document.createElement('div');
+        card.className = 'data-card tour-card';
+
+        card.innerHTML = `
+            <div class="card-content">
+                <div class="card-image">
+                    <img src="${this.generateTourImagePath(cityId, tourId)}" alt="${this.escapeHtml(tourName)}" onerror="this.src='../images/default-tour.jpg'">
+                    <span class="card-badge discount">-15%</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title" title="${this.escapeHtml(tourName)}">
+                        ${this.escapeHtml(tourName)}
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-value">${this.escapeHtml(cityName)}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-clock"></i>
+                            <span class="detail-label">Duration:</span>
+                            <span class="detail-value">${duration} ${duration === 1 ? 'day' : 'days'}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <span class="detail-label">Price:</span>
+                            <span class="detail-value">${this.formatPrice(tour.price_per_person || 0)} VND</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-btn card-btn-primary" onclick="bookTour(${tourId}, ${cityId})" title="Book this tour">
+                            <i class="fas fa-calendar-plus"></i>
+                            Book
+                        </button>
+                        <button class="card-btn card-btn-secondary" onclick="viewTourDetails(${tourId}, ${cityId})" title="View tour details">
+                            <i class="fas fa-info-circle"></i>
+                            Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        return card;
+    }
+
+    createHotelCard(hotel) {
+        const hotelId = hotel.hotelid || hotel.id || 0;
+        const hotelName = hotel.hotel || hotel.hotel_name || hotel.name || 'Hotel';
+        const rating = parseFloat(hotel.ratings || 4).toFixed(1);
+        const cost = parseFloat(hotel.cost || 0);
+
+        const card = document.createElement('div');
+        card.className = 'data-card hotel-card';
+
+        let priceDetail = '';
+        if (cost > 0) {
+            priceDetail = `
+                <div class="detail-item">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <span class="detail-label">Price:</span>
+                    <span class="detail-value">${this.formatPrice(cost)} VND/night</span>
+                </div>
+            `;
+        }
+
+        card.innerHTML = `
+            <div class="card-content">
+                <div class="card-image">
+                    <img src="${this.generateHotelImagePath(hotelId)}" alt="${this.escapeHtml(hotelName)}" onerror="this.src='../images/default-hotel.jpg'">
+                    <span class="card-badge rating">${rating}</span>
+                </div>
+                <div class="card-info">
+                    <div class="card-title" title="${this.escapeHtml(hotelName)}">
+                        ${this.escapeHtml(hotelName)}
+                    </div>
+                    <div class="card-details">
+                        <div class="detail-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span class="detail-label">Location:</span>
+                            <span class="detail-value">${this.escapeHtml(hotel.city || hotel.city_name || 'Vietnam')}</span>
+                        </div>
+                        <div class="detail-item">
+                            <i class="fas fa-bed"></i>
+                            <span class="detail-label">Rating:</span>
+                            <span class="detail-value">${rating}/5.0</span>
+                        </div>
+                        ${priceDetail}
+                    </div>
+                    <div class="card-actions">
+                        <button class="card-btn card-btn-primary" onclick="bookHotel(${hotelId})" title="Book this hotel">
+                            <i class="fas fa-bed"></i>
+                            Book
+                        </button>
+                        <button class="card-btn card-btn-secondary" onclick="viewHotelDetails(${hotelId})" title="View hotel details">
+                            <i class="fas fa-info-circle"></i>
+                            Details
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+        return card;
+    }
+        
+    getCityIdFromName(cityName) {
+        const cityMapping = {
+            'Ho Chi Minh': 11, 'Ho Chi Minh City': 11, 'Saigon': 11,
+            'Nha Trang': 12,
+            'Hue': 13,
+            'Phu Yen': 14,
+            'Da Lat': 15, 'Dalat': 15,
+            'Phu Quoc': 16,
+            'Hoi An': 17,
+            'Ha Giang': 18,
+            'Tay Bac': 10,
+            'Da Nang': 19,
+            'Can Tho': 20,
+            'Hanoi': 21
+        };
+        
+        return cityMapping[cityName] || cityMapping[cityName.toLowerCase()] || 11;
+    }
+
+    // Rest of the class methods remain the same as original...
+    formatChatTime(timestamp) {
+        if (!timestamp) return '';
+        
+        const date = new Date(timestamp);
+        const now = new Date();
+        const diffTime = now - date;
+        const diffMinutes = Math.floor(diffTime / (1000 * 60));
+        const diffHours = Math.floor(diffTime / (1000 * 60 * 60));
+        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        
+        if (diffMinutes < 1) {
+            return 'Just now';
+        } else if (diffMinutes < 60) {
+            return `${diffMinutes}m ago`;
+        } else if (diffHours < 24) {
+            return `${diffHours}h ago`;
+        } else if (diffDays < 7) {
+            return `${diffDays}d ago`;
+        } else {
+            return date.toLocaleDateString();
+        }
+    }
+
     saveCurrentChatData() {
         if (this.conversationHistory.length > 0) {
             const chatData = {
@@ -354,266 +946,476 @@ class TravelChatbot {
     }
 
     saveCurrentChatToHistory() {
-        if (this.conversationHistory.length > 0) {
-            const chatTitle = this.generateSmartChatTitle();
-            const chatSession = {
-                id: this.currentChatId || Date.now(),
-                title: chatTitle,
-                conversationHistory: [...this.conversationHistory],
-                messagesHTML: this.messages ? this.messages.innerHTML : '',
-                timestamp: new Date().getTime(),
-                lastMessage: this.conversationHistory[this.conversationHistory.length - 1]?.message || ''
+        if (this.conversationHistory.length < 2) return;
+        
+        const userMessage = this.conversationHistory.find(msg => msg.role === 'user')?.message || '';
+        const botResponse = this.conversationHistory.find(msg => msg.role === 'assistant') || null;
+        
+        if (!userMessage) return;
+        
+        const title = this.generateChatTitle(userMessage);
+        const chatId = this.currentChatId || Date.now().toString();
+        
+        const now = new Date();
+        const timestamp = now.toISOString();
+        
+        const chatData = {
+            id: chatId,
+            chat_id: chatId,
+            title: title,
+            user_message: userMessage,
+            bot_response: botResponse ? JSON.stringify({
+                text: botResponse.message,
+                data: botResponse.data,
+                type: botResponse.type
+            }) : '',
+            created_at: timestamp,
+            timestamp: timestamp
+        };
+        
+        const existingIndex = this.chatHistoryList.findIndex(chat => 
+            (chat.id && chat.id == chatId) || (chat.chat_id && chat.chat_id == chatId)
+        );
+        
+        if (existingIndex >= 0) {
+            this.chatHistoryList[existingIndex] = {
+                ...this.chatHistoryList[existingIndex],
+                ...chatData
             };
+        } else {
+            this.chatHistoryList.unshift(chatData);
+        }
+        
+        if (this.chatHistoryList.length > 50) {
+            this.chatHistoryList = this.chatHistoryList.slice(0, 50);
+        }
+        
+        localStorage.setItem('chatHistory', JSON.stringify(this.chatHistoryList));
+        this.saveChatToServer(chatData);
+        this.updateChatHistorySidebar();
+        
+        console.log('Chat saved to history:', title);
+    }
+
+    async saveChatToServer(chatData) {
+        try {
+            const response = await fetch('./save_chat.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify({
+                    user_id: 1,
+                    title: chatData.title,
+                    user_message: chatData.user_message,
+                    bot_response: chatData.bot_response
+                })
+            });
             
-            const existingChats = JSON.parse(localStorage.getItem('chatHistory') || '[]');
-            const existingIndex = existingChats.findIndex(chat => chat.id === chatSession.id);
-            
-            if (existingIndex >= 0) {
-                existingChats[existingIndex] = chatSession;
-            } else {
-                existingChats.unshift(chatSession);
+            if (response.ok) {
+                const result = await response.json();
+                if (result.success) {
+                    console.log('Chat saved to server successfully');
+                }
             }
-            
-            if (existingChats.length > 50) {
-                existingChats.splice(50);
-            }
-            
-            localStorage.setItem('chatHistory', JSON.stringify(existingChats));
-            this.chatHistoryList = existingChats;
-            this.updateChatHistorySidebar();
+        } catch (error) {
+            console.error('Error saving chat to server:', error);
         }
     }
 
-    generateSmartChatTitle() {
-        const firstUserMessage = this.conversationHistory.find(msg => msg.role === 'user')?.message || 'New Chat';
+    generateChatTitle(message) {
+        let cleanMessage = message.trim();
+        cleanMessage = cleanMessage.replace(/[?!.,]/, '');
         
-        const cleanMessage = firstUserMessage
-            .toLowerCase()
-            .replace(/[?!.,]/g, '')
-            .replace(/\b(?:can you|could you|please|help me|i want to|i need to|show me|find me|tell me about|what is|what are|how to|where is)\b/g, '')
-            .trim();
-
-        const words = cleanMessage.split(/\s+/).filter(word => word.length > 2);
-        let selectedWords = words.slice(0, 4);
+        const fillerWords = [
+            'can you', 'could you', 'please', 'help me', 'i want to', 'i need to',
+            'show me', 'find me', 'tell me about', 'what is', 'what are', 'how to', 
+            'where is', 'give me', 'let me know', 'i would like', 'looking for'
+        ];
         
-        if (selectedWords.length > 0) {
-            const shortTitle = selectedWords.map(word => this.capitalizeFirstLetter(word)).join(' ');
-            
-            if (firstUserMessage.length > 25 && words.length > 4) {
-                return shortTitle + '...';
-            }
-            return shortTitle;
+        let lowerMessage = cleanMessage.toLowerCase();
+        fillerWords.forEach(filler => {
+            lowerMessage = lowerMessage.replace(new RegExp('\\b' + filler + '\\b', 'g'), '');
+        });
+        
+        const words = lowerMessage.split(' ').filter(word => word.length > 0);
+        const selectedWords = words.slice(0, 4);
+        
+        if (selectedWords.length === 0) {
+            const originalWords = cleanMessage.split(' ').filter(word => word.length > 0);
+            selectedWords.push(...originalWords.slice(0, 3));
         }
         
-        const originalWords = firstUserMessage.split(/\s+/).slice(0, 3);
-        const fallbackTitle = originalWords.map(word => this.capitalizeFirstLetter(word)).join(' ');
-        
-        if (firstUserMessage.split(/\s+/).length > 3) {
-            return fallbackTitle + '...';
+        if (selectedWords.length === 0) {
+            return 'New Chat';
         }
         
-        return fallbackTitle || 'New Chat';
-    }
-
-    capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+        let title = selectedWords.map(word => 
+            word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+        ).join(' ');
+        
+        if (words.length > selectedWords.length || cleanMessage.split(' ').length > selectedWords.length) {
+            title += '...';
+        }
+        
+        if (title.length > 50) {
+            title = title.substring(0, 47) + '...';
+        }
+        
+        return title;
     }
 
     updateChatHistorySidebar() {
         if (!this.chatList) return;
         
+        console.log('Updating chat history sidebar with', this.chatHistoryList.length, 'items');
+        
         this.chatList.innerHTML = '';
         
-        if (!this.chatHistoryList || this.chatHistoryList.length === 0) {
-            const emptyState = document.createElement('div');
-            emptyState.className = 'empty-chat-state';
-            emptyState.innerHTML = `
-                <div style="text-align: center; padding: 20px; color: #6c757d;">
-                    <i class="fas fa-comments" style="font-size: 24px; margin-bottom: 8px;"></i>
-                    <p>No conversations yet</p>
-                    <small>Start chatting to see your history here</small>
+        if (this.chatHistoryList.length >= 2) {
+            const bulkControls = document.createElement('div');
+            bulkControls.className = 'bulk-delete-controls show';
+            bulkControls.innerHTML = `
+                <div class="bulk-actions">
+                    <button class="bulk-btn clear-all-btn" onclick="window.travelChatbot.clearAllHistory()">
+                        <i class="fas fa-trash-alt"></i> Clear All History
+                    </button>
                 </div>
             `;
-            this.chatList.appendChild(emptyState);
+            this.chatList.appendChild(bulkControls);
+        }
+        
+        if (this.chatHistoryList.length === 0) {
+            const noHistoryDiv = document.createElement('div');
+            noHistoryDiv.className = 'no-history';
+            noHistoryDiv.innerHTML = `
+                <p>No chat history yet</p>
+                <small>Your conversations will appear here</small>
+            `;
+            this.chatList.appendChild(noHistoryDiv);
             return;
         }
-
-        const today = new Date();
-        const yesterday = new Date(today);
-        yesterday.setDate(yesterday.getDate() - 1);
-        const lastWeek = new Date(today);
-        lastWeek.setDate(lastWeek.getDate() - 7);
-
-        const groups = {
-            today: [],
-            yesterday: [],
-            thisWeek: [],
-            older: []
-        };
-
-        this.chatHistoryList.forEach(chat => {
-            const chatDate = new Date(chat.timestamp);
-            if (chatDate.toDateString() === today.toDateString()) {
-                groups.today.push(chat);
-            } else if (chatDate.toDateString() === yesterday.toDateString()) {
-                groups.yesterday.push(chat);
-            } else if (chatDate > lastWeek) {
-                groups.thisWeek.push(chat);
-            } else {
-                groups.older.push(chat);
-            }
-        });
-
-        this.renderChatGroup('Today', groups.today);
-        this.renderChatGroup('Yesterday', groups.yesterday);
-        this.renderChatGroup('This Week', groups.thisWeek);
-        this.renderChatGroup('Older', groups.older);
-    }
-
-    renderChatGroup(groupTitle, chats) {
-        if (chats.length === 0) return;
-
-        const groupElement = document.createElement('div');
-        groupElement.className = 'chat-group';
         
-        const groupHeader = document.createElement('div');
-        groupHeader.className = 'chat-group-header';
-        groupHeader.textContent = groupTitle;
-        groupElement.appendChild(groupHeader);
-
-        chats.forEach(chat => {
-            const chatItem = document.createElement('div');
-            chatItem.className = 'chat-item';
-            chatItem.setAttribute('data-chat-id', chat.id);
-            if (chat.id === this.currentChatId) {
-                chatItem.classList.add('active');
+        const sortedHistory = [...this.chatHistoryList].sort((a, b) => {
+            const timeA = new Date(a.created_at || a.timestamp || 0).getTime();
+            const timeB = new Date(b.created_at || b.timestamp || 0).getTime();
+            
+            if (timeA === timeB) {
+                const idA = parseInt(a.id || a.chat_id || 0);
+                const idB = parseInt(b.id || b.chat_id || 0);
+                return idB - idA;
             }
             
-            chatItem.innerHTML = `
-                <div class="chat-item-content" onclick="window.travelChatbot.loadChat('${chat.id}')">
-                    <div class="chat-title" id="title-${chat.id}">${this.escapeHtml(chat.title)}</div>
-                    <input type="text" class="chat-title-input" id="input-${chat.id}" 
-                           value="${this.escapeHtml(chat.title)}" 
-                           style="display: none;"
-                           onblur="window.travelChatbot.saveTitleEdit('${chat.id}')"
-                           onkeypress="window.travelChatbot.handleTitleKeyPress(event, '${chat.id}')">
+            return timeB - timeA;
+        });
+        
+        const groupedHistory = this.groupHistoryByDate(sortedHistory);
+        const groupOrder = ['Today', 'Yesterday', 'This Week', 'This Month', 'Older'];
+        
+        groupOrder.forEach(groupTitle => {
+            if (groupedHistory[groupTitle] && groupedHistory[groupTitle].length > 0) {
+                const dateHeader = document.createElement('div');
+                dateHeader.className = 'chat-date-header';
+                dateHeader.textContent = groupTitle;
+                this.chatList.appendChild(dateHeader);
+                
+                groupedHistory[groupTitle].forEach(chat => {
+                    const chatItem = this.createChatHistoryItem(chat);
+                    this.chatList.appendChild(chatItem);
+                });
+            }
+        });
+    }
+
+    groupHistoryByDate(history) {
+        const groups = {};
+        const now = new Date();
+        
+        history.forEach(chat => {
+            const chatDate = new Date(chat.created_at || chat.timestamp);
+            const diffTime = now - chatDate;
+            const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+            
+            let groupKey;
+            if (diffDays === 0) {
+                groupKey = 'Today';
+            } else if (diffDays === 1) {
+                groupKey = 'Yesterday';
+            } else if (diffDays < 7) {
+                groupKey = 'This Week';
+            } else if (diffDays < 30) {
+                groupKey = 'This Month';
+            } else {
+                groupKey = 'Older';
+            }
+            
+            if (!groups[groupKey]) {
+                groups[groupKey] = [];
+            }
+            groups[groupKey].push(chat);
+        });
+        
+        return groups;
+    }
+
+    createChatHistoryItem(chat) {
+        const chatItem = document.createElement('div');
+        chatItem.className = 'chat-history-item';
+        chatItem.setAttribute('data-chat-id', chat.id || chat.chat_id);
+        
+        const isCurrentChat = this.currentChatId && (chat.id == this.currentChatId || chat.chat_id == this.currentChatId);
+        if (isCurrentChat) {
+            chatItem.classList.add('active');
+        }
+        
+        chatItem.innerHTML = `
+            <div class="chat-item-main" onclick="window.travelChatbot.loadChatHistoryItem('${chat.id || chat.chat_id}')">
+                <div class="chat-title" title="${this.escapeHtml(chat.title || 'Untitled Chat')}">
+                    ${this.escapeHtml(chat.title || 'Untitled Chat')}
                 </div>
-                <div class="chat-actions">
-                    <button class="chat-action-btn title-edit-btn" onclick="window.travelChatbot.editChatTitle('${chat.id}')" title="Edit title">
+                <div class="chat-item-actions" onclick="event.stopPropagation()">
+                    <button class="chat-action-btn edit-btn" onclick="window.travelChatbot.editChatTitle('${chat.id || chat.chat_id}')" title="Rename">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="chat-action-btn chat-delete-btn" onclick="window.travelChatbot.deleteChat('${chat.id}')" title="Delete chat">
+                    <button class="chat-action-btn delete-btn" onclick="window.travelChatbot.deleteChatHistoryItem('${chat.id || chat.chat_id}')" title="Delete">
                         <i class="fas fa-trash"></i>
                     </button>
                 </div>
-            `;
-            
-            groupElement.appendChild(chatItem);
-        });
+            </div>
+        `;
+        
+        return chatItem;
+    }
 
-        this.chatList.appendChild(groupElement);
+    async loadChatHistoryItem(chatId) {
+        try {
+            console.log('Loading chat history item:', chatId);
+            
+            if (this.conversationHistory.length > 0) {
+                this.saveCurrentChatToHistory();
+            }
+            
+            let chat = this.chatHistoryList.find(c => (c.id == chatId || c.chat_id == chatId));
+            
+            if (!chat) {
+                const response = await fetch(`./get_chat_history.php?chat_id=${chatId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data.success && data.chat) {
+                        chat = data.chat;
+                    }
+                }
+            }
+            
+            if (!chat) {
+                console.error('Chat not found:', chatId);
+                return;
+            }
+            
+            this.currentChatId = chatId;
+            this.conversationHistory = [];
+            this.messages.innerHTML = '';
+            this.hideWelcomeScreen();
+            
+            if (chat.user_message) {
+                this.addMessage(chat.user_message, 'user');
+                this.conversationHistory.push({
+                    role: 'user',
+                    message: chat.user_message,
+                    timestamp: chat.created_at || new Date().toISOString()
+                });
+            }
+            
+            if (chat.bot_response) {
+                let botResponseData = null;
+                try {
+                    botResponseData = JSON.parse(chat.bot_response);
+                } catch (e) {
+                    botResponseData = { text: chat.bot_response };
+                }
+                
+                this.addMessage(botResponseData.text || chat.bot_response, 'assistant', botResponseData);
+                this.conversationHistory.push({
+                    role: 'assistant',
+                    message: botResponseData.text || chat.bot_response,
+                    data: botResponseData.data,
+                    type: botResponseData.type,
+                    timestamp: chat.created_at || new Date().toISOString()
+                });
+            }
+            
+            this.updateChatHistorySidebar();
+            this.scrollToBottom();
+            
+            console.log('Chat history item loaded successfully');
+            
+        } catch (error) {
+            console.error('Error loading chat history item:', error);
+            alert('Failed to load chat. Please try again.');
+        }
     }
 
     editChatTitle(chatId) {
-        this.finishTitleEdit();
+        const chatItem = document.querySelector(`[data-chat-id="${chatId}"]`);
+        if (!chatItem) return;
+        
+        const titleElement = chatItem.querySelector('.chat-title');
+        if (!titleElement) return;
+        
+        const currentTitle = titleElement.textContent.trim();
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'chat-title-input';
+        input.value = currentTitle;
+        
+        titleElement.innerHTML = '';
+        titleElement.appendChild(input);
+        input.focus();
+        input.select();
         
         this.editingChatId = chatId;
-        const titleElement = document.getElementById(`title-${chatId}`);
-        const inputElement = document.getElementById(`input-${chatId}`);
+        this.originalTitle = currentTitle;
         
-        if (titleElement && inputElement) {
-            titleElement.style.display = 'none';
-            inputElement.style.display = 'block';
-            inputElement.focus();
-            inputElement.select();
-        }
+        const finishEdit = (save = true) => {
+            const newTitle = input.value.trim();
+            
+            if (save && newTitle && newTitle !== currentTitle && newTitle.length > 0) {
+                this.updateChatTitle(chatId, newTitle);
+                titleElement.textContent = newTitle;
+            } else {
+                titleElement.textContent = currentTitle;
+            }
+            
+            this.editingChatId = null;
+            this.originalTitle = null;
+        };
+        
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                finishEdit(true);
+            } else if (e.key === 'Escape') {
+                e.preventDefault();
+                finishEdit(false);
+            }
+        });
+        
+        input.addEventListener('blur', () => finishEdit(true));
     }
 
-    handleTitleKeyPress(event, chatId) {
-        if (event.key === 'Enter') {
-            this.saveTitleEdit(chatId);
-        } else if (event.key === 'Escape') {
-            this.cancelTitleEdit(chatId);
-        }
-    }
-
-    saveTitleEdit(chatId) {
-        const inputElement = document.getElementById(`input-${chatId}`);
-        const newTitle = inputElement ? inputElement.value.trim() : '';
-        
-        if (newTitle && newTitle !== '') {
-            const chatIndex = this.chatHistoryList.findIndex(chat => chat.id === chatId);
+    async updateChatTitle(chatId, newTitle) {
+        try {
+            const chatIndex = this.chatHistoryList.findIndex(chat => 
+                chat.id == chatId || chat.chat_id == chatId
+            );
+            
             if (chatIndex >= 0) {
                 this.chatHistoryList[chatIndex].title = newTitle;
                 localStorage.setItem('chatHistory', JSON.stringify(this.chatHistoryList));
+                console.log('Title updated in localStorage immediately:', newTitle);
+                
+                this.updateChatHistorySidebar();
             }
+            
+            setTimeout(async () => {
+                try {
+                    const response = await fetch('./update_chat_title.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            title: newTitle
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        console.log('Chat title updated on server successfully');
+                    }
+                } catch (serverError) {
+                    console.warn('Failed to update title on server, but local update successful:', serverError);
+                }
+            }, 100);
+            
+        } catch (error) {
+            console.error('Error updating chat title:', error);
         }
-        
-        this.finishTitleEdit();
-    }
-
-    cancelTitleEdit(chatId) {
-        const inputElement = document.getElementById(`input-${chatId}`);
-        const titleElement = document.getElementById(`title-${chatId}`);
-        
-        if (inputElement && titleElement) {
-            const originalChat = this.chatHistoryList.find(chat => chat.id === chatId);
-            if (originalChat) {
-                inputElement.value = originalChat.title;
-            }
-        }
-        
-        this.finishTitleEdit();
     }
 
     finishTitleEdit() {
         if (this.editingChatId) {
-            const titleElement = document.getElementById(`title-${this.editingChatId}`);
-            const inputElement = document.getElementById(`input-${this.editingChatId}`);
-            
-            if (titleElement && inputElement) {
-                titleElement.textContent = inputElement.value;
-                titleElement.style.display = 'block';
-                inputElement.style.display = 'none';
+            const chatItem = document.querySelector(`[data-chat-id="${this.editingChatId}"]`);
+            if (chatItem) {
+                const input = chatItem.querySelector('.chat-title-input');
+                if (input) {
+                    const titleElement = input.parentElement;
+                    titleElement.textContent = input.value.trim() || 'Untitled Chat';
+                }
             }
-            
             this.editingChatId = null;
         }
     }
 
-    loadChat(chatId) {
-        const chat = this.chatHistoryList.find(c => c.id === chatId);
-        if (!chat) return;
-
-        if (this.conversationHistory.length > 0) {
-            this.saveCurrentChatToHistory();
-        }
-
-        this.currentChatId = chat.id;
-        this.conversationHistory = [...chat.conversationHistory];
-        if (this.messages) {
-            this.messages.innerHTML = chat.messagesHTML;
-        }
-        this.hideWelcomeScreen();
-        this.scrollToBottom();
+    async deleteChatHistoryItem(chatId) {
+        const chatToDelete = this.chatHistoryList.find(chat => 
+            chat.id == chatId || chat.chat_id == chatId
+        );
         
-        this.updateChatHistorySidebar();
-        this.removeSuggestions();
-    }
-
-    deleteChat(chatId) {
-        const chat = this.chatHistoryList.find(c => c.id === chatId);
-        const chatTitle = chat ? chat.title : 'this conversation';
+        const chatTitle = chatToDelete ? chatToDelete.title : 'this chat';
         
-        if (confirm(`Are you sure you want to delete "${chatTitle}"?`)) {
-            this.chatHistoryList = this.chatHistoryList.filter(chat => chat.id !== chatId);
+        if (!confirm(`Are you sure you want to delete "${chatTitle}"? This cannot be undone.`)) {
+            return;
+        }
+        
+        try {
+            this.chatHistoryList = this.chatHistoryList.filter(chat => 
+                chat.id != chatId && chat.chat_id != chatId
+            );
             localStorage.setItem('chatHistory', JSON.stringify(this.chatHistoryList));
+            console.log('Chat deleted from localStorage immediately');
             
-            if (chatId === this.currentChatId) {
+            this.updateChatHistorySidebar();
+            
+            if (this.currentChatId == chatId) {
                 this.startNewChat();
-            } else {
-                this.updateChatHistorySidebar();
             }
+            
+            setTimeout(async () => {
+                try {
+                    const response = await fetch('./delete_chat.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId
+                        })
+                    });
+                    
+                    if (response.ok) {
+                        console.log('Chat deleted from server successfully');
+                    }
+                } catch (serverError) {
+                    console.warn('Failed to delete from server, but local deletion successful:', serverError);
+                }
+            }, 100);
+            
+            console.log('Chat deleted successfully:', chatTitle);
+            
+        } catch (error) {
+            console.error('Error deleting chat:', error);
+            alert('Failed to delete chat. Please try again.');
         }
     }
 
@@ -647,22 +1449,39 @@ class TravelChatbot {
     
     startNewChat() {
         if (this.conversationHistory.length > 0) {
-            this.saveCurrentChatToHistory();
+            const hasRealConversation = this.conversationHistory.some(msg => 
+                msg.role === 'assistant' && msg.message && 
+                !msg.message.toLowerCase().includes('i apologize') &&
+                msg.message.trim().length > 50
+            );
+            
+            if (hasRealConversation) {
+                this.saveCurrentChatToHistory();
+                console.log('Current chat saved to history before starting new chat');
+            }
         }
         
         this.currentChatId = null;
         this.conversationHistory = [];
+        this.lastSuccessfulResponse = null;
+        
         if (this.messages) {
             this.messages.innerHTML = '';
         }
+        
         this.showWelcomeScreen();
+        
         if (this.messageInput) {
+            this.messageInput.value = '';
             this.messageInput.focus();
         }
         
         sessionStorage.removeItem('chatData');
         this.finishTitleEdit();
+        this.removeSuggestions();
         this.updateChatHistorySidebar();
+        
+        console.log('New chat started successfully');
     }
     
     async sendMessage(messageText = null) {
@@ -704,6 +1523,8 @@ class TravelChatbot {
             this.hideTypingIndicator();
             
             if (response && response.success && response.response) {
+                this.lastSuccessfulResponse = response.response;
+                
                 this.addMessage(response.response.text, 'assistant', response.response);
                 
                 this.conversationHistory.push({
@@ -725,32 +1546,40 @@ class TravelChatbot {
                 }
                 
             } else {
-                const errorText = response && response.error ? 
-                    `I apologize for the error: ${response.error}` : 
-                    'I\'m having trouble processing your request right now. Please try again in a moment.';
+                let errorText;
+                if (response && response.error) {
+                    if (response.error.includes('processing') || response.error.includes('server')) {
+                        errorText = 'The system is temporarily unavailable. Please try again in a moment.';
+                    } else {
+                        errorText = response.error;
+                    }
+                } else {
+                    errorText = 'Unable to process your request right now. Please try rephrasing your question or try again later.';
+                }
                 this.addMessage(errorText, 'assistant');
+                
+                console.error('Backend response error:', response);
             }
         } catch (error) {
             this.hideTypingIndicator();
-            console.error('Chat error:', error);
+            console.error('Chat API error:', error);
             
-            let errorMessage = 'I\'m experiencing connectivity issues.';
+            let errorMessage;
             
-            if (error.message.includes('404') || error.message.includes('Not Found')) {
-                errorMessage = 'Cannot find the chatbot service. Please check if the backend file exists.';
-            } else if (error.message.includes('500') || error.message.includes('Server error')) {
-                errorMessage = 'Server error occurred. Please check the server logs.';
-            } else if (error.message.includes('Network error') || error.name === 'TypeError') {
-                errorMessage = 'Network connection issue. Please check your internet connection and try again.';
-            } else if (error.message.includes('timeout')) {
+            if (error.message && error.message.includes('JSON')) {
+                errorMessage = 'Server configuration issue detected. Please check the backend setup.';
+            } else if (error.message && (error.message.includes('404') || error.message.includes('Not Found'))) {
+                errorMessage = 'Chat service is not available. Please verify the backend is running.';
+            } else if (error.message && error.message.includes('timeout')) {
                 errorMessage = 'Request timed out. The server may be busy, please try again.';
-            } else if (error.message.includes('JSON')) {
-                errorMessage = 'Server returned invalid response format. Please check the PHP file for syntax errors.';
+            } else if (error.message && error.message.includes('Network')) {
+                errorMessage = 'Connection problem detected. Please check your internet connection.';
+            } else {
+                errorMessage = 'Unable to process your request. Please try again.';
             }
             
             this.addMessage(errorMessage, 'assistant');
         }
-        
         this.scrollToBottom();
     }
     
@@ -790,511 +1619,6 @@ class TravelChatbot {
         }
         
         this.messages.appendChild(messageElement);
-    }
-
-    addDataCards(messageElement, response) {
-        const cardContainer = document.createElement('div');
-        
-        const hasTours = this.hasToursInResponse(response);
-        const hasHotels = this.hasHotelsInResponse(response);
-        const tourCount = this.getTourCount(response);
-        const hotelCount = this.getHotelCount(response);
-        
-        // **NEW**: Handle multi-city tour/hotel searches
-        if (response.layout_type === 'multi_city_tours') {
-            this.createMultiCityLayout(cardContainer, response, 'tour');
-        } else if (response.layout_type === 'multi_city_hotels') {
-            this.createMultiCityLayout(cardContainer, response, 'hotel');
-        }
-        // Handle existing layouts
-        else if (hasTours && hasHotels && (response.layout_type === 'mixed_content' || response.match_level === 'mixed_search')) {
-            cardContainer.className = 'data-cards mixed-content';
-            this.createMixedLayout(cardContainer, response, tourCount, hotelCount);
-        } else if (hasTours) {
-            cardContainer.className = 'data-cards single-section';
-            this.createSingleToursSection(cardContainer, response, tourCount);
-        } else if (hasHotels) {
-            cardContainer.className = 'data-cards single-section';
-            this.createSingleHotelsSection(cardContainer, response, hotelCount);
-        } else {
-            cardContainer.className = 'data-cards';
-            this.createDefaultLayout(cardContainer, response);
-        }
-        
-        if (cardContainer.children.length > 0) {
-            messageElement.querySelector('.message-content').appendChild(cardContainer);
-        }
-    }
-
-    // Create single tours section with header (like mixed layout style)
-    createSingleToursSection(container, response, tourCount) {
-        const maxInitialItems = 6; // Show 6 tours initially
-        
-        const toursSection = document.createElement('div');
-        toursSection.className = 'single-section tours-section';
-        
-        const toursHeader = document.createElement('h4');
-        toursHeader.innerHTML = `<i class="fas fa-map-signs"></i> Tour Packages (${tourCount})`;
-        toursSection.appendChild(toursHeader);
-        
-        const tours = this.extractToursFromResponse(response);
-        this.renderItemsWithPagination(toursSection, tours, 'tour', maxInitialItems, true);
-        
-        container.appendChild(toursSection);
-    }
-
-    // Create single hotels section with header (like mixed layout style)
-    createSingleHotelsSection(container, response, hotelCount) {
-        const maxInitialItems = 6; // Show 6 hotels initially
-        
-        const hotelsSection = document.createElement('div');
-        hotelsSection.className = 'single-section hotels-section';
-        
-        const hotelsHeader = document.createElement('h4');
-        hotelsHeader.innerHTML = `<i class="fas fa-bed"></i> Accommodations (${hotelCount})`;
-        hotelsSection.appendChild(hotelsHeader);
-        
-        const hotels = this.extractHotelsFromResponse(response);
-        this.renderItemsWithPagination(hotelsSection, hotels, 'hotel', maxInitialItems, true);
-        
-        container.appendChild(hotelsSection);
-    }
-
-    // Helper methods to check response content
-    hasToursInResponse(response) {
-        if (response.type === 'tour_search') return true;
-        if (response.type === 'destination_info' && response.data?.tours?.length > 0) return true;
-        if (Array.isArray(response.data) && response.data.some(item => item.tour_name || item.tourid)) return true;
-        return false;
-    }
-
-    hasHotelsInResponse(response) {
-        if (response.type === 'hotel_search') return true;
-        if (response.type === 'destination_info' && response.data?.hotels?.length > 0) return true;
-        if (Array.isArray(response.data) && response.data.some(item => item.hotel || item.hotelid)) return true;
-        return false;
-    }
-
-    getTourCount(response) {
-        if (response.type === 'tour_search' && Array.isArray(response.data)) {
-            return response.data.length;
-        }
-        if (response.type === 'destination_info' && response.data?.tours) {
-            return response.data.tours.length;
-        }
-        if (Array.isArray(response.data)) {
-            return response.data.filter(item => item.tour_name || item.tourid).length;
-        }
-        return 0;
-    }
-
-    getHotelCount(response) {
-        if (response.type === 'hotel_search' && Array.isArray(response.data)) {
-            return response.data.length;
-        }
-        if (response.type === 'destination_info' && response.data?.hotels) {
-            return response.data.hotels.length;
-        }
-        if (Array.isArray(response.data)) {
-            return response.data.filter(item => item.hotel || item.hotelid).length;
-        }
-        return 0;
-    }
-
-    // Create multi-city layout (e.g., tours in city 1 vs. tours in city 2)
-    createMultiCityLayout(container, response, type) {
-        const items = type === 'tour' ? this.extractToursFromResponse(response) : this.extractHotelsFromResponse(response);
-        if (items.length === 0) return;
-
-        // Separate items by city_group instead of column_position
-        const cities = [...new Set(items.map(item => item.city_group))];
-        const city1Items = items.filter(item => item.city_group === cities[0]);
-        const city2Items = items.filter(item => item.city_group === cities[1]);
-
-        // Add CSS class for multi-city styling
-        container.className = 'multi-city-layout';
-
-        // Create left column (City 1)
-        const leftColumnDiv = document.createElement('div');
-        leftColumnDiv.className = 'multi-city-column left-column';
-        
-        if (cities[0]) {
-            const leftHeader = document.createElement('h4');
-            leftHeader.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${this.escapeHtml(cities[0])} (${city1Items.length})`;
-            leftColumnDiv.appendChild(leftHeader);
-        }
-
-        city1Items.forEach(item => {
-            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
-            leftColumnDiv.appendChild(card);
-        });
-        container.appendChild(leftColumnDiv);
-
-        // Create right column (City 2)  
-        const rightColumnDiv = document.createElement('div');
-        rightColumnDiv.className = 'multi-city-column right-column';
-
-        if (cities[1]) {
-            const rightHeader = document.createElement('h4');
-            rightHeader.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${this.escapeHtml(cities[1])} (${city2Items.length})`;
-            rightColumnDiv.appendChild(rightHeader);
-        }
-
-        city2Items.forEach(item => {
-            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
-            rightColumnDiv.appendChild(card);
-        });
-        container.appendChild(rightColumnDiv);
-    }
-
-    // Create mixed layout (tours + hotels side by side)
-    createMixedLayout(container, response, tourCount, hotelCount) {
-        const maxInitialItems = 4; // Show max 4 items initially per section
-        
-        // Tours section
-        if (this.hasToursInResponse(response)) {
-            const toursSection = document.createElement('div');
-            toursSection.className = 'mixed-section tours-section';
-            
-            const toursHeader = document.createElement('h4');
-            toursHeader.innerHTML = `<i class="fas fa-map-signs"></i> Tour Packages (${tourCount})`;
-            toursSection.appendChild(toursHeader);
-            
-            const tours = this.extractToursFromResponse(response);
-            this.renderItemsWithPagination(toursSection, tours, 'tour', maxInitialItems);
-            
-            container.appendChild(toursSection);
-        }
-        
-        // Hotels section
-        if (this.hasHotelsInResponse(response)) {
-            const hotelsSection = document.createElement('div');
-            hotelsSection.className = 'mixed-section hotels-section';
-            
-            const hotelsHeader = document.createElement('h4');
-            hotelsHeader.innerHTML = `<i class="fas fa-bed"></i> Accommodations (${hotelCount})`;
-            hotelsSection.appendChild(hotelsHeader);
-            
-            const hotels = this.extractHotelsFromResponse(response);
-            this.renderItemsWithPagination(hotelsSection, hotels, 'hotel', maxInitialItems);
-            
-            container.appendChild(hotelsSection);
-        }
-    }
-
-    // Create default single column layout
-    createDefaultLayout(container, response) {
-        const maxInitialItems = 3; // Show 3 items initially
-        
-        if (response.type === 'tour_search' && Array.isArray(response.data)) {
-            this.renderItemsWithPagination(container, response.data, 'tour', maxInitialItems);
-        }
-        else if (response.type === 'hotel_search' && Array.isArray(response.data)) {
-            this.renderItemsWithPagination(container, response.data, 'hotel', maxInitialItems);
-        }
-        else if (response.type === 'destination_info' && response.data) {
-            if (response.data.tours && response.data.tours.length > 0) {
-                response.data.tours.forEach(tour => {
-                    const card = this.createTourCard(tour);
-                    container.appendChild(card);
-                });
-            }
-            if (response.data.hotels && response.data.hotels.length > 0) {
-                response.data.hotels.forEach(hotel => {
-                    const card = this.createHotelCard(hotel);
-                    container.appendChild(card);
-                });
-            }
-        }
-        else if (Array.isArray(response.data)) {
-            response.data.forEach(item => {
-                if (item.tour_name || item.tourid) {
-                    const card = this.createTourCard(item);
-                    container.appendChild(card);
-                } else if (item.hotel || item.hotelid) {
-                    const card = this.createHotelCard(item);
-                    container.appendChild(card);
-                }
-            });
-        }
-    }
-
-    // Extract tours from various response formats
-    extractToursFromResponse(response) {
-        if (response.type === 'tour_search' && Array.isArray(response.data)) {
-            return response.data;
-        }
-        if (response.type === 'destination_info' && response.data?.tours) {
-            return response.data.tours;
-        }
-        if (Array.isArray(response.data)) {
-            return response.data.filter(item => item.tour_name || item.tourid);
-        }
-        return [];
-    }
-
-    // Extract hotels from various response formats
-    extractHotelsFromResponse(response) {
-        if (response.type === 'hotel_search' && Array.isArray(response.data)) {
-            return response.data;
-        }
-        if (response.type === 'destination_info' && response.data?.hotels) {
-            return response.data.hotels;
-        }
-        if (Array.isArray(response.data)) {
-            return response.data.filter(item => item.hotel || item.hotelid);
-        }
-        return [];
-    }
-
-    // Render items with pagination/show more functionality
-    renderItemsWithPagination(container, items, type, maxInitial, isGrid = false) {
-        if (!items || items.length === 0) return;
-        
-        const containerId = `container_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-        
-        // Create wrapper for cards
-        const cardsWrapper = document.createElement('div');
-        cardsWrapper.className = isGrid ? 'cards-grid-wrapper' : 'cards-list-wrapper';
-        cardsWrapper.id = containerId;
-        
-        // Render initial items
-        items.slice(0, maxInitial).forEach((item, index) => {
-            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
-            card.classList.add('visible');
-            if (type === 'tour') {
-                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
-                    '<span class="card-category-badge tour">Tour</span>');
-            } else {
-                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
-                    '<span class="card-category-badge hotel">Hotel</span>');
-            }
-            cardsWrapper.appendChild(card);
-        });
-        
-        // Render hidden items
-        items.slice(maxInitial).forEach((item, index) => {
-            const card = type === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
-            card.classList.add('hidden');
-            if (type === 'tour') {
-                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
-                    '<span class="card-category-badge tour">Tour</span>');
-            } else {
-                card.querySelector('.card-image').insertAdjacentHTML('afterbegin', 
-                    '<span class="card-category-badge hotel">Hotel</span>');
-            }
-            cardsWrapper.appendChild(card);
-        });
-        
-        container.appendChild(cardsWrapper);
-        
-        // Add show more/less buttons if needed
-        if (items.length > maxInitial) {
-            const toggleContainer = document.createElement('div');
-            toggleContainer.className = 'card-show-toggle';
-            
-            const showMoreBtn = document.createElement('button');
-            showMoreBtn.className = 'show-more-btn';
-            showMoreBtn.innerHTML = `<i class="fas fa-chevron-down"></i> Show ${items.length - maxInitial} More ${type === 'tour' ? 'Tours' : 'Hotels'}`;
-            
-            const showLessBtn = document.createElement('button');
-            showLessBtn.className = 'show-less-btn hidden';
-            showLessBtn.innerHTML = `<i class="fas fa-chevron-up"></i> Show Less`;
-            
-            // Show more functionality
-            showMoreBtn.addEventListener('click', () => {
-                const hiddenCards = cardsWrapper.querySelectorAll('.data-card.hidden');
-                hiddenCards.forEach(card => {
-                    card.classList.remove('hidden');
-                    card.classList.add('visible');
-                });
-                showMoreBtn.classList.add('hidden');
-                showLessBtn.classList.remove('hidden');
-                
-                // Smooth scroll to show new content
-                setTimeout(() => {
-                    const lastCard = cardsWrapper.lastElementChild;
-                    if (lastCard) {
-                        lastCard.scrollIntoView({ behavior: 'smooth', block: 'end' });
-                    }
-                }, 100);
-            });
-            
-            // Show less functionality
-            showLessBtn.addEventListener('click', () => {
-                const allCards = cardsWrapper.querySelectorAll('.data-card');
-                allCards.forEach((card, index) => {
-                    if (index >= maxInitial) {
-                        card.classList.add('hidden');
-                        card.classList.remove('visible');
-                    }
-                });
-                showLessBtn.classList.add('hidden');
-                showMoreBtn.classList.remove('hidden');
-                
-                // Scroll back to top of cards
-                setTimeout(() => {
-                    cardsWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 100);
-            });
-            
-            toggleContainer.appendChild(showMoreBtn);
-            toggleContainer.appendChild(showLessBtn);
-            container.appendChild(toggleContainer);
-        }
-    }
-
-        
-    generateTourImagePath(cityId, tourId) {
-        const cityIdToString = {
-            10: 'taybac',
-            11: 'hcm', 
-            12: 'nhatrang',
-            13: 'hue',
-            14: 'phuyen', 
-            15: 'dalat',
-            16: 'phuquoc',
-            17: 'hoian',
-            18: 'hagiang',
-            19: 'danang',
-            20: 'cantho',
-            21: 'hoinoi'
-        };
-        
-        const cityString = cityIdToString[cityId] || 'hcm';
-        
-        const imageMap = {
-        'taybac' :[1, 2, 3, 4, 93, 94, 95, 96],
-        'hcm' :[5, 6, 7, 8, 89, 90, 91, 92],
-        'nhatrang' :[85, 86, 87, 88, 9, 10, 11, 12],
-        'hue' :[13, 14, 15, 16, 81, 82, 83, 84],
-        'phuyen' :[77, 78, 79, 80, 17, 18, 19, 20,],
-        'dalat' :[21, 22, 23, 24, 73, 74, 75, 76],        
-        'phuquoc' :[25, 26, 27, 28, 69, 70, 71, 72],
-        'hoian' :[29, 30, 31, 32, 65, 66, 67, 68],   
-        'hagiang' :[61, 62, 63, 64, 33, 34, 35, 36],
-        'danang' :[37, 38, 39, 40, 57, 58, 59, 60],
-        'cantho' :[53, 54, 55, 56, 41, 42, 43, 44,],
-        'hanoi'  :[45, 46, 47, 48, 49, 50, 51, 52]
-        };
-            
-        const imageIds = imageMap[cityString] || [1, 2, 3, 4];
-        const imageId = imageIds[(tourId - 1) % imageIds.length];
-            
-        return `../tourphotoID/${imageId}.jpg`;
-    }
-
-    generateHotelImagePath(hotelId) {
-        return `../hotelphotoID/${hotelId}.jpg`;
-    }
-
-    // Generic card creation function to reduce duplication
-    _createBaseCard(itemType, cardData) {
-        const card = document.createElement('div');
-        card.className = `data-card ${itemType}-card`;
-
-        const detailsHTML = cardData.details.map(detail => `
-            <div class="detail-item">
-                <i class="fas ${detail.icon}"></i>
-                <span class="detail-label">${detail.label}:</span>
-                <span class="detail-value">${this.escapeHtml(detail.value)}</span>
-            </div>
-        `).join('');
-
-        const actionsHTML = cardData.actions.map(action => `
-            <button class="card-btn ${action.class}" onclick="${action.handler}" title="${action.title}">
-                <i class="fas ${action.icon}"></i>
-                ${action.text}
-            </button>
-        `).join('');
-
-        card.innerHTML = `
-            <div class="card-content">
-                <div class="card-image">
-                    <img src="${cardData.imagePath}" alt="${this.escapeHtml(cardData.title)}" onerror="this.src='../images/default-${itemType}.jpg'">
-                    ${cardData.badgeHTML || ''}
-                </div>
-                <div class="card-info">
-                    <div class="card-title" title="${this.escapeHtml(cardData.title)}">
-                        ${this.escapeHtml(cardData.title)}
-                    </div>
-                    <div class="card-details">${detailsHTML}</div>
-                    <div class="card-actions">${actionsHTML}</div>
-                </div>
-            </div>
-        `;
-        return card;
-    }
-
-    createTourCard(tour) {
-        const tourId = tour.tourid || tour.id || 0;
-        const cityName = tour.city || tour.city_name || 'Vietnam';
-        const cityId = tour.cityid || this.getCityIdFromName(cityName) || 11;
-        const duration = parseInt(tour.duration_days || 0);
-
-        const cardData = {
-            title: tour.tour_name || tour.name || 'Tour Package',
-            imagePath: this.generateTourImagePath(cityId, tourId),
-            badgeHTML: '<span class="card-badge discount">-15%</span>',
-            details: [
-                { icon: 'fa-map-marker-alt', label: 'Location', value: cityName },
-                { icon: 'fa-clock', label: 'Duration', value: `${duration} ${duration === 1 ? 'day' : 'days'}` },
-                { icon: 'fa-money-bill-wave', label: 'Price', value: `${this.formatPrice(tour.price_per_person || 0)} VND` }
-            ],
-            actions: [
-                { class: 'card-btn-primary', handler: `bookTour(${tourId}, ${cityId})`, title: 'Book this tour', icon: 'fa-calendar-plus', text: 'Book' },
-                { class: 'card-btn-secondary', handler: `viewTourDetails(${tourId}, ${cityId})`, title: 'View tour details', icon: 'fa-info-circle', text: 'Details' }
-            ]
-        };
-
-        return this._createBaseCard('tour', cardData);
-    }
-
-    createHotelCard(hotel) {
-        const hotelId = hotel.hotelid || hotel.id || 0;
-        const hotelName = hotel.hotel || hotel.hotel_name || hotel.name || 'Hotel';
-        const rating = parseFloat(hotel.ratings || 4).toFixed(1);
-        const cost = parseFloat(hotel.cost || 0);
-
-        const cardData = {
-            title: hotelName,
-            imagePath: this.generateHotelImagePath(hotelId),
-            badgeHTML: `<span class="card-badge rating">${rating}</span>`,
-            details: [
-                { icon: 'fa-map-marker-alt', label: 'Location', value: hotel.city || hotel.city_name || 'Vietnam' },
-                { icon: 'fa-star', label: 'Rating', value: `${rating}/5.0` }
-            ],
-            actions: [
-                { class: 'card-btn-primary', handler: `bookHotel(${hotelId})`, title: 'Book this hotel', icon: 'fa-bed', text: 'Book' },
-                { class: 'card-btn-secondary', handler: `viewHotelDetails(${hotelId})`, title: 'View hotel details', icon: 'fa-info-circle', text: 'Details' }
-            ]
-        };
-        
-        if (cost > 0) {
-            cardData.details.push({ 
-                icon: 'fa-money-bill-wave', 
-                label: 'Price', 
-                value: `${this.formatPrice(cost)} VND/night` 
-            });
-        }
-
-        return this._createBaseCard('hotel', cardData);
-    }
-        
-    getCityIdFromName(cityName) {
-        const cityMapping = {
-            'Ho Chi Minh': 11, 'Ho Chi Minh City': 11, 'Saigon': 11,
-            'Nha Trang': 12,
-            'Hue': 13,
-            'Phu Yen': 14,
-            'Da Lat': 15, 'Dalat': 15,
-            'Phu Quoc': 16,
-            'Hoi An': 17,
-            'Ha Giang': 18,
-            'Tay Bac': 10
-        };
-        
-        return cityMapping[cityName] || cityMapping[cityName.toLowerCase()] || 11;
     }
     
     addSuggestions(suggestions) {
@@ -1374,7 +1698,7 @@ class TravelChatbot {
             .replace(/\n\n/g, '<br><br>')
             .replace(/\n/g, '<br>')
             .replace(/(\d+)\.\s/g, '<br><strong>$1.</strong> ')
-            .replace(/•\s/g, '<br>• ');
+            .replace(/â€¢\s/g, '<br>â€¢ ');
     }
     
     formatPrice(price) {
@@ -1398,16 +1722,27 @@ class TravelChatbot {
     
     async loadChatHistory() {
         try {
+            console.log('Loading chat history...');
+            
             const localHistory = JSON.parse(localStorage.getItem('chatHistory') || '[]');
             this.chatHistoryList = localHistory;
             this.updateChatHistorySidebar();
             
-            // Optionally try to load from API
-            const response = await fetch(this.apiEndpoint + '?action=get_history');
+            const response = await fetch('./get_chat_history.php', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                }
+            });
+            
             if (response.ok) {
                 const data = await response.json();
                 if (data.success && data.history) {
-                    console.log('API history loaded:', data.history.length, 'conversations');
+                    this.chatHistoryList = data.history;
+                    localStorage.setItem('chatHistory', JSON.stringify(this.chatHistoryList));
+                    this.updateChatHistorySidebar();
+                    console.log('Chat history loaded from server:', this.chatHistoryList.length);
                 }
             }
         } catch (error) {
@@ -1451,9 +1786,13 @@ class TravelChatbot {
                 if (response.status === 404) {
                     throw new Error(`File not found (404). Check if ${this.apiEndpoint} exists.`);
                 } else if (response.status === 500) {
-                    throw new Error(`Server error (500): ${errorText.substring(0, 200)}`);
+                    if (errorText.includes('PHP') || errorText.includes('Fatal error') || errorText.includes('Parse error')) {
+                        throw new Error('Server configuration error detected. Please check the backend setup.');
+                    } else {
+                        throw new Error('Server is temporarily unavailable. Please try again in a moment.');
+                    }
                 } else {
-                    throw new Error(`HTTP error ${response.status}: ${errorText.substring(0, 200)}`);
+                    throw new Error(`Service unavailable (${response.status}). Please try again later.`);
                 }
             }
             
@@ -1461,27 +1800,37 @@ class TravelChatbot {
             if (!contentType || !contentType.includes("application/json")) {
                 const text = await response.text();
                 console.error('Non-JSON response:', text.substring(0, 500));
-                throw new Error("Server returned non-JSON response. Check PHP file for syntax errors.");
+                
+                if (text.includes('PHP') || text.includes('Fatal error') || text.includes('Parse error') || text.includes('Warning')) {
+                    throw new Error("Backend configuration issue detected. Please check the PHP backend for syntax errors.");
+                } else {
+                    throw new Error("Server returned unexpected response format. Please contact support.");
+                }
             }
             
             const data = await response.json();
             console.log('Backend response:', data);
+            
+            if (data && data.success === false && data.error) {
+                console.warn('Backend returned error:', data.error);
+                return data;
+            }
+            
             return data;
             
         } catch (error) {
             console.error('API call failed:', error);
             
             if (error.name === 'AbortError') {
-                throw new Error('Request timed out. Please try again.');
+                throw new Error('Request timed out. The server may be busy, please try again.');
             } else if (error.name === 'TypeError' && error.message.includes('fetch')) {
-                throw new Error('Network error. Please check your internet connection.');
+                throw new Error('Network connection problem. Please check your internet connection.');
             } else {
                 throw error;
             }
         }
-    }
-    
-    // Cleanup method
+    } 
+
     destroy() {
         if (this.autoSaveInterval) {
             clearInterval(this.autoSaveInterval);
@@ -1564,4 +1913,5 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }, 5000);
     }
+    
 });

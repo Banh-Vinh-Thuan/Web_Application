@@ -1,150 +1,104 @@
 <?php
-session_start();
 
-// Set content type to JSON
-header('Content-Type: application/json');
+ob_start();
+error_reporting(E_ALL);
+ini_set('display_errors', 0);
+session_start();
+ob_clean();
+
+header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type, Authorization');
+header('Access-Control-Allow-Headers: Content-Type');
 
-// Handle preflight requests
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
-    exit();
-}
-
-// Database configuration
-$serverName = "localhost";
-$dbUsername = "root";
-$dbPassword = "4444";
-$dbName = "travelscapes";
-
-// Initialize database connection
-$conn = mysqli_connect($serverName, $dbUsername, $dbPassword, $dbName);
-
-if (!$conn) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Database connection failed: ' . mysqli_connect_error()
-    ]);
-    exit();
-}
-
-// Include all service files
-require_once './Logger.php';
-require_once './CacheService.php';
-require_once './UserService.php';
-require_once './DatabaseService.php';
-require_once './GeminiService.php';
-require_once './GreetingService.php';
-require_once './IntentAnalyzer.php';
-require_once './DataRetriever.php';
-require_once './ResponseGenerator.php';
-require_once './OptimizedRAGTravelChatbot.php';
-
-// Main request handling
 try {
-    $chatbot = new OptimizedRAGTravelChatbot($conn);
+    $conn = mysqli_connect("localhost", "root", "4444", "travelscapes");
     
-    if ($_SERVER['REQUEST_METHOD'] === 'GET') {
-        if (isset($_GET['action'])) {
-            switch ($_GET['action']) {
-                case 'get_history':
-                    echo json_encode($chatbot->getChatHistory());
-                    exit;
-                    
-                case 'get_stats':
-                    echo json_encode($chatbot->getSystemStats());
-                    exit;
-                    
-                case 'clear_cache':
-                    CacheService::clear();
-                    echo json_encode([
-                        'success' => true,
-                        'message' => 'Cache cleared successfully'
-                    ]);
-                    exit;
-                    
-                default:
-                    http_response_code(400);
-                    echo json_encode([
-                        'success' => false,
-                        'error' => 'Invalid action parameter'
-                    ]);
-                    exit;
-            }
-        }
-        
-        echo json_encode([
-            'success' => true,
-            'message' => 'Enhanced Vietnam Travel RAG Chatbot API',
-            'version' => '3.0',
-            'features' => [
-                'Multi-user support',
-                'Improved caching',
-                'Detailed logging',
-                'AI-powered suggestions',
-                'International destination support'
-            ],
-            'endpoints' => [
-                'POST /' => 'Send chat message',
-                'GET /?action=get_history' => 'Get chat history',
-                'GET /?action=get_stats' => 'Get system statistics',
-                'GET /?action=clear_cache' => 'Clear system cache'
-            ]
-        ]);
-        exit;
+    if (!$conn) {
+        throw new Exception('Database connection failed: ' . mysqli_connect_error());
     }
     
+    mysqli_set_charset($conn, "utf8mb4");
+
+    // Updated include list with error checking
+    $requiredFiles = [
+        './Logger.php',
+        './config.php', 
+        './CacheService.php',
+        './UserService.php',
+        './DatabaseService.php',
+        './GeminiService.php',
+        './GreetingService.php',
+        './IntentAnalyzer.php',
+        './ResponseGenerator.php',
+        './HybridRetriever.php',
+        './OptimizedRAGTravelChatbot.php'
+    ];
+
+    foreach ($requiredFiles as $file) {
+        if (!file_exists($file)) {
+            throw new Exception("Required file missing: $file");
+        }
+        require_once $file;
+    }
+
+    $chatbot = new OptimizedRAGTravelChatbot($conn);
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        handlePostRequest($chatbot);
+    } else {
+        respondWithError('Method not allowed', 405);
+    }
+
+} catch (Exception $e) {
+    error_log("Chatbot error: " . $e->getMessage());
+    respondWithError('Service temporarily unavailable.', 500);
+} finally {
+    if (isset($conn) && $conn) {
+        mysqli_close($conn);
+    }
+}
+
+function handlePostRequest($chatbot) {
+    try {
         $input = json_decode(file_get_contents('php://input'), true);
         
         if (!$input || !isset($input['message'])) {
-            http_response_code(400);
-            echo json_encode([
-                'success' => false,
-                'error' => 'Invalid request format. Expected JSON with "message" field.'
-            ]);
-            exit;
+            respondWithError('Invalid request format.', 400);
         }
-        
+
         $message = trim($input['message']);
         $conversationHistory = $input['conversation_history'] ?? [];
         
         if (empty($message)) {
-            http_response_code(400);
-            echo json_encode([
-                'success' => false,
-                'error' => 'Message cannot be empty'
-            ]);
-            exit;
+            respondWithError('Message cannot be empty.', 400);
+        }
+
+        $response = $chatbot->processMessage($message, $conversationHistory);
+
+        if ($response['success']) {
+            respondWithSuccess(['response' => $response['response']]);
+        } else {
+            respondWithError($response['error'] ?? 'Unable to process request.', 500);
         }
         
-        $response = $chatbot->processMessage($message, $conversationHistory);
-        $response['timestamp'] = date('c');
-        $response['user_id'] = UserService::getCurrentUserId();
-        
-        echo json_encode($response);
-        exit;
+    } catch (Exception $e) {
+        error_log("Request processing error: " . $e->getMessage());
+        respondWithError('Request processing failed.', 500);
     }
-    
-    http_response_code(405);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Method not allowed. Use GET or POST.'
-    ]);
-    
-} catch (Exception $e) {
-    Logger::error("RAG Chatbot backend error", ['error' => $e->getMessage()]);
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'error' => 'Internal server error. Please try again later.',
-        'debug' => $e->getMessage(), // For debugging
-        'timestamp' => date('c')
-    ]);
 }
 
-mysqli_close($conn);
+function respondWithSuccess($data) {
+    ob_clean();
+    echo json_encode(array_merge(['success' => true], $data));
+    exit();
+}
+
+function respondWithError($message, $httpCode = 400) {
+    ob_clean();
+    http_response_code($httpCode);
+    echo json_encode(['success' => false, 'error' => $message]);
+    exit();
+}
+
 ?>

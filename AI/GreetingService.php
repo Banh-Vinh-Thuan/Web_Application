@@ -16,9 +16,7 @@ class GreetingService {
             (strlen($message) <= 15 && preg_match('/^(hi|hello|hey)\s*(there|!)*$/i', $message));
     }
     
-    /**
-     * Generate greeting response
-     */
+    // Generate greeting response
     public static function generateGreetingResponse() {
         $response = [
             'text' => "Hello! I'm your travel assistant. I can help you find tours and hotels in Vietnam, or plan international trips. How can I assist you today?",
