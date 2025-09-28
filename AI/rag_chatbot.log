@@ -38,3 +38,43 @@
 [2025-09-28 02:19:45] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":6}
 [2025-09-28 02:19:45] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Phu Yen And Ho..."}
 [2025-09-28 02:19:45] [INFO] Message processed successfully {"processing_time_ms":1343.23,"confidence":0.7000000000000001,"response_type":"tour_search","layout_type":"multi_city_tours","items_returned":7}
+[2025-09-28 03:23:18] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-09-28 03:23:18] [INFO] Processing message {"message":"tour in da lat and hu","history_count":5}
+[2025-09-28 03:23:18] [INFO] Starting hybrid retrieval {"query":"tour in da lat and hu","intent":"tour_search"}
+[2025-09-28 03:23:20] [WARNING] No vectors found in database 
+[2025-09-28 03:23:20] [INFO] Hybrid retrieval completed successfully {"total_results":6,"confidence":0.64,"retrieval_stats":{"semantic_results":0,"bm25_results":8,"sql_results":8,"final_results":6}}
+[2025-09-28 03:23:20] [INFO] generateVietnameseResponse called {"userMessage":"tour in da lat and hu","context_length":1109,"metadata":{"match_level":"hybrid_match","confidence":0.64}}
+[2025-09-28 03:23:22] [INFO] Successfully generated response {"response_length":761,"response_preview":"I found these tours:\n• **Dalat Highlands & Coffee Experience** - 3 days, 4,890,000 VND\n• **Dalat"}
+[2025-09-28 03:23:22] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.64,"display_items":6}
+[2025-09-28 03:23:22] [INFO] Conversation saved successfully {"userId":1,"title":"Tour In Da Lat And..."}
+[2025-09-28 03:23:22] [INFO] Message processed successfully {"processing_time_ms":3510.54,"confidence":0.64,"response_type":"tour_search","layout_type":"single_tours","items_returned":6}
+[2025-09-28 03:25:01] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-09-28 03:25:01] [INFO] Processing message {"message":"tour ha noi and can tho","history_count":5}
+[2025-09-28 03:25:01] [INFO] Starting hybrid retrieval {"query":"tour ha noi and can tho","intent":"tour_search"}
+[2025-09-28 03:25:01] [WARNING] No vectors found in database 
+[2025-09-28 03:25:01] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":7}}
+[2025-09-28 03:25:01] [INFO] generateVietnameseResponse called {"userMessage":"tour ha noi and can tho","context_length":1109,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-09-28 03:25:01] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour ha noi and can tho","context_available":true}
+[2025-09-28 03:25:01] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":5}
+[2025-09-28 03:25:01] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Ha Noi And Can..."}
+[2025-09-28 03:25:01] [INFO] Message processed successfully {"processing_time_ms":943.48,"confidence":0.7000000000000001,"response_type":"tour_search","layout_type":"multi_city_tours","items_returned":7}
+[2025-09-28 03:25:25] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-09-28 03:25:25] [INFO] Processing message {"message":"tour phu quoc and nha trang","history_count":5}
+[2025-09-28 03:25:25] [INFO] Starting hybrid retrieval {"query":"tour phu quoc and nha trang","intent":"tour_search"}
+[2025-09-28 03:25:26] [WARNING] No vectors found in database 
+[2025-09-28 03:25:26] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":7}}
+[2025-09-28 03:25:26] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc and nha trang","context_length":1384,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-09-28 03:25:27] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour phu quoc and nha trang","context_available":true}
+[2025-09-28 03:25:27] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":6}
+[2025-09-28 03:25:27] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Phu Quoc And Nha..."}
+[2025-09-28 03:25:27] [INFO] Message processed successfully {"processing_time_ms":1970.02,"confidence":0.7000000000000001,"response_type":"tour_search","layout_type":"multi_city_tours","items_returned":7}
+[2025-09-28 03:25:45] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-09-28 03:25:45] [INFO] Processing message {"message":"tour ho chi minh and hoi an","history_count":5}
+[2025-09-28 03:25:45] [INFO] Starting hybrid retrieval {"query":"tour ho chi minh and hoi an","intent":"tour_search"}
+[2025-09-28 03:25:46] [WARNING] No vectors found in database 
+[2025-09-28 03:25:46] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":7}}
+[2025-09-28 03:25:46] [INFO] generateVietnameseResponse called {"userMessage":"tour ho chi minh and hoi an","context_length":1279,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-09-28 03:25:46] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour ho chi minh and hoi an","context_available":true}
+[2025-09-28 03:25:46] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":4}
+[2025-09-28 03:25:46] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Ho Chi Minh And..."}
+[2025-09-28 03:25:46] [INFO] Message processed successfully {"processing_time_ms":1152.99,"confidence":0.7000000000000001,"response_type":"tour_search","layout_type":"multi_city_tours","items_returned":7}
