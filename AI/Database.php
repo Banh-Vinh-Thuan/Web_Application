@@ -1,6 +1,6 @@
 <?php
 require_once './Logger.php';
-require_once './CacheService.php';
+require_once './Cache.php';
 require_once './config.php';
 
 /**

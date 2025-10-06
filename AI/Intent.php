@@ -1,6 +1,6 @@
 <?php
 
-require_once './GeminiService.php';
+require_once './Gemini.php';
 require_once './Logger.php';
 
 class FewShotIntentAnalyzer {

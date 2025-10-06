@@ -14,68 +14,45 @@ class Config {
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
     const GEMINI_EMBEDDING_MODEL = "models/text-embedding-004";
 
-    // RAG Pipeline Configuration
-    const HYBRID_WEIGHTS = [
-        'semantic' => 0.45,  // Vector similarity weight
-        'bm25' => 0.35,      // Keyword matching weight
-        'sql' => 0.20        // Structured filtering weight
-    ];
+    // RAG Pipeline
+    public const HYBRID_WEIGHTS = ['semantic' => 0.45, 'bm25' => 0.35, 'sql' => 0.20];
 
     // Cache Configuration
-    const CACHE_DEFAULT_TTL = 300;     // 5 minutes
-    const CACHE_CITIES_TTL = 1800;     // 30 minutes
-    const CACHE_EMBEDDINGS_TTL = 3600; // 1 hour
-    const CACHE_STATS_TTL = 300;       // 5 minutes
+    public const CACHE_DEFAULT_TTL = 300;     
+    public const CACHE_CITIES_TTL = 3600;       
+    
+    // Logging Configuration
+    public const LOG_FILE = __DIR__ . '/rag_chatbot.log'; 
+    public const DEBUG_MODE = false; 
 
     // Application Limits
-    const MAX_MESSAGE_LENGTH = 1000;
-    const MAX_CONVERSATION_HISTORY = 10;
-    const MAX_CHAT_HISTORY = 50;
-    const MAX_RESULTS_PER_CHANNEL = 15;
-    const MAX_FINAL_RESULTS = 10;
+    public const MAX_MESSAGE_LENGTH = 1000;
+    public const MAX_CONVERSATION_HISTORY = 10;
+    public const MAX_RESULTS_PER_CHANNEL = 15;
+    public const MAX_FINAL_RESULTS = 10;
 
-    // API Timeouts (seconds)
-    const API_TIMEOUT = 30;
-    const DB_TIMEOUT = 10;
-    const EMBEDDING_TIMEOUT = 20;
-
-    // Logging Configuration
-    const LOG_FILE = 'rag_chatbot.log';
-    const LOG_MAX_SIZE = 10485760; // 10MB
-    const DEBUG_MODE = false;
-
-    // User Configuration
-    const DEFAULT_USER_ID = 1;
+    // Timeouts (seconds)
+    public const API_TIMEOUT = 30;
 
     // Search Quality Thresholds
-    const MIN_SIMILARITY_SCORE = 0.3;
-    const MIN_BM25_SCORE = 0.1;
-    const MIN_CONFIDENCE_THRESHOLD = 0.2;
+    public const MIN_SIMILARITY_SCORE = 0.3;
+    public const MIN_BM25_SCORE = 0.1;
+    public const MIN_CONFIDENCE_THRESHOLD = 0.2;
 
-    // Get database connection with proper error handling
-    public static function getDatabaseConnection() {
+    public static function getDatabaseConnection(): mysqli
+    {
         try {
-            $conn = mysqli_connect(
-                self::DB_HOST,
-                self::DB_USERNAME,
-                self::DB_PASSWORD,
-                self::DB_NAME
-            );
-
-            if (!$conn) {
-                throw new Exception('Database connection failed: ' . mysqli_connect_error());
+            $conn = new mysqli(self::DB_HOST, self::DB_USERNAME, self::DB_PASSWORD, self::DB_NAME);
+            if ($conn->connect_error) {
+                throw new Exception('Database connection failed: ' . $conn->connect_error);
             }
-
-            // Set charset
-            if (!mysqli_set_charset($conn, self::DB_CHARSET)) {
-                throw new Exception('Error setting charset: ' . mysqli_error($conn));
+            if (!$conn->set_charset(self::DB_CHARSET)) {
+                throw new Exception('Error setting charset: ' . $conn->error);
             }
-
             return $conn;
-
         } catch (Exception $e) {
             error_log("Database connection error: " . $e->getMessage());
-            throw new Exception("Unable to connect to database");
+            throw new RuntimeException("Unable to connect to the database.");
         }
     }
 
@@ -180,69 +157,20 @@ class Config {
     // Validate configuration
     public static function validateConfig() {
         $errors = [];
-
-        // Check required API key
-        if (empty(self::GEMINI_API_KEY) || self::GEMINI_API_KEY === 'YOUR_API_KEY_HERE') {
-            $errors[] = 'Gemini API key is not configured';
-        }
-
-        // Check database configuration
-        if (empty(self::DB_HOST) || empty(self::DB_NAME)) {
-            $errors[] = 'Database configuration is incomplete';
-        }
-
-        // Check weights sum to 1
+        if (empty(self::GEMINI_API_KEY) || self::GEMINI_API_KEY === 'YOUR_API_KEY_HERE') { $errors[] = 'Gemini API key is not configured'; }
+        if (empty(self::DB_HOST) || empty(self::DB_NAME)) { $errors[] = 'Database configuration is incomplete'; }
         $weightSum = array_sum(self::HYBRID_WEIGHTS);
-        if (abs($weightSum - 1.0) > 0.01) {
-            $errors[] = 'Hybrid weights must sum to 1.0';
-        }
-
-        // Check log file writability
-        $logDir = dirname(self::LOG_FILE);
-        if (!is_writable($logDir)) {
-            $errors[] = 'Log directory is not writable: ' . $logDir;
-        }
-
+        if (abs($weightSum - 1.0) > 0.01) { $errors[] = 'Hybrid weights must sum to 1.0'; }
+        if (!file_exists(self::LOG_FILE) && !is_writable(dirname(self::LOG_FILE))) { $errors[] = 'Log directory is not writable: ' . dirname(self::LOG_FILE); }
         return $errors;
     }
 
     // Get environment-specific configuration
-    public static function getEnvironmentConfig() {
-        $environment = $_SERVER['APP_ENV'] ?? 'production';
-
-        switch ($environment) {
-            case 'development':
-                return [
-                    'debug' => true,
-                    'log_level' => 'DEBUG',
-                    'cache_ttl' => 60, // 1 minute for faster development
-                    'api_timeout' => 60
-                ];
-
-            case 'testing':
-                return [
-                    'debug' => true,
-                    'log_level' => 'INFO',
-                    'cache_ttl' => 10,
-                    'api_timeout' => 30
-                ];
-
-            case 'production':
-            default:
-                return [
-                    'debug' => false,
-                    'log_level' => 'ERROR',
-                    'cache_ttl' => self::CACHE_DEFAULT_TTL,
-                    'api_timeout' => self::API_TIMEOUT
-                ];
-        }
-    }
+    public static function getEnvironmentConfig() { $environment = $_SERVER['APP_ENV'] ?? 'production'; switch ($environment) { case 'development': return [ 'debug' => true, 'log_level' => 'DEBUG', 'cache_ttl' => 60, 'api_timeout' => 60 ]; case 'testing': return [ 'debug' => true, 'log_level' => 'INFO', 'cache_ttl' => 10, 'api_timeout' => 30 ]; case 'production': default: return [ 'debug' => false, 'log_level' => 'ERROR', 'cache_ttl' => self::CACHE_DEFAULT_TTL, 'api_timeout' => self::API_TIMEOUT ]; } }
 }
 
-// Validate configuration on load
 $configErrors = Config::validateConfig();
 if (!empty($configErrors)) {
     error_log("Configuration errors: " . implode(', ', $configErrors));
 }
-
 ?>

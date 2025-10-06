@@ -138,6 +138,6 @@
             }
         });
     </script>
-    <script src="ai-planner.js"></script>
+    <script src="chatbot.js"></script>
 </body>
 </html>

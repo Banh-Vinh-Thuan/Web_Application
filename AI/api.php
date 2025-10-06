@@ -32,15 +32,15 @@ try {
     $requiredFiles = [
         './Logger.php',
         './config.php', 
-        './CacheService.php',
-        './UserService.php',
-        './DatabaseService.php',
-        './GeminiService.php',
+        './Cache.php',
+        './User.php',
+        './Database.php',
+        './Gemini.php',
         './GreetingService.php',
-        './IntentAnalyzer.php',
-        './ResponseGenerator.php',
-        './HybridRetriever.php',
-        './OptimizedRAGTravelChatbot.php'
+        './Intent.php',
+        './Generator.php',
+        './Retriever.php',
+        './Controller.php'
     ];
 
     foreach ($requiredFiles as $file) {

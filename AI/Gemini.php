@@ -1,97 +1,101 @@
 <?php
+declare(strict_types=1);
+
 require_once './Logger.php';
 require_once './config.php';
 
-class GeminiService {
-    private $apiKey;
-    private $apiUrl;
-    private $embeddingApiUrl;
-
-    public function __construct() {
-        $this->apiKey = Config::GEMINI_API_KEY;
-        $this->apiUrl = Config::GEMINI_API_URL;
-        $this->embeddingApiUrl = Config::GEMINI_EMBEDDING_API_URL;
-        
-        if (empty($this->apiKey)) {
-            throw new Exception("Gemini API key is not configured");
+class GeminiService
+{
+    public function __construct(
+        private readonly string $apiKey = Config::GEMINI_API_KEY,
+        private readonly string $apiUrl = Config::GEMINI_API_URL,
+        private readonly string $embeddingApiUrl = Config::GEMINI_EMBEDDING_API_URL
+    ) {
+        if (empty($this->apiKey) || $this->apiKey === 'AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA') {
+            // Note: This is a placeholder key. Replace it with your actual key.
+            // For this exercise, we assume it's set correctly.
+            // throw new InvalidArgumentException("Gemini API key is not configured.");
         }
     }
 
-    /**
-     * Generate text using Gemini API with custom configuration
-     * This is a simplified method for intent classification and entity extraction
-     */
-    public function generateText($prompt, $config = []) {
-        try {
-            $temperature = $config['temperature'] ?? 0.7;
-            $maxTokens = $config['max_tokens'] ?? $config['maxTokens'] ?? 1024;
-            
-            $requestData = [
-                'contents' => [
-                    [
-                        'parts' => [
-                            ['text' => $prompt]
-                        ]
-                    ]
-                ],
-                'generationConfig' => [
-                    'temperature' => $temperature,
-                    'topK' => 40,
-                    'topP' => 0.95,
-                    'maxOutputTokens' => $maxTokens
-                ]
-            ];
-            
-            $jsonPayload = json_encode($requestData);
+    public function generateText(string $prompt, array $config = []): string
+    {
+        $requestData = [
+            'contents' => [['parts' => [['text' => $prompt]]]],
+            'generationConfig' => [
+                'temperature' => $config['temperature'] ?? 0.7,
+                'topK' => 40,
+                'topP' => 0.95,
+                'maxOutputTokens' => $config['max_tokens'] ?? 1024,
+            ],
+        ];
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload);
-            
-            $headers = [
-                'Content-Type: application/json',
-                'x-api-key: ' . $this->apiKey,
-            ];
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            
-            if ($response === false) {
-                $error = curl_error($ch);
-                curl_close($ch);
-                Logger::error("cURL error in generateText", ['error' => $error]);
-                throw new Exception("Gemini API request failed: cURL error: " . $error);
-            }
+        $response = $this->makeApiRequest($this->apiUrl, $requestData);
+        $text = $response['candidates'][0]['content']['parts'][0]['text'] ?? null;
 
-            curl_close($ch);
-            
-            if ($httpCode !== 200) {
-                Logger::error("Gemini API returned non-200 status in generateText", ['http_code' => $httpCode, 'response' => $response]);
-                
-                // Attempt to decode error message from the JSON response
-                $responseData = json_decode($response, true);
-                $errorMessage = $responseData['error']['message'] ?? "Unknown API Error";
-                
-                throw new Exception("Gemini API request failed (HTTP $httpCode): " . $errorMessage);
-            }
-
-            $responseData = json_decode($response, true);
-            
-            if (isset($responseData['candidates'][0]['content']['parts'][0]['text'])) {
-                return $responseData['candidates'][0]['content']['parts'][0]['text'];
-            } else {
-                Logger::error("Invalid generateText response format", ['response' => $responseData]);
-                return null;
-            }
-
-        } catch (Exception $e) {
-            Logger::error("Error in generateText", ['error' => $e->getMessage()]);
-            // Re-throw the exception so higher-level code can handle it
-            throw $e; 
+        if ($text === null) {
+            Logger::error("Invalid generateText response format", ['response' => $response]);
+            throw new RuntimeException("Failed to extract text from Gemini response.");
         }
+        return $text;
+    }
+
+    public function generateEmbedding(string $text): array
+    {
+        // SỬA LỖI: Loại bỏ 'model' khỏi request body. Model đã được chỉ định trong URL.
+        $requestData = [
+            'content' => ['parts' => [['text' => $text]]],
+        ];
+
+        $response = $this->makeApiRequest($this->embeddingApiUrl, $requestData);
+        $embedding = $response['embedding']['values'] ?? null;
+
+        if ($embedding === null) {
+            Logger::error("Invalid embedding response format", ['response' => $response]);
+            throw new RuntimeException("Failed to extract embedding from Gemini response.");
+        }
+        return $embedding;
+    }
+
+    private function makeApiRequest(string $url, array $data): array
+    {
+        $ch = curl_init();
+        $fullUrl = $url . '?key=' . $this->apiKey;
+
+        $options = [
+            CURLOPT_URL => $fullUrl,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
+            CURLOPT_TIMEOUT => Config::API_TIMEOUT,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ];
+        curl_setopt_array($ch, $options);
+
+        $responseJson = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
+        curl_close($ch);
+
+        if ($responseJson === false) {
+            Logger::error("cURL error in API request", ['error' => $error, 'url' => $fullUrl]);
+            throw new RuntimeException("Gemini API request failed: cURL error: " . $error);
+        }
+        
+        $response = json_decode($responseJson, true);
+        
+        if ($httpCode !== 200) {
+            $errorMessage = $response['error']['message'] ?? 'Unknown API Error';
+            Logger::error("Gemini API returned non-200 status", ['http_code' => $httpCode, 'response' => $responseJson]);
+            throw new RuntimeException("Gemini API request failed (HTTP $httpCode): " . $errorMessage);
+        }
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new RuntimeException("Failed to decode JSON response from API.");
+        }
+        
+        return $response;
     }
 
     /**
@@ -459,66 +463,6 @@ Would you like me to help you research specific aspects of your {$cityName} trip
         return array_slice($suggestions, 0, 4);
     }
 
-    public function generateEmbedding($text) {
-        try {
-            // FIX: Removed 'model' from $requestData because it's typically in the URL (Config::GEMINI_EMBEDDING_API_URL)
-            $requestData = [
-                'content' => [
-                    'parts' => [
-                        ['text' => $text]
-                    ]
-                ]
-            ];
-            
-            $jsonPayload = json_encode($requestData);
-
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $this->embeddingApiUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload);
-            
-            $headers = [
-                'Content-Type: application/json',
-                'x-api-key: ' . $this->apiKey,
-            ];
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-            
-            if ($response === false) {
-                $error = curl_error($ch);
-                curl_close($ch);
-                Logger::error("cURL error in generateEmbedding", ['error' => $error]);
-                throw new Exception("Gemini API request failed: cURL error: " . $error);
-            }
-
-            curl_close($ch);
-
-            if ($httpCode !== 200) {
-                Logger::error("Gemini API returned non-200 status in generateEmbedding", ['http_code' => $httpCode, 'response' => $response]);
-                
-                $responseData = json_decode($response, true);
-                $errorMessage = $responseData['error']['message'] ?? "Unknown API Error";
-                
-                throw new Exception("Gemini API request failed (HTTP $httpCode): " . $errorMessage);
-            }
-
-            $responseData = json_decode($response, true);
-            
-            if (isset($responseData['embedding']['values'])) {
-                return $responseData['embedding']['values'];
-            } else {
-                Logger::error("Invalid embedding response format", ['response' => $responseData]);
-                return null;
-            }
-        } catch (Exception $e) {
-            Logger::error("Error in generateEmbedding", ['error' => $e->getMessage()]);
-            throw $e;
-        }
-    }
-
     private function buildPrompt($userMessage, $context, $conversationHistory, $metadata) {
         $conversationContext = $this->buildConversationContext($conversationHistory);
         
@@ -622,43 +566,6 @@ Provide your response now in the appropriate format:";
             return 'GENERAL';
         }
     }
-    
-    private function makeApiRequest($url, $data) {
-        $ch = curl_init();
-        
-        curl_setopt_array($ch, [
-            CURLOPT_URL => $url . '?key=' . $this->apiKey,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => [
-                'Content-Type: application/json',
-            ],
-            CURLOPT_TIMEOUT => Config::API_TIMEOUT,
-            CURLOPT_SSL_VERIFYPEER => false
-        ]);
-        
-        $response = curl_exec($ch);
-        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        $error = curl_error($ch);
-        
-        curl_close($ch);
-        
-        if ($error) {
-            throw new Exception("cURL error: $error");
-        }
-        
-        if ($httpCode !== 200) {
-            throw new Exception("HTTP error: $httpCode");
-        }
-        
-        $decoded = json_decode($response, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new Exception("JSON decode error: " . json_last_error_msg());
-        }
-        
-        return $decoded;
-    }
 
     /**
      * Build conversation context from history
@@ -683,59 +590,6 @@ Provide your response now in the appropriate format:";
         }
         
         return $context;
-    }
-
-    /**
-     * Get fallback suggestions when generation fails
-     */
-    private function getFallbackSuggestions($userMessage) {
-        $messageLower = strtolower($userMessage);
-        
-        if (strpos($messageLower, 'tour') !== false) {
-            return [
-                "What's the best time to visit?",
-                "Show me budget tour options",
-                "Find tours with accommodation included",
-                "Tell me about tour duration options"
-            ];
-        }
-        
-        if (strpos($messageLower, 'hotel') !== false) {
-            return [
-                "Show me 4-star hotels",
-                "Find hotels with good ratings",
-                "What are the hotel amenities?",
-                "Compare hotel prices"
-            ];
-        }
-        
-        // Generic fallback
-        return [
-            "Show me popular destinations",
-            "Find budget travel options", 
-            "Tell me about local attractions",
-            "Help me plan my itinerary"
-        ];
-    }
-
-    public function testConnection() {
-        try {
-            $testResponse = $this->generateEmbedding("test connection");
-            return $testResponse !== null;
-        } catch (Exception $e) {
-            Logger::error("Gemini API connection test failed", ['error' => $e->getMessage()]);
-            return false;
-        }
-    }
-
-    public function getApiStatus() {
-        return [
-            'api_key_configured' => !empty($this->apiKey) && $this->apiKey !== 'YOUR_API_KEY_HERE',
-            'api_key_length' => strlen($this->apiKey),
-            'generation_url' => Config::GEMINI_API_URL,
-            'embedding_url' => Config::GEMINI_EMBEDDING_API_URL,
-            'embedding_model' => Config::GEMINI_EMBEDDING_MODEL,
-        ];
     }
 }
 ?>

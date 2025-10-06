@@ -2,7 +2,7 @@
 const CONSTANTS = {
     SESSION_KEY: 'chatData',
     CHAT_HISTORY_KEY: 'chatHistory',
-    API_ENDPOINT: './rag_chatbot_backend_refactored.php',
+    API_ENDPOINT: './api.php',
     MAX_HISTORY_ITEMS: 50,
     AUTO_SAVE_INTERVAL: 30000,
     REQUEST_TIMEOUT: 30000,
