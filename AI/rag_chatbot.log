@@ -78,3 +78,267 @@
 [2025-09-28 03:25:46] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":4}
 [2025-09-28 03:25:46] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Ho Chi Minh And..."}
 [2025-09-28 03:25:46] [INFO] Message processed successfully {"processing_time_ms":1152.99,"confidence":0.7000000000000001,"response_type":"tour_search","layout_type":"multi_city_tours","items_returned":7}
+[2025-10-05 13:33:12] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-05 13:33:12] [INFO] Processing message {"message":"tour da nang","history_count":1}
+[2025-10-05 13:33:12] [INFO] Starting hybrid retrieval {"query":"tour da nang","intent":"tour_search"}
+[2025-10-05 13:33:13] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-05 13:33:13] [INFO] generateVietnameseResponse called {"userMessage":"tour da nang","context_length":1431,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-05 13:33:13] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour da nang","context_available":true}
+[2025-10-05 13:33:13] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.84,"display_items":6}
+[2025-10-05 13:33:13] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Da Nang"}
+[2025-10-05 13:33:13] [INFO] Message processed successfully {"processing_time_ms":1202.12,"confidence":0.84,"response_type":"tour_search","layout_type":"single_tours","items_returned":7}
+[2025-10-05 13:33:23] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-05 13:33:23] [INFO] Processing message {"message":"tour nha trang","history_count":3}
+[2025-10-05 13:33:23] [INFO] Starting hybrid retrieval {"query":"tour nha trang","intent":"tour_search"}
+[2025-10-05 13:33:23] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-05 13:33:23] [INFO] generateVietnameseResponse called {"userMessage":"tour nha trang","context_length":1330,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-05 13:33:23] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour nha trang","context_available":true}
+[2025-10-05 13:33:23] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.84,"display_items":6}
+[2025-10-05 13:33:23] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Nha Trang"}
+[2025-10-05 13:33:23] [INFO] Message processed successfully {"processing_time_ms":781.38,"confidence":0.84,"response_type":"tour_search","layout_type":"single_tours","items_returned":7}
+[2025-10-05 13:33:28] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-05 13:33:28] [INFO] Processing message {"message":"tour phu quoc","history_count":5}
+[2025-10-05 13:33:28] [INFO] Starting hybrid retrieval {"query":"tour phu quoc","intent":"tour_search"}
+[2025-10-05 13:33:29] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-05 13:33:29] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc","context_length":1402,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-05 13:33:29] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour phu quoc","context_available":true}
+[2025-10-05 13:33:29] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.84,"display_items":6}
+[2025-10-05 13:33:29] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Phu Quoc"}
+[2025-10-05 13:33:29] [INFO] Message processed successfully {"processing_time_ms":729.29,"confidence":0.84,"response_type":"tour_search","layout_type":"single_tours","items_returned":7}
+[2025-10-05 13:38:56] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-05 13:38:56] [INFO] Processing message {"message":"tour phu yen","history_count":5}
+[2025-10-05 13:38:56] [INFO] Starting hybrid retrieval {"query":"tour phu yen","intent":"tour_search"}
+[2025-10-05 13:38:57] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-05 13:38:57] [INFO] generateVietnameseResponse called {"userMessage":"tour phu yen","context_length":1235,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-05 13:38:57] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour phu yen","context_available":true}
+[2025-10-05 13:38:57] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.84,"display_items":6}
+[2025-10-05 13:38:57] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Phu Yen"}
+[2025-10-05 13:38:57] [INFO] Message processed successfully {"processing_time_ms":1099.84,"confidence":0.84,"response_type":"tour_search","layout_type":"single_tours","items_returned":7}
+[2025-10-05 13:39:06] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-05 13:39:06] [INFO] Processing message {"message":"tour hotel with rating 5 star","history_count":5}
+[2025-10-05 13:39:06] [INFO] Starting hybrid retrieval {"query":"tour hotel with rating 5 star","intent":"hotel_search"}
+[2025-10-05 13:39:07] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.9,"retrieval_stats":{"semantic_results":15,"bm25_results":12,"sql_results":15,"final_results":7}}
+[2025-10-05 13:39:07] [INFO] generateVietnameseResponse called {"userMessage":"tour hotel with rating 5 star","context_length":1026,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-05 13:39:07] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour hotel with rating 5 star","context_available":true}
+[2025-10-05 13:39:07] [INFO] Hybrid response generated successfully {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9,"display_items":6}
+[2025-10-05 13:39:07] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Hotel With Rating 5..."}
+[2025-10-05 13:39:07] [INFO] Message processed successfully {"processing_time_ms":753.81,"confidence":0.9,"response_type":"hotel_search","layout_type":"single_hotels","items_returned":7}
+[2025-10-05 13:39:32] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-05 13:39:32] [INFO] Processing message {"message":"hotel in ha noi with rating 3 star","history_count":5}
+[2025-10-05 13:39:32] [INFO] Starting hybrid retrieval {"query":"hotel in ha noi with rating 3 star","intent":"hotel_search"}
+[2025-10-05 13:39:33] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-05 13:39:33] [INFO] generateVietnameseResponse called {"userMessage":"hotel in ha noi with rating 3 star","context_length":1002,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-05 13:39:33] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"hotel in ha noi with rating 3 star","context_available":true}
+[2025-10-05 13:39:33] [INFO] Hybrid response generated successfully {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.84,"display_items":6}
+[2025-10-05 13:39:33] [INFO] Conversation saved successfully {"userId":1,"title":"Hotel In Ha Noi With..."}
+[2025-10-05 13:39:33] [INFO] Message processed successfully {"processing_time_ms":875.78,"confidence":0.84,"response_type":"hotel_search","layout_type":"single_hotels","items_returned":7}
+[2025-10-06 00:55:20] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 00:55:20] [INFO] Processing message {"message":"tour hoi an","history_count":1}
+[2025-10-06 00:55:20] [INFO] Starting hybrid retrieval {"query":"tour hoi an","intent":"tour_search"}
+[2025-10-06 00:55:21] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-06 00:55:21] [INFO] generateVietnameseResponse called {"userMessage":"tour hoi an","context_length":1485,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-06 00:55:23] [INFO] Successfully generated response {"response_length":1083,"response_preview":"Okay, I found these tours:\n\n**Tours in Hoi An:**\n• **Hoi An Cultural Experience: Ancient Town - Ri"}
+[2025-10-06 00:55:23] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.84,"display_items":6}
+[2025-10-06 00:55:23] [INFO] Conversation saved successfully {"userId":1,"title":"Tour Hoi An"}
+[2025-10-06 00:55:23] [INFO] Message processed successfully {"processing_time_ms":3410.76,"confidence":0.84,"response_type":"tour_search","layout_type":"single_tours","items_returned":7}
+[2025-10-06 01:10:10] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:10:10] [INFO] Processing message {"message":"hotel ha giang","history_count":3}
+[2025-10-06 01:10:10] [INFO] Starting hybrid retrieval {"query":"hotel ha giang","intent":"hotel_search"}
+[2025-10-06 01:10:11] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":6,"sql_results":10,"final_results":7}}
+[2025-10-06 01:10:11] [INFO] generateVietnameseResponse called {"userMessage":"hotel ha giang","context_length":1011,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-06 01:10:11] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"hotel ha giang","context_available":true}
+[2025-10-06 01:10:11] [INFO] Hybrid response generated successfully {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.84,"display_items":6}
+[2025-10-06 01:10:11] [INFO] Conversation saved successfully {"userId":1,"title":"Hotel Ha Giang"}
+[2025-10-06 01:10:11] [INFO] Message processed successfully {"processing_time_ms":1402.36,"confidence":0.84,"response_type":"hotel_search","layout_type":"single_hotels","items_returned":7}
+[2025-10-06 01:11:33] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:11:33] [INFO] Processing message {"message":"tour phu yen","history_count":5}
+[2025-10-06 01:11:33] [INFO] Starting hybrid retrieval {"query":"tour phu yen","intent":"tour_search"}
+[2025-10-06 01:11:34] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.84,"retrieval_stats":{"semantic_results":15,"bm25_results":8,"sql_results":8,"final_results":7}}
+[2025-10-06 01:11:34] [INFO] generateVietnameseResponse called {"userMessage":"tour phu yen","context_length":1235,"metadata":{"match_level":"hybrid_match","confidence":0.84}}
+[2025-10-06 01:11:35] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour phu yen","context_available":true}
+[2025-10-06 01:11:35] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.84,"display_items":6}
+[2025-10-06 01:11:35] [INFO] Message processed successfully {"processing_time_ms":1210.24,"confidence":0.84,"response_type":"tour_search","layout_type":"single_tours","items_returned":7}
+[2025-10-06 01:11:51] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:11:51] [INFO] Processing message {"message":"tour da lat and hotel nha trang","history_count":5}
+[2025-10-06 01:11:51] [INFO] Starting hybrid retrieval {"query":"tour da lat and hotel nha trang","intent":"mixed_search"}
+[2025-10-06 01:11:52] [INFO] Hybrid retrieval completed successfully {"total_results":10,"confidence":0.9,"retrieval_stats":{"semantic_results":15,"bm25_results":15,"sql_results":15,"final_results":10}}
+[2025-10-06 01:11:52] [INFO] generateVietnameseResponse called {"userMessage":"tour da lat and hotel nha trang","context_length":1677,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-06 01:11:52] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","user_message":"tour da lat and hotel nha trang","context_available":true}
+[2025-10-06 01:11:52] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9,"display_items":5}
+[2025-10-06 01:11:52] [INFO] Message processed successfully {"processing_time_ms":1106.2,"confidence":0.9,"response_type":"tour_search","layout_type":"multi_city_tours","items_returned":10}
+[2025-10-06 01:26:37] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:26:37] [INFO] Processing message {"message":"hotel phu quoc","history_count":1}
+[2025-10-06 01:26:45] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:26:45] [INFO] Processing message {"message":"hotel phu quoc","history_count":1}
+[2025-10-06 01:29:12] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:29:12] [INFO] Processing message {"message":"hotel in da nang","history_count":2}
+[2025-10-06 01:35:07] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:35:07] [INFO] Processing message {"message":"hotel can tho","history_count":1}
+[2025-10-06 01:44:34] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:44:34] [INFO] Chatbot initialized successfully 
+[2025-10-06 01:44:34] [INFO] Processing user message {"message_length":16,"message_preview":"hotel in tay bac","history_count":2}
+[2025-10-06 01:44:34] [INFO] Processing message {"message":"hotel in tay bac","history_count":2}
+[2025-10-06 01:44:35] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:44:35] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:44:35] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"hotel in tay bac"}
+[2025-10-06 01:44:35] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 01:44:36] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:44:36] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:44:36] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:44:36] [INFO] Starting hybrid retrieval {"query":"hotel in tay bac","intent":"hotel_search"}
+[2025-10-06 01:44:37] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:44:37] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:44:37] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:44:37] [INFO] Hybrid retrieval completed successfully {"total_results":6,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":10,"sql_results":10,"final_results":6}}
+[2025-10-06 01:44:37] [INFO] generateVietnameseResponse called {"userMessage":"hotel in tay bac","context_length":806,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-10-06 01:44:38] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"hotel in tay bac","context_available":true,"context_length":806}
+[2025-10-06 01:44:38] [INFO] Hybrid response generated successfully {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.7000000000000001,"display_items":6}
+[2025-10-06 01:44:38] [INFO] Message processed successfully {"processing_time_ms":4142.86,"confidence":0.7000000000000001,"response_type":"hotel_search","items_returned":6}
+[2025-10-06 01:44:38] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-06 01:53:40] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:53:40] [INFO] Chatbot initialized successfully 
+[2025-10-06 01:53:40] [INFO] Processing user message {"message_length":11,"message_preview":"tour ha noi","history_count":4}
+[2025-10-06 01:53:40] [INFO] Processing message {"message":"tour ha noi","history_count":4}
+[2025-10-06 01:53:42] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:53:42] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:42] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"tour ha noi"}
+[2025-10-06 01:53:42] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 01:53:43] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:53:43] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:43] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:43] [INFO] Starting hybrid retrieval {"query":"tour ha noi","intent":"tour_search"}
+[2025-10-06 01:53:44] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:53:44] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:44] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:44] [INFO] Hybrid retrieval completed successfully {"total_results":6,"confidence":0.64,"retrieval_stats":{"semantic_results":0,"bm25_results":8,"sql_results":8,"final_results":6}}
+[2025-10-06 01:53:44] [INFO] generateVietnameseResponse called {"userMessage":"tour ha noi","context_length":973,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.64}}
+[2025-10-06 01:53:44] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"tour ha noi","context_available":true,"context_length":973}
+[2025-10-06 01:53:44] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.64,"display_items":6}
+[2025-10-06 01:53:44] [INFO] Message processed successfully {"processing_time_ms":4145.08,"confidence":0.64,"response_type":"tour_search","items_returned":6}
+[2025-10-06 01:53:44] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-06 01:53:57] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:53:57] [INFO] Chatbot initialized successfully 
+[2025-10-06 01:53:57] [INFO] Processing user message {"message_length":24,"message_preview":"tour can tho with 3 days","history_count":5}
+[2025-10-06 01:53:57] [INFO] Processing message {"message":"tour can tho with 3 days","history_count":5}
+[2025-10-06 01:53:58] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:53:58] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:58] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"tour can tho with 3 days"}
+[2025-10-06 01:53:58] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 01:53:59] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:53:59] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:59] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:53:59] [INFO] Starting hybrid retrieval {"query":"tour can tho with 3 days","intent":"tour_search"}
+[2025-10-06 01:54:01] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:01] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:01] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:01] [INFO] Hybrid retrieval completed successfully {"total_results":2,"confidence":0.4600000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":2,"sql_results":2,"final_results":2}}
+[2025-10-06 01:54:01] [INFO] generateVietnameseResponse called {"userMessage":"tour can tho with 3 days","context_length":409,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.4600000000000001}}
+[2025-10-06 01:54:01] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"tour can tho with 3 days","context_available":true,"context_length":409}
+[2025-10-06 01:54:01] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.4600000000000001,"display_items":2}
+[2025-10-06 01:54:01] [INFO] Message processed successfully {"processing_time_ms":3823.88,"confidence":0.4600000000000001,"response_type":"tour_search","items_returned":2}
+[2025-10-06 01:54:01] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-06 01:54:10] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:54:10] [INFO] Chatbot initialized successfully 
+[2025-10-06 01:54:10] [INFO] Processing user message {"message_length":28,"message_preview":"tour da lat under 5 millions","history_count":5}
+[2025-10-06 01:54:10] [INFO] Processing message {"message":"tour da lat under 5 millions","history_count":5}
+[2025-10-06 01:54:12] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:12] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:12] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"tour da lat under 5 millions"}
+[2025-10-06 01:54:12] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 01:54:13] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:13] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:13] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:13] [INFO] Starting hybrid retrieval {"query":"tour da lat under 5 millions","intent":"tour_search"}
+[2025-10-06 01:54:14] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:14] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:14] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:14] [INFO] Hybrid retrieval completed successfully {"total_results":1,"confidence":0.43000000000000005,"retrieval_stats":{"semantic_results":0,"bm25_results":1,"sql_results":1,"final_results":1}}
+[2025-10-06 01:54:14] [INFO] generateVietnameseResponse called {"userMessage":"tour da lat under 5 millions","context_length":189,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.43000000000000005}}
+[2025-10-06 01:54:14] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"tour da lat under 5 millions","context_available":true,"context_length":189}
+[2025-10-06 01:54:14] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.43000000000000005,"display_items":1}
+[2025-10-06 01:54:14] [INFO] Message processed successfully {"processing_time_ms":3622.33,"confidence":0.43000000000000005,"response_type":"tour_search","items_returned":1}
+[2025-10-06 01:54:14] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-06 01:54:50] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 01:54:50] [INFO] Chatbot initialized successfully 
+[2025-10-06 01:54:50] [INFO] Processing user message {"message_length":25,"message_preview":"tour in ha noi and da lat","history_count":5}
+[2025-10-06 01:54:50] [INFO] Processing message {"message":"tour in ha noi and da lat","history_count":5}
+[2025-10-06 01:54:52] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:52] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:52] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"tour in ha noi and da lat"}
+[2025-10-06 01:54:52] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 01:54:53] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:53] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:53] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:53] [INFO] Starting hybrid retrieval {"query":"tour in ha noi and da lat","intent":"tour_search"}
+[2025-10-06 01:54:54] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 01:54:54] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:54] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 01:54:54] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":7}}
+[2025-10-06 01:54:54] [INFO] generateVietnameseResponse called {"userMessage":"tour in ha noi and da lat","context_length":1211,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-10-06 01:54:55] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"tour in ha noi and da lat","context_available":true,"context_length":1211}
+[2025-10-06 01:54:55] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":5}
+[2025-10-06 01:54:55] [INFO] Message processed successfully {"processing_time_ms":4256.25,"confidence":0.7000000000000001,"response_type":"tour_search","items_returned":7}
+[2025-10-06 01:54:55] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-06 03:20:04] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 03:20:04] [INFO] Chatbot initialized successfully 
+[2025-10-06 03:20:04] [INFO] Processing user message {"message_length":29,"message_preview":"tour in ha giang and phu quoc","history_count":5}
+[2025-10-06 03:20:04] [INFO] Processing message {"message":"tour in ha giang and phu quoc","history_count":5}
+[2025-10-06 03:20:04] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:04] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:04] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"tour in ha giang and phu quoc"}
+[2025-10-06 03:20:04] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 03:20:05] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:05] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:05] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:05] [INFO] Starting hybrid retrieval {"query":"tour in ha giang and phu quoc","intent":"tour_search"}
+[2025-10-06 03:20:05] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:05] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:05] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:05] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":7}}
+[2025-10-06 03:20:05] [INFO] generateVietnameseResponse called {"userMessage":"tour in ha giang and phu quoc","context_length":1363,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-10-06 03:20:06] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"tour in ha giang and phu quoc","context_available":true,"context_length":1363}
+[2025-10-06 03:20:06] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":4}
+[2025-10-06 03:20:06] [INFO] Message processed successfully {"processing_time_ms":1745.1,"confidence":0.7000000000000001,"response_type":"tour_search","items_returned":7}
+[2025-10-06 03:20:06] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-06 03:20:17] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 03:20:17] [INFO] Chatbot initialized successfully 
+[2025-10-06 03:20:17] [INFO] Processing user message {"message_length":28,"message_preview":"hotel in da nang and tay bac","history_count":5}
+[2025-10-06 03:20:17] [INFO] Processing message {"message":"hotel in da nang and tay bac","history_count":5}
+[2025-10-06 03:20:18] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:18] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:18] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"hotel in da nang and tay bac"}
+[2025-10-06 03:20:18] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 03:20:18] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:18] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:18] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:18] [INFO] Starting hybrid retrieval {"query":"hotel in da nang and tay bac","intent":"hotel_search"}
+[2025-10-06 03:20:19] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:19] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:19] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:19] [INFO] Hybrid retrieval completed successfully {"total_results":7,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":7}}
+[2025-10-06 03:20:19] [INFO] generateVietnameseResponse called {"userMessage":"hotel in da nang and tay bac","context_length":977,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-10-06 03:20:19] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"hotel in da nang and tay bac","context_available":true,"context_length":977}
+[2025-10-06 03:20:19] [INFO] Hybrid response generated successfully {"response_type":"hotel_search","layout_type":"multi_city_hotels","confidence":0.7000000000000001,"display_items":4}
+[2025-10-06 03:20:19] [INFO] Message processed successfully {"processing_time_ms":1322.85,"confidence":0.7000000000000001,"response_type":"hotel_search","items_returned":7}
+[2025-10-06 03:20:19] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-06 03:20:29] [INFO] RAG Chatbot initialized successfully {"userId":1,"components":{"database":"connected","gemini":"initialized","intent_analyzer":"initialized","hybrid_retriever":"ready","response_generator":"ready"}}
+[2025-10-06 03:20:29] [INFO] Chatbot initialized successfully 
+[2025-10-06 03:20:29] [INFO] Processing user message {"message_length":25,"message_preview":"tour hue and hotel hoi an","history_count":5}
+[2025-10-06 03:20:29] [INFO] Processing message {"message":"tour hue and hotel hoi an","history_count":5}
+[2025-10-06 03:20:29] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:29] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:29] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.","message":"tour hue and hotel hoi an"}
+[2025-10-06 03:20:29] [WARNING] Using fallback rule-based intent detection 
+[2025-10-06 03:20:29] [ERROR] Gemini API returned non-200 status in generateText {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:29] [ERROR] Error in generateText {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:29] [ERROR] Entity extraction failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:29] [INFO] Starting hybrid retrieval {"query":"tour hue and hotel hoi an","intent":"mixed_search"}
+[2025-10-06 03:20:30] [ERROR] Gemini API returned non-200 status in generateEmbedding {"http_code":403,"response":"{\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API.\",\n    \"status\": \"PERMISSION_DENIED\"\n  }\n}\n"}
+[2025-10-06 03:20:30] [ERROR] Error in generateEmbedding {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:30] [ERROR] Semantic search failed {"error":"Gemini API request failed (HTTP 403): Method doesn't allow unregistered callers (callers without established identity). Please use API Key or other form of API consumer identity to call this API."}
+[2025-10-06 03:20:30] [INFO] Hybrid retrieval completed successfully {"total_results":10,"confidence":0.7000000000000001,"retrieval_stats":{"semantic_results":0,"bm25_results":15,"sql_results":15,"final_results":10}}
+[2025-10-06 03:20:30] [INFO] generateVietnameseResponse called {"userMessage":"tour hue and hotel hoi an","context_length":1485,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.7000000000000001}}
+[2025-10-06 03:20:30] [ERROR] Gemini API error - generating fallback {"error_message":"HTTP error: 429","error_code":0,"user_message":"tour hue and hotel hoi an","context_available":true,"context_length":1485}
+[2025-10-06 03:20:30] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.7000000000000001,"display_items":4}
+[2025-10-06 03:20:30] [INFO] Message processed successfully {"processing_time_ms":1280.07,"confidence":0.7000000000000001,"response_type":"tour_search","items_returned":10}
+[2025-10-06 03:20:30] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}

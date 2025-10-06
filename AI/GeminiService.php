@@ -17,20 +17,128 @@ class GeminiService {
         }
     }
 
+    /**
+     * Generate text using Gemini API with custom configuration
+     * This is a simplified method for intent classification and entity extraction
+     */
+    public function generateText($prompt, $config = []) {
+        try {
+            $temperature = $config['temperature'] ?? 0.7;
+            $maxTokens = $config['max_tokens'] ?? $config['maxTokens'] ?? 1024;
+            
+            $requestData = [
+                'contents' => [
+                    [
+                        'parts' => [
+                            ['text' => $prompt]
+                        ]
+                    ]
+                ],
+                'generationConfig' => [
+                    'temperature' => $temperature,
+                    'topK' => 40,
+                    'topP' => 0.95,
+                    'maxOutputTokens' => $maxTokens
+                ]
+            ];
+            
+            $jsonPayload = json_encode($requestData);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload);
+            
+            $headers = [
+                'Content-Type: application/json',
+                'x-api-key: ' . $this->apiKey,
+            ];
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            
+            if ($response === false) {
+                $error = curl_error($ch);
+                curl_close($ch);
+                Logger::error("cURL error in generateText", ['error' => $error]);
+                throw new Exception("Gemini API request failed: cURL error: " . $error);
+            }
+
+            curl_close($ch);
+            
+            if ($httpCode !== 200) {
+                Logger::error("Gemini API returned non-200 status in generateText", ['http_code' => $httpCode, 'response' => $response]);
+                
+                // Attempt to decode error message from the JSON response
+                $responseData = json_decode($response, true);
+                $errorMessage = $responseData['error']['message'] ?? "Unknown API Error";
+                
+                throw new Exception("Gemini API request failed (HTTP $httpCode): " . $errorMessage);
+            }
+
+            $responseData = json_decode($response, true);
+            
+            if (isset($responseData['candidates'][0]['content']['parts'][0]['text'])) {
+                return $responseData['candidates'][0]['content']['parts'][0]['text'];
+            } else {
+                Logger::error("Invalid generateText response format", ['response' => $responseData]);
+                return null;
+            }
+
+        } catch (Exception $e) {
+            Logger::error("Error in generateText", ['error' => $e->getMessage()]);
+            // Re-throw the exception so higher-level code can handle it
+            throw $e; 
+        }
+    }
+
+    /**
+     * Chat method for conversational interactions
+     * Alias for generateText with conversation history support
+     */
+    public function chat($prompt, $conversationHistory = [], $config = []) {
+        // If conversation history is provided, build context
+        if (!empty($conversationHistory)) {
+            $contextualPrompt = $this->buildConversationContext($conversationHistory);
+            $contextualPrompt .= "\n\nCurrent message: " . $prompt;
+            return $this->generateText($contextualPrompt, $config);
+        }
+        
+        return $this->generateText($prompt, $config);
+    }
+
     public function generateVietnameseResponse($userMessage, $context, $conversationHistory, $metadata = []) {
         try {
             // DEBUG: Log input parameters
             Logger::info("generateVietnameseResponse called", [
                 'userMessage' => substr($userMessage, 0, 100),
                 'context_length' => strlen($context),
+                'context_empty' => empty($context),
                 'metadata' => $metadata
             ]);
+            
+            // CRITICAL FIX: Check if context is empty FIRST and return immediately
+            if (empty(trim($context))) {
+                Logger::warning("Empty context received, returning fallback immediately");
+                $fallback = $this->generateContextualFallback('', $userMessage);
+                
+                // DOUBLE CHECK: Ensure fallback is never empty
+                if (empty(trim($fallback))) {
+                    Logger::error("Fallback generation returned empty, using emergency response");
+                    return "I'm ready to help you explore tours and hotels in Vietnam! Could you tell me which city you're interested in, or what type of experience you're looking for?";
+                }
+                
+                return $fallback;
+            }
             
             $prompt = $this->buildPrompt($userMessage, $context, $conversationHistory, $metadata);
             
             // DEBUG: Log the built prompt
             Logger::debug("Built prompt", [
-                'prompt_length' => strlen($prompt)
+                'prompt_length' => strlen($prompt),
+                'prompt_preview' => substr($prompt, 0, 200)
             ]);
             
             $requestData = [
@@ -49,19 +157,7 @@ class GeminiService {
                 ]
             ];
             
-            // DEBUG: Log request data
-            Logger::debug("Making API request", [
-                'url' => $this->apiUrl,
-                'request_data_size' => strlen(json_encode($requestData))
-            ]);
-            
             $response = $this->makeApiRequest($this->apiUrl, $requestData);
-            
-            // DEBUG: Log API response status
-            Logger::debug("Gemini API response received", [
-                'has_candidates' => isset($response['candidates']),
-                'candidates_count' => isset($response['candidates']) ? count($response['candidates']) : 0
-            ]);
             
             if ($response && isset($response['candidates'][0]['content']['parts'][0]['text'])) {
                 $generatedText = trim($response['candidates'][0]['content']['parts'][0]['text']);
@@ -75,7 +171,6 @@ class GeminiService {
                     }
                 }
                 
-                // DEBUG: Log successful generation
                 Logger::info("Successfully generated response", [
                     'response_length' => strlen($generatedText),
                     'response_preview' => substr($generatedText, 0, 100)
@@ -84,25 +179,48 @@ class GeminiService {
                 return $generatedText;
             }
             
-            // DEBUG: Log structure issue and try fallback
-            Logger::warning("Invalid Gemini API response structure, using context fallback", [
-                'has_candidates' => isset($response['candidates']),
-                'context_available' => !empty($context)
-            ]);
+            // API returned invalid structure - use fallback
+            Logger::warning("Invalid Gemini API response structure, using context fallback");
+            $fallback = $this->generateContextualFallback($context, $userMessage);
             
-            // Try to generate a response from available context
-            return $this->generateContextualFallback($context, $userMessage);
+            // CRITICAL: Ensure fallback is never empty
+            if (empty(trim($fallback))) {
+                Logger::error("Context fallback returned empty string");
+                return "I found some travel options for you. Let me show you what's available based on your search.";
+            }
+            
+            return $fallback;
             
         } catch (Exception $e) {
             // DEBUG: Log detailed error
             Logger::error("Gemini API error - generating fallback", [
                 'error_message' => $e->getMessage(),
+                'error_code' => $e->getCode(),
                 'user_message' => substr($userMessage, 0, 50),
-                'context_available' => !empty($context)
+                'context_available' => !empty($context),
+                'context_length' => strlen($context ?? '')
             ]);
             
-            // Generate intelligent fallback based on available context
-            return $this->generateContextualFallback($context, $userMessage);
+            // CRITICAL FIX: Always return a valid non-empty fallback
+            try {
+                $fallback = $this->generateContextualFallback($context ?? '', $userMessage);
+                
+                if (empty(trim($fallback))) {
+                    Logger::error("Fallback generation failed in catch block, using emergency response");
+                    return "I'm experiencing technical difficulties, but I'm here to help you find tours and hotels in Vietnam. Please try asking about a specific city like Hanoi, Da Nang, or Ho Chi Minh City.";
+                }
+                
+                return $fallback;
+                
+            } catch (Exception $fallbackError) {
+                Logger::critical("Both API and fallback failed", [
+                    'api_error' => $e->getMessage(),
+                    'fallback_error' => $fallbackError->getMessage()
+                ]);
+                
+                // LAST RESORT: Return hardcoded helpful message
+                return "I'm ready to help you plan your Vietnam trip! I can show you:\n\n• Tours in popular cities\n• Hotels with various ratings\n• Travel packages and itineraries\n\nWhich city would you like to explore?";
+            }
         }
     }
 
@@ -145,8 +263,10 @@ class GeminiService {
 
     // Generate fallback response using available context data
     private function generateContextualFallback($context, $userMessage) {
-        if (empty($context)) {
-            return "I'd be happy to help you find travel options in Vietnam. Could you please specify which city or type of experience you're looking for?";
+        // CRITICAL: Handle completely empty context
+        if (empty(trim($context))) {
+            Logger::warning("generateContextualFallback called with empty context");
+            return "I'd be happy to help you find travel options in Vietnam! I can show you tours and hotels in cities like Hanoi, Da Nang, Ho Chi Minh City, Hoi An, and more. Which destination interests you?";
         }
         
         // Check if this is a multi-city query
@@ -260,14 +380,16 @@ class GeminiService {
             }
         }
         
-        // Final fallback if nothing could be parsed
-        if (empty($response)) {
+        // CRITICAL: Final fallback if parsing completely failed
+        if (empty(trim($response))) {
+            Logger::warning("Context parsing failed, using keyword-based fallback");
+            
             if (stripos($userMessage, 'tour') !== false) {
-                $response = "I have tour information available for various destinations in Vietnam. The tours range from 2-7 days with different price points and experiences.";
+                $response = "I have tour information available for various destinations in Vietnam. The tours range from 2-7 days with different price points and experiences. Which city would you like to explore?";
             } elseif (stripos($userMessage, 'hotel') !== false) {
-                $response = "I have hotel information available across Vietnam with various ratings and price ranges to suit different budgets.";
+                $response = "I have hotel information available across Vietnam with various ratings and price ranges to suit different budgets. Which city are you interested in?";
             } else {
-                $response = "I have travel information available for tours and hotels across Vietnam. Please let me know what specific destination or type of experience interests you.";
+                $response = "I can help you find tours and hotels across Vietnam's most popular destinations including Hanoi, Da Nang, Ho Chi Minh City, Hoi An, and more. What are you looking for?";
             }
         }
         
@@ -275,9 +397,9 @@ class GeminiService {
     }
 
     public function generateInternationalPlan($userMessage, $cityName, $conversationHistory) {
-    $conversationContext = $this->buildConversationContext($conversationHistory);
+        $conversationContext = $this->buildConversationContext($conversationHistory);
 
-    $prompt = "You are a helpful international travel assistant. The user is asking about travel to {$cityName}.
+        $prompt = "You are a helpful international travel assistant. The user is asking about travel to {$cityName}.
 
 {$conversationContext}
 
@@ -292,25 +414,12 @@ Please provide a helpful, detailed response about traveling to {$cityName}. Incl
 - Travel requirements (visa, etc.) if applicable
 
 Keep your response conversational, informative, and well-structured. Focus on being practical and helpful.";
-    
-    try {
-        $requestData = [
-            'contents' => [
-                [
-                    'parts' => [
-                        ['text' => $prompt]
-                    ]
-                ]
-            ]
-        ];
         
-        $response = $this->makeApiRequest($this->apiUrl, $requestData);
-        
-        if ($response && isset($response['candidates'][0]['content']['parts'][0]['text'])) {
-            return $response['candidates'][0]['content']['parts'][0]['text'];
-        }
-        
-        return "I'd be happy to help you plan your trip to {$cityName}! Here are some general tips:\n
+        try {
+            return $this->generateText($prompt);
+        } catch (Exception $e) {
+            Logger::error("International plan generation error", ['error' => $e->getMessage()]);
+            return "I'd be happy to help you plan your trip to {$cityName}! Here are some general tips:\n
 **Planning Your Visit:**
 - Research visa requirements and travel documents
 - Check weather conditions for your travel dates  
@@ -325,12 +434,8 @@ Keep your response conversational, informative, and well-structured. Focus on be
 - Cultural etiquette and customs
 
 Would you like me to help you research specific aspects of your {$cityName} trip?";
-        
-    } catch (Exception $e) {
-        Logger::error("International plan generation error", ['error' => $e->getMessage()]);
-        return "For travel to $cityName, please check visa requirements and book accommodations in advance.";
+        }
     }
-}
 
     public function generateSuggestions($userMessage, $aiResponse, $responseData) {
         $suggestions = [
@@ -356,8 +461,8 @@ Would you like me to help you research specific aspects of your {$cityName} trip
 
     public function generateEmbedding($text) {
         try {
+            // FIX: Removed 'model' from $requestData because it's typically in the URL (Config::GEMINI_EMBEDDING_API_URL)
             $requestData = [
-                'model' => Config::GEMINI_EMBEDDING_MODEL,
                 'content' => [
                     'parts' => [
                         ['text' => $text]
@@ -365,18 +470,52 @@ Would you like me to help you research specific aspects of your {$cityName} trip
                 ]
             ];
             
-            $response = $this->makeApiRequest($this->embeddingApiUrl, $requestData);
+            $jsonPayload = json_encode($requestData);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $this->embeddingApiUrl);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonPayload);
             
-            if ($response && isset($response['embedding']['values'])) {
-                return $response['embedding']['values'];
+            $headers = [
+                'Content-Type: application/json',
+                'x-api-key: ' . $this->apiKey,
+            ];
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+            
+            $response = curl_exec($ch);
+            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            
+            if ($response === false) {
+                $error = curl_error($ch);
+                curl_close($ch);
+                Logger::error("cURL error in generateEmbedding", ['error' => $error]);
+                throw new Exception("Gemini API request failed: cURL error: " . $error);
             }
+
+            curl_close($ch);
+
+            if ($httpCode !== 200) {
+                Logger::error("Gemini API returned non-200 status in generateEmbedding", ['http_code' => $httpCode, 'response' => $response]);
+                
+                $responseData = json_decode($response, true);
+                $errorMessage = $responseData['error']['message'] ?? "Unknown API Error";
+                
+                throw new Exception("Gemini API request failed (HTTP $httpCode): " . $errorMessage);
+            }
+
+            $responseData = json_decode($response, true);
             
-            Logger::warning("Invalid embedding response", ['text' => substr($text, 0, 100)]);
-            return null;
-            
+            if (isset($responseData['embedding']['values'])) {
+                return $responseData['embedding']['values'];
+            } else {
+                Logger::error("Invalid embedding response format", ['response' => $responseData]);
+                return null;
+            }
         } catch (Exception $e) {
-            Logger::error("Embedding generation failed", ['error' => $e->getMessage()]);
-            return null;
+            Logger::error("Error in generateEmbedding", ['error' => $e->getMessage()]);
+            throw $e;
         }
     }
 
@@ -521,147 +660,6 @@ Provide your response now in the appropriate format:";
         return $decoded;
     }
 
-    private function callApi($apiUrl, $prompt = null, $postData = null) {
-        // Build post data if prompt provided
-        if ($prompt && !$postData) {
-            $postData = [
-                "contents" => [["parts" => [["text" => $prompt]]]],
-                "generationConfig" => [ 
-                    "temperature" => 0.7,
-                    "topP" => 0.8,
-                    "topK" => 40,
-                    "maxOutputTokens" => 800,
-                    "stopSequences" => []
-                ],
-                "safetySettings" => [
-                    [
-                        "category" => "HARM_CATEGORY_HARASSMENT",
-                        "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
-                    ],
-                    [
-                        "category" => "HARM_CATEGORY_HATE_SPEECH", 
-                        "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
-                    ],
-                    [
-                        "category" => "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-                        "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
-                    ],
-                    [
-                        "category" => "HARM_CATEGORY_DANGEROUS_CONTENT",
-                        "threshold" => "BLOCK_MEDIUM_AND_ABOVE"
-                    ]
-                ]
-            ];
-        }
-
-        $maxRetries = 3;
-        $retryDelay = 1; // seconds
-        
-        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
-            try {
-                $ch = curl_init();
-                
-                // FIXED: Corrected the URL concatenation syntax
-                curl_setopt_array($ch, [
-                    CURLOPT_URL => $apiUrl . "?key=" . $this->apiKey,  // FIXED: Changed => to .
-                    CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => json_encode($postData),
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_HTTPHEADER => [
-                        'Content-Type: application/json',
-                        'User-Agent: TravelChatbot/1.0'
-                    ],
-                    CURLOPT_TIMEOUT => Config::API_TIMEOUT,
-                    CURLOPT_CONNECTTIMEOUT => 10,
-                    CURLOPT_SSL_VERIFYPEER => true,
-                    CURLOPT_FOLLOWLOCATION => false
-                ]);
-
-                $response = curl_exec($ch);
-                $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-                $curlError = curl_error($ch);
-                
-                curl_close($ch);
-                
-                // Handle cURL errors
-                if ($curlError) {
-                    throw new Exception("cURL Error: " . $curlError);
-                }
-                
-                // Handle empty response
-                if ($response === false || empty($response)) {
-                    throw new Exception("Empty response from API");
-                }
-
-                $decodedResponse = json_decode($response, true);
-                
-                // Handle JSON decode errors
-                if (json_last_error() !== JSON_ERROR_NONE) {
-                    throw new Exception("JSON decode error: " . json_last_error_msg());
-                }
-                
-                // Handle HTTP errors
-                if ($httpCode !== 200) {
-                    $errorMessage = $decodedResponse['error']['message'] ?? "Unknown API Error";
-                    
-                    // Handle rate limiting with exponential backoff
-                    if ($httpCode === 429 && $attempt < $maxRetries) {
-                        Logger::warning("Rate limit hit, retrying", [
-                            'attempt' => $attempt,
-                            'delay' => $retryDelay
-                        ]);
-                        sleep($retryDelay);
-                        $retryDelay *= 2; // Exponential backoff
-                        continue;
-                    }
-                    
-                    throw new Exception("API error ($httpCode): " . $errorMessage);
-                }
-
-                // Handle different API response formats
-                if (strpos($apiUrl, 'embedContent') !== false) {
-                    // Embedding API response
-                    return $decodedResponse;
-                } else {
-                    // Generation API response
-                    if (!isset($decodedResponse['candidates'][0]['content']['parts'][0]['text'])) {
-                        // Check for content filtering
-                        if (isset($decodedResponse['candidates'][0]['finishReason'])) {
-                            $finishReason = $decodedResponse['candidates'][0]['finishReason'];
-                            if ($finishReason === 'SAFETY') {
-                                throw new Exception("Content was blocked by safety filters");
-                            }
-                        }
-                        throw new Exception("Unexpected response structure from Gemini Generation API");
-                    }
-                    
-                    return $decodedResponse['candidates'][0]['content']['parts'][0]['text'];
-                }
-                
-            } catch (Exception $e) {
-                // If this is the last attempt, throw the exception
-                if ($attempt === $maxRetries) {
-                    Logger::error("API call failed after all retries", [
-                        'error' => $e->getMessage(),
-                        'attempts' => $maxRetries,
-                        'api_url' => $apiUrl
-                    ]);
-                    throw $e;
-                }
-                
-                // Log the retry attempt
-                Logger::warning("API call failed, retrying", [
-                    'attempt' => $attempt,
-                    'error' => $e->getMessage(),
-                    'retry_delay' => $retryDelay
-                ]);
-                
-                sleep($retryDelay);
-                $retryDelay *= 2; // Exponential backoff
-            }
-        }
-    }
-
     /**
      * Build conversation context from history
      */
@@ -737,7 +735,6 @@ Provide your response now in the appropriate format:";
             'generation_url' => Config::GEMINI_API_URL,
             'embedding_url' => Config::GEMINI_EMBEDDING_API_URL,
             'embedding_model' => Config::GEMINI_EMBEDDING_MODEL,
-            'timeout' => Config::API_TIMEOUT
         ];
     }
 }

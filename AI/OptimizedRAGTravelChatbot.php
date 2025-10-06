@@ -12,13 +12,6 @@ require_once './HybridRetriever.php';
 /**
  * Main RAG Travel Chatbot Controller
  * Implements Complete Parallel Hybrid Retrieval Architecture
- * 
- * ARCHITECTURE OVERVIEW:
- * 1. Intent Analysis & Entity Extraction
- * 2. Parallel Hybrid Retrieval (Semantic + BM25 + SQL)
- * 3. Result Merging & Reranking
- * 4. Context Augmentation
- * 5. LLM Response Generation
  */
 class OptimizedRAGTravelChatbot {
     private $dbService;
@@ -27,6 +20,7 @@ class OptimizedRAGTravelChatbot {
     private $responseGenerator;
     private $vietnameseCities;
     private $hybridRetriever;
+    private $intentAnalyzer;
 
     public function __construct($db) {
         try {
@@ -35,6 +29,9 @@ class OptimizedRAGTravelChatbot {
             $this->userId = UserService::getCurrentUserId();
             $this->vietnameseCities = Config::getVietnameseCities();
 
+            // CRITICAL FIX: Initialize intent analyzer
+            $this->intentAnalyzer = new FewShotIntentAnalyzer();
+            
             // Initialize the hybrid retriever with database service
             $this->hybridRetriever = new HybridRetriever($this->dbService);
             
@@ -45,7 +42,8 @@ class OptimizedRAGTravelChatbot {
                 'userId' => $this->userId,
                 'components' => [
                     'database' => 'connected',
-                    'gemini' => 'initialized', 
+                    'gemini' => 'initialized',
+                    'intent_analyzer' => 'initialized',
                     'hybrid_retriever' => 'ready',
                     'response_generator' => 'ready'
                 ]
@@ -59,10 +57,6 @@ class OptimizedRAGTravelChatbot {
 
     /**
      * MAIN MESSAGE PROCESSING METHOD
-     * Implements Full RAG Pipeline:
-     * R - Retrieval (Parallel Hybrid: Semantic + BM25 + SQL)
-     * A - Augmentation (Context building with retrieved data)
-     * G - Generation (LLM response with enriched context)
      */
     public function processMessage($message, $conversationHistory = []) {
         $startTime = microtime(true);
@@ -76,18 +70,21 @@ class OptimizedRAGTravelChatbot {
                 'history_count' => count($conversationHistory)
             ]);
 
-            // STEP 1: Handle simple greetings efficiently (bypass RAG for performance)
+            // STEP 1: Handle simple greetings efficiently
             if (GreetingService::isSimpleGreeting($message)) {
                 Logger::debug("Simple greeting detected, bypassing RAG pipeline");
                 return GreetingService::generateGreetingResponse();
             }
 
             // STEP 2: Intent Analysis & Entity Extraction
-            $intent = IntentAnalyzer::analyzeIntent($message);
-            $entities = IntentAnalyzer::extractEntities($message, $this->vietnameseCities);
+            // CRITICAL FIX: Use instance method instead of static
+            $intentResult = $this->intentAnalyzer->analyzeIntent($message);
+            $intent = $intentResult['intent'];
+            $entities = $this->intentAnalyzer->extractEntities($message, $this->vietnameseCities);
 
             Logger::debug("Intent analysis completed", [
                 'intent' => $intent,
+                'confidence' => $intentResult['confidence'],
                 'entities_found' => [
                     'cities' => count($entities['cities'] ?? []),
                     'has_budget' => !empty($entities['budget']),
@@ -99,26 +96,40 @@ class OptimizedRAGTravelChatbot {
 
             // STEP 3: Route based on destination type
             if ($entities['is_international']) {
-                Logger::debug("International destination detected, routing to international handler");
+                Logger::debug("International destination detected");
                 return $this->handleInternationalQuery($message, $entities, $conversationHistory);
             }
 
             // STEP 4: PARALLEL HYBRID RETRIEVAL
-            // Execute Semantic, BM25, and SQL searches simultaneously
             Logger::debug("Starting parallel hybrid retrieval", [
                 'intent' => $intent,
-                'entities' => $entities
+                'cities_count' => count($entities['cities'] ?? [])
             ]);
 
             $retrievalResult = $this->hybridRetriever->hybridSearch($message, $entities, $intent);
 
+            // CRITICAL FIX: Better error handling
             if (!$retrievalResult['success']) {
                 Logger::warning("Hybrid retrieval failed", [
                     'message' => substr($message, 0, 100),
+                    'intent' => $intent,
+                    'error' => $retrievalResult['error'] ?? 'unknown'
+                ]);
+                
+                return $this->generateFallbackResponse(
+                    "I'm having trouble finding specific results for your request. Let me help you explore some popular options in Vietnam instead."
+                );
+            }
+
+            // CRITICAL FIX: Check if results are actually empty
+            if (empty($retrievalResult['results'])) {
+                Logger::warning("Retrieval returned no results", [
+                    'message' => substr($message, 0, 100),
                     'intent' => $intent
                 ]);
+                
                 return $this->generateFallbackResponse(
-                    "I couldn't find relevant information for your request. Please try rephrasing or being more specific about your travel needs."
+                    "I couldn't find specific matches for your request. Let me show you some popular travel options in Vietnam."
                 );
             }
 
@@ -129,24 +140,54 @@ class OptimizedRAGTravelChatbot {
             ]);
 
             // STEP 5: AUGMENTATION & GENERATION
-            // Generate contextualized response using retrieved data
-            $response = $this->responseGenerator->generateHybridResponse(
-                $message,
-                $retrievalResult,
-                $conversationHistory
-            );
+            try {
+                $response = $this->responseGenerator->generateHybridResponse(
+                    $message,
+                    $retrievalResult,
+                    $conversationHistory
+                );
+                
+                // CRITICAL FIX: Validate response structure
+                if (empty($response) || !is_array($response)) {
+                    Logger::error("Invalid response from generator", [
+                        'response_type' => gettype($response)
+                    ]);
+                    throw new Exception("Response generator returned invalid data");
+                }
+                
+                // CRITICAL FIX: Ensure text field exists and is not empty
+                if (empty(trim($response['text'] ?? ''))) {
+                    Logger::error("Response text is empty");
+                    $response['text'] = "I found some travel options for you based on your search.";
+                }
+                
+            } catch (Exception $genError) {
+                Logger::error("Response generation failed", [
+                    'error' => $genError->getMessage(),
+                    'results_count' => count($retrievalResult['results'])
+                ]);
+                
+                // CRITICAL FIX: Create manual response from results
+                $response = $this->createManualResponse($retrievalResult['results'], $intent);
+            }
 
-            // STEP 6: Save conversation for future context
-            $this->dbService->saveConversation($this->userId, $message, $response);
+            // STEP 6: Save conversation
+            try {
+                $this->dbService->saveConversation($this->userId, $message, $response);
+            } catch (Exception $saveError) {
+                Logger::warning("Failed to save conversation", [
+                    'error' => $saveError->getMessage()
+                ]);
+                // Don't fail the request if save fails
+            }
 
-            // STEP 7: Calculate and log performance metrics
+            // STEP 7: Calculate performance metrics
             $processingTime = microtime(true) - $startTime;
 
             Logger::info("Message processed successfully", [
                 'processing_time_ms' => round($processingTime * 1000, 2),
                 'confidence' => $retrievalResult['confidence'],
                 'response_type' => $response['type'] ?? 'unknown',
-                'layout_type' => $response['layout_type'] ?? 'default',
                 'items_returned' => count($retrievalResult['results'])
             ]);
 
@@ -165,11 +206,68 @@ class OptimizedRAGTravelChatbot {
             Logger::error("Message processing error", [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
-                'message' => substr($message, 0, 100)
+                'message' => substr($message ?? '', 0, 100)
             ]);
 
             return $this->generateErrorResponse($e->getMessage());
         }
+    }
+
+    /**
+     * CRITICAL FIX: Create manual response when generator fails
+     */
+    private function createManualResponse($results, $intent) {
+        if (empty($results)) {
+            return [
+                'text' => "I'm ready to help you explore Vietnam! What destination interests you?",
+                'type' => 'fallback',
+                'data' => []
+            ];
+        }
+        
+        // Separate tours and hotels
+        $tours = array_filter($results, fn($r) => $r['item_type'] === 'tour');
+        $hotels = array_filter($results, fn($r) => $r['item_type'] === 'hotel');
+        
+        $text = "";
+        
+        if (!empty($tours)) {
+            $text .= "I found these tours for you:\n\n";
+            foreach (array_slice($tours, 0, 3) as $result) {
+                $tour = $result['item'];
+                $text .= sprintf(
+                    "• **%s** - %s days, %s VND\n",
+                    $tour['tour_name'] ?? 'Tour',
+                    $tour['duration_days'] ?? 'N/A',
+                    number_format($tour['price_per_person'] ?? 0)
+                );
+            }
+        }
+        
+        if (!empty($hotels)) {
+            if (!empty($tours)) {
+                $text .= "\n";
+            }
+            $text .= "I found these hotels for you:\n\n";
+            foreach (array_slice($hotels, 0, 3) as $result) {
+                $hotel = $result['item'];
+                $text .= sprintf(
+                    "• **%s** - Rating: %s/5, %s VND/night\n",
+                    $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Hotel',
+                    $hotel['ratings'] ?? 'N/A',
+                    number_format($hotel['cost'] ?? 0)
+                );
+            }
+        }
+        
+        return [
+            'text' => $text,
+            'type' => $intent,
+            'data' => [
+                'tours' => array_map(fn($r) => $r['item'], $tours),
+                'hotels' => array_map(fn($r) => $r['item'], $hotels)
+            ]
+        ];
     }
 
     /**
@@ -182,11 +280,12 @@ class OptimizedRAGTravelChatbot {
             throw new InvalidArgumentException('Message cannot be empty');
         }
 
-        if (strlen($message) > Config::MAX_MESSAGE_LENGTH) {
-            throw new InvalidArgumentException('Message too long. Please keep it under ' . Config::MAX_MESSAGE_LENGTH . ' characters.');
+        $maxLength = defined('Config::MAX_MESSAGE_LENGTH') ? Config::MAX_MESSAGE_LENGTH : 1000;
+        if (strlen($message) > $maxLength) {
+            throw new InvalidArgumentException('Message too long. Please keep it under ' . $maxLength . ' characters.');
         }
 
-        // Remove potentially harmful content
+        // Remove potentially harmful content but preserve special characters for Vietnamese
         $message = htmlspecialchars($message, ENT_QUOTES, 'UTF-8');
         
         // Remove excessive whitespace
@@ -196,7 +295,7 @@ class OptimizedRAGTravelChatbot {
     }
 
     /**
-     * Handle international destination queries (non-Vietnam)
+     * Handle international destination queries
      */
     private function handleInternationalQuery($message, $entities, $conversationHistory) {
         Logger::info("Processing international query", [
@@ -204,19 +303,44 @@ class OptimizedRAGTravelChatbot {
             'message' => substr($message, 0, 100)
         ]);
 
-        $response = $this->responseGenerator->generateInternationalResponse(
-            $message,
-            $entities,
-            $conversationHistory
-        );
+        try {
+            $response = $this->responseGenerator->generateInternationalResponse(
+                $message,
+                $entities,
+                $conversationHistory
+            );
+            
+            // Validate response
+            if (empty($response) || !is_array($response) || empty($response['text'] ?? '')) {
+                throw new Exception("Invalid international response");
+            }
+            
+        } catch (Exception $e) {
+            Logger::error("International response generation failed", [
+                'error' => $e->getMessage()
+            ]);
+            
+            $cityName = $entities['cities'][0]['name'] ?? 'your destination';
+            $response = [
+                'text' => "I'd be happy to help you plan your trip to {$cityName}! However, I specialize in Vietnam travel. For international destinations, I recommend checking with a travel agency or online travel platforms for detailed information.",
+                'type' => 'international',
+                'data' => []
+            ];
+        }
 
-        // Save conversation for history
-        $this->dbService->saveConversation($this->userId, $message, $response);
+        // Save conversation
+        try {
+            $this->dbService->saveConversation($this->userId, $message, $response);
+        } catch (Exception $saveError) {
+            Logger::warning("Failed to save international query", [
+                'error' => $saveError->getMessage()
+            ]);
+        }
 
         return [
             'success' => true,
             'response' => $response,
-            'processing_time' => 0, // International queries are fast
+            'processing_time' => 0,
             'debug_info' => [
                 'type' => 'international',
                 'cities' => $entities['cities'] ?? []
@@ -229,22 +353,19 @@ class OptimizedRAGTravelChatbot {
      */
     private function generateFallbackResponse($message) {
         $fallbackSuggestions = [
-            'Show me popular tours in Vietnam',
-            'Find hotels in Ho Chi Minh City',
-            'Plan a 3-day trip to Da Lat',
-            'What are the best budget tours?',
+            'Show me popular tours in Hanoi',
+            'Find hotels in Da Nang',
+            'Plan a 3-day trip to Hoi An',
+            'What are budget tours in Ho Chi Minh City?',
             'Tell me about Nha Trang attractions'
         ];
 
         return [
             'success' => true,
             'response' => [
-                'text' => $message,
+                'text' => $message . "\n\nTry one of these popular queries:",
                 'type' => 'fallback',
-                'layout_type' => 'default',
                 'data' => [],
-                'match_level' => 'fallback',
-                'confidence' => 0.2,
                 'suggestions' => $fallbackSuggestions
             ]
         ];
@@ -258,14 +379,18 @@ class OptimizedRAGTravelChatbot {
 
         return [
             'success' => false,
-            'error' => 'I encountered an error processing your request. Please try again in a moment.',
-            'suggestions' => [
-                'Try rephrasing your question',
-                'Ask about tours or hotels in Vietnam',
-                'Start with a simple greeting',
-                'Check your internet connection'
-            ],
-            'debug_error' => $errorMessage // Only in development
+            'error' => 'Unable to process your request. Please try again.',
+            'response' => [
+                'text' => "I'm experiencing technical difficulties. Please try asking about tours or hotels in Vietnam's beautiful cities like Hanoi, Da Nang, or Ho Chi Minh City.",
+                'type' => 'error',
+                'data' => [],
+                'suggestions' => [
+                    'Show me tours in Hanoi',
+                    'Find hotels in Da Nang',
+                    'What are popular destinations in Vietnam?',
+                    'Help me plan a trip to Hoi An'
+                ]
+            ]
         ];
     }
 
@@ -297,22 +422,22 @@ class OptimizedRAGTravelChatbot {
      */
     public function getSystemStats() {
         try {
-            $stats = $this->dbService->getSystemStats();
-            
-            // Add runtime statistics
-            $stats['runtime_info'] = [
-                'current_user' => $this->userId,
-                'memory_usage' => round(memory_get_usage() / 1024 / 1024, 2) . 'MB',
-                'peak_memory' => round(memory_get_peak_usage() / 1024 / 1024, 2) . 'MB',
-                'php_version' => PHP_VERSION,
-                'timestamp' => date('Y-m-d H:i:s')
+            $stats = [
+                'status' => 'operational',
+                'runtime_info' => [
+                    'current_user' => $this->userId,
+                    'memory_usage' => round(memory_get_usage() / 1024 / 1024, 2) . 'MB',
+                    'peak_memory' => round(memory_get_peak_usage() / 1024 / 1024, 2) . 'MB',
+                    'php_version' => PHP_VERSION,
+                    'timestamp' => date('Y-m-d H:i:s')
+                ]
             ];
 
             return $stats;
 
         } catch (Exception $e) {
             Logger::error("Failed to get system stats", ['error' => $e->getMessage()]);
-            return [];
+            return ['status' => 'error', 'message' => $e->getMessage()];
         }
     }
 }
