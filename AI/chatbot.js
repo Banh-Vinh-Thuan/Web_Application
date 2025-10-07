@@ -304,7 +304,10 @@ class TravelChatbot {
         this.renderCardsWithLayout(cardContainer, layout);
 
         if (cardContainer.children.length > 0) {
-            messageElement.querySelector('.message-content').appendChild(cardContainer);
+            const messageContent = messageElement.querySelector('.message-content');
+            if (messageContent) {
+                messageContent.appendChild(cardContainer);
+            }
         }
     }
 
@@ -381,14 +384,23 @@ class TravelChatbot {
     }
 
     renderCardsWithLayout(container, layout) {
-        container.className = 'data-cards two-column-layout';
-
-        if (layout.leftColumn?.data.length > 0) {
-            container.appendChild(this.createColumnElement('left', layout.leftColumn, layout.type));
+        // Đặt class theo layout type
+        if (layout.type.includes('filtered') || layout.type.includes('mixed') || layout.type.includes('split')) {
+            container.className = 'data-cards two-column-layout';
+        } else {
+            container.className = 'data-cards';
         }
 
+        // Render left column
+        if (layout.leftColumn?.data.length > 0) {
+            const leftCol = this.createColumnElement('left', layout.leftColumn, layout.type);
+            container.appendChild(leftCol);
+        }
+
+        // Render right column
         if (layout.rightColumn?.data.length > 0) {
-            container.appendChild(this.createColumnElement('right', layout.rightColumn, layout.type));
+            const rightCol = this.createColumnElement('right', layout.rightColumn, layout.type);
+            container.appendChild(rightCol);
         }
     }
 
@@ -396,11 +408,19 @@ class TravelChatbot {
         const column = document.createElement('div');
         column.className = `card-column ${side}-column ${columnData.type}-column`;
 
+        // Add column header nếu cần
+        const header = this.createColumnHeader(columnData.type);
+        if (header) {
+            column.appendChild(header);
+        }
+
+        // Create cards wrapper
         const cardsWrapper = document.createElement('div');
         cardsWrapper.className = 'column-cards';
 
+        // Add cards
         columnData.data.forEach(item => {
-            const card = columnData.type === 'tour'
+            const card = columnData.type === 'tour' || item.tour_name
                 ? this.createTourCard(item)
                 : this.createHotelCard(item);
             cardsWrapper.appendChild(card);
@@ -408,6 +428,21 @@ class TravelChatbot {
 
         column.appendChild(cardsWrapper);
         return column;
+    }
+
+    createColumnHeader(type) {
+        if (type === 'tour') {
+            const header = document.createElement('div');
+            header.className = 'column-header';
+            header.innerHTML = '<i class="fas fa-map-signs"></i> Tours';
+            return header;
+        } else if (type === 'hotel') {
+            const header = document.createElement('div');
+            header.className = 'column-header';
+            header.innerHTML = '<i class="fas fa-bed"></i> Hotels';
+            return header;
+        }
+        return null;
     }
 
     createTourCard(tour) {
@@ -759,12 +794,120 @@ class TravelChatbot {
     createChatHistoryItem(chat) {
         const chatItem = document.createElement('div');
         chatItem.className = 'chat-history-item';
+        chatItem.dataset.chatId = chat.id;
+        
         chatItem.innerHTML = `
-            <div class="chat-item-main" onclick="window.travelChatbot.loadChatHistoryItem('${chat.id}')">
-                <div class="chat-title">${this.escapeHtml(chat.title || 'Untitled')}</div>
+            <div class="chat-item-main">
+                <div class="chat-title" onclick="window.travelChatbot.loadChatHistoryItem('${chat.id}')">${this.escapeHtml(chat.title || 'Untitled')}</div>
+                <div class="chat-item-actions">
+                    <button class="chat-action-btn edit-btn" onclick="window.travelChatbot.editChatTitle('${chat.id}')" title="Rename">
+                        <i class="fas fa-pen"></i>
+                    </button>
+                    <button class="chat-action-btn delete-btn" onclick="window.travelChatbot.deleteChatHistoryItem('${chat.id}')" title="Delete">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
             </div>
         `;
+        
         return chatItem;
+    }
+
+    editChatTitle(chatId) {
+        const chatItem = document.querySelector(`.chat-history-item[data-chat-id="${chatId}"]`);
+        if (!chatItem) return;
+        
+        const titleElement = chatItem.querySelector('.chat-title');
+        const currentTitle = titleElement.textContent;
+        
+        // Tạo input để edit
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.className = 'chat-title-input';
+        input.value = currentTitle;
+        
+        // Replace title với input
+        titleElement.replaceWith(input);
+        input.focus();
+        input.select();
+        
+        // Xử lý save
+        const saveEdit = () => {
+            const newTitle = input.value.trim();
+            if (newTitle && newTitle !== currentTitle) {
+                // Update trong array
+                const chat = this.chatHistoryList.find(c => c.id === chatId);
+                if (chat) {
+                    chat.title = newTitle;
+                    localStorage.setItem(CONSTANTS.CHAT_HISTORY_KEY, JSON.stringify(this.chatHistoryList));
+                    this.updateChatToServer(chatId, { title: newTitle });
+                }
+            }
+            
+            // Restore lại title element
+            const newTitleElement = document.createElement('div');
+            newTitleElement.className = 'chat-title';
+            newTitleElement.textContent = newTitle || currentTitle;
+            newTitleElement.onclick = () => this.loadChatHistoryItem(chatId);
+            input.replaceWith(newTitleElement);
+        };
+        
+        // Events
+        input.addEventListener('blur', saveEdit);
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                saveEdit();
+            }
+        });
+    }
+  
+    deleteChatHistoryItem(chatId) {
+        if (!confirm('Delete this chat?')) return;
+        
+        // Xóa khỏi array
+        this.chatHistoryList = this.chatHistoryList.filter(chat => chat.id !== chatId);
+        
+        // Lưu lại localStorage
+        localStorage.setItem(CONSTANTS.CHAT_HISTORY_KEY, JSON.stringify(this.chatHistoryList));
+        
+        // Xóa trên server
+        this.deleteChatFromServer(chatId);
+        
+        // Update UI
+        this.updateChatHistorySidebar();
+        
+        // Nếu đang xem chat này thì clear
+        if (this.currentChatId === chatId) {
+            this.startNewChat();
+        }
+    }
+
+    async updateChatToServer(chatId, updates) {
+        try {
+            await fetch('./update_chat.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    ...updates
+                })
+            });
+        } catch (error) {
+            console.error('Error updating chat on server:', error);
+        }
+    }
+
+    async deleteChatFromServer(chatId) {
+        try {
+            await fetch('./delete_chat.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: chatId })
+            });
+        } catch (error) {
+            console.error('Error deleting chat from server:', error);
+        }
     }
 
     async loadChatHistoryItem(chatId) {
@@ -878,3 +1021,6 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Failed to initialize chatbot:', error);
     }
 });
+
+window.editChatTitle = (chatId) => window.travelChatbot?.editChatTitle(chatId);
+window.deleteChatHistoryItem = (chatId) => window.travelChatbot?.deleteChatHistoryItem(chatId);
