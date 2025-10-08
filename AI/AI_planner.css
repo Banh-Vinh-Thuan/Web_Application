@@ -1522,7 +1522,7 @@ body {
     transition: all 0.3s ease;
     max-width: 100%;
     position: relative;
-    height: 160px;
+    height: 180px;
 }
 
 .data-card:hover {
@@ -1686,7 +1686,7 @@ body {
 /* Card Image Section */
 .card-image {
     width: 140px; 
-    height: 140px; 
+    height: 120px; 
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
@@ -1696,8 +1696,8 @@ body {
 }
 
 .card-image img {
-    width: 100%;
-    height: 100%;
+    width: 110%;
+    height: 85%;
     object-fit: cover;
     transition: transform 0.3s ease;
     border-radius: 8px;

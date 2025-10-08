@@ -314,39 +314,36 @@ class TravelChatbot {
     determineCardLayout(tours, hotels, response) {
         const hasTours = tours.length > 0;
         const hasHotels = hotels.length > 0;
-        const hasFilters = this.detectFilterConditions(response);
 
+        // Case 1: Mixed results (tours and hotels)
         if (hasTours && hasHotels) {
-            return hasFilters
-                ? this.createFilteredMixedLayout(tours, hotels)
-                : {
-                    type: 'mixed-content',
-                    leftColumn: { type: 'tour', data: tours.slice(0, 3) },
-                    rightColumn: { type: 'hotel', data: hotels.slice(0, 3) }
-                };
+            return {
+                type: 'mixed-content',
+                leftColumn: { type: 'tour', data: tours },
+                rightColumn: { type: 'hotel', data: hotels }
+            };
         }
 
+        // FIX: Case 2: Only tours were found -> use single section layout
         if (hasTours) {
-            return hasFilters
-                ? this.createFilteredSingleTypeLayout(tours, 'tour')
-                : {
-                    type: 'tours-split',
-                    leftColumn: { type: 'tour', data: tours.slice(0, 3) },
-                    rightColumn: { type: 'tour', data: tours.slice(3, 6) }
-                };
+            return {
+                type: 'single-section',
+                sectionType: 'tour',
+                data: tours
+            };
         }
 
+        // FIX: Case 3: Only hotels were found -> use single section layout
         if (hasHotels) {
-            return hasFilters
-                ? this.createFilteredSingleTypeLayout(hotels, 'hotel')
-                : {
-                    type: 'hotels-split',
-                    leftColumn: { type: 'hotel', data: hotels.slice(0, 3) },
-                    rightColumn: { type: 'hotel', data: hotels.slice(3, 6) }
-                };
+            return {
+                type: 'single-section',
+                sectionType: 'hotel',
+                data: hotels
+            };
         }
 
-        return { type: 'single-column', leftColumn: { type: 'tour', data: [] } };
+        // Case 4: No results
+        return { type: 'empty' };
     }
 
     createFilteredMixedLayout(tours, hotels) {
@@ -384,23 +381,45 @@ class TravelChatbot {
     }
 
     renderCardsWithLayout(container, layout) {
-        // Đặt class theo layout type
-        if (layout.type.includes('filtered') || layout.type.includes('mixed') || layout.type.includes('split')) {
+        container.innerHTML = ''; // Clear previous content
+
+        // **FIX**: Handle the new 'single-section' layout
+        if (layout.type === 'single-section' && layout.data.length > 0) {
+            container.className = 'data-cards single-section';
+            const sectionType = layout.sectionType; // 'tour' or 'hotel'
+            
+            const header = document.createElement('h4');
+            if (sectionType === 'tour') {
+                header.innerHTML = '<i class="fas fa-map-signs"></i> Tours';
+            } else {
+                header.innerHTML = '<i class="fas fa-bed"></i> Hotels';
+                container.classList.add('hotels-section');
+            }
+            container.appendChild(header);
+
+            const gridWrapper = document.createElement('div');
+            gridWrapper.className = 'cards-grid-wrapper';
+
+            layout.data.forEach(item => {
+                const card = (sectionType === 'tour') 
+                    ? this.createTourCard(item) 
+                    : this.createHotelCard(item);
+                gridWrapper.appendChild(card);
+            });
+            container.appendChild(gridWrapper);
+
+        } else if (layout.type === 'mixed-content') {
             container.className = 'data-cards two-column-layout';
-        } else {
-            container.className = 'data-cards';
-        }
 
-        // Render left column
-        if (layout.leftColumn?.data.length > 0) {
-            const leftCol = this.createColumnElement('left', layout.leftColumn, layout.type);
-            container.appendChild(leftCol);
-        }
+            if (layout.leftColumn?.data.length > 0) {
+                const leftCol = this.createColumnElement('left', layout.leftColumn, layout.type);
+                container.appendChild(leftCol);
+            }
 
-        // Render right column
-        if (layout.rightColumn?.data.length > 0) {
-            const rightCol = this.createColumnElement('right', layout.rightColumn, layout.type);
-            container.appendChild(rightCol);
+            if (layout.rightColumn?.data.length > 0) {
+                const rightCol = this.createColumnElement('right', layout.rightColumn, layout.type);
+                container.appendChild(rightCol);
+            }
         }
     }
 

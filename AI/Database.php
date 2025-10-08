@@ -329,16 +329,28 @@ class DatabaseService {
         $tableName = $itemType === 'tour' ? 'tours' : 'hotels';
         $alias = $itemType === 'tour' ? 't' : 'h';
         
+        $params = $ids;
+        $types = str_repeat('i', count($ids));
+
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
         $sql = "SELECT {$alias}.*, c.city as city_name
                 FROM {$tableName} {$alias}
                 LEFT JOIN cities c ON {$alias}.cityid = c.cityid
                 WHERE {$alias}.{$idField} IN ({$placeholders})";
 
+        // **FIX**: Re-apply city filter to ensure correctness after semantic search
+        if (!empty($filters['cityIds'])) {
+            $cityPlaceholders = implode(',', array_fill(0, count($filters['cityIds']), '?'));
+            $sql .= " AND {$alias}.cityid IN ({$cityPlaceholders})";
+            foreach ($filters['cityIds'] as $cityId) {
+                $params[] = $cityId;
+                $types .= 'i';
+            }
+        }
+
         try {
             $stmt = $this->db->prepare($sql);
-            $types = str_repeat('i', count($ids));
-            $stmt->bind_param($types, ...$ids);
+            $stmt->bind_param($types, ...$params);
             $stmt->execute();
             
             $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);

@@ -12,9 +12,6 @@ class GeminiService
         private readonly string $embeddingApiUrl = Config::GEMINI_EMBEDDING_API_URL
     ) {
         if (empty($this->apiKey) || $this->apiKey === 'AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA') {
-            // Note: This is a placeholder key. Replace it with your actual key.
-            // For this exercise, we assume it's set correctly.
-            // throw new InvalidArgumentException("Gemini API key is not configured.");
         }
     }
 
@@ -42,7 +39,6 @@ class GeminiService
 
     public function generateEmbedding(string $text): array
     {
-        // SỬA LỖI: Loại bỏ 'model' khỏi request body. Model đã được chỉ định trong URL.
         $requestData = [
             'content' => ['parts' => [['text' => $text]]],
         ];
@@ -122,29 +118,15 @@ class GeminiService
                 'context_empty' => empty($context),
                 'metadata' => $metadata
             ]);
-            
-            // CRITICAL FIX: Check if context is empty FIRST and return immediately
+
+            // CRITICAL FIX: Check if context is empty FIRST
             if (empty(trim($context))) {
                 Logger::warning("Empty context received, returning fallback immediately");
-                $fallback = $this->generateContextualFallback('', $userMessage);
-                
-                // DOUBLE CHECK: Ensure fallback is never empty
-                if (empty(trim($fallback))) {
-                    Logger::error("Fallback generation returned empty, using emergency response");
-                    return "I'm ready to help you explore tours and hotels in Vietnam! Could you tell me which city you're interested in, or what type of experience you're looking for?";
-                }
-                
-                return $fallback;
+                return "I'm ready to help you explore tours and hotels in Vietnam! Could you tell me which city you're interested in, or what type of experience you're looking for?";
             }
-            
+
             $prompt = $this->buildPrompt($userMessage, $context, $conversationHistory, $metadata);
-            
-            // DEBUG: Log the built prompt
-            Logger::debug("Built prompt", [
-                'prompt_length' => strlen($prompt),
-                'prompt_preview' => substr($prompt, 0, 200)
-            ]);
-            
+
             $requestData = [
                 'contents' => [
                     [
@@ -160,72 +142,104 @@ class GeminiService
                     'maxOutputTokens' => 1024
                 ]
             ];
-            
+
             $response = $this->makeApiRequest($this->apiUrl, $requestData);
-            
+
             if ($response && isset($response['candidates'][0]['content']['parts'][0]['text'])) {
                 $generatedText = trim($response['candidates'][0]['content']['parts'][0]['text']);
-                
-                // Check if response is too generic and try to enhance it
-                if ($this->isGenericResponse($generatedText)) {
-                    Logger::warning("Generic response detected, trying to enhance");
-                    $enhancedResponse = $this->enhanceGenericResponse($generatedText, $context, $userMessage);
-                    if (!empty($enhancedResponse)) {
-                        $generatedText = $enhancedResponse;
-                    }
+
+                // CRITICAL FIX: If response is empty or too generic, use context-based fallback
+                if (empty($generatedText) || $this->isGenericResponse($generatedText)) {
+                    Logger::warning("Empty or generic response detected, using context fallback");
+                    $fallback = $this->buildContextBasedResponse($context, $userMessage);
+                    return !empty($fallback) ? $fallback : "I found some travel options for you based on your search.";
                 }
-                
+
                 Logger::info("Successfully generated response", [
                     'response_length' => strlen($generatedText),
                     'response_preview' => substr($generatedText, 0, 100)
                 ]);
-                
+
                 return $generatedText;
             }
-            
-            // API returned invalid structure - use fallback
+
+            // API returned invalid structure - use context fallback
             Logger::warning("Invalid Gemini API response structure, using context fallback");
-            $fallback = $this->generateContextualFallback($context, $userMessage);
-            
-            // CRITICAL: Ensure fallback is never empty
-            if (empty(trim($fallback))) {
-                Logger::error("Context fallback returned empty string");
-                return "I found some travel options for you. Let me show you what's available based on your search.";
-            }
-            
-            return $fallback;
-            
+            return $this->buildContextBasedResponse($context, $userMessage);
+
         } catch (Exception $e) {
-            // DEBUG: Log detailed error
             Logger::error("Gemini API error - generating fallback", [
                 'error_message' => $e->getMessage(),
-                'error_code' => $e->getCode(),
                 'user_message' => substr($userMessage, 0, 50),
-                'context_available' => !empty($context),
-                'context_length' => strlen($context ?? '')
+                'context_available' => !empty($context)
             ]);
-            
-            // CRITICAL FIX: Always return a valid non-empty fallback
-            try {
-                $fallback = $this->generateContextualFallback($context ?? '', $userMessage);
-                
-                if (empty(trim($fallback))) {
-                    Logger::error("Fallback generation failed in catch block, using emergency response");
-                    return "I'm experiencing technical difficulties, but I'm here to help you find tours and hotels in Vietnam. Please try asking about a specific city like Hanoi, Da Nang, or Ho Chi Minh City.";
-                }
-                
-                return $fallback;
-                
-            } catch (Exception $fallbackError) {
-                Logger::critical("Both API and fallback failed", [
-                    'api_error' => $e->getMessage(),
-                    'fallback_error' => $fallbackError->getMessage()
-                ]);
-                
-                // LAST RESORT: Return hardcoded helpful message
-                return "I'm ready to help you plan your Vietnam trip! I can show you:\n\n• Tours in popular cities\n• Hotels with various ratings\n• Travel packages and itineraries\n\nWhich city would you like to explore?";
-            }
+
+            return $this->buildContextBasedResponse($context ?? '', $userMessage);
         }
+    }
+
+    private function buildContextBasedResponse($context, $userMessage) {
+        // If no context is provided, return a default welcome message
+        if (empty(trim($context))) {
+            return "I'm ready to help you plan your trip to Vietnam! Which destination are you interested in?";
+        }
+
+        $response = "";
+
+        // Parse context to extract structured tour information
+        if (preg_match_all(
+            '/\*\*(.*?)\*\* \(City: (.*?)\)\nDuration: (\d+) days \| Price: ([\d,.]+) VND/s',
+            $context,
+            $tourMatches,
+            PREG_SET_ORDER
+        )) {
+            $city = $tourMatches[0][2] ?? 'Vietnam';
+            $response .= "Here are some interesting tours available in **{$city}**:\n\n";
+            
+            $toursToList = array_slice($tourMatches, 0, 6);
+
+            foreach ($toursToList as $match) {
+                $tourName = $match[1];
+                $duration = $match[3];
+                $price = $match[4];
+                $response .= "• **{$tourName}** — a {$duration}-day tour priced from {$price} VND.\n";
+            }
+
+            $response .= "\nWould you like to see more details about these options?";
+        }
+        // SỬA ĐỔI: Thêm khối `else if` để xử lý và định dạng cho khách sạn
+        else if (preg_match_all(
+            // Regex to capture Hotel Name, City, Rating, and Price per night
+            '/\*\*(.*?)\*\* \(City: (.*?)\)\nRating: ([\d.]+)\s*\|\s*Price: ([\d,.]+\s*VND\/night)/s',
+            $context,
+            $hotelMatches,
+            PREG_SET_ORDER
+        )) {
+            $city = $hotelMatches[0][2] ?? 'Vietnam';
+            $response .= "Here are some excellent hotels available in **{$city}**:\n\n";
+
+            $hotelsToList = array_slice($hotelMatches, 0, 6);
+
+            foreach ($hotelsToList as $match) {
+                $hotelName = $match[1];
+                $rating = $match[3];
+                $price = $match[4];
+                // Định dạng đầu ra cho khách sạn để tương đồng với tour
+                $response .= "• **{$hotelName}** — Rating: {$rating}/5, priced from {$price}.\n";
+            }
+
+            $response .= "\nWould you like more details on any of these hotels?";
+        }
+
+        // Fallback response if no structured data is found
+        if (empty(trim($response))) {
+            return "I found some travel options based on your search. Please check the results below!";
+        }
+
+        // Add a friendly closing line
+        $response .= "\nThese options offer wonderful experiences across Vietnam. Which one would you like to explore further?";
+
+        return $response;
     }
 
     // Check if response is too generic
@@ -282,15 +296,15 @@ class GeminiService
         $citiesFound = [];
         
         // Extract tour information with city tracking
-        if (preg_match_all('/\*\*([^*]+)\*\*[^(]*\(City:\s*([^)]+)\)[^|]*Duration:\s*([^|]+)\|[^:]*:\s*([^\n]+)/i', $context, $tourMatches, PREG_SET_ORDER)) {
-            foreach ($tourMatches as $match) {
+        if (preg_match_all('/\*\*([^*]+)\*\*[^(]*\(City:\s*([^)]+)\)[^|]*Rating:\s*([^|]+)\|[^:]*:\s*([^\n]+)/i', $context, $hotelMatches, PREG_SET_ORDER)) {
+            foreach ($hotelMatches as $match) {
                 if (count($match) >= 5) {
                     $cityName = trim($match[2]);
-                    $tours[] = [
+                    $hotels[] = [
                         'name' => trim($match[1]),
                         'city' => $cityName,
-                        'duration' => trim($match[3]),
-                        'price' => trim($match[4])
+                        'rating' => trim($match[3]), // Giữ nguyên rating gốc
+                        'price' => trim($match[4]) // Giữ nguyên giá gốc
                     ];
                     if (!in_array($cityName, $citiesFound)) {
                         $citiesFound[] = $cityName;
@@ -368,7 +382,10 @@ class GeminiService
                         if (!empty($hotelsByCity[$city])) {
                             $response .= "**Hotels in $city:**\n";
                             foreach (array_slice($hotelsByCity[$city], 0, 3) as $hotel) {
-                                $response .= "• **{$hotel['name']}** - Rating: {$hotel['rating']}/5, {$hotel['price']} VND/night\n";
+                                // **FIX**: Check for existing units before appending
+                                $ratingText = (strpos($hotel['rating'], '/5') === false) ? "{$hotel['rating']}/5" : $hotel['rating'];
+                                $priceText = (stripos($hotel['price'], 'VND') === false) ? "{$hotel['price']} VND/night" : $hotel['price'];
+                                $response .= "• **{$hotel['name']}** - Rating: {$ratingText}, {$priceText}\n";
                             }
                             $response .= "\n";
                         }
@@ -378,7 +395,10 @@ class GeminiService
                     $response .= "I found several hotels in $cityName:\n\n";
                     
                     foreach (array_slice($hotels, 0, 6) as $hotel) {
-                        $response .= "• **{$hotel['name']}** - Rating: {$hotel['rating']}/5, {$hotel['price']} VND/night\n";
+                        // **FIX**: Check for existing units before appending
+                        $ratingText = (strpos($hotel['rating'], '/5') === false) ? "{$hotel['rating']}/5" : $hotel['rating'];
+                        $priceText = (stripos($hotel['price'], 'VND') === false) ? "{$hotel['price']} VND/night" : $hotel['price'];
+                        $response .= "• **{$hotel['name']}** - Rating: {$ratingText}, {$priceText}\n";
                     }
                 }
             }

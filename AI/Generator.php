@@ -303,16 +303,14 @@ class ResponseGenerator
             foreach ($tours as $tourResult) {
                 $tour = $tourResult['item'];
                 $score = $tourResult['combined_score'] ?? $tourResult['final_score'] ?? 0;
-                $channels = implode(', ', $tourResult['channels'] ?? ['unknown']);
-
+                
+                // Định dạng cho tour (giữ nguyên)
                 $context .= sprintf(
-                    "- **%s** (City: %s)\n  Duration: %d days | Price: %s VND\n  Found via: %s (Score: %.2f)\n\n",
+                    "**%s** (City: %s)\nDuration: %d days | Price: %s VND\n\n",
                     $tour['tour_name'] ?? 'Unknown Tour',
                     $tour['city_name'] ?? $tour['city'] ?? 'Unknown City',
                     $tour['duration_days'] ?? 0,
-                    number_format($tour['price_per_person'] ?? 0),
-                    $channels,
-                    $score
+                    number_format($tour['price_per_person'] ?? 0)
                 );
             }
         }
@@ -322,16 +320,13 @@ class ResponseGenerator
             foreach ($hotels as $hotelResult) {
                 $hotel = $hotelResult['item'];
                 $score = $hotelResult['combined_score'] ?? $hotelResult['final_score'] ?? 0;
-                $channels = implode(', ', $hotelResult['channels'] ?? ['unknown']);
 
                 $context .= sprintf(
-                    "- **%s** (City: %s)\n  Rating: %.1f/5 | Price: %s VND/night\n  Found via: %s (Score: %.2f)\n\n",
+                    "**%s** (City: %s)\nRating: %.1f | Price: %s VND/night\n\n",
                     $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
                     $hotel['city_name'] ?? $hotel['city'] ?? 'Unknown City',
                     $hotel['ratings'] ?? 0,
-                    number_format($hotel['cost'] ?? 0),
-                    $channels,
-                    $score
+                    number_format($hotel['cost'] ?? 0)
                 );
             }
         }
