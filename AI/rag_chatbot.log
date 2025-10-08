@@ -931,3 +931,87 @@
 [2025-10-07 15:39:35] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.85,"display_items":6}
 [2025-10-07 15:39:35] [INFO] Message processed successfully {"processing_time_ms":2450.64,"confidence":0.85,"response_type":"tour_search"}
 [2025-10-07 15:39:35] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-08 08:17:36] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:17:36] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:17:36] [INFO] Processing user message {"message_length":23,"message_preview":"tour hội an and huế","history_count":1}
+[2025-10-08 08:17:37] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour hội an and huế"}
+[2025-10-08 08:17:38] [INFO] Starting hybrid retrieval {"query":"tour hội an and huế","intent":"tour_search"}
+[2025-10-08 08:17:39] [INFO] Reranking started {"candidates":15,"query_length":23}
+[2025-10-08 08:17:40] [INFO] Reranking completed {"input":15,"output":10}
+[2025-10-08 08:17:40] [INFO] generateVietnameseResponse called {"userMessage":"tour hội an and huế","context_length":1393,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.65}}
+[2025-10-08 08:17:42] [INFO] Successfully generated response {"response_length":880,"response_preview":"Okay, I found these tours in Hoi An and Hue:\n\n**Tours in Hoi An:**\n• **Hoi An Heritage & Beach: An"}
+[2025-10-08 08:17:42] [INFO] Hybrid response generated successfully {"response_type":"tour_search","layout_type":"single_tours","confidence":0.65,"display_items":6}
+[2025-10-08 08:17:43] [INFO] Message processed successfully {"processing_time_ms":6255.27,"confidence":0.65,"response_type":"tour_search"}
+[2025-10-08 08:17:43] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-08 08:24:44] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:24:44] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:24:44] [INFO] Processing user message {"message_length":25,"message_preview":"hotel phu yen and tay bac","history_count":3}
+[2025-10-08 08:24:45] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel phu yen and tay bac"}
+[2025-10-08 08:24:46] [INFO] Starting hybrid retrieval {"query":"hotel phu yen and tay bac","intent":"hotel_search"}
+[2025-10-08 08:24:46] [INFO] Reranking started {"candidates":18,"query_length":25}
+[2025-10-08 08:24:48] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-08 08:24:48] [INFO] generateVietnameseResponse called {"userMessage":"hotel phu yen and tay bac","context_length":1005,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-08 08:24:51] [INFO] Successfully generated response {"response_length":712,"response_preview":"Okay, I found these hotels in Phu Yen and Tay Bac:\n\n**Hotels in Phu Yen:**\n• **Tuy Hoa Central Hot"}
+[2025-10-08 08:24:51] [INFO] Hybrid response generated successfully {"response_type":"hotel_search","layout_type":"multi_city_hotels","confidence":0.9,"display_items":6}
+[2025-10-08 08:24:51] [INFO] Message processed successfully {"processing_time_ms":6533.8,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-08 08:24:51] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-08 08:37:49] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:37:49] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:37:49] [INFO] Processing user message {"message_length":30,"message_preview":"tour ha giang and hotel da lat","history_count":5}
+[2025-10-08 08:37:50] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"tour ha giang and hotel da lat"}
+[2025-10-08 08:37:51] [INFO] Hybrid search started {"query":"tour ha giang and hotel da lat","intent":"mixed_search"}
+[2025-10-08 08:37:51] [INFO] Reranking started {"candidates":20,"query_length":30}
+[2025-10-08 08:37:53] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-08 08:37:53] [INFO] generateVietnameseResponse called {"userMessage":"tour ha giang and hotel da lat","context_length":1383,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-08 08:37:56] [INFO] Successfully generated response {"response_length":835,"response_preview":"**Tours:**\n• **Ha Giang Nature & Culture: Dong Van Karst Plateau - Lung Cam Cultural Village - Ma "}
+[2025-10-08 08:37:56] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9}
+[2025-10-08 08:37:56] [INFO] Message processed successfully {"processing_time_ms":6841.16,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-08 08:37:56] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-08 08:46:07] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:46:07] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:46:07] [INFO] Processing user message {"message_length":12,"message_preview":"tour can tho","history_count":5}
+[2025-10-08 08:46:08] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour can tho"}
+[2025-10-08 08:46:09] [INFO] Hybrid search started {"query":"tour can tho","intent":"tour_search"}
+[2025-10-08 08:46:10] [INFO] Reranking started {"candidates":15,"query_length":12}
+[2025-10-08 08:46:11] [INFO] Reranking completed {"input":15,"output":10}
+[2025-10-08 08:46:11] [INFO] generateVietnameseResponse called {"userMessage":"tour can tho","context_length":1054,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.85}}
+[2025-10-08 08:46:13] [INFO] Successfully generated response {"response_length":625,"response_preview":"I found these tours:\n• **Can Tho Countryside Biking & Fruit Garden Tour** - 2 days, 3,100,000 VND\n"}
+[2025-10-08 08:46:13] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.85}
+[2025-10-08 08:46:13] [INFO] Message processed successfully {"processing_time_ms":5992.95,"confidence":0.85,"response_type":"tour_search"}
+[2025-10-08 08:46:13] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-08 08:46:29] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:46:29] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:46:29] [INFO] Processing user message {"message_length":10,"message_preview":"other tour","history_count":5}
+[2025-10-08 08:46:30] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"other tour"}
+[2025-10-08 08:46:31] [INFO] Hybrid search started {"query":"other tour","intent":"tour_search"}
+[2025-10-08 08:46:32] [INFO] Reranking started {"candidates":16,"query_length":10}
+[2025-10-08 08:46:34] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-08 08:46:34] [INFO] generateVietnameseResponse called {"userMessage":"other tour","context_length":1227,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.725}}
+[2025-10-08 08:46:37] [INFO] Successfully generated response {"response_length":804,"response_preview":"Okay, here are some other tour options for you:\n\n**Tours in Ho Chi Minh:**\n• **Museum and Contempo"}
+[2025-10-08 08:46:37] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.725}
+[2025-10-08 08:46:37] [INFO] Message processed successfully {"processing_time_ms":7328.01,"confidence":0.725,"response_type":"tour_search"}
+[2025-10-08 08:46:37] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-08 08:47:34] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:47:34] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:47:34] [INFO] Processing user message {"message_length":19,"message_preview":"tour hue and hoi an","history_count":5}
+[2025-10-08 08:47:35] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour hue and hoi an"}
+[2025-10-08 08:47:36] [INFO] Hybrid search started {"query":"tour hue and hoi an","intent":"tour_search"}
+[2025-10-08 08:47:37] [INFO] Reranking started {"candidates":18,"query_length":19}
+[2025-10-08 08:47:39] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-08 08:47:39] [INFO] generateVietnameseResponse called {"userMessage":"tour hue and hoi an","context_length":1289,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-08 08:47:41] [INFO] Successfully generated response {"response_length":948,"response_preview":"Okay, I found these tours in Hue and Hoi An:\n\n**Tours in Hue:**\n• **Hue Relax & Scenic Escape: Per"}
+[2025-10-08 08:47:41] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-08 08:47:41] [INFO] Message processed successfully {"processing_time_ms":7179.4,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-08 08:47:41] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-08 08:47:49] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-08 08:47:49] [INFO] Chatbot initialized successfully 
+[2025-10-08 08:47:49] [INFO] Processing user message {"message_length":25,"message_preview":"tour tay bac and ha giang","history_count":5}
+[2025-10-08 08:47:49] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour tay bac and ha giang"}
+[2025-10-08 08:47:50] [INFO] Hybrid search started {"query":"tour tay bac and ha giang","intent":"tour_search"}
+[2025-10-08 08:47:51] [INFO] Reranking started {"candidates":18,"query_length":25}
+[2025-10-08 08:47:53] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-08 08:47:53] [INFO] generateVietnameseResponse called {"userMessage":"tour tay bac and ha giang","context_length":1402,"context_empty":false,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-08 08:47:56] [INFO] Successfully generated response {"response_length":1047,"response_preview":"Okay, I found these tours:\n\n**Tours in Tay Bac:**\n• **Northwest Adventure Loop: Ha Giang - Dong Va"}
+[2025-10-08 08:47:56] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-08 08:47:56] [INFO] Message processed successfully {"processing_time_ms":6887.92,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-08 08:47:56] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}

@@ -11,7 +11,6 @@ class HybridRetriever
     private GeminiService $geminiService;
     private CrossEncoderReranker $reranker;
     private array $weights;
-    
     private const DEFAULT_LIMIT = 15;
 
     public function __construct(
@@ -22,53 +21,50 @@ class HybridRetriever
         $this->geminiService = new GeminiService();
         $this->reranker = new CrossEncoderReranker($this->geminiService);
         
-        // Only BM25 and Semantic weights (removed SQL)
+        // Fusion weights (removed SQL channel)
         $this->weights = [
-            'semantic' => 0.6,  // Increased weight for semantic
-            'bm25' => 0.4       // Increased weight for BM25
+            'semantic' => 0.6,
+            'bm25' => 0.4
         ];
         
-        Logger::debug("HybridRetriever initialized successfully");
+        Logger::debug("HybridRetriever initialized", ['weights' => $this->weights]);
     }
 
+    /**
+     * Main hybrid search pipeline
+     */
     public function hybridSearch(string $query, array $entities, string $intent): array
     {
         try {
-            Logger::info("Starting hybrid retrieval", ['query' => $query, 'intent' => $intent]);
+            Logger::info("Hybrid search started", ['query' => $query, 'intent' => $intent]);
 
             $filters = $this->prepareFilters($entities, $intent);
 
-            // STEP 1: RETRIEVE from BM25 and Semantic channels only
+            // STEP 1: Parallel Retrieval (BM25 + Semantic)
             $semanticResults = $this->semanticSearch($query, $filters);
             $bm25Results = $this->bm25Search($query, $filters);
 
-            Logger::debug("Retrieval channels executed", [
-                'semantic_count' => count($semanticResults),
-                'bm25_count' => count($bm25Results)
+            Logger::debug("Retrieval completed", [
+                'semantic' => count($semanticResults),
+                'bm25' => count($bm25Results)
             ]);
 
-            // STEP 2: FUSE & PRE-RANK (BM25 + Semantic only)
-            $preRankedCandidates = $this->fuseAndPreRank($semanticResults, $bm25Results);
+            // STEP 2: Fusion & Pre-ranking
+            $preRankedCandidates = $this->fuseResults($semanticResults, $bm25Results);
 
             if (empty($preRankedCandidates)) {
-                Logger::warning("No candidates found after fusion step.", ['query' => $query]);
-                return [
-                    'success' => false,
-                    'results' => [],
-                    'confidence' => 0.1,
-                    'error' => 'no_results_found',
-                ];
+                return $this->emptyResultsResponse($query);
             }
 
-            // STEP 3: RERANK with Cross-Encoder
-            $candidatesToRerank = array_slice($preRankedCandidates, 0, 20);
-            $hybridScores = array_column($candidatesToRerank, 'combined_score');
-            $rerankedResults = $this->reranker->rerank($query, $candidatesToRerank, $hybridScores);
+            // STEP 3: Cross-Encoder Reranking (top 20 candidates)
+            $topCandidates = array_slice($preRankedCandidates, 0, 20);
+            $hybridScores = array_column($topCandidates, 'combined_score');
+            $rerankedResults = $this->reranker->rerank($query, $topCandidates, $hybridScores);
 
-            // STEP 4: FILTER the final list
+            // STEP 4: Diversity Filtering
             $finalResults = $this->applyDiversityFiltering($rerankedResults, Config::MAX_FINAL_RESULTS);
 
-            $confidence = $this->calculateOverallConfidence($semanticResults, $bm25Results, $finalResults);
+            $confidence = $this->calculateConfidence($semanticResults, $bm25Results, $finalResults);
 
             return [
                 'success' => true,
@@ -77,51 +73,32 @@ class HybridRetriever
                 'retrieval_stats' => [
                     'semantic_results' => count($semanticResults),
                     'bm25_results' => count($bm25Results),
-                    'pre_ranked_count' => count($preRankedCandidates),
-                    'reranked_count' => count($rerankedResults),
-                    'final_results' => count($finalResults)
+                    'pre_ranked' => count($preRankedCandidates),
+                    'reranked' => count($rerankedResults),
+                    'final' => count($finalResults)
                 ]
             ];
 
         } catch (Exception $e) {
-            Logger::error("Hybrid search completely failed", [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
+            Logger::error("Hybrid search failed", ['error' => $e->getMessage()]);
             return ['success' => false, 'results' => [], 'confidence' => 0, 'error' => $e->getMessage()];
         }
     }
 
-    private function fuseAndPreRank(array $semanticResults, array $bm25Results): array
+    /**
+     * Dense Semantic Search using embeddings
+     */
+    private function semanticSearch($query, $filters, $limit = self::DEFAULT_LIMIT): array
     {
-        Logger::debug("Starting result fusion and pre-ranking");
-
-        $normalizedSemantic = $this->normalizeResults($semanticResults, 'similarity_score');
-        $normalizedBM25 = $this->normalizeResults($bm25Results, 'bm25_score');
-
-        $unified = $this->unifyResultsByItem($normalizedSemantic, $normalizedBM25);
-
-        return $this->calculateCombinedScores($unified);
-    }
-
-    private function semanticSearch($query, $filters, $limit = self::DEFAULT_LIMIT) {
         try {
-            Logger::debug("Starting semantic search", ['query' => $query]);
-
             $queryVector = $this->geminiService->generateEmbedding($query);
-
             if (!$queryVector) {
                 Logger::warning("Failed to generate query embedding");
                 return [];
             }
 
             $similarityResults = $this->dbService->findSimilarItemsByVector($queryVector, $limit * 2);
-
-            if (empty($similarityResults)) {
-                return [];
-            }
-
-            return $this->enrichWithItemData($similarityResults, $filters, $limit);
+            return empty($similarityResults) ? [] : $this->enrichWithItemData($similarityResults, $filters, $limit);
 
         } catch (Exception $e) {
             Logger::error("Semantic search failed", ['error' => $e->getMessage()]);
@@ -129,24 +106,19 @@ class HybridRetriever
         }
     }
 
-    private function bm25Search($query, $filters, $limit = self::DEFAULT_LIMIT) {
+    /**
+     * BM25 Search using tokenized query
+     */
+    private function bm25Search($query, $filters, $limit = self::DEFAULT_LIMIT): array
+    {
         try {
-            Logger::debug("Starting BM25 search", ['query' => $query]);
-
             $queryTerms = $this->tokenizeQuery($query);
-
-            if (empty($queryTerms)) {
-                return [];
-            }
+            if (empty($queryTerms)) return [];
 
             $documents = $this->getSearchableDocuments($filters);
-
-            if (empty($documents)) {
-                return [];
-            }
+            if (empty($documents)) return [];
 
             $scores = $this->calculateBM25Scores($queryTerms, $documents);
-
             arsort($scores);
 
             return $this->buildBM25Results($scores, $documents, $queryTerms, $limit);
@@ -157,225 +129,48 @@ class HybridRetriever
         }
     }
 
-    private function buildBM25Results($scores, $documents, $queryTerms, $limit) {
-        $results = [];
-        $topDocIds = array_slice(array_keys($scores), 0, $limit);
-
-        foreach ($topDocIds as $docId) {
-            if ($scores[$docId] > Config::MIN_BM25_SCORE) {
-                $document = $documents[$docId];
-                $results[] = [
-                    'item' => $document['item'],
-                    'bm25_score' => $scores[$docId],
-                    'item_type' => $document['type'],
-                    'matched_terms' => $this->getMatchedTerms($queryTerms, $document['text'])
-                ];
-            }
-        }
-
-        return $results;
-    }
-
-    private function prepareFilters($entities, $intent) {
-        $filters = [];
-
-        if (!empty($entities['cities'])) {
-            $cityIds = array_filter(
-                array_map(fn($city) => $city['id'] ?? null, $entities['cities']),
-                fn($id) => $id !== null
-            );
-
-            if (!empty($cityIds)) {
-                $filters['cityIds'] = array_unique($cityIds);
-            }
-        }
-
-        if (!empty($entities['budget'])) {
-            $filters['budget'] = $entities['budget'];
-            $filters['price_condition'] = $entities['price_condition'] ?? 'under';
-        }
-
-        if (!empty($entities['duration'])) {
-            $filters['duration'] = $entities['duration'];
-        }
-
-        if (!empty($entities['rating'])) {
-            $filters['rating'] = $entities['rating'];
-            $filters['rating_condition'] = $entities['rating_condition'] ?? 'exact';
-        }
-
-        $filters['item_focus'] = match($intent) {
-            'tour_search' => 'tour',
-            'hotel_search' => 'hotel',
-            'mixed_search' => 'both',
-            default => null
-        };
-
-        return $filters;
-    }
-
-    private function enrichWithItemData($similarityResults, $filters, $limit) {
-        $enrichedResults = [];
-        $tourIds = [];
-        $hotelIds = [];
-
-        foreach ($similarityResults as $simResult) {
-            if ($simResult['item_type'] === 'tour') {
-                $tourIds[] = $simResult['item_id'];
-            } elseif ($simResult['item_type'] === 'hotel') {
-                $hotelIds[] = $simResult['item_id'];
-            }
-        }
-
-        try {
-            $tours = !empty($tourIds) ? $this->dbService->getToursByIds($tourIds, $filters) : [];
-            $hotels = !empty($hotelIds) ? $this->dbService->getHotelsByIds($hotelIds, $filters) : [];
-
-            $tourMap = $this->createItemMap($tours, 'tourid');
-            $hotelMap = $this->createItemMap($hotels, 'hotelid');
-
-            foreach ($similarityResults as $simResult) {
-                $itemData = null;
-
-                if ($simResult['item_type'] === 'tour' && isset($tourMap[$simResult['item_id']])) {
-                    $itemData = $tourMap[$simResult['item_id']];
-                } elseif ($simResult['item_type'] === 'hotel' && isset($hotelMap[$simResult['item_id']])) {
-                    $itemData = $hotelMap[$simResult['item_id']];
-                }
-
-                if ($itemData && $this->meetsQualityThreshold($simResult['score'])) {
-                    $enrichedResults[] = [
-                        'item' => $itemData,
-                        'similarity_score' => $simResult['score'],
-                        'retrieval_type' => 'semantic',
-                        'item_type' => $simResult['item_type'],
-                        'embedding_quality' => $this->assessEmbeddingQuality($simResult['score'])
-                    ];
-                }
-
-                if (count($enrichedResults) >= $limit) {
-                    break;
-                }
-            }
-
-        } catch (Exception $e) {
-            Logger::error("Failed to enrich semantic results", ['error' => $e->getMessage()]);
-        }
-
-        usort($enrichedResults, fn($a, $b) => $b['similarity_score'] <=> $a['similarity_score']);
-
-        return $enrichedResults;
-    }
-
-    private function createItemMap($items, $idField) {
-        $map = [];
-        foreach ($items as $item) {
-            if (isset($item[$idField])) {
-                $map[$item[$idField]] = $item;
-            }
-        }
-        return $map;
-    }
-
-    private function meetsQualityThreshold($score) {
-        return $score >= Config::MIN_SIMILARITY_SCORE;
-    }
-
-    private function assessEmbeddingQuality($score) {
-        if ($score >= 0.8) return 'excellent';
-        if ($score >= 0.6) return 'good';
-        if ($score >= 0.4) return 'fair';
-        return 'poor';
-    }
-
-    private function tokenizeQuery($text) {
-        $text = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', ' ', $text));
-        $words = preg_split('/\s+/', trim($text));
-        $stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'is', 'are', 'was', 'were', 'be', 'been', 'have', 'has', 'had'];
-
-        $cleanTerms = array_filter($words, fn($word) => strlen($word) > 2 && !in_array($word, $stopWords) && !is_numeric($word));
-
-        return array_unique($cleanTerms);
-    }
-
-    private function getSearchableDocuments($filters) {
-        $documents = [];
-
-        try {
-            if (!isset($filters['item_focus']) || $filters['item_focus'] !== 'hotel') {
-                $tours = $this->dbService->searchItems('tour', $filters);
-                foreach ($tours as $tour) {
-                    $text = $this->buildTourSearchText($tour);
-                    $documents['tour_' . $tour['tourid']] = ['text' => $text, 'word_count' => str_word_count($text), 'type' => 'tour', 'item' => $tour];
-                }
-            }
-
-            if (!isset($filters['item_focus']) || $filters['item_focus'] !== 'tour') {
-                $hotels = $this->dbService->searchItems('hotel', $filters);
-                foreach ($hotels as $hotel) {
-                    $text = $this->buildHotelSearchText($hotel);
-                    $documents['hotel_' . $hotel['hotelid']] = ['text' => $text, 'word_count' => str_word_count($text), 'type' => 'hotel', 'item' => $hotel];
-                }
-            }
-
-        } catch (Exception $e) {
-            Logger::error("Failed to get searchable documents", ['error' => $e->getMessage()]);
-        }
-
-        return $documents;
-    }
-
-    private function buildTourSearchText($tour) {
-        $parts = [$tour['tour_name'] ?? '', $tour['city_name'] ?? '', $tour['description'] ?? '', ($tour['duration_days'] ?? '') . ' days', 'tour package travel'];
-        return implode(' ', array_filter($parts));
-    }
-
-    private function buildHotelSearchText($hotel) {
-        $parts = [$hotel['hotel'] ?? $hotel['hotel_name'] ?? '', $hotel['city_name'] ?? '', $hotel['description'] ?? '', ($hotel['ratings'] ?? '') . ' star hotel', 'accommodation stay lodge'];
-        return implode(' ', array_filter($parts));
-    }
-
-    private function calculateBM25Scores($queryTerms, $documents) {
+    /**
+     * BM25 Score Calculation (Okapi BM25)
+     */
+    private function calculateBM25Scores($queryTerms, $documents): array
+    {
         $scores = array_fill_keys(array_keys($documents), 0.0);
         $docCount = count($documents);
-
         if ($docCount === 0) return $scores;
 
-        $totalWordCount = array_sum(array_column($documents, 'word_count'));
-        $avgDocLength = $totalWordCount / $docCount;
+        $avgDocLength = array_sum(array_column($documents, 'word_count')) / $docCount;
 
-        $documentFrequency = [];
-        foreach ($queryTerms as $term) {
-            $df = 0;
-            foreach ($documents as $doc) {
-                if (stripos($doc['text'], $term) !== false) {
-                    $df++;
-                }
+        // Calculate document frequency
+        $df = array_fill_keys($queryTerms, 0);
+        foreach ($documents as $doc) {
+            $docText = strtolower($doc['text']);
+            foreach ($queryTerms as $term) {
+                if (stripos($docText, $term) !== false) $df[$term]++;
             }
-            $documentFrequency[$term] = max(1, $df);
         }
 
+        // BM25 scoring
         foreach ($documents as $docId => $document) {
             $docLength = $document['word_count'];
             $docText = strtolower($document['text']);
 
             foreach ($queryTerms as $term) {
-                $termFrequency = substr_count($docText, $term);
+                $tf = substr_count($docText, $term);
+                if ($tf === 0) continue;
 
-                if ($termFrequency > 0) {
-                    $idf = log(($docCount - $documentFrequency[$term] + 0.5) / ($documentFrequency[$term] + 0.5) + 1);
-                    $numerator = $termFrequency * ($this->k1 + 1);
-                    $denominator = $termFrequency + $this->k1 * (1 - $this->b + $this->b * ($docLength / $avgDocLength));
-                    $termScore = $idf * ($numerator / $denominator);
-                    $scores[$docId] += $termScore;
-                }
+                $idf = log(($docCount - $df[$term] + 0.5) / ($df[$term] + 0.5) + 1);
+                $numerator = $tf * ($this->k1 + 1);
+                $denominator = $tf + $this->k1 * (1 - $this->b + $this->b * ($docLength / $avgDocLength));
+                
+                $scores[$docId] += $idf * ($numerator / $denominator);
             }
 
-            $queryPhrase = implode(' ', $queryTerms);
-            if (stripos($docText, $queryPhrase) !== false) {
+            // Phrase match bonus
+            if (stripos($docText, implode(' ', $queryTerms)) !== false) {
                 $scores[$docId] *= 1.5;
             }
 
+            // Title match bonus
             $itemName = $this->getItemName($document['item'], $document['type']);
             foreach ($queryTerms as $term) {
                 if (stripos($itemName, $term) !== false) {
@@ -387,35 +182,18 @@ class HybridRetriever
         return $scores;
     }
 
-    private function getItemName($item, $type) {
-        if ($type === 'tour') {
-            return strtolower($item['tour_name'] ?? '');
-        } elseif ($type === 'hotel') {
-            return strtolower($item['hotel'] ?? $item['hotel_name'] ?? '');
-        }
-        return '';
-    }
+    /**
+     * Fusion: Combine BM25 + Semantic results with weighted scoring
+     */
+    private function fuseResults($semanticResults, $bm25Results): array
+    {
+        // Normalize scores
+        $normSemantic = $this->normalizeScores($semanticResults, 'similarity_score');
+        $normBM25 = $this->normalizeScores($bm25Results, 'bm25_score');
 
-    private function normalizeResults($results, $scoreField) {
-        if (empty($results)) return [];
-
-        $scores = array_column($results, $scoreField);
-        $maxScore = max($scores);
-        $minScore = min($scores);
-        $range = ($maxScore - $minScore) == 0 ? 1 : ($maxScore - $minScore);
-
-        foreach ($results as &$result) {
-            $result['norm_score'] = ($result[$scoreField] - $minScore) / $range;
-        }
-
-        return $results;
-    }
-
-    private function unifyResultsByItem($semanticResults, $bm25Results) {
+        // Unify by item ID
         $unified = [];
-        $resultSets = ['semantic' => $semanticResults, 'bm25' => $bm25Results];
-
-        foreach ($resultSets as $channelType => $results) {
+        foreach (['semantic' => $normSemantic, 'bm25' => $normBM25] as $channel => $results) {
             foreach ($results as $result) {
                 if (!isset($result['item']) || !isset($result['item_type'])) continue;
 
@@ -428,55 +206,59 @@ class HybridRetriever
                         'item_type' => $result['item_type'],
                         'item_id' => $itemId,
                         'scores' => ['semantic' => 0, 'bm25' => 0],
-                        'channels' => [],
-                        'raw_scores' => []
+                        'channels' => []
                     ];
                 }
 
-                $unified[$key]['scores'][$channelType] = $result['norm_score'] ?? 0;
-                $unified[$key]['channels'][] = $channelType;
-                
-                $originalScore = $result['similarity_score'] ?? $result['bm25_score'] ?? 0;
-                $unified[$key]['raw_scores'][$channelType] = $originalScore;
+                $unified[$key]['scores'][$channel] = $result['norm_score'] ?? 0;
+                $unified[$key]['channels'][] = $channel;
             }
         }
 
-        return $unified;
-    }
-
-    private function extractItemId($item, $itemType) {
-        if ($itemType === 'tour') return $item['tourid'] ?? null;
-        if ($itemType === 'hotel') return $item['hotelid'] ?? null;
-        return null;
-    }
-
-    private function calculateCombinedScores($unifiedResults) {
-        foreach ($unifiedResults as &$result) {
-            $combinedScore = 0;
-
-            foreach (['semantic', 'bm25'] as $channel) {
-                $combinedScore += ($result['scores'][$channel] ?? 0) * ($this->weights[$channel] ?? 0.5);
-            }
-
-            $channelCount = count($result['channels']);
-            $consensusBonus = ($channelCount > 1) ? (0.1 * ($channelCount - 1)) : 0;
-
+        // Calculate combined scores
+        foreach ($unified as &$result) {
+            $combinedScore = 
+                $result['scores']['semantic'] * $this->weights['semantic'] +
+                $result['scores']['bm25'] * $this->weights['bm25'];
+            
+            // Consensus bonus (both channels agree)
+            $consensusBonus = count($result['channels']) > 1 ? 0.1 : 0;
+            
             $result['combined_score'] = min(1.0, $combinedScore + $consensusBonus);
-            $result['channel_count'] = $channelCount;
+            $result['channel_count'] = count($result['channels']);
         }
 
-        uasort($unifiedResults, fn($a, $b) => $b['combined_score'] <=> $a['combined_score']);
-
-        return array_values($unifiedResults);
+        usort($unified, fn($a, $b) => $b['combined_score'] <=> $a['combined_score']);
+        return array_values($unified);
     }
 
-    private function applyDiversityFiltering($rankedResults, $limit) {
-        if (empty($rankedResults)) return [];
+    /**
+     * Normalize scores to [0,1] range
+     */
+    private function normalizeScores($results, $scoreField): array
+    {
+        if (empty($results)) return [];
 
+        $scores = array_column($results, $scoreField);
+        $max = max($scores);
+        $min = min($scores);
+        $range = ($max - $min) == 0 ? 1 : ($max - $min);
+
+        foreach ($results as &$result) {
+            $result['norm_score'] = ($result[$scoreField] - $min) / $range;
+        }
+        return $results;
+    }
+
+    /**
+     * Diversity Filtering: Limit per city and type
+     */
+    private function applyDiversityFiltering($rankedResults, $limit): array
+    {
         $finalResults = [];
         $cityCount = [];
         $typeCount = ['tour' => 0, 'hotel' => 0];
-
+        
         $maxPerCity = 6;
         $maxPerType = ceil($limit * 0.7);
 
@@ -486,49 +268,214 @@ class HybridRetriever
             $cityName = $result['item']['city_name'] ?? 'Unknown';
             $itemType = $result['item_type'];
 
-            $currentCityCount = $cityCount[$cityName] ?? 0;
-
-            if ($currentCityCount >= $maxPerCity || $typeCount[$itemType] >= $maxPerType) {
+            if (($cityCount[$cityName] ?? 0) >= $maxPerCity || $typeCount[$itemType] >= $maxPerType) {
                 continue;
             }
 
             $finalResults[] = $result;
-            $cityCount[$cityName] = $currentCityCount + 1;
+            $cityCount[$cityName] = ($cityCount[$cityName] ?? 0) + 1;
             $typeCount[$itemType]++;
         }
 
         return $finalResults;
     }
 
-    private function getMatchedTerms($queryTerms, $documentText) {
-        $matched = [];
-        $docTextLower = strtolower($documentText);
-
-        foreach ($queryTerms as $term) {
-            if (stripos($docTextLower, $term) !== false) {
-                $matched[] = $term;
-            }
-        }
-
-        return $matched;
-    }
-
-    private function calculateOverallConfidence($semanticResults, $bm25Results, $finalResults) {
+    /**
+     * Calculate overall confidence score
+     */
+    private function calculateConfidence($semanticResults, $bm25Results, $finalResults): float
+    {
         $baseConfidence = 0.5;
-
         $semanticBoost = min(0.25, count($semanticResults) * 0.025);
         $bm25Boost = min(0.25, count($bm25Results) * 0.025);
-
+        
         $consensusBoost = 0;
         if (!empty($finalResults)) {
-            $totalConsensus = array_sum(array_column($finalResults, 'channel_count'));
-            $avgConsensus = $totalConsensus / count($finalResults);
+            $avgConsensus = array_sum(array_column($finalResults, 'channel_count')) / count($finalResults);
             $consensusBoost = min(0.2, ($avgConsensus - 1) * 0.1);
         }
 
-        $finalConfidence = $baseConfidence + $semanticBoost + $bm25Boost + $consensusBoost;
+        return min(0.95, max(0.1, $baseConfidence + $semanticBoost + $bm25Boost + $consensusBoost));
+    }
 
-        return min(0.95, max(0.1, $finalConfidence));
+    // ==================== HELPER METHODS ====================
+
+    private function prepareFilters($entities, $intent): array
+    {
+        $filters = [];
+        
+        if (!empty($entities['cities'])) {
+            $cityIds = array_filter(array_map(fn($city) => $city['id'] ?? null, $entities['cities']));
+            if (!empty($cityIds)) $filters['cityIds'] = array_unique($cityIds);
+        }
+        
+        if (!empty($entities['budget'])) {
+            $filters['budget'] = $entities['budget'];
+            $filters['price_condition'] = $entities['price_condition'] ?? 'under';
+        }
+        
+        if (!empty($entities['duration'])) $filters['duration'] = $entities['duration'];
+        if (!empty($entities['rating'])) {
+            $filters['rating'] = $entities['rating'];
+            $filters['rating_condition'] = $entities['rating_condition'] ?? 'exact';
+        }
+        
+        $filters['item_focus'] = match($intent) {
+            'tour_search' => 'tour',
+            'hotel_search' => 'hotel',
+            'mixed_search' => 'both',
+            default => null
+        };
+
+        return $filters;
+    }
+
+    private function enrichWithItemData($similarityResults, $filters, $limit): array
+    {
+        $tourIds = $hotelIds = [];
+        foreach ($similarityResults as $sim) {
+            if ($sim['item_type'] === 'tour') $tourIds[] = $sim['item_id'];
+            elseif ($sim['item_type'] === 'hotel') $hotelIds[] = $sim['item_id'];
+        }
+
+        $tours = !empty($tourIds) ? $this->dbService->getToursByIds($tourIds, $filters) : [];
+        $hotels = !empty($hotelIds) ? $this->dbService->getHotelsByIds($hotelIds, $filters) : [];
+
+        $tourMap = $this->createItemMap($tours, 'tourid');
+        $hotelMap = $this->createItemMap($hotels, 'hotelid');
+
+        $enriched = [];
+        foreach ($similarityResults as $sim) {
+            $itemData = ($sim['item_type'] === 'tour') 
+                ? ($tourMap[$sim['item_id']] ?? null)
+                : ($hotelMap[$sim['item_id']] ?? null);
+
+            if ($itemData && $sim['score'] >= Config::MIN_SIMILARITY_SCORE) {
+                $enriched[] = [
+                    'item' => $itemData,
+                    'similarity_score' => $sim['score'],
+                    'item_type' => $sim['item_type']
+                ];
+            }
+
+            if (count($enriched) >= $limit) break;
+        }
+
+        return $enriched;
+    }
+
+    private function buildBM25Results($scores, $documents, $queryTerms, $limit): array
+    {
+        $results = [];
+        $topDocIds = array_slice(array_keys($scores), 0, $limit);
+
+        foreach ($topDocIds as $docId) {
+            if ($scores[$docId] > Config::MIN_BM25_SCORE) {
+                $doc = $documents[$docId];
+                $results[] = [
+                    'item' => $doc['item'],
+                    'bm25_score' => $scores[$docId],
+                    'item_type' => $doc['type']
+                ];
+            }
+        }
+        return $results;
+    }
+
+    private function getSearchableDocuments($filters): array
+    {
+        $documents = [];
+        
+        if (!isset($filters['item_focus']) || $filters['item_focus'] !== 'hotel') {
+            foreach ($this->dbService->searchItems('tour', $filters) as $tour) {
+                $text = $this->buildSearchText($tour, 'tour');
+                $documents['tour_' . $tour['tourid']] = [
+                    'text' => $text,
+                    'word_count' => str_word_count($text),
+                    'type' => 'tour',
+                    'item' => $tour
+                ];
+            }
+        }
+
+        if (!isset($filters['item_focus']) || $filters['item_focus'] !== 'tour') {
+            foreach ($this->dbService->searchItems('hotel', $filters) as $hotel) {
+                $text = $this->buildSearchText($hotel, 'hotel');
+                $documents['hotel_' . $hotel['hotelid']] = [
+                    'text' => $text,
+                    'word_count' => str_word_count($text),
+                    'type' => 'hotel',
+                    'item' => $hotel
+                ];
+            }
+        }
+
+        return $documents;
+    }
+
+    private function buildSearchText($item, $type): string
+    {
+        if ($type === 'tour') {
+            return implode(' ', array_filter([
+                $item['tour_name'] ?? '',
+                $item['city_name'] ?? '',
+                $item['description'] ?? '',
+                ($item['duration_days'] ?? '') . ' days',
+                'tour package travel'
+            ]));
+        }
+        
+        return implode(' ', array_filter([
+            $item['hotel'] ?? $item['hotel_name'] ?? '',
+            $item['city_name'] ?? '',
+            $item['description'] ?? '',
+            ($item['ratings'] ?? '') . ' star hotel',
+            'accommodation stay lodge'
+        ]));
+    }
+
+    private function tokenizeQuery($text): array
+    {
+        $text = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', ' ', $text));
+        $words = preg_split('/\s+/', trim($text));
+        
+        $stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'];
+        
+        return array_unique(array_filter($words, fn($w) => 
+            strlen($w) > 2 && !in_array($w, $stopWords) && !is_numeric($w)
+        ));
+    }
+
+    private function createItemMap($items, $idField): array
+    {
+        $map = [];
+        foreach ($items as $item) {
+            if (isset($item[$idField])) $map[$item[$idField]] = $item;
+        }
+        return $map;
+    }
+
+    private function extractItemId($item, $itemType): ?int
+    {
+        return ($itemType === 'tour') ? ($item['tourid'] ?? null) : ($item['hotelid'] ?? null);
+    }
+
+    private function getItemName($item, $type): string
+    {
+        return strtolower(($type === 'tour') 
+            ? ($item['tour_name'] ?? '') 
+            : ($item['hotel'] ?? $item['hotel_name'] ?? ''));
+    }
+
+    private function emptyResultsResponse($query): array
+    {
+        Logger::warning("No results found", ['query' => $query]);
+        return [
+            'success' => false,
+            'results' => [],
+            'confidence' => 0.1,
+            'error' => 'no_results_found'
+        ];
     }
 }
 ?>
