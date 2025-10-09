@@ -1,14 +1,15 @@
 <?php
+
 require_once './Logger.php';
 require_once './Cache.php';
 require_once './config.php';
 
 /**
  * Enhanced Database Service with Vector Search
+ * FIXED: Filter application for mixed queries
  */
 class DatabaseService {
     private $db;
-    
     private const DEFAULT_LIMIT = 20;
     private const MAX_LIMIT = 100;
     private const VECTOR_SEARCH_LIMIT = 2000;
@@ -21,7 +22,7 @@ class DatabaseService {
     }
 
     /**
-     * Main search method for items
+     * FIXED: Main search method with proper filter application
      */
     public function searchItems($itemType, $filters = []) {
         if (!in_array($itemType, ['tour', 'hotel'])) {
@@ -29,7 +30,7 @@ class DatabaseService {
         }
 
         $query = $this->buildSearchQuery($itemType, $filters);
-        
+
         try {
             $stmt = $this->db->prepare($query['sql']);
             if (!$stmt) {
@@ -67,15 +68,15 @@ class DatabaseService {
     private function buildSearchQuery($itemType, $filters) {
         $tableAlias = $itemType === 'tour' ? 't' : 'h';
         $tableName = $itemType === 'tour' ? 'tours' : 'hotels';
-
+        
         $sql = "SELECT {$tableAlias}.*, c.city as city_name
                 FROM {$tableName} {$tableAlias}
                 LEFT JOIN cities c ON {$tableAlias}.cityid = c.cityid
                 WHERE 1=1";
-
+        
         $params = [];
         $types = "";
-
+        
         // City filter
         if (!empty($filters['cityIds'])) {
             $cityIds = array_filter($filters['cityIds'], 'is_numeric');
@@ -88,7 +89,7 @@ class DatabaseService {
                 }
             }
         }
-
+        
         // Budget filter
         if (!empty($filters['budget']) && is_numeric($filters['budget'])) {
             $priceField = $itemType === 'tour' ? 'price_per_person' : 'cost';
@@ -97,14 +98,14 @@ class DatabaseService {
             $params[] = (float)$filters['budget'];
             $types .= 'd';
         }
-
+        
         // Duration filter (tours only)
         if ($itemType === 'tour' && !empty($filters['duration'])) {
             $sql .= " AND {$tableAlias}.duration_days = ?";
             $params[] = (int)$filters['duration'];
             $types .= 'i';
         }
-
+        
         // Rating filter (hotels only)
         if ($itemType === 'hotel' && !empty($filters['rating'])) {
             $condition = $filters['rating_condition'] ?? 'minimum';
@@ -126,38 +127,57 @@ class DatabaseService {
                     $types .= 'd';
             }
         }
-
-        // Search term
-        if (!empty($filters['search_term'])) {
-            $nameField = $itemType === 'tour' ? 'tour_name' : 'hotel';
-            $sql .= " AND ({$tableAlias}.{$nameField} LIKE ? OR c.city LIKE ?)";
-            $searchTerm = '%' . $filters['search_term'] . '%';
-            $params[] = $searchTerm;
-            $params[] = $searchTerm;
-            $types .= 'ss';
-        }
-
+        
         // Ordering
         $sql .= " ORDER BY " . $this->getOrderByClause($itemType, $tableAlias, $filters);
-
-        // Limit
-        $limit = $this->sanitizeLimit($filters['limit'] ?? self::DEFAULT_LIMIT);
+        
+        // CRITICAL: Determine limit based on query type and city count
+        $limit = $this->determineQueryLimit($filters);
+        
         $sql .= " LIMIT ?";
         $params[] = $limit;
         $types .= 'i';
-
+        
         return ['sql' => $sql, 'params' => $params, 'types' => $types];
     }
 
+    private function determineQueryLimit($filters): int
+    {
+        $isMultiCity = !empty($filters['cityIds']) && count($filters['cityIds']) >= 2;
+        $hasConditions = !empty($filters['budget']) || 
+                        !empty($filters['duration']) || 
+                        !empty($filters['rating']);
+        
+        // Case 1-4: Basic queries (no conditions)
+        if (!$hasConditions) {
+            if ($isMultiCity) {
+                // Multi-city basic: need 6 per city minimum (12 total to choose from)
+                return 12;
+            } else {
+                // Single city basic: need exactly 6
+                return 6;
+            }
+        }
+        
+        // Case 5-8: Conditional queries
+        if ($isMultiCity) {
+            // Multi-city with conditions: get more to filter
+            return 20;
+        } else {
+            // Single city with conditions: get what's available
+            return 20;
+        }
+    }
     private function getOrderByClause($itemType, $alias, $filters) {
         if ($itemType === 'tour') {
             return "{$alias}.price_per_person ASC, {$alias}.duration_days DESC";
         }
-        
+
         // Hotels: sort by rating desc if exact rating filter, otherwise by price
         if (!empty($filters['rating']) && ($filters['rating_condition'] ?? 'exact') === 'exact') {
             return "{$alias}.cost ASC, {$alias}.ratings DESC";
         }
+
         return "{$alias}.ratings DESC, {$alias}.cost ASC";
     }
 
@@ -176,16 +196,15 @@ class DatabaseService {
 
         try {
             $stmt = $this->db->prepare(
-                "SELECT id, item_id, item_type, vector_embedding 
-                 FROM item_vectors 
-                 WHERE vector_embedding IS NOT NULL 
+                "SELECT id, item_id, item_type, vector_embedding
+                 FROM item_vectors
+                 WHERE vector_embedding IS NOT NULL
                  LIMIT ?"
             );
-            
+
             $vectorLimit = self::VECTOR_SEARCH_LIMIT;
             $stmt->bind_param('i', $vectorLimit);
             $stmt->execute();
-            
             $allVectors = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
 
@@ -194,6 +213,7 @@ class DatabaseService {
             }
 
             $similarities = $this->calculateSimilarities($queryVector, $allVectors);
+
             usort($similarities, fn($a, $b) => $b['score'] <=> $a['score']);
 
             return array_slice($similarities, 0, $limit);
@@ -206,13 +226,13 @@ class DatabaseService {
 
     private function calculateSimilarities($queryVector, $allVectors) {
         $similarities = [];
-        
+
         foreach ($allVectors as $row) {
             $itemVector = json_decode($row['vector_embedding'], true);
-            
+
             if (is_array($itemVector) && count($itemVector) === count($queryVector)) {
                 $similarity = $this->cosineSimilarity($queryVector, $itemVector);
-                
+
                 if ($similarity > Config::MIN_SIMILARITY_SCORE) {
                     $similarities[] = [
                         'item_id' => $row['item_id'],
@@ -222,7 +242,7 @@ class DatabaseService {
                 }
             }
         }
-        
+
         return $similarities;
     }
 
@@ -274,6 +294,7 @@ class DatabaseService {
             }
 
             CacheService::set($cacheKey, $result, Config::CACHE_CITIES_TTL);
+
             return $result;
 
         } catch (Exception $e) {
@@ -284,17 +305,18 @@ class DatabaseService {
 
     private function findCityPartialMatch($cityName) {
         $searchTerm = '%' . $cityName . '%';
+        
         $stmt = $this->db->prepare("
-            SELECT *, 
-            CASE 
-                WHEN LOWER(city) LIKE LOWER(?) THEN 1
-                WHEN LOWER(city) LIKE LOWER(CONCAT(?, '%')) THEN 2
-                WHEN LOWER(city) LIKE LOWER(CONCAT('%', ?, '%')) THEN 3
-                ELSE 4
-            END as match_priority
-            FROM cities 
-            WHERE LOWER(city) LIKE LOWER(?) 
-            ORDER BY match_priority ASC, LENGTH(city) ASC 
+            SELECT *,
+                CASE
+                    WHEN LOWER(city) LIKE LOWER(?) THEN 1
+                    WHEN LOWER(city) LIKE LOWER(CONCAT(?, '%')) THEN 2
+                    WHEN LOWER(city) LIKE LOWER(CONCAT('%', ?, '%')) THEN 3
+                    ELSE 4
+                END as match_priority
+            FROM cities
+            WHERE LOWER(city) LIKE LOWER(?)
+            ORDER BY match_priority ASC, LENGTH(city) ASC
             LIMIT 1
         ");
         
@@ -302,19 +324,19 @@ class DatabaseService {
         $stmt->execute();
         $result = $stmt->get_result()->fetch_assoc();
         $stmt->close();
-        
+
         return $result;
     }
 
     /**
-     * Get tours by IDs
+     * FIXED: Get tours by IDs with proper filter re-application
      */
     public function getToursByIds(array $tourIds, array $filters = []) {
         return $this->getItemsByIds('tour', $tourIds, 'tourid', $filters);
     }
 
     /**
-     * Get hotels by IDs
+     * FIXED: Get hotels by IDs with proper filter re-application
      */
     public function getHotelsByIds(array $hotelIds, array $filters = []) {
         return $this->getItemsByIds('hotel', $hotelIds, 'hotelid', $filters);
@@ -322,23 +344,23 @@ class DatabaseService {
 
     private function getItemsByIds($itemType, $ids, $idField, $filters) {
         if (empty($ids)) return [];
-
+        
         $ids = array_filter($ids, 'is_numeric');
         if (empty($ids)) return [];
-
+        
         $tableName = $itemType === 'tour' ? 'tours' : 'hotels';
         $alias = $itemType === 'tour' ? 't' : 'h';
         
         $params = $ids;
         $types = str_repeat('i', count($ids));
-
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        
         $sql = "SELECT {$alias}.*, c.city as city_name
                 FROM {$tableName} {$alias}
                 LEFT JOIN cities c ON {$alias}.cityid = c.cityid
                 WHERE {$alias}.{$idField} IN ({$placeholders})";
-
-        // **FIX**: Re-apply city filter to ensure correctness after semantic search
+        
+        // Re-apply city filter
         if (!empty($filters['cityIds'])) {
             $cityPlaceholders = implode(',', array_fill(0, count($filters['cityIds']), '?'));
             $sql .= " AND {$alias}.cityid IN ({$cityPlaceholders})";
@@ -347,53 +369,64 @@ class DatabaseService {
                 $types .= 'i';
             }
         }
-
+        
+        // Re-apply duration filter for tours
+        if ($itemType === 'tour' && !empty($filters['duration'])) {
+            $sql .= " AND {$alias}.duration_days = ?";
+            $params[] = (int)$filters['duration'];
+            $types .= 'i';
+        }
+        
+        // Re-apply rating filter for hotels
+        if ($itemType === 'hotel' && !empty($filters['rating'])) {
+            $condition = $filters['rating_condition'] ?? 'minimum';
+            switch ($condition) {
+                case 'exact':
+                    $sql .= " AND {$alias}.ratings >= ? AND {$alias}.ratings < ?";
+                    $params[] = floatval($filters['rating']);
+                    $params[] = floatval($filters['rating']) + 1.0;
+                    $types .= 'dd';
+                    break;
+                case 'maximum':
+                    $sql .= " AND {$alias}.ratings < ?";
+                    $params[] = floatval($filters['rating']) + 1.0;
+                    $types .= 'd';
+                    break;
+                default: // minimum
+                    $sql .= " AND {$alias}.ratings >= ?";
+                    $params[] = floatval($filters['rating']);
+                    $types .= 'd';
+            }
+        }
+        
+        // Re-apply budget filter
+        if (!empty($filters['budget'])) {
+            $priceField = $itemType === 'tour' ? 'price_per_person' : 'cost';
+            $operator = ($filters['price_condition'] ?? 'under') === 'over' ? '>=' : '<=';
+            $sql .= " AND {$alias}.{$priceField} {$operator} ?";
+            $params[] = (float)$filters['budget'];
+            $types .= 'd';
+        }
+        
         try {
             $stmt = $this->db->prepare($sql);
             $stmt->bind_param($types, ...$params);
             $stmt->execute();
-            
             $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
-
-            return $this->applyPostFilters($result, $filters, $itemType);
-
+            
+            Logger::debug("Items retrieved by IDs", [
+                'type' => $itemType,
+                'requested' => count($ids),
+                'found' => count($result),
+                'filters_applied' => !empty($filters)
+            ]);
+            
+            return $result;
         } catch (Exception $e) {
             Logger::error("Get items by IDs failed", ['error' => $e->getMessage()]);
             return [];
         }
-    }
-
-    private function applyPostFilters($items, $filters, $itemType) {
-        if (empty($filters) || empty($items)) return $items;
-
-        return array_filter($items, function($item) use ($filters, $itemType) {
-            if (!empty($filters['budget'])) {
-                $priceField = $itemType === 'tour' ? 'price_per_person' : 'cost';
-                $condition = $filters['price_condition'] ?? 'under';
-                
-                if ($condition === 'under' && $item[$priceField] > $filters['budget']) {
-                    return false;
-                }
-                if ($condition === 'over' && $item[$priceField] < $filters['budget']) {
-                    return false;
-                }
-            }
-
-            if ($itemType === 'tour' && !empty($filters['duration'])) {
-                if ($item['duration_days'] != $filters['duration']) {
-                    return false;
-                }
-            }
-
-            if ($itemType === 'hotel' && !empty($filters['rating'])) {
-                if ($item['ratings'] < $filters['rating']) {
-                    return false;
-                }
-            }
-
-            return true;
-        });
     }
 
     /**
@@ -409,8 +442,8 @@ class DatabaseService {
             ");
 
             $responseText = is_array($botResponse) ? ($botResponse['text'] ?? '') : $botResponse;
+            
             $stmt->bind_param("isss", $userId, $title, $userMessage, $responseText);
-
             $result = $stmt->execute();
             $stmt->close();
 
@@ -424,10 +457,9 @@ class DatabaseService {
 
     private function generateConversationTitle($message) {
         $cleanMessage = preg_replace('/[?!.,]/', '', trim($message));
-        
         $fillerWords = ['can you', 'could you', 'please', 'help me', 'show me', 'find me'];
-        $lowerMessage = strtolower($cleanMessage);
         
+        $lowerMessage = strtolower($cleanMessage);
         foreach ($fillerWords as $filler) {
             $lowerMessage = str_replace($filler, '', $lowerMessage);
         }
@@ -460,7 +492,7 @@ class DatabaseService {
                 ORDER BY created_at DESC
                 LIMIT ?
             ");
-            
+
             $stmt->bind_param("ii", $userId, $limit);
             $stmt->execute();
             $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
@@ -474,4 +506,5 @@ class DatabaseService {
         }
     }
 }
+
 ?>

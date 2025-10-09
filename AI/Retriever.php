@@ -130,6 +130,25 @@ class HybridRetriever
     }
 
     /**
+     * Tokenize query into search terms
+     */
+    private function tokenizeQuery($query): array
+    {
+        // Remove special characters and normalize
+        $query = strtolower(trim($query));
+        $query = preg_replace('/[^\p{L}\p{N}\s]/u', ' ', $query);
+        
+        // Split into words
+        $terms = preg_split('/\s+/', $query, -1, PREG_SPLIT_NO_EMPTY);
+        
+        // Remove common stopwords
+        $stopwords = ['the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'and', 'or'];
+        $terms = array_filter($terms, fn($term) => !in_array($term, $stopwords) && strlen($term) > 2);
+        
+        return array_values(array_unique($terms));
+    }
+
+    /**
      * BM25 Score Calculation (Okapi BM25)
      */
     private function calculateBM25Scores($queryTerms, $documents): array
@@ -180,6 +199,28 @@ class HybridRetriever
         }
 
         return $scores;
+    }
+
+    /**
+     * Get item name for scoring
+     */
+    private function getItemName($item, $type): string
+    {
+        if ($type === 'tour') {
+            return strtolower($item['tour_name'] ?? '');
+        }
+        return strtolower($item['hotel'] ?? $item['hotel_name'] ?? '');
+    }
+
+    /**
+     * Extract item ID
+     */
+    private function extractItemId($item, $itemType): int
+    {
+        if ($itemType === 'tour') {
+            return (int)($item['tourid'] ?? 0);
+        }
+        return (int)($item['hotelid'] ?? 0);
     }
 
     /**
@@ -298,58 +339,217 @@ class HybridRetriever
         return min(0.95, max(0.1, $baseConfidence + $semanticBoost + $bm25Boost + $consensusBoost));
     }
 
+    /**
+     * Empty results response
+     */
+    private function emptyResultsResponse($query): array
+    {
+        return [
+            'success' => true,
+            'results' => [],
+            'confidence' => 0.1,
+            'retrieval_stats' => [
+                'semantic_results' => 0,
+                'bm25_results' => 0,
+                'pre_ranked' => 0,
+                'reranked' => 0,
+                'final' => 0
+            ]
+        ];
+    }
+
     // ==================== HELPER METHODS ====================
 
     private function prepareFilters($entities, $intent): array
     {
         $filters = [];
         
-        if (!empty($entities['cities'])) {
-            $cityIds = array_filter(array_map(fn($city) => $city['id'] ?? null, $entities['cities']));
-            if (!empty($cityIds)) $filters['cityIds'] = array_unique($cityIds);
+        // CRITICAL: For mixed queries, we need to handle city filtering differently
+        $isMixedQuery = ($intent === 'mixed_search');
+        
+        if ($isMixedQuery) {
+            // For mixed queries, extract cities from the raw message
+            $filters['is_mixed'] = true;
+            $filters['tour_cities'] = [];
+            $filters['hotel_cities'] = [];
+            
+            // Parse the message to determine which cities are for tours vs hotels
+            if (isset($entities['raw_message'])) {
+                $parsedCities = $this->parseMixedQueryCities($entities['raw_message']);
+                $filters['tour_cities'] = $parsedCities['tour_cities'] ?? [];
+                $filters['hotel_cities'] = $parsedCities['hotel_cities'] ?? [];
+            }
+            
+            // If we couldn't parse specifically, use all cities for both
+            if (empty($filters['tour_cities']) && empty($filters['hotel_cities'])) {
+                if (!empty($entities['cities'])) {
+                    $cityIds = array_filter(array_map(fn($city) => $city['id'] ?? null, $entities['cities']));
+                    $filters['tour_cities'] = $cityIds;
+                    $filters['hotel_cities'] = $cityIds;
+                }
+            }
+        } else {
+            // Normal query: use cities for both types
+            if (!empty($entities['cities'])) {
+                $cityIds = array_filter(array_map(fn($city) => $city['id'] ?? null, $entities['cities']));
+                if (!empty($cityIds)) {
+                    $filters['cityIds'] = array_unique($cityIds);
+                }
+            }
         }
         
+        // Budget filter
         if (!empty($entities['budget'])) {
             $filters['budget'] = $entities['budget'];
             $filters['price_condition'] = $entities['price_condition'] ?? 'under';
         }
         
-        if (!empty($entities['duration'])) $filters['duration'] = $entities['duration'];
-        if (!empty($entities['rating'])) {
-            $filters['rating'] = $entities['rating'];
-            $filters['rating_condition'] = $entities['rating_condition'] ?? 'exact';
+        // Duration filter
+        if (!empty($entities['duration'])) {
+            $filters['duration'] = $entities['duration'];
         }
         
+        // Rating filter
+        if (!empty($entities['rating'])) {
+            $filters['rating'] = $entities['rating'];
+            $filters['rating_condition'] = $entities['rating_condition'] ?? 'minimum';
+        }
+        
+        // Item focus based on intent
         $filters['item_focus'] = match($intent) {
             'tour_search' => 'tour',
             'hotel_search' => 'hotel',
             'mixed_search' => 'both',
             default => null
         };
-
+        
+        Logger::debug("Filters prepared", [
+            'intent' => $intent,
+            'is_mixed' => $isMixedQuery,
+            'filters' => $filters
+        ]);
+        
         return $filters;
+    }
+
+    private function parseMixedQueryCities($message): array
+    {
+        $result = [
+            'tour_cities' => [],
+            'hotel_cities' => []
+        ];
+        
+        $messageLower = strtolower($message);
+        
+        // City mappings
+        $cityMappings = [
+            'hanoi' => 21, 'ha noi' => 21, 'hà nội' => 21,
+            'ho chi minh' => 11, 'saigon' => 11, 'hcmc' => 11,
+            'da nang' => 19, 'danang' => 19, 'đà nẵng' => 19,
+            'hue' => 13, 'huế' => 13,
+            'nha trang' => 12, 'nhatrang' => 12,
+            'hoi an' => 17, 'hoian' => 17, 'hội an' => 17,
+            'da lat' => 15, 'dalat' => 15, 'đà lạt' => 15,
+            'phu quoc' => 16, 'phuquoc' => 16, 'phú quốc' => 16,
+            'can tho' => 20, 'cantho' => 20, 'cần thơ' => 20,
+            'ha giang' => 18, 'hagiang' => 18, 'hà giang' => 18,
+            'phu yen' => 14, 'phuyen' => 14, 'phú yên' => 14,
+            'tay bac' => 10, 'taybac' => 10, 'tây bắc' => 10
+        ];
+        
+        // Pattern 1: "tour CITY1 and hotel CITY2"
+        if (preg_match('/\b(tour|tours)\b\s+([a-zA-ZÀ-ỹ\s]+?)\s+and\s+\b(hotel|hotels)\b\s+([a-zA-ZÀ-ỹ\s]+?)(?:\s|$|for|with)/i', $messageLower, $matches)) {
+            $tourCityStr = trim($matches[2]);
+            $hotelCityStr = trim($matches[4]);
+            
+            // Find tour city
+            foreach ($cityMappings as $cityName => $cityId) {
+                if (strpos($tourCityStr, $cityName) !== false) {
+                    $result['tour_cities'][] = $cityId;
+                    break;
+                }
+            }
+            
+            // Find hotel city
+            foreach ($cityMappings as $cityName => $cityId) {
+                if (strpos($hotelCityStr, $cityName) !== false) {
+                    $result['hotel_cities'][] = $cityId;
+                    break;
+                }
+            }
+            
+            Logger::debug("Parsed mixed query cities (pattern 1)", $result);
+            return $result;
+        }
+        
+        // Pattern 2: "hotel CITY1 and tour CITY2"
+        if (preg_match('/\b(hotel|hotels)\b\s+([a-zA-ZÀ-ỹ\s]+?)\s+and\s+\b(tour|tours)\b\s+([a-zA-ZÀ-ỹ\s]+?)(?:\s|$|for|with)/i', $messageLower, $matches)) {
+            $hotelCityStr = trim($matches[2]);
+            $tourCityStr = trim($matches[4]);
+            
+            foreach ($cityMappings as $cityName => $cityId) {
+                if (strpos($hotelCityStr, $cityName) !== false) {
+                    $result['hotel_cities'][] = $cityId;
+                    break;
+                }
+            }
+            
+            foreach ($cityMappings as $cityName => $cityId) {
+                if (strpos($tourCityStr, $cityName) !== false) {
+                    $result['tour_cities'][] = $cityId;
+                    break;
+                }
+            }
+            
+            Logger::debug("Parsed mixed query cities (pattern 2)", $result);
+            return $result;
+        }
+        
+        Logger::debug("Could not parse mixed query cities specifically", ['message' => substr($message, 0, 100)]);
+        return $result;
     }
 
     private function enrichWithItemData($similarityResults, $filters, $limit): array
     {
         $tourIds = $hotelIds = [];
+        
         foreach ($similarityResults as $sim) {
             if ($sim['item_type'] === 'tour') $tourIds[] = $sim['item_id'];
             elseif ($sim['item_type'] === 'hotel') $hotelIds[] = $sim['item_id'];
         }
-
-        $tours = !empty($tourIds) ? $this->dbService->getToursByIds($tourIds, $filters) : [];
-        $hotels = !empty($hotelIds) ? $this->dbService->getHotelsByIds($hotelIds, $filters) : [];
-
+        
+        // For mixed queries, apply specific city filters
+        $isMixed = $filters['is_mixed'] ?? false;
+        
+        $tours = [];
+        $hotels = [];
+        
+        if (!empty($tourIds)) {
+            $tourFilters = $filters;
+            if ($isMixed && !empty($filters['tour_cities'])) {
+                $tourFilters['cityIds'] = $filters['tour_cities'];
+            }
+            $tours = $this->dbService->getToursByIds($tourIds, $tourFilters);
+        }
+        
+        if (!empty($hotelIds)) {
+            $hotelFilters = $filters;
+            if ($isMixed && !empty($filters['hotel_cities'])) {
+                $hotelFilters['cityIds'] = $filters['hotel_cities'];
+            }
+            $hotels = $this->dbService->getHotelsByIds($hotelIds, $hotelFilters);
+        }
+        
         $tourMap = $this->createItemMap($tours, 'tourid');
         $hotelMap = $this->createItemMap($hotels, 'hotelid');
-
+        
         $enriched = [];
+        
         foreach ($similarityResults as $sim) {
-            $itemData = ($sim['item_type'] === 'tour') 
+            $itemData = ($sim['item_type'] === 'tour')
                 ? ($tourMap[$sim['item_id']] ?? null)
                 : ($hotelMap[$sim['item_id']] ?? null);
-
+            
             if ($itemData && $sim['score'] >= Config::MIN_SIMILARITY_SCORE) {
                 $enriched[] = [
                     'item' => $itemData,
@@ -357,11 +557,31 @@ class HybridRetriever
                     'item_type' => $sim['item_type']
                 ];
             }
-
+            
             if (count($enriched) >= $limit) break;
         }
-
+        
+        Logger::debug("Enriched items", [
+            'requested' => count($similarityResults),
+            'enriched' => count($enriched),
+            'is_mixed' => $isMixed
+        ]);
+        
         return $enriched;
+    }
+
+    /**
+     * Create item map for quick lookup
+     */
+    private function createItemMap($items, $idField): array
+    {
+        $map = [];
+        foreach ($items as $item) {
+            if (isset($item[$idField])) {
+                $map[$item[$idField]] = $item;
+            }
+        }
+        return $map;
     }
 
     private function buildBM25Results($scores, $documents, $queryTerms, $limit): array
@@ -386,8 +606,17 @@ class HybridRetriever
     {
         $documents = [];
         
+        $isMixed = $filters['is_mixed'] ?? false;
+        
+        // Handle tours
         if (!isset($filters['item_focus']) || $filters['item_focus'] !== 'hotel') {
-            foreach ($this->dbService->searchItems('tour', $filters) as $tour) {
+            // For mixed queries, use tour-specific city filter
+            $tourFilters = $filters;
+            if ($isMixed && !empty($filters['tour_cities'])) {
+                $tourFilters['cityIds'] = $filters['tour_cities'];
+            }
+            
+            foreach ($this->dbService->searchItems('tour', $tourFilters) as $tour) {
                 $text = $this->buildSearchText($tour, 'tour');
                 $documents['tour_' . $tour['tourid']] = [
                     'text' => $text,
@@ -397,9 +626,16 @@ class HybridRetriever
                 ];
             }
         }
-
+        
+        // Handle hotels
         if (!isset($filters['item_focus']) || $filters['item_focus'] !== 'tour') {
-            foreach ($this->dbService->searchItems('hotel', $filters) as $hotel) {
+            // For mixed queries, use hotel-specific city filter
+            $hotelFilters = $filters;
+            if ($isMixed && !empty($filters['hotel_cities'])) {
+                $hotelFilters['cityIds'] = $filters['hotel_cities'];
+            }
+            
+            foreach ($this->dbService->searchItems('hotel', $hotelFilters) as $hotel) {
                 $text = $this->buildSearchText($hotel, 'hotel');
                 $documents['hotel_' . $hotel['hotelid']] = [
                     'text' => $text,
@@ -409,7 +645,12 @@ class HybridRetriever
                 ];
             }
         }
-
+        
+        Logger::debug("Searchable documents retrieved", [
+            'total' => count($documents),
+            'is_mixed' => $isMixed
+        ]);
+        
         return $documents;
     }
 
@@ -433,49 +674,6 @@ class HybridRetriever
             'accommodation stay lodge'
         ]));
     }
-
-    private function tokenizeQuery($text): array
-    {
-        $text = strtolower(preg_replace('/[^\p{L}\p{N}\s]/u', ' ', $text));
-        $words = preg_split('/\s+/', trim($text));
-        
-        $stopWords = ['the', 'a', 'an', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'];
-        
-        return array_unique(array_filter($words, fn($w) => 
-            strlen($w) > 2 && !in_array($w, $stopWords) && !is_numeric($w)
-        ));
-    }
-
-    private function createItemMap($items, $idField): array
-    {
-        $map = [];
-        foreach ($items as $item) {
-            if (isset($item[$idField])) $map[$item[$idField]] = $item;
-        }
-        return $map;
-    }
-
-    private function extractItemId($item, $itemType): ?int
-    {
-        return ($itemType === 'tour') ? ($item['tourid'] ?? null) : ($item['hotelid'] ?? null);
-    }
-
-    private function getItemName($item, $type): string
-    {
-        return strtolower(($type === 'tour') 
-            ? ($item['tour_name'] ?? '') 
-            : ($item['hotel'] ?? $item['hotel_name'] ?? ''));
-    }
-
-    private function emptyResultsResponse($query): array
-    {
-        Logger::warning("No results found", ['query' => $query]);
-        return [
-            'success' => false,
-            'results' => [],
-            'confidence' => 0.1,
-            'error' => 'no_results_found'
-        ];
-    }
 }
+
 ?>

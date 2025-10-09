@@ -39,55 +39,70 @@ class OptimizedRAGTravelChatbot {
     /**
      * MAIN MESSAGE PROCESSING METHOD
      */
-    public function processMessage(string $message, array $conversationHistory = []): array{
+    public function processMessage(string $message, array $conversationHistory = []): array {
         $startTime = microtime(true);
+        
         try {
-            // STEP 1: Sanitize and handle simple cases
+            // STEP 1: Sanitize input
             $sanitizedMessage = $this->sanitizeInput($message);
+            
             if (GreetingService::isSimpleGreeting($sanitizedMessage)) {
                 return GreetingService::generateGreetingResponse();
             }
-
+            
             // STEP 2: Intent and Entity Analysis
             $intentResult = $this->intentAnalyzer->analyzeIntent($sanitizedMessage);
             $intent = $intentResult['intent'];
             $entities = $this->intentAnalyzer->extractEntities($sanitizedMessage, $this->vietnameseCities);
-
-            // STEP 3: Route international queries
+            
+            Logger::info("Intent Analysis", [
+                'intent' => $intent,
+                'cities' => count($entities['cities'] ?? []),
+                'has_conditions' => $entities['has_conditions'] ?? false
+            ]);
+            
+            // STEP 3: Check for international queries
             if ($entities['is_international'] ?? false) {
                 return $this->handleInternationalQuery($sanitizedMessage, $entities, $conversationHistory);
             }
-
-            // STEP 4: Hybrid Retrieval
+            
+            // STEP 4: CRITICAL - Detect mixed queries and adjust intent
+            $intent = $this->refineMixedQueryIntent($sanitizedMessage, $intent, $entities);
+            
+            // STEP 5: Hybrid Retrieval with refined intent
             $retrievalResult = $this->hybridRetriever->hybridSearch($sanitizedMessage, $entities, $intent);
+            
             if (empty($retrievalResult['results'])) {
-                Logger::warning("Retrieval returned no results", ['message' => $sanitizedMessage, 'intent' => $intent]);
+                Logger::warning("Retrieval returned no results", [
+                    'message' => $sanitizedMessage,
+                    'intent' => $intent
+                ]);
                 return $this->generateFallbackResponse("I couldn't find any specific matches for your request.");
             }
             
-            // STEP 5: Generate Response
+            // STEP 6: Generate Response
             $response = $this->responseGenerator->generateHybridResponse(
                 $sanitizedMessage,
                 $retrievalResult,
                 $conversationHistory
             );
-
-            // STEP 6: Save conversation (non-critical)
+            
+            // STEP 7: Save conversation
             try {
                 $this->dbService->saveConversation($this->userId, $sanitizedMessage, $response);
             } catch (Exception $saveError) {
                 Logger::warning("Failed to save conversation", ['error' => $saveError->getMessage()]);
-                // Don't fail the request if saving fails
             }
-
-            // STEP 7: Finalize and return
+            
+            // STEP 8: Finalize
             $processingTime = microtime(true) - $startTime;
+            
             Logger::info("Message processed successfully", [
                 'processing_time_ms' => round($processingTime * 1000, 2),
                 'confidence' => $retrievalResult['confidence'] ?? 0,
-                'response_type' => $response['type'] ?? 'unknown',
+                'response_type' => $response['type'] ?? 'unknown'
             ]);
-
+            
             return [
                 'success' => true,
                 'response' => $response,
@@ -98,14 +113,51 @@ class OptimizedRAGTravelChatbot {
                     'confidence' => $retrievalResult['confidence'] ?? 0
                 ]
             ];
-
+            
         } catch (InvalidArgumentException $e) {
             Logger::warning("Invalid input", ['error' => $e->getMessage()]);
             return $this->generateErrorResponse($e->getMessage());
         } catch (Exception $e) {
-            Logger::error("Message processing error", ['error' => $e->getMessage(), 'trace' => $e->getTraceAsString()]);
+            Logger::error("Message processing error", [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
             return $this->generateErrorResponse("I'm sorry, an unexpected error occurred. Please try again.");
         }
+    }
+
+    private function refineMixedQueryIntent($message, $currentIntent, $entities): string {
+        $messageLower = strtolower($message);
+        
+        // Pattern 1: "tour in city1 and hotel in city2"
+        $mixedPattern1 = '/\b(tour|tours)\b.*\b(in|at|to)\b.*\band\b.*\b(hotel|hotels)\b.*\b(in|at|to)\b/i';
+        
+        // Pattern 2: "hotel in city1 and tour in city2"
+        $mixedPattern2 = '/\b(hotel|hotels)\b.*\b(in|at|to)\b.*\band\b.*\b(tour|tours)\b.*\b(in|at|to)\b/i';
+        
+        // Pattern 3: Simple "tour X and hotel Y"
+        $mixedPattern3 = '/\b(tour|tours)\b.*\band\b.*\b(hotel|hotels)\b/i';
+        
+        if (preg_match($mixedPattern1, $messageLower) || 
+            preg_match($mixedPattern2, $messageLower) ||
+            preg_match($mixedPattern3, $messageLower)) {
+            
+            Logger::info("Detected mixed query pattern", ['message' => substr($message, 0, 100)]);
+            return 'mixed_search';
+        }
+        
+        // If we have 2+ cities and both tour/hotel keywords, likely mixed
+        if (count($entities['cities'] ?? []) >= 2) {
+            $hasTour = preg_match('/\b(tour|tours)\b/', $messageLower);
+            $hasHotel = preg_match('/\b(hotel|hotels)\b/', $messageLower);
+            
+            if ($hasTour && $hasHotel) {
+                Logger::info("Detected mixed query (2 cities + both keywords)");
+                return 'mixed_search';
+            }
+        }
+        
+        return $currentIntent;
     }
 
     /**

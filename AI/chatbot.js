@@ -297,11 +297,13 @@ class TravelChatbot {
         const cardContainer = document.createElement('div');
         cardContainer.className = 'data-cards';
 
-        const tours = this.extractToursFromResponse(response);
-        const hotels = this.extractHotelsFromResponse(response);
+        // Use the layout type provided by the backend response
+        const layoutType = response.layout_type || 'default';
 
-        const layout = this.determineCardLayout(tours, hotels, response);
-        this.renderCardsWithLayout(cardContainer, layout);
+        // The data to be rendered is in response.data
+        const renderData = response.data || {};
+
+        this.renderCardsWithLayout(cardContainer, layoutType, renderData);
 
         if (cardContainer.children.length > 0) {
             const messageContent = messageElement.querySelector('.message-content');
@@ -380,46 +382,109 @@ class TravelChatbot {
         };
     }
 
-    renderCardsWithLayout(container, layout) {
-        container.innerHTML = ''; // Clear previous content
-
-        // **FIX**: Handle the new 'single-section' layout
-        if (layout.type === 'single-section' && layout.data.length > 0) {
-            container.className = 'data-cards single-section';
-            const sectionType = layout.sectionType; // 'tour' or 'hotel'
-            
-            const header = document.createElement('h4');
-            if (sectionType === 'tour') {
-                header.innerHTML = '<i class="fas fa-map-signs"></i> Tours';
-            } else {
-                header.innerHTML = '<i class="fas fa-bed"></i> Hotels';
-                container.classList.add('hotels-section');
-            }
-            container.appendChild(header);
-
-            const gridWrapper = document.createElement('div');
-            gridWrapper.className = 'cards-grid-wrapper';
-
-            layout.data.forEach(item => {
-                const card = (sectionType === 'tour') 
-                    ? this.createTourCard(item) 
-                    : this.createHotelCard(item);
-                gridWrapper.appendChild(card);
-            });
-            container.appendChild(gridWrapper);
-
-        } else if (layout.type === 'mixed-content') {
+    renderCardsWithLayout(container, layoutType, data) {
+        container.innerHTML = '';
+        
+        const tours = data.tours || [];
+        const hotels = data.hotels || [];
+        const cities = data.cities || [];
+        const isMultiCity = data.multi_city || false;
+        
+        // Check if this is a conditional query
+        const hasConditions = data.has_conditions || false;
+        
+        // Case 3 & 7: Multi-city tours (Tour in city1 and city2)
+        if (layoutType === 'multi_city_tours' && isMultiCity && cities.length >= 2) {
             container.className = 'data-cards two-column-layout';
-
-            if (layout.leftColumn?.data.length > 0) {
-                const leftCol = this.createColumnElement('left', layout.leftColumn, layout.type);
-                container.appendChild(leftCol);
+            
+            // Group tours by city
+            const toursByCity = this.groupToursByCity(tours, cities);
+            
+            // Ensure minimum 3 tours per city for basic queries
+            if (!hasConditions) {
+                if (toursByCity[cities[0]]?.length < 3 || toursByCity[cities[1]]?.length < 3) {
+                    console.warn('Not enough tours for both cities, falling back to single layout');
+                    this.renderSingleCityLayout(container, tours, 'tour', cities[0]);
+                    return;
+                }
             }
-
-            if (layout.rightColumn?.data.length > 0) {
-                const rightCol = this.createColumnElement('right', layout.rightColumn, layout.type);
-                container.appendChild(rightCol);
+            
+            // Create columns for each city
+            cities.slice(0, 2).forEach(cityName => {
+                if (toursByCity[cityName] && toursByCity[cityName].length > 0) {
+                    const column = this.createCityColumn(toursByCity[cityName], cityName, 'tour', hasConditions);
+                    container.appendChild(column);
+                }
+            });
+            return;
+        }
+        
+        // Case 4: Multi-city hotels (Hotel in city1 and city2)
+        if (layoutType === 'multi_city_hotels' && isMultiCity && cities.length >= 2) {
+            container.className = 'data-cards two-column-layout';
+            
+            const hotelsByCity = this.groupHotelsByCity(hotels, cities);
+            
+            // Ensure minimum 3 hotels per city for basic queries
+            if (!hasConditions) {
+                if (hotelsByCity[cities[0]]?.length < 3 || hotelsByCity[cities[1]]?.length < 3) {
+                    console.warn('Not enough hotels for both cities, falling back to single layout');
+                    this.renderSingleCityLayout(container, hotels, 'hotel', cities[0]);
+                    return;
+                }
             }
+            
+            cities.slice(0, 2).forEach(cityName => {
+                if (hotelsByCity[cityName] && hotelsByCity[cityName].length > 0) {
+                    const column = this.createCityColumn(hotelsByCity[cityName], cityName, 'hotel', hasConditions);
+                    container.appendChild(column);
+                }
+            });
+            return;
+        }
+        
+        // Case 5 & 6: Mixed content (Tour in city1 and Hotel in city2)
+        if (layoutType === 'mixed_content' && tours.length > 0 && hotels.length > 0) {
+            container.className = 'data-cards two-column-layout';
+            
+            // Left column: Tours
+            const tourCity = tours[0].city_name || 'Vietnam';
+            const tourColumn = this.createCityColumn(tours.slice(0, hasConditions ? tours.length : 3), tourCity, 'tour', hasConditions);
+            container.appendChild(tourColumn);
+            
+            // Right column: Hotels
+            const hotelCity = hotels[0].city_name || 'Vietnam';
+            const hotelColumn = this.createCityColumn(hotels.slice(0, hasConditions ? hotels.length : 3), hotelCity, 'hotel', hasConditions);
+            container.appendChild(hotelColumn);
+            return;
+        }
+        
+        // Case 1 & 8: Single city tours (Tour in city1)
+        if (layoutType === 'single_tours' && tours.length > 0) {
+            const cityName = tours[0].city_name || 'Vietnam';
+            
+            // Basic query: must have 6 cards split 3-3
+            if (!hasConditions && tours.length >= 6) {
+                this.renderTwoColumnSplit(container, tours.slice(0, 6), cityName, 'tour');
+            } else {
+                // Conditional query: show all results found
+                this.renderTwoColumnSplit(container, tours, cityName, 'tour');
+            }
+            return;
+        }
+        
+        // Case 2: Single city hotels (Hotel in city1)
+        if (layoutType === 'single_hotels' && hotels.length > 0) {
+            const cityName = hotels[0].city_name || 'Vietnam';
+            
+            // Basic query: must have 6 cards split 3-3
+            if (!hasConditions && hotels.length >= 6) {
+                this.renderTwoColumnSplit(container, hotels.slice(0, 6), cityName, 'hotel');
+            } else {
+                // Conditional query: show all results found
+                this.renderTwoColumnSplit(container, hotels, cityName, 'hotel');
+            }
+            return;
         }
     }
 
@@ -468,13 +533,16 @@ class TravelChatbot {
         const tourId = tour.tourid || 0;
         const cityId = tour.cityid || 11;
         const duration = parseInt(tour.duration_days || 0);
-
+        
         const card = document.createElement('div');
         card.className = 'data-card tour-card';
+        
         card.innerHTML = `
             <div class="card-content">
                 <div class="card-image">
-                    <img src="${this.generateTourImagePath(cityId, tourId)}" alt="${this.escapeHtml(tour.tour_name)}">
+                    <img src="${this.generateTourImagePath(cityId, tourId)}" 
+                        alt="${this.escapeHtml(tour.tour_name)}" 
+                        loading="lazy">
                     <span class="card-badge discount">-15%</span>
                 </div>
                 <div class="card-info">
@@ -482,15 +550,15 @@ class TravelChatbot {
                     <div class="card-details">
                         <div class="detail-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span class="detail-value">${this.escapeHtml(tour.city_name || 'Vietnam')}</span>
+                            <span>${this.escapeHtml(tour.city_name || 'Vietnam')}</span>
                         </div>
                         <div class="detail-item">
                             <i class="fas fa-clock"></i>
-                            <span class="detail-value">${duration} ${duration === 1 ? 'day' : 'days'}</span>
+                            <span>${duration} ${duration === 1 ? 'day' : 'days'}</span>
                         </div>
                         <div class="detail-item">
                             <i class="fas fa-money-bill-wave"></i>
-                            <span class="detail-value">${this.formatPrice(tour.price_per_person || 0)} VND</span>
+                            <span>${this.formatPrice(tour.price_per_person || 0)} VND</span>
                         </div>
                     </div>
                     <div class="card-actions">
@@ -504,6 +572,7 @@ class TravelChatbot {
                 </div>
             </div>
         `;
+        
         return card;
     }
 
@@ -511,13 +580,16 @@ class TravelChatbot {
         const hotelId = hotel.hotelid || 0;
         const rating = parseFloat(hotel.ratings || 4).toFixed(1);
         const cost = parseFloat(hotel.cost || 0);
-
+        
         const card = document.createElement('div');
         card.className = 'data-card hotel-card';
+        
         card.innerHTML = `
             <div class="card-content">
                 <div class="card-image">
-                    <img src="${this.generateHotelImagePath(hotelId)}" alt="${this.escapeHtml(hotel.hotel || hotel.hotel_name)}">
+                    <img src="${this.generateHotelImagePath(hotelId)}" 
+                        alt="${this.escapeHtml(hotel.hotel || hotel.hotel_name)}" 
+                        loading="lazy">
                     <span class="card-badge rating">${rating}</span>
                 </div>
                 <div class="card-info">
@@ -525,16 +597,16 @@ class TravelChatbot {
                     <div class="card-details">
                         <div class="detail-item">
                             <i class="fas fa-map-marker-alt"></i>
-                            <span class="detail-value">${this.escapeHtml(hotel.city_name || 'Vietnam')}</span>
+                            <span>${this.escapeHtml(hotel.city_name || 'Vietnam')}</span>
                         </div>
                         <div class="detail-item">
-                            <i class="fas fa-bed"></i>
-                            <span class="detail-value">${rating}/5.0</span>
+                            <i class="fas fa-star"></i>
+                            <span>${rating}/5.0</span>
                         </div>
                         ${cost > 0 ? `
                         <div class="detail-item">
                             <i class="fas fa-money-bill-wave"></i>
-                            <span class="detail-value">${this.formatPrice(cost)} VND/night</span>
+                            <span>${this.formatPrice(cost)} VND/night</span>
                         </div>
                         ` : ''}
                     </div>
@@ -549,10 +621,125 @@ class TravelChatbot {
                 </div>
             </div>
         `;
+        
         return card;
     }
 
     // Helper Methods
+    groupToursByCity(tours, cities) {
+        const grouped = {};
+        cities.forEach(city => grouped[city] = []);
+        
+        tours.forEach(tour => {
+            const cityGroup = tour.city_group || tour.city_name;
+            if (grouped[cityGroup]) {
+                grouped[cityGroup].push(tour);
+            }
+        });
+        
+        return grouped;
+    }
+
+    // Helper: Group hotels by city
+    groupHotelsByCity(hotels, cities) {
+        const grouped = {};
+        cities.forEach(city => grouped[city] = []);
+        
+        hotels.forEach(hotel => {
+            const cityGroup = hotel.city_group || hotel.city_name;
+            if (grouped[cityGroup]) {
+                grouped[cityGroup].push(hotel);
+            }
+        });
+        
+        return grouped;
+    }
+
+    createCityColumn(items, cityName, itemType, hasConditions) {
+        const column = document.createElement('div');
+        column.className = `card-column ${itemType}-column`;
+        
+        // Column header with icon and solid line
+        const header = document.createElement('div');
+        header.className = 'column-header';
+        const icon = itemType === 'tour' ? 'fa-compass' : 'fa-hotel';
+        const label = itemType === 'tour' ? 'Tour' : 'Hotel';
+        header.innerHTML = `<i class="fas ${icon}"></i> ${label} in ${this.escapeHtml(cityName)}`;
+        column.appendChild(header);
+        
+        // Cards wrapper
+        const cardsWrapper = document.createElement('div');
+        cardsWrapper.className = 'column-cards';
+        
+        // Limit: 3 cards per column for basic queries, no limit for conditional
+        const limit = hasConditions ? items.length : 3;
+        items.slice(0, limit).forEach(item => {
+            const card = itemType === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            cardsWrapper.appendChild(card);
+        });
+        
+        column.appendChild(cardsWrapper);
+        return column;
+    }
+
+    renderTwoColumnSplit(container, items, cityName, itemType) {
+        container.className = 'data-cards two-column-layout has-shared-header';
+        
+        // Create SINGLE shared header spanning both columns
+        const sharedHeader = document.createElement('div');
+        sharedHeader.className = `shared-column-header ${itemType}-header`;
+        const icon = itemType === 'tour' ? 'fa-compass' : 'fa-hotel';
+        const label = itemType === 'tour' ? 'Tour' : 'Hotel';
+        sharedHeader.innerHTML = `<i class="fas ${icon}"></i> ${label} in ${this.escapeHtml(cityName)}`;
+        container.appendChild(sharedHeader);
+        
+        const halfPoint = Math.ceil(items.length / 2);
+        const leftItems = items.slice(0, halfPoint);
+        const rightItems = items.slice(halfPoint);
+        
+        // Left column (no header)
+        const leftCol = this.createCityColumnNoHeader(leftItems, itemType);
+        container.appendChild(leftCol);
+        
+        // Right column (no header, if items exist)
+        if (rightItems.length > 0) {
+            const rightCol = this.createCityColumnNoHeader(rightItems, itemType);
+            container.appendChild(rightCol);
+        }
+    }
+
+    createCityColumnNoHeader(items, itemType) {
+        const column = document.createElement('div');
+        column.className = `card-column ${itemType}-column no-header`;
+        
+        const cardsWrapper = document.createElement('div');
+        cardsWrapper.className = 'column-cards';
+        
+        items.forEach(item => {
+            const card = itemType === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
+            cardsWrapper.appendChild(card);
+        });
+        
+        column.appendChild(cardsWrapper);
+        return column;
+    }
+
+    renderSingleCityLayout(container, items, itemType, cityName) {
+        container.className = 'data-cards two-column-layout';
+        
+        const halfPoint = Math.ceil(items.length / 2);
+        const leftItems = items.slice(0, Math.min(3, halfPoint));
+        const rightItems = items.slice(3, 6);
+        
+        const leftCol = this.createCityColumn(leftItems, cityName, itemType, false);
+        container.appendChild(leftCol);
+        
+        if (rightItems.length > 0) {
+            const rightCol = this.createCityColumn(rightItems, cityName, itemType, false);
+            container.appendChild(rightCol);
+        }
+    }
+
     generateTourImagePath(cityId, tourId) {
         const imageMap = {
             'taybac': [1, 2, 3, 4], 'hcm': [5, 6, 7, 8], 'nhatrang': [9, 10, 11, 12],

@@ -806,11 +806,8 @@ body {
 
 /* ENHANCED DATA CARDS WITH IMAGES */
 .data-cards {
-    display: grid;
-    gap: 16px;
-    margin-top: 12px;
-    width: 100%; 
-    max-width: 100%;
+  margin-top: 15px;
+  width: 100%;
 }
 
 /* Two Column Layout - Foundation for all card layouts */
@@ -818,46 +815,42 @@ body {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
-    margin-top: 12px;
     align-items: flex-start;
-    width: 100%;
+    margin-top: 12px;
 }
 
 /* Card Column - Base container for each column */
 .card-column {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    position: relative;
-    width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 /* Column Headers */
 .column-header {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     color: #333333;
-    margin-bottom: 12px;
     padding-bottom: 8px;
     border-bottom: 2px solid #10a37f;
     display: flex;
     align-items: center;
     gap: 8px;
-    position: relative;
-    z-index: 15; 
-    background: #ffffff;
-    padding-right: 8px;
+    margin-bottom: 8px;
 }
 
 .column-header i {
-    font-size: 14px;
-    flex-shrink: 0;
+    font-size: 15px;
+    color: #10a37f;
 }
 
 /* Column type styling */
 .tour-column .column-header {
-    color: #10a37f;
     border-bottom-color: #10a37f;
+}
+
+.tour-column .column-header i {
+    color: #10a37f;
 }
 
 .tour-column .column-header i.fa-map-signs {
@@ -865,8 +858,11 @@ body {
 }
 
 .hotel-column .column-header {
-    color: #3498db;
     border-bottom-color: #3498db;
+}
+
+.hotel-column .column-header i {
+    color: #3498db;
 }
 
 .hotel-column .column-header i.fa-bed {
@@ -877,7 +873,7 @@ body {
 .column-cards {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
 }
 
 /* Single section layout cho tours hoặc hotels riêng lẻ */
@@ -901,7 +897,7 @@ body {
     color: #333333;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #10a37f;
+    border-bottom: 2px dashed #10a37f;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -1130,21 +1126,22 @@ body {
     flex-direction: column;
     gap: 16px;
     position: relative;
+    background: transparent; 
 }
 
 .cross-city-section h4 {
     font-size: 16px;
     font-weight: 600;
-    color: #333333;
+    color: #10a37f; 
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #10a37f;
+    border-bottom: 2px dashed #10a37f; 
     display: flex;
     align-items: center;
     gap: 8px;
     position: relative;
-    z-index: 15; 
-    background: #ffffff;
+    z-index: 15;
+    background: transparent;
     padding-right: 12px;
 }
 
@@ -1154,12 +1151,14 @@ body {
 }
 
 /* Different colors for tours vs hotels */
-.cross-city-section.tours-section h4 {
-    border-bottom-color: #10a37f;
+.cross-city-section.tours-section h4,
+.cross-city-section.hotels-section h4 {
     color: #10a37f;
+    border-bottom-color: #10a37f;
 }
 
-.cross-city-section.tours-section h4 i.fa-map-signs {
+.cross-city-section.tours-section h4 i.fa-map-signs,
+.cross-city-section.hotels-section h4 i.fa-bed {
     color: #10a37f;
 }
 
@@ -1286,16 +1285,6 @@ body {
     min-height: 200px;
 }
 
-.multi-city-column.left-column,
-.multi-city-column.tours-column {
-    border-left: 4px solid #10a37f; 
-}
-
-.multi-city-column.right-column,
-.multi-city-column.hotels-column {
-    border-left: 4px solid #3498db; 
-}
-
 .multi-city-column.center-column{
     border-left: 4px solid #e74c3c; /* Red for middle column */
 }
@@ -1356,15 +1345,20 @@ body {
 
 /* Adjust card layout for multi-city display */
 .multi-city-column .card-content {
-    height: auto;
-    flex-direction: column;
+    height: 180px; 
+    display: flex;
+    flex-direction: row;
+    overflow: hidden; 
 }
 
 .multi-city-column .card-image {
-    width: 100%; 
-    height: 120px;
+    height: 180px; 
+    width: 140px;
+    position: relative;
+    overflow: hidden;
+    flex-shrink: 0;
+    border-radius: 8px;
     margin: 0; 
-    border-radius: 0; 
 }
 
 .multi-city-column .card-info {
@@ -1378,18 +1372,19 @@ body {
     line-height: 1.3;
     margin-bottom: 6px;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 2; 
     -webkit-box-orient: vertical;
     overflow: hidden;
-    min-height: 30px; 
+    min-height: 36px; 
+    max-height: 36px; 
 }
 
 .multi-city-column .card-details {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 3px;
-    margin-bottom: 8px;
+    gap: 6px; 
+    margin-bottom: 10px; 
 }
 
 .multi-city-column .detail-item {
@@ -1518,15 +1513,13 @@ body {
     border: 1px solid #e9ecef;
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: all 0.3s ease;
-    max-width: 100%;
-    position: relative;
-    height: 180px;
+    width: 100%;
 }
 
 .data-card:hover {
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
     transform: translateY(-2px);
     border-color: #10a37f;
 }
@@ -1680,27 +1673,29 @@ body {
 
 .card-content {
     display: flex;
-    height: 100%; 
+    flex-direction: row;
+    height: 160px;
 }
 
 /* Card Image Section */
 .card-image {
-    width: 140px; 
-    height: 120px; 
+    width: 180px;
+    height: 100%;
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
-    margin: 10px; 
-    border-radius: 8px; 
-    align-self: flex-start;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .card-image img {
-    width: 110%;
-    height: 85%;
+    width: 100%;
+    height: 100%;
     object-fit: cover;
-    transition: transform 0.3s ease;
     border-radius: 8px;
+    transition: transform 0.3s ease;
 }
 
 .data-card:hover .card-image img {
@@ -1709,68 +1704,64 @@ body {
 
 .card-badge {
     position: absolute;
-    top: 6px;
-    right: 6px;
-    background: rgba(16, 163, 127, 0.9);
+    top: 16px;
+    right: 16px;
+    background: rgba(220, 53, 69, 0.9);
     color: white;
-    padding: 3px 6px;
-    border-radius: 4px;
+    padding: 3px 7px;
+    border-radius: 6px;
     font-size: 10px;
     font-weight: 600;
-    backdrop-filter: blur(4px);
-    z-index: 5;
+    z-index: 2;
 }
 
 .card-badge.discount {
-    background: rgba(220, 53, 69, 0.9);
+  background: rgba(220, 53, 69, 0.9);
 }
 
 .card-badge.rating {
-    background: rgba(255, 193, 7, 0.9);
-    color: #000;
+  background: rgba(255, 193, 7, 0.9);
+  color: #000;
 }
 
 /* Card Information Section */
 .card-info {
     flex: 1;
-    padding: 10px;
+    padding: 12px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    min-height: 100px;
+    min-width: 0;
 }
 
 .card-title {
     font-size: 14px;
-    font-weight: 600;
+    font-weight: 500;
     color: #333333;
+    line-height: 1.3;
     margin-bottom: 6px;
-    line-height: 1.3; 
     display: -webkit-box;
-    -webkit-line-clamp: 2; 
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
-    overflow: hidden; 
-    min-height: 34px; 
-    max-height: 34px;
-    position: relative;
-    z-index: 10;
-    word-wrap: break-word;
+    overflow: hidden;
+    min-height: 33px;
+    max-height: 33px;
 }
 
 .card-details {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 3px;
-    margin-bottom: 6px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
 }
 
 .detail-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #333333;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: #333333;
 }
 
 .detail-item i {
@@ -1779,6 +1770,14 @@ body {
     font-size: 10px;
     text-align: center;
     flex-shrink: 0;
+}
+
+.detail-item span {
+    font-size: 11px;
+    color: #555555;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .detail-label {
@@ -1790,9 +1789,8 @@ body {
 
 
 .detail-value {
-    color: #333333;
-    font-weight: 400;
-    font-size: 12px;
+  color: #333333;
+  font-weight: 400;
 }
 
 .price-section {
@@ -1817,31 +1815,29 @@ body {
 .card-actions {
     display: flex;
     gap: 6px;
-    margin-top: 4px;
+    margin-top: auto;
 }
 
 .card-btn {
     flex: 1;
-    padding: 6px 10px;
+    padding: 6px 8px;
     border-radius: 6px;
-    font-size: 11px;
+    font-size: 10px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
     border: none;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 4px;
-    text-decoration: none;
+    transition: all 0.2s ease;
     text-transform: uppercase;
     letter-spacing: 0.3px;
-    min-height: 28px;
 }
 
 .card-btn-primary {
-    background: #10a37f;
-    color: #ffffff;
+  background: #10a37f;
+  color: #ffffff;
 }
 
 .card-btn-primary:hover {
@@ -1856,9 +1852,8 @@ body {
 }
 
 .card-btn-secondary:hover {
-    background: #e9ecef;
-    color: #333333;
-    border-color: #dee2e6;
+  background: #e9ecef;
+  color: #333333;
 }
 
 .card-btn i {
@@ -1988,74 +1983,73 @@ body {
 
 /* FIXED INPUT AREA - Always at bottom */
 .input-container {
-    position: fixed;
-    bottom: 0;
-    left: 260px;
-    right: 0;
-    padding: 15px; 
-    border-top: 1px solid #e9ecef;
-    background: #ffffff;
-    z-index: 50;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+  position: fixed;
+  bottom: 0;
+  left: 260px;
+  right: 0;
+  padding: 15px;
+  border-top: 1px solid #e9ecef;
+  background: #ffffff;
+  z-index: 50;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .input-wrapper {
-    max-width: 900px;
-    margin: 0 auto;
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .input-box {
-    background: #f8f9fa;
-    border: 2px solid #e9ecef;
-    border-radius: 12px;
-    display: flex;
-    align-items: flex-end;
-    padding: 10px 14px;
-    gap: 10px;
-    position: relative;
-    transition: border-color 0.2s ease;
+  background: #f8f9fa;
+  border: 2px solid #e9ecef;
+  border-radius: 12px;
+  display: flex;
+  align-items: flex-end;
+  padding: 10px 14px;
+  gap: 10px;
+  transition: border-color 0.2s ease;
 }
 
 .input-box:focus-within {
-    border-color: #10a37f;
+  border-color: #10a37f;
 }
 
 .message-input {
-    flex: 1;
-    background: none;
-    border: none;
-    color: #333333;
-    font-size: 15px;
-    line-height: 1.4;
-    resize: none;
-    outline: none;
-    min-height: 22px;
-    max-height: 180px;
-    overflow-y: auto;
+  flex: 1;
+  background: none;
+  border: none;
+  color: #333333;
+  font-size: 15px;
+  line-height: 1.4;
+  resize: none;
+  outline: none;
+  min-height: 22px;
+  max-height: 180px;
+  overflow-y: auto;
 }
 
 .message-input::placeholder {
-    color: #6c757d;
+  color: #6c757d;
 }
 
 .send-btn {
-    background: #10a37f;
-    border: none;
-    color: #ffffff;
-    width: 30px;
-    height: 30px;
-    border-radius: 7px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
+  background: #10a37f;
+  border: none;
+  color: #ffffff;
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
 }
 
 .send-btn:disabled {
-    background: #dee2e6;
-    color: #6c757d;
-    cursor: not-allowed;
+  background: #dee2e6;
+  color: #6c757d;
+  cursor: not-allowed;
 }
 
 .send-btn:not(:disabled):hover {
@@ -2132,7 +2126,7 @@ body {
     color: #6c757d;
     margin-bottom: 12px;
     padding-bottom: 6px;
-    border-bottom: 1px solid #e9ecef;
+    border-bottom: 1px dashed #e9ecef;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -2492,7 +2486,7 @@ body {
 
 .data-cards.multi-city-layout {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Fixed 2 columns */
+    grid-template-columns: repeat(2, 1fr); 
     gap: 16px;
     margin-top: 15px;
     align-items: flex-start;
@@ -2503,19 +2497,11 @@ body {
     display: flex;
     flex-direction: column;
     gap: 12px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 16px;
-    border: 1px solid #e9ecef;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-}
-
-.multi-city-column.tours-column {
-    border-left: 4px solid #10a37f; 
-}
-
-.multi-city-column.hotels-column {
-    border-left: 4px solid #3498db; 
+    background: transparent; 
+    border-radius: 0; 
+    padding: 0; 
+    border: none; 
+    box-shadow: none; 
 }
 
 .multi-city-column h4 {
@@ -2523,14 +2509,14 @@ body {
     font-weight: 600;
     margin-bottom: 12px;
     padding-bottom: 8px;
-    border-bottom: 2px solid #dee2e6;
+    border-bottom: 2px dashed #10a37f; 
     display: flex;
     align-items: center;
     gap: 8px;
-    color: #333333;
+    color: #10a37f; 
     position: relative;
     z-index: 15;
-    background: #f8f9fa;
+    background: transparent; 
 }
 
 .multi-city-column h4 i {
@@ -2540,14 +2526,20 @@ body {
 
 .tours-column h4 {
     color: #10a37f;
+    border-bottom: 2px dashed #10a37f;
+}
+
+.tours-column h4 i.fa-map-signs {
+    color: #10a37f;
 }
 
 .hotels-column h4 {
     color: #3498db;
+    border-bottom: 2px dashed #3498db;
 }
 
 .hotels-column h4 i.fa-bed {
-    color: #3498db; 
+    color: #3498db;
 }
 
 .multi-city-column .data-card {
@@ -2574,13 +2566,16 @@ body {
     position: relative;
     overflow: hidden;
     flex-shrink: 0;
+    border-radius: 12px;
+    margin: 12px; 
 }
 
 .multi-city-column .card-image img {
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    height: 100%; 
+    object-fit: cover; 
     transition: transform 0.3s ease;
+    border-radius: 8px;
 }
 
 .multi-city-column .data-card:hover .card-image img {
@@ -2588,7 +2583,12 @@ body {
 }
 
 .multi-city-column .card-info {
-    padding: 12px;
+    padding: 14px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-width: 0; 
 }
 
 .multi-city-column .detail-item {
@@ -2895,5 +2895,89 @@ body {
     
     .sidebar.collapsed + .main-content .input-container {
         left: 0;
+    }
+}
+
+/* Shared header spans both columns for Cases 1, 2, 8 */
+.shared-column-header {
+    grid-column: 1 / -1;
+    font-size: 15px;
+    font-weight: 600;
+    color: #333333;
+    padding-bottom: 8px;
+    border-bottom: 2px solid #10a37f;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.shared-column-header i {
+    font-size: 15px;
+    color: #10a37f;
+}
+
+/* Tour shared header */
+.shared-column-header.tour-header {
+    border-bottom-color: #10a37f;
+}
+
+.shared-column-header.tour-header i {
+    color: #10a37f;
+}
+
+/* Hotel shared header */
+.shared-column-header.hotel-header {
+    border-bottom-color: #3498db;
+}
+
+.shared-column-header.hotel-header i {
+    color: #3498db;
+}
+
+/* Hide individual column headers when shared header is used */
+.card-column.no-header .column-header {
+    display: none;
+}
+
+.card-column.no-header {
+    margin-top: 0;
+}
+
+/* Ensure proper spacing for columns without headers */
+.data-cards.two-column-layout.has-shared-header {
+    grid-template-rows: auto 1fr;
+}
+
+.data-cards.two-column-layout.has-shared-header .shared-column-header {
+    grid-row: 1;
+}
+
+.data-cards.two-column-layout.has-shared-header .card-column {
+    grid-row: 2;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .shared-column-header {
+        font-size: 14px;
+        padding-bottom: 6px;
+        margin-bottom: 10px;
+    }
+    
+    .shared-column-header i {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 480px) {
+    .shared-column-header {
+        font-size: 13px;
+        padding-bottom: 5px;
+        margin-bottom: 8px;
+    }
+    
+    .shared-column-header i {
+        font-size: 13px;
     }
 }
