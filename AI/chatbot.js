@@ -389,18 +389,33 @@ class TravelChatbot {
         const hotels = data.hotels || [];
         const cities = data.cities || [];
         const isMultiCity = data.multi_city || false;
-        
-        // Check if this is a conditional query
         const hasConditions = data.has_conditions || false;
         
-        // Case 3 & 7: Multi-city tours (Tour in city1 and city2)
+        // CASE 5-6: Mixed content (tour + hotel)
+        if (layoutType === 'mixed_content' && tours.length > 0 && hotels.length > 0) {
+            container.className = 'data-cards two-column-layout';
+            
+            const tourCity = data.tour_city || tours[0].city_name || 'Vietnam';
+            const hotelCity = data.hotel_city || hotels[0].city_name || 'Vietnam';
+            
+            // Left column: Tours
+            const tourColumn = this.createCityColumn(tours, tourCity, 'tour', hasConditions);
+            container.appendChild(tourColumn);
+            
+            // Right column: Hotels
+            const hotelColumn = this.createCityColumn(hotels, hotelCity, 'hotel', hasConditions);
+            container.appendChild(hotelColumn);
+            
+            return;
+        }
+        
+        // CASE 3 & 7: Multi-city tours
         if (layoutType === 'multi_city_tours' && isMultiCity && cities.length >= 2) {
             container.className = 'data-cards two-column-layout';
             
-            // Group tours by city
             const toursByCity = this.groupToursByCity(tours, cities);
             
-            // Ensure minimum 3 tours per city for basic queries
+            // Ensure minimum requirements for basic queries
             if (!hasConditions) {
                 if (toursByCity[cities[0]]?.length < 3 || toursByCity[cities[1]]?.length < 3) {
                     console.warn('Not enough tours for both cities, falling back to single layout');
@@ -416,16 +431,16 @@ class TravelChatbot {
                     container.appendChild(column);
                 }
             });
+            
             return;
         }
         
-        // Case 4: Multi-city hotels (Hotel in city1 and city2)
+        // CASE 4: Multi-city hotels
         if (layoutType === 'multi_city_hotels' && isMultiCity && cities.length >= 2) {
             container.className = 'data-cards two-column-layout';
             
             const hotelsByCity = this.groupHotelsByCity(hotels, cities);
             
-            // Ensure minimum 3 hotels per city for basic queries
             if (!hasConditions) {
                 if (hotelsByCity[cities[0]]?.length < 3 || hotelsByCity[cities[1]]?.length < 3) {
                     console.warn('Not enough hotels for both cities, falling back to single layout');
@@ -440,48 +455,29 @@ class TravelChatbot {
                     container.appendChild(column);
                 }
             });
+            
             return;
         }
         
-        // Case 5 & 6: Mixed content (Tour in city1 and Hotel in city2)
-        if (layoutType === 'mixed_content' && tours.length > 0 && hotels.length > 0) {
-            container.className = 'data-cards two-column-layout';
-            
-            // Left column: Tours
-            const tourCity = tours[0].city_name || 'Vietnam';
-            const tourColumn = this.createCityColumn(tours.slice(0, hasConditions ? tours.length : 3), tourCity, 'tour', hasConditions);
-            container.appendChild(tourColumn);
-            
-            // Right column: Hotels
-            const hotelCity = hotels[0].city_name || 'Vietnam';
-            const hotelColumn = this.createCityColumn(hotels.slice(0, hasConditions ? hotels.length : 3), hotelCity, 'hotel', hasConditions);
-            container.appendChild(hotelColumn);
-            return;
-        }
-        
-        // Case 1 & 8: Single city tours (Tour in city1)
+        // CASE 1 & 8: Single city tours
         if (layoutType === 'single_tours' && tours.length > 0) {
             const cityName = tours[0].city_name || 'Vietnam';
             
-            // Basic query: must have 6 cards split 3-3
             if (!hasConditions && tours.length >= 6) {
                 this.renderTwoColumnSplit(container, tours.slice(0, 6), cityName, 'tour');
             } else {
-                // Conditional query: show all results found
                 this.renderTwoColumnSplit(container, tours, cityName, 'tour');
             }
             return;
         }
         
-        // Case 2: Single city hotels (Hotel in city1)
+        // CASE 2: Single city hotels
         if (layoutType === 'single_hotels' && hotels.length > 0) {
             const cityName = hotels[0].city_name || 'Vietnam';
             
-            // Basic query: must have 6 cards split 3-3
             if (!hasConditions && hotels.length >= 6) {
                 this.renderTwoColumnSplit(container, hotels.slice(0, 6), cityName, 'hotel');
             } else {
-                // Conditional query: show all results found
                 this.renderTwoColumnSplit(container, hotels, cityName, 'hotel');
             }
             return;
@@ -659,7 +655,6 @@ class TravelChatbot {
         const column = document.createElement('div');
         column.className = `card-column ${itemType}-column`;
         
-        // Column header with icon and solid line
         const header = document.createElement('div');
         header.className = 'column-header';
         const icon = itemType === 'tour' ? 'fa-compass' : 'fa-hotel';
@@ -679,6 +674,7 @@ class TravelChatbot {
         });
         
         column.appendChild(cardsWrapper);
+        
         return column;
     }
 

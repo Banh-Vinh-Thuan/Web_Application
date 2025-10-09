@@ -109,8 +109,7 @@ class ResponseGenerator
 
     // ==================== DISPLAY DATA STRUCTURING ====================
 
-    private function structureDisplayData($results, $userMessage): array
-    {
+    private function structureDisplayData($results, $userMessage): array {
         $tours = [];
         $hotels = [];
         
@@ -124,7 +123,7 @@ class ResponseGenerator
             }
         }
         
-        // Extract information from query
+        // Extract query information
         $cities = self::extractCitiesFromQuery($userMessage);
         $queryType = $this->analyzeQueryType($userMessage);
         $hasConditions = $this->detectConditions($userMessage);
@@ -144,61 +143,88 @@ class ResponseGenerator
         
         // CASE 5-6: Mixed query (tour in city1 AND hotel in city2)
         if ($queryType === 'mixed' && !empty($tours) && !empty($hotels)) {
-            // For mixed queries, just take what we have
-            $displayData['tours'] = array_slice($tours, 0, 3);
-            $displayData['hotels'] = array_slice($hotels, 0, 3);
+            // For mixed queries, group by city
+            if (count($cities) >= 2) {
+                $tourCity = $this->findItemCity($tours, $cities);
+                $hotelCity = $this->findItemCity($hotels, $cities);
+                
+                $displayData['tours'] = $this->filterItemsByCity($tours, $tourCity, $hasConditions ? count($tours) : 3);
+                $displayData['hotels'] = $this->filterItemsByCity($hotels, $hotelCity, $hasConditions ? count($hotels) : 3);
+                $displayData['tour_city'] = $tourCity;
+                $displayData['hotel_city'] = $hotelCity;
+            } else {
+                // Same city mixed
+                $displayData['tours'] = array_slice($tours, 0, 3);
+                $displayData['hotels'] = array_slice($hotels, 0, 3);
+            }
             return $displayData;
         }
         
         // CASE 3 & 7: Multi-city tours
         if ($queryType === 'tour_only' && count($cities) >= 2 && !empty($tours)) {
-            $grouped = $this->groupItemsByCity($tours, $cities, 6);
+            $grouped = $this->groupItemsByCity($tours, $cities, 100);
             
             if ($this->isValidMultiCityDistribution($grouped, $cities)) {
-                $city1Tours = array_values(array_filter($grouped, fn($item) =>
+                $city1Tours = array_values(array_filter($grouped, fn($item) => 
                     ($item['city_group'] ?? '') === $cities[0]
                 ));
-                $city2Tours = array_values(array_filter($grouped, fn($item) =>
+                $city2Tours = array_values(array_filter($grouped, fn($item) => 
                     ($item['city_group'] ?? '') === $cities[1]
                 ));
                 
                 // For basic queries, need at least 3 per city
-                if (!$hasConditions && (count($city1Tours) < 3 || count($city2Tours) < 3)) {
-                    $displayData['tours'] = array_slice($tours, 0, 6);
+                if (!$hasConditions) {
+                    if (count($city1Tours) >= 3 && count($city2Tours) >= 3) {
+                        $displayData['tours'] = array_merge(
+                            array_slice($city1Tours, 0, 3),
+                            array_slice($city2Tours, 0, 3)
+                        );
+                        $displayData['multi_city'] = true;
+                        $displayData['cities'] = array_slice($cities, 0, 2);
+                    } else {
+                        // Fallback to single city if not enough results
+                        $displayData['tours'] = array_slice($tours, 0, 6);
+                    }
                 } else {
-                    $displayData['tours'] = array_merge(
-                        array_slice($city1Tours, 0, $hasConditions ? count($city1Tours) : 3),
-                        array_slice($city2Tours, 0, $hasConditions ? count($city2Tours) : 3)
-                    );
+                    // Conditional query: show all results found
+                    $displayData['tours'] = array_merge($city1Tours, $city2Tours);
                     $displayData['multi_city'] = true;
                     $displayData['cities'] = array_slice($cities, 0, 2);
                 }
+                
                 return $displayData;
             }
         }
         
         // CASE 4: Multi-city hotels
         if ($queryType === 'hotel_only' && count($cities) >= 2 && !empty($hotels)) {
-            $grouped = $this->groupItemsByCity($hotels, $cities, 6);
+            $grouped = $this->groupItemsByCity($hotels, $cities, 100);
             
             if ($this->isValidMultiCityDistribution($grouped, $cities)) {
-                $city1Hotels = array_values(array_filter($grouped, fn($item) =>
+                $city1Hotels = array_values(array_filter($grouped, fn($item) => 
                     ($item['city_group'] ?? '') === $cities[0]
                 ));
-                $city2Hotels = array_values(array_filter($grouped, fn($item) =>
+                $city2Hotels = array_values(array_filter($grouped, fn($item) => 
                     ($item['city_group'] ?? '') === $cities[1]
                 ));
                 
-                if (!$hasConditions && (count($city1Hotels) < 3 || count($city2Hotels) < 3)) {
-                    $displayData['hotels'] = array_slice($hotels, 0, 6);
+                if (!$hasConditions) {
+                    if (count($city1Hotels) >= 3 && count($city2Hotels) >= 3) {
+                        $displayData['hotels'] = array_merge(
+                            array_slice($city1Hotels, 0, 3),
+                            array_slice($city2Hotels, 0, 3)
+                        );
+                        $displayData['multi_city'] = true;
+                        $displayData['cities'] = array_slice($cities, 0, 2);
+                    } else {
+                        $displayData['hotels'] = array_slice($hotels, 0, 6);
+                    }
                 } else {
-                    $displayData['hotels'] = array_merge(
-                        array_slice($city1Hotels, 0, $hasConditions ? count($city1Hotels) : 3),
-                        array_slice($city2Hotels, 0, $hasConditions ? count($city2Hotels) : 3)
-                    );
+                    $displayData['hotels'] = array_merge($city1Hotels, $city2Hotels);
                     $displayData['multi_city'] = true;
                     $displayData['cities'] = array_slice($cities, 0, 2);
                 }
+                
                 return $displayData;
             }
         }
@@ -218,6 +244,30 @@ class ResponseGenerator
         return $displayData;
     }
 
+    private function findItemCity($items, $cities) {
+        foreach ($items as $item) {
+            $itemCity = strtolower(trim($item['city_name'] ?? ''));
+            foreach ($cities as $city) {
+                if (self::cityMatches($itemCity, $city)) {
+                    return $city;
+                }
+            }
+        }
+        return $cities[0] ?? '';
+    }
+
+    private function filterItemsByCity($items, $targetCity, $limit) {
+        $filtered = [];
+        foreach ($items as $item) {
+            $itemCity = strtolower(trim($item['city_name'] ?? ''));
+            if (self::cityMatches($itemCity, $targetCity)) {
+                $filtered[] = $item;
+                if (count($filtered) >= $limit) break;
+            }
+        }
+        return $filtered;
+    }
+    
     private function analyzeQueryType($userMessage): string
     {
         $messageLower = strtolower($userMessage);

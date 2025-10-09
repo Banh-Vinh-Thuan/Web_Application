@@ -353,6 +353,7 @@ class DatabaseService {
         
         $params = $ids;
         $types = str_repeat('i', count($ids));
+        
         $placeholders = implode(',', array_fill(0, count($ids), '?'));
         
         $sql = "SELECT {$alias}.*, c.city as city_name
@@ -360,7 +361,7 @@ class DatabaseService {
                 LEFT JOIN cities c ON {$alias}.cityid = c.cityid
                 WHERE {$alias}.{$idField} IN ({$placeholders})";
         
-        // Re-apply city filter
+        // CRITICAL: Re-apply city filter
         if (!empty($filters['cityIds'])) {
             $cityPlaceholders = implode(',', array_fill(0, count($filters['cityIds']), '?'));
             $sql .= " AND {$alias}.cityid IN ({$cityPlaceholders})";
@@ -370,33 +371,37 @@ class DatabaseService {
             }
         }
         
+        // CRITICAL: Fix rating filter for hotels - EXACT star rating
+        if ($itemType === 'hotel' && !empty($filters['rating'])) {
+            $condition = $filters['rating_condition'] ?? 'exact';
+            $rating = floatval($filters['rating']);
+            
+            switch ($condition) {
+                case 'exact':
+                    // FIXED: For "3 star", show only 3.0 to 3.9
+                    $sql .= " AND {$alias}.ratings >= ? AND {$alias}.ratings < ?";
+                    $params[] = $rating;
+                    $params[] = $rating + 1.0;
+                    $types .= 'dd';
+                    break;
+                case 'minimum':
+                    $sql .= " AND {$alias}.ratings >= ?";
+                    $params[] = $rating;
+                    $types .= 'd';
+                    break;
+                case 'maximum':
+                    $sql .= " AND {$alias}.ratings < ?";
+                    $params[] = $rating + 1.0;
+                    $types .= 'd';
+                    break;
+            }
+        }
+        
         // Re-apply duration filter for tours
         if ($itemType === 'tour' && !empty($filters['duration'])) {
             $sql .= " AND {$alias}.duration_days = ?";
             $params[] = (int)$filters['duration'];
             $types .= 'i';
-        }
-        
-        // Re-apply rating filter for hotels
-        if ($itemType === 'hotel' && !empty($filters['rating'])) {
-            $condition = $filters['rating_condition'] ?? 'minimum';
-            switch ($condition) {
-                case 'exact':
-                    $sql .= " AND {$alias}.ratings >= ? AND {$alias}.ratings < ?";
-                    $params[] = floatval($filters['rating']);
-                    $params[] = floatval($filters['rating']) + 1.0;
-                    $types .= 'dd';
-                    break;
-                case 'maximum':
-                    $sql .= " AND {$alias}.ratings < ?";
-                    $params[] = floatval($filters['rating']) + 1.0;
-                    $types .= 'd';
-                    break;
-                default: // minimum
-                    $sql .= " AND {$alias}.ratings >= ?";
-                    $params[] = floatval($filters['rating']);
-                    $types .= 'd';
-            }
         }
         
         // Re-apply budget filter
@@ -415,7 +420,7 @@ class DatabaseService {
             $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
             $stmt->close();
             
-            Logger::debug("Items retrieved by IDs", [
+            Logger::debug("Items retrieved by IDs with filters", [
                 'type' => $itemType,
                 'requested' => count($ids),
                 'found' => count($result),
@@ -423,6 +428,7 @@ class DatabaseService {
             ]);
             
             return $result;
+            
         } catch (Exception $e) {
             Logger::error("Get items by IDs failed", ['error' => $e->getMessage()]);
             return [];

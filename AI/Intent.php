@@ -232,41 +232,62 @@ class FewShotIntentAnalyzer {
         
         $messageLower = strtolower($message);
         
-        // Extract cities
+        // Extract cities and conditions
         $cities = $this->extractCityNames($messageLower);
         $hasTwoOrMoreCities = count($cities) >= 2;
         
-        // Extract keywords with position
+        // Extract keywords
         $hasTourKeyword = preg_match('/\b(tour|tours|trip|package)\b/', $messageLower);
         $hasHotelKeyword = preg_match('/\b(hotel|hotels|accommodation|stay|resort)\b/', $messageLower);
         
-        // Check for explicit "and" between tour and hotel
+        // CRITICAL: Check for explicit mixed pattern with "and"
         $hasMixedPattern = preg_match('/\b(tour|tours)\b.*\band\b.*\b(hotel|hotels)\b/i', $messageLower) ||
                         preg_match('/\b(hotel|hotels)\b.*\band\b.*\b(tour|tours)\b/i', $messageLower);
         
         // Extract conditions
         $hasConditions = $this->detectConditionsInMessage($messageLower);
         
-        // Decision tree
-        
         // PRIORITY 1: Mixed queries (tour AND hotel)
         if ($hasMixedPattern || ($hasTourKeyword && $hasHotelKeyword && $hasTwoOrMoreCities)) {
             return [
                 'intent' => 'mixed_search',
-                'confidence' => 0.80,
+                'confidence' => 0.85,
                 'method' => 'fallback',
                 'has_conditions' => $hasConditions
             ];
         }
         
-        // PRIORITY 2: Multi-city single type
+        // PRIORITY 2: Multi-city single type with conditions
+        if ($hasTwoOrMoreCities && $hasConditions) {
+            if ($hasTourKeyword && !$hasHotelKeyword) {
+                return [
+                    'intent' => 'tour_search',
+                    'confidence' => 0.80,
+                    'method' => 'fallback',
+                    'has_conditions' => true,
+                    'multi_city' => true
+                ];
+            }
+            if ($hasHotelKeyword && !$hasTourKeyword) {
+                return [
+                    'intent' => 'hotel_search',
+                    'confidence' => 0.80,
+                    'method' => 'fallback',
+                    'has_conditions' => true,
+                    'multi_city' => true
+                ];
+            }
+        }
+        
+        // PRIORITY 3: Multi-city single type without conditions
         if ($hasTwoOrMoreCities) {
             if ($hasTourKeyword && !$hasHotelKeyword) {
                 return [
                     'intent' => 'tour_search',
                     'confidence' => 0.75,
                     'method' => 'fallback',
-                    'has_conditions' => $hasConditions
+                    'has_conditions' => false,
+                    'multi_city' => true
                 ];
             }
             if ($hasHotelKeyword && !$hasTourKeyword) {
@@ -274,18 +295,20 @@ class FewShotIntentAnalyzer {
                     'intent' => 'hotel_search',
                     'confidence' => 0.75,
                     'method' => 'fallback',
-                    'has_conditions' => $hasConditions
+                    'has_conditions' => false,
+                    'multi_city' => true
                 ];
             }
         }
         
-        // PRIORITY 3: Single city
+        // PRIORITY 4: Single city or general
         if ($hasTourKeyword) {
             return [
                 'intent' => 'tour_search',
                 'confidence' => 0.70,
                 'method' => 'fallback',
-                'has_conditions' => $hasConditions
+                'has_conditions' => $hasConditions,
+                'multi_city' => false
             ];
         }
         
@@ -294,7 +317,8 @@ class FewShotIntentAnalyzer {
                 'intent' => 'hotel_search',
                 'confidence' => 0.70,
                 'method' => 'fallback',
-                'has_conditions' => $hasConditions
+                'has_conditions' => $hasConditions,
+                'multi_city' => false
             ];
         }
         
@@ -302,7 +326,8 @@ class FewShotIntentAnalyzer {
             'intent' => 'general',
             'confidence' => 0.50,
             'method' => 'fallback',
-            'has_conditions' => false
+            'has_conditions' => false,
+            'multi_city' => false
         ];
     }
 
@@ -348,13 +373,18 @@ class FewShotIntentAnalyzer {
     public function extractEntities($message, $vietnameseCities) {
         try {
             $prompt = $this->buildEntityExtractionPrompt($message, $vietnameseCities);
-            
             $response = $this->geminiService->generateText($prompt, [
                 'temperature' => 0.1,
                 'maxTokens' => 300
             ]);
             
-            return $this->parseEntityResponse($response, $message, $vietnameseCities);
+            $entities = $this->parseEntityResponse($response, $message, $vietnameseCities);
+            
+            // CRITICAL: Ensure has_conditions is set
+            $entities['has_conditions'] = $this->detectConditions($message);
+            
+            return $entities;
+            
         } catch (Exception $e) {
             Logger::error("Entity extraction failed", ['error' => $e->getMessage()]);
             return $this->fallbackEntityExtraction($message, $vietnameseCities);
