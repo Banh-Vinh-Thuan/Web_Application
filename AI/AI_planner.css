@@ -2990,3 +2990,12 @@ body {
         font-size: 13px;
     }
 }
+
+.multi-city-column.hotels-column h4 {
+    color: #3498db;
+    border-bottom-color: #3498db;
+}
+
+.multi-city-column.hotels-column h4 i.fa-bed {
+    color: #3498db;
+}

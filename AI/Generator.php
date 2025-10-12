@@ -165,14 +165,14 @@ class ResponseGenerator
             $grouped = $this->groupItemsByCity($tours, $cities, 100);
             
             if ($this->isValidMultiCityDistribution($grouped, $cities)) {
-                $city1Tours = array_values(array_filter($grouped, fn($item) => 
+                $city1Tours = array_values(array_filter($grouped, fn($item) =>
                     ($item['city_group'] ?? '') === $cities[0]
                 ));
-                $city2Tours = array_values(array_filter($grouped, fn($item) => 
+                $city2Tours = array_values(array_filter($grouped, fn($item) =>
                     ($item['city_group'] ?? '') === $cities[1]
                 ));
                 
-                // For basic queries, need at least 3 per city
+                // ALWAYS show exactly 3 per city for basic queries
                 if (!$hasConditions) {
                     if (count($city1Tours) >= 3 && count($city2Tours) >= 3) {
                         $displayData['tours'] = array_merge(
@@ -181,15 +181,19 @@ class ResponseGenerator
                         );
                         $displayData['multi_city'] = true;
                         $displayData['cities'] = array_slice($cities, 0, 2);
+                        $displayData['city1_tours'] = array_slice($city1Tours, 0, 3); // NEW: Separate arrays
+                        $displayData['city2_tours'] = array_slice($city2Tours, 0, 3); // NEW: Separate arrays
                     } else {
-                        // Fallback to single city if not enough results
+                        // Fallback: not enough results for multi-city
                         $displayData['tours'] = array_slice($tours, 0, 6);
                     }
                 } else {
-                    // Conditional query: show all results found
+                    // Conditional: show all found
                     $displayData['tours'] = array_merge($city1Tours, $city2Tours);
                     $displayData['multi_city'] = true;
                     $displayData['cities'] = array_slice($cities, 0, 2);
+                    $displayData['city1_tours'] = $city1Tours; // NEW: Separate arrays
+                    $displayData['city2_tours'] = $city2Tours; // NEW: Separate arrays
                 }
                 
                 return $displayData;
@@ -201,10 +205,10 @@ class ResponseGenerator
             $grouped = $this->groupItemsByCity($hotels, $cities, 100);
             
             if ($this->isValidMultiCityDistribution($grouped, $cities)) {
-                $city1Hotels = array_values(array_filter($grouped, fn($item) => 
+                $city1Hotels = array_values(array_filter($grouped, fn($item) =>
                     ($item['city_group'] ?? '') === $cities[0]
                 ));
-                $city2Hotels = array_values(array_filter($grouped, fn($item) => 
+                $city2Hotels = array_values(array_filter($grouped, fn($item) =>
                     ($item['city_group'] ?? '') === $cities[1]
                 ));
                 
@@ -216,13 +220,19 @@ class ResponseGenerator
                         );
                         $displayData['multi_city'] = true;
                         $displayData['cities'] = array_slice($cities, 0, 2);
+                        $displayData['city1_hotels'] = array_slice($city1Hotels, 0, 3); // NEW: Separate arrays
+                        $displayData['city2_hotels'] = array_slice($city2Hotels, 0, 3); // NEW: Separate arrays
                     } else {
+                        // Fallback
                         $displayData['hotels'] = array_slice($hotels, 0, 6);
                     }
                 } else {
+                    // Conditional query
                     $displayData['hotels'] = array_merge($city1Hotels, $city2Hotels);
                     $displayData['multi_city'] = true;
                     $displayData['cities'] = array_slice($cities, 0, 2);
+                    $displayData['city1_hotels'] = $city1Hotels; // NEW: Separate arrays
+                    $displayData['city2_hotels'] = $city2Hotels; // NEW: Separate arrays
                 }
                 
                 return $displayData;

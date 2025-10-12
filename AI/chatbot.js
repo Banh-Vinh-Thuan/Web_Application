@@ -398,63 +398,70 @@ class TravelChatbot {
             const tourCity = data.tour_city || tours[0].city_name || 'Vietnam';
             const hotelCity = data.hotel_city || hotels[0].city_name || 'Vietnam';
             
-            // Left column: Tours
+            // Left column: Tours with header
             const tourColumn = this.createCityColumn(tours, tourCity, 'tour', hasConditions);
             container.appendChild(tourColumn);
             
-            // Right column: Hotels
+            // Right column: Hotels with header
             const hotelColumn = this.createCityColumn(hotels, hotelCity, 'hotel', hasConditions);
             container.appendChild(hotelColumn);
             
             return;
         }
         
-        // CASE 3 & 7: Multi-city tours
+        // CASE 3 & 7: Multi-city tours - FIXED TO MATCH HOTEL LAYOUT
         if (layoutType === 'multi_city_tours' && isMultiCity && cities.length >= 2) {
             container.className = 'data-cards two-column-layout';
             
-            const toursByCity = this.groupToursByCity(tours, cities);
+            // Get separate arrays for each city
+            const city1Tours = data.city1_tours || [];
+            const city2Tours = data.city2_tours || [];
             
-            // Ensure minimum requirements for basic queries
+            // Validation
             if (!hasConditions) {
-                if (toursByCity[cities[0]]?.length < 3 || toursByCity[cities[1]]?.length < 3) {
-                    console.warn('Not enough tours for both cities, falling back to single layout');
+                if (city1Tours.length < 3 || city2Tours.length < 3) {
+                    console.warn('Not enough tours for multi-city, using fallback');
                     this.renderSingleCityLayout(container, tours, 'tour', cities[0]);
                     return;
                 }
             }
             
-            // Create columns for each city
-            cities.slice(0, 2).forEach(cityName => {
-                if (toursByCity[cityName] && toursByCity[cityName].length > 0) {
-                    const column = this.createCityColumn(toursByCity[cityName], cityName, 'tour', hasConditions);
-                    container.appendChild(column);
-                }
-            });
+            // FIXED: Create columns with individual headers like hotel layout
+            // Left column: City 1 Tours with header
+            const leftColumn = this.createCityColumn(city1Tours, cities[0], 'tour', hasConditions);
+            container.appendChild(leftColumn);
+            
+            // Right column: City 2 Tours with header
+            const rightColumn = this.createCityColumn(city2Tours, cities[1], 'tour', hasConditions);
+            container.appendChild(rightColumn);
             
             return;
         }
         
-        // CASE 4: Multi-city hotels
+        // CASE 4: Multi-city hotels - KEEP SAME STRUCTURE
         if (layoutType === 'multi_city_hotels' && isMultiCity && cities.length >= 2) {
             container.className = 'data-cards two-column-layout';
             
-            const hotelsByCity = this.groupHotelsByCity(hotels, cities);
+            // Get separate arrays for each city
+            const city1Hotels = data.city1_hotels || [];
+            const city2Hotels = data.city2_hotels || [];
             
+            // Validation
             if (!hasConditions) {
-                if (hotelsByCity[cities[0]]?.length < 3 || hotelsByCity[cities[1]]?.length < 3) {
-                    console.warn('Not enough hotels for both cities, falling back to single layout');
+                if (city1Hotels.length < 3 || city2Hotels.length < 3) {
+                    console.warn('Not enough hotels for multi-city, using fallback');
                     this.renderSingleCityLayout(container, hotels, 'hotel', cities[0]);
                     return;
                 }
             }
             
-            cities.slice(0, 2).forEach(cityName => {
-                if (hotelsByCity[cityName] && hotelsByCity[cityName].length > 0) {
-                    const column = this.createCityColumn(hotelsByCity[cityName], cityName, 'hotel', hasConditions);
-                    container.appendChild(column);
-                }
-            });
+            // Left column: City 1 Hotels with header
+            const leftColumn = this.createCityColumn(city1Hotels, cities[0], 'hotel', hasConditions);
+            container.appendChild(leftColumn);
+            
+            // Right column: City 2 Hotels with header
+            const rightColumn = this.createCityColumn(city2Hotels, cities[1], 'hotel', hasConditions);
+            container.appendChild(rightColumn);
             
             return;
         }
@@ -651,10 +658,122 @@ class TravelChatbot {
         return grouped;
     }
 
+
+    renderCardsWithLayout(container, layoutType, data) {
+        container.innerHTML = '';
+        
+        const tours = data.tours || [];
+        const hotels = data.hotels || [];
+        const cities = data.cities || [];
+        const isMultiCity = data.multi_city || false;
+        const hasConditions = data.has_conditions || false;
+        
+        // CASE 5-6: Mixed content (tour + hotel)
+        if (layoutType === 'mixed_content' && tours.length > 0 && hotels.length > 0) {
+            container.className = 'data-cards two-column-layout';
+            
+            const tourCity = data.tour_city || tours[0].city_name || 'Vietnam';
+            const hotelCity = data.hotel_city || hotels[0].city_name || 'Vietnam';
+            
+            // Left column: Tours with header
+            const tourColumn = this.createCityColumn(tours, tourCity, 'tour', hasConditions);
+            container.appendChild(tourColumn);
+            
+            // Right column: Hotels with header
+            const hotelColumn = this.createCityColumn(hotels, hotelCity, 'hotel', hasConditions);
+            container.appendChild(hotelColumn);
+            
+            return;
+        }
+        
+        // CASE 3 & 7: Multi-city tours - FIXED TO MATCH HOTEL LAYOUT
+        if (layoutType === 'multi_city_tours' && isMultiCity && cities.length >= 2) {
+            container.className = 'data-cards two-column-layout';
+            
+            // Get separate arrays for each city
+            const city1Tours = data.city1_tours || [];
+            const city2Tours = data.city2_tours || [];
+            
+            // Validation
+            if (!hasConditions) {
+                if (city1Tours.length < 3 || city2Tours.length < 3) {
+                    console.warn('Not enough tours for multi-city, using fallback');
+                    this.renderSingleCityLayout(container, tours, 'tour', cities[0]);
+                    return;
+                }
+            }
+            
+            // FIXED: Create columns with individual headers like hotel layout
+            // Left column: City 1 Tours with header
+            const leftColumn = this.createCityColumn(city1Tours, cities[0], 'tour', hasConditions);
+            container.appendChild(leftColumn);
+            
+            // Right column: City 2 Tours with header
+            const rightColumn = this.createCityColumn(city2Tours, cities[1], 'tour', hasConditions);
+            container.appendChild(rightColumn);
+            
+            return;
+        }
+        
+        // CASE 4: Multi-city hotels - KEEP SAME STRUCTURE
+        if (layoutType === 'multi_city_hotels' && isMultiCity && cities.length >= 2) {
+            container.className = 'data-cards two-column-layout';
+            
+            // Get separate arrays for each city
+            const city1Hotels = data.city1_hotels || [];
+            const city2Hotels = data.city2_hotels || [];
+            
+            // Validation
+            if (!hasConditions) {
+                if (city1Hotels.length < 3 || city2Hotels.length < 3) {
+                    console.warn('Not enough hotels for multi-city, using fallback');
+                    this.renderSingleCityLayout(container, hotels, 'hotel', cities[0]);
+                    return;
+                }
+            }
+            
+            // Left column: City 1 Hotels with header
+            const leftColumn = this.createCityColumn(city1Hotels, cities[0], 'hotel', hasConditions);
+            container.appendChild(leftColumn);
+            
+            // Right column: City 2 Hotels with header
+            const rightColumn = this.createCityColumn(city2Hotels, cities[1], 'hotel', hasConditions);
+            container.appendChild(rightColumn);
+            
+            return;
+        }
+        
+        // CASE 1 & 8: Single city tours
+        if (layoutType === 'single_tours' && tours.length > 0) {
+            const cityName = tours[0].city_name || 'Vietnam';
+            
+            if (!hasConditions && tours.length >= 6) {
+                this.renderTwoColumnSplit(container, tours.slice(0, 6), cityName, 'tour');
+            } else {
+                this.renderTwoColumnSplit(container, tours, cityName, 'tour');
+            }
+            return;
+        }
+        
+        // CASE 2: Single city hotels
+        if (layoutType === 'single_hotels' && hotels.length > 0) {
+            const cityName = hotels[0].city_name || 'Vietnam';
+            
+            if (!hasConditions && hotels.length >= 6) {
+                this.renderTwoColumnSplit(container, hotels.slice(0, 6), cityName, 'hotel');
+            } else {
+                this.renderTwoColumnSplit(container, hotels, cityName, 'hotel');
+            }
+            return;
+        }
+    }
+
+    // UPDATED: createCityColumn to support both single and multi-city layouts
     createCityColumn(items, cityName, itemType, hasConditions) {
         const column = document.createElement('div');
         column.className = `card-column ${itemType}-column`;
         
+        // Header with icon - SAME FOR BOTH TOURS AND HOTELS
         const header = document.createElement('div');
         header.className = 'column-header';
         const icon = itemType === 'tour' ? 'fa-compass' : 'fa-hotel';
@@ -666,8 +785,10 @@ class TravelChatbot {
         const cardsWrapper = document.createElement('div');
         cardsWrapper.className = 'column-cards';
         
-        // Limit: 3 cards per column for basic queries, no limit for conditional
+        // CRITICAL: For basic multi-city queries, show exactly 3 cards
+        // For conditional queries, show all found items
         const limit = hasConditions ? items.length : 3;
+        
         items.slice(0, limit).forEach(item => {
             const card = itemType === 'tour' ? this.createTourCard(item) : this.createHotelCard(item);
             cardsWrapper.appendChild(card);

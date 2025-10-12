@@ -144,30 +144,29 @@ class DatabaseService {
     private function determineQueryLimit($filters): int
     {
         $isMultiCity = !empty($filters['cityIds']) && count($filters['cityIds']) >= 2;
-        $hasConditions = !empty($filters['budget']) || 
-                        !empty($filters['duration']) || 
+        $hasConditions = !empty($filters['budget']) ||
+                        !empty($filters['duration']) ||
                         !empty($filters['rating']);
         
-        // Case 1-4: Basic queries (no conditions)
-        if (!$hasConditions) {
-            if ($isMultiCity) {
-                // Multi-city basic: need 6 per city minimum (12 total to choose from)
-                return 12;
-            } else {
-                // Single city basic: need exactly 6
-                return 6;
-            }
+        // Multi-city basic queries need at least 6 total (3 per city)
+        if ($isMultiCity && !$hasConditions) {
+            return 12; // Get extra to ensure 3 per city after filtering
         }
         
-        // Case 5-8: Conditional queries
-        if ($isMultiCity) {
-            // Multi-city with conditions: get more to filter
-            return 20;
-        } else {
-            // Single city with conditions: get what's available
-            return 20;
+        // Multi-city conditional queries
+        if ($isMultiCity && $hasConditions) {
+            return 20; // Get more for filtering
         }
+        
+        // Single city basic
+        if (!$hasConditions) {
+            return 6;
+        }
+        
+        // Single city conditional
+        return 20;
     }
+
     private function getOrderByClause($itemType, $alias, $filters) {
         if ($itemType === 'tour') {
             return "{$alias}.price_per_person ASC, {$alias}.duration_days DESC";
