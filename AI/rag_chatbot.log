@@ -4191,3 +4191,302 @@
 [2025-10-13 04:30:25] [INFO] Hybrid response generated {"response_type":"mixed_content","layout_type":"mixed_content","confidence":0.9}
 [2025-10-13 04:30:25] [INFO] Message processed successfully {"processing_time_ms":2851.9,"confidence":0.9,"response_type":"mixed_content"}
 [2025-10-13 04:30:25] [INFO] Request processed successfully {"response_type":"mixed_content","has_data":true}
+[2025-10-13 07:06:35] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:06:35] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:06:35] [INFO] Processing user message {"message_length":13,"message_preview":"tour phu quoc","history_count":1}
+[2025-10-13 07:06:35] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour phu quoc"}
+[2025-10-13 07:06:36] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false}
+[2025-10-13 07:06:36] [INFO] Hybrid search started {"query":"tour phu quoc","intent":"tour_search"}
+[2025-10-13 07:06:37] [INFO] Reranking started {"candidates":9,"query_length":13}
+[2025-10-13 07:06:37] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc","context_length":750,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-13 07:06:39] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-13 07:06:39] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775}
+[2025-10-13 07:06:39] [INFO] Message processed successfully {"processing_time_ms":4888.88,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-13 07:06:39] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:06:48] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:06:48] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:06:48] [INFO] Processing user message {"message_length":12,"message_preview":"hotel da lat","history_count":3}
+[2025-10-13 07:06:48] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel da lat"}
+[2025-10-13 07:06:49] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false}
+[2025-10-13 07:06:49] [INFO] Hybrid search started {"query":"hotel da lat","intent":"hotel_search"}
+[2025-10-13 07:06:50] [INFO] Reranking started {"candidates":12,"query_length":12}
+[2025-10-13 07:06:51] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-13 07:06:51] [INFO] generateVietnameseResponse called {"userMessage":"hotel da lat","context_length":480,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 07:06:53] [INFO] Successfully generated response {"response_length":514,"response_preview":"Okay, I found these hotels in Da Lat:\n\n• **Ba Thang Hai Heritage Hotel** - Rating: 5.0\/5 - 950,000"}
+[2025-10-13 07:06:53] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8}
+[2025-10-13 07:06:53] [INFO] Message processed successfully {"processing_time_ms":5580.18,"confidence":0.8,"response_type":"hotel_search"}
+[2025-10-13 07:06:53] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:07:14] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:07:14] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:07:14] [INFO] Processing user message {"message_length":23,"message_preview":"tour in phu yen and hue","history_count":5}
+[2025-10-13 07:07:15] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour in phu yen and hue"}
+[2025-10-13 07:07:16] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":false}
+[2025-10-13 07:07:16] [INFO] Hybrid search started {"query":"tour in phu yen and hue","intent":"tour_search"}
+[2025-10-13 07:07:16] [INFO] Reranking started {"candidates":16,"query_length":23}
+[2025-10-13 07:07:18] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 07:07:18] [INFO] generateVietnameseResponse called {"userMessage":"tour in phu yen and hue","context_length":785,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:07:21] [INFO] Successfully generated response {"response_length":882,"response_preview":"Okay, I found these tours in Phu Yen and Hue:\n\nTours available across Phu Yen and Hue:\n\nTours in Phu"}
+[2025-10-13 07:07:21] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-13 07:07:21] [INFO] Message processed successfully {"processing_time_ms":6407.12,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-13 07:07:21] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:07:32] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:07:32] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:07:32] [INFO] Processing user message {"message_length":21,"message_preview":"hotel hue and can tho","history_count":5}
+[2025-10-13 07:07:33] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel hue and can tho"}
+[2025-10-13 07:07:34] [INFO] Intent Analysis {"intent":"hotel_search","cities":2,"has_conditions":false}
+[2025-10-13 07:07:34] [INFO] Hybrid search started {"query":"hotel hue and can tho","intent":"hotel_search"}
+[2025-10-13 07:07:35] [INFO] Reranking started {"candidates":16,"query_length":21}
+[2025-10-13 07:07:37] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 07:07:37] [INFO] generateVietnameseResponse called {"userMessage":"hotel hue and can tho","context_length":551,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:07:38] [INFO] Successfully generated response {"response_length":603,"response_preview":"Okay, I found these hotels in Hue and Can Tho:\n\nHotels in Hue:\n* **Vo Thi Sau Boutique Hotel** - Rat"}
+[2025-10-13 07:07:38] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9}
+[2025-10-13 07:07:39] [INFO] Message processed successfully {"processing_time_ms":6190.15,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-13 07:07:39] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:07:49] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:07:49] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:07:49] [INFO] Processing user message {"message_length":36,"message_preview":"tour ho chi minh and hotel nha trang","history_count":5}
+[2025-10-13 07:07:50] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"tour ho chi minh and hotel nha trang"}
+[2025-10-13 07:07:51] [INFO] Intent Analysis {"intent":"mixed_search","cities":2,"has_conditions":false}
+[2025-10-13 07:07:51] [INFO] Detected mixed query pattern {"message":"tour ho chi minh and hotel nha trang"}
+[2025-10-13 07:07:51] [INFO] Hybrid search started {"query":"tour ho chi minh and hotel nha trang","intent":"mixed_search"}
+[2025-10-13 07:07:51] [INFO] Reranking started {"candidates":20,"query_length":36}
+[2025-10-13 07:07:54] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-13 07:07:54] [INFO] generateVietnameseResponse called {"userMessage":"tour ho chi minh and hotel nha trang","context_length":1014,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:07:57] [INFO] Successfully generated response {"response_length":582,"response_preview":"Okay, I found these tours in Ho Chi Minh and hotels in Nha Trang:\n\nTours in Ho Chi Minh:\n* **Museum "}
+[2025-10-13 07:07:57] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9}
+[2025-10-13 07:07:57] [INFO] Message processed successfully {"processing_time_ms":7270.25,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-13 07:07:57] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:43:23] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:43:23] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:43:23] [INFO] Processing user message {"message_length":13,"message_preview":"tour ha giang","history_count":1}
+[2025-10-13 07:43:23] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour ha giang"}
+[2025-10-13 07:43:24] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false}
+[2025-10-13 07:43:24] [INFO] Hybrid search started {"query":"tour ha giang","intent":"tour_search"}
+[2025-10-13 07:43:25] [INFO] Reranking started {"candidates":15,"query_length":13}
+[2025-10-13 07:43:26] [INFO] Reranking completed {"input":15,"output":10}
+[2025-10-13 07:43:26] [INFO] generateVietnameseResponse called {"userMessage":"tour ha giang","context_length":880,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 07:43:28] [INFO] Successfully generated response {"response_length":932,"response_preview":"Okay, I found these tours in Ha Giang for you:\n\n• **Ha Giang Nature & Culture: Dong Van Karst Plat"}
+[2025-10-13 07:43:28] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.8}
+[2025-10-13 07:43:28] [INFO] Message processed successfully {"processing_time_ms":5912.64,"confidence":0.8,"response_type":"tour_search"}
+[2025-10-13 07:43:28] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:43:40] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:43:40] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:43:40] [INFO] Processing user message {"message_length":20,"message_preview":"tour tay bac and hue","history_count":3}
+[2025-10-13 07:43:41] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour tay bac and hue"}
+[2025-10-13 07:43:42] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":false}
+[2025-10-13 07:43:42] [INFO] Hybrid search started {"query":"tour tay bac and hue","intent":"tour_search"}
+[2025-10-13 07:43:43] [INFO] Reranking started {"candidates":16,"query_length":20}
+[2025-10-13 07:43:45] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 07:43:45] [INFO] generateVietnameseResponse called {"userMessage":"tour tay bac and hue","context_length":786,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:43:47] [INFO] Successfully generated response {"response_length":871,"response_preview":"Okay, I found these tours in Tay Bac and Hue for you:\n\nTours available across Tay Bac and Hue:\n\nTour"}
+[2025-10-13 07:43:47] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-13 07:43:47] [INFO] Message processed successfully {"processing_time_ms":6988.24,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-13 07:43:47] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:44:29] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:44:29] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:44:29] [INFO] Processing user message {"message_length":25,"message_preview":"hotel da nang and can tho","history_count":5}
+[2025-10-13 07:44:29] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel da nang and can tho"}
+[2025-10-13 07:44:30] [INFO] Intent Analysis {"intent":"hotel_search","cities":2,"has_conditions":false}
+[2025-10-13 07:44:30] [INFO] Hybrid search started {"query":"hotel da nang and can tho","intent":"hotel_search"}
+[2025-10-13 07:44:31] [INFO] Reranking started {"candidates":16,"query_length":25}
+[2025-10-13 07:44:33] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 07:44:33] [INFO] generateVietnameseResponse called {"userMessage":"hotel da nang and can tho","context_length":561,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:44:35] [INFO] Successfully generated response {"response_length":625,"response_preview":"Okay, I found these hotels in Da Nang and Can Tho for you:\n\n**Da Nang Hotels:**\n* **Muong Thanh Gran"}
+[2025-10-13 07:44:35] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"multi_city_hotels","confidence":0.9}
+[2025-10-13 07:44:35] [INFO] Message processed successfully {"processing_time_ms":6182.32,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-13 07:44:35] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:44:52] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:44:52] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:44:52] [INFO] Processing user message {"message_length":31,"message_preview":"tour phu quoc and hotel phu yen","history_count":5}
+[2025-10-13 07:44:53] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"tour phu quoc and hotel phu yen"}
+[2025-10-13 07:44:53] [INFO] Intent Analysis {"intent":"mixed_search","cities":2,"has_conditions":false}
+[2025-10-13 07:44:53] [INFO] Detected mixed query pattern {"message":"tour phu quoc and hotel phu yen"}
+[2025-10-13 07:44:53] [INFO] Hybrid search started {"query":"tour phu quoc and hotel phu yen","intent":"mixed_search"}
+[2025-10-13 07:44:54] [INFO] Reranking started {"candidates":20,"query_length":31}
+[2025-10-13 07:44:56] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-13 07:44:56] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc and hotel phu yen","context_length":992,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:44:58] [INFO] Successfully generated response {"response_length":505,"response_preview":"Okay, I found these tours in Phu Quoc and hotels in Phu Yen for you:\n\n**Tours available in Phu Quoc:"}
+[2025-10-13 07:44:58] [INFO] Hybrid response generated {"response_type":"mixed_content","layout_type":"mixed_content","confidence":0.9}
+[2025-10-13 07:44:58] [INFO] Message processed successfully {"processing_time_ms":6048.01,"confidence":0.9,"response_type":"mixed_content"}
+[2025-10-13 07:44:58] [INFO] Request processed successfully {"response_type":"mixed_content","has_data":true}
+[2025-10-13 07:47:06] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:47:06] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:47:06] [INFO] Processing user message {"message_length":15,"message_preview":"hotel nha trang","history_count":5}
+[2025-10-13 07:47:07] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel nha trang"}
+[2025-10-13 07:47:08] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false}
+[2025-10-13 07:47:08] [INFO] Hybrid search started {"query":"hotel nha trang","intent":"hotel_search"}
+[2025-10-13 07:47:09] [INFO] Reranking started {"candidates":10,"query_length":15}
+[2025-10-13 07:47:09] [INFO] generateVietnameseResponse called {"userMessage":"hotel nha trang","context_length":487,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 07:47:12] [INFO] Successfully generated response {"response_length":542,"response_preview":"Okay, I found these hotels in Nha Trang for you:\n\n• **Nha Trang Beachfront Hotel** - Rating: 5.0\/5"}
+[2025-10-13 07:47:12] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8}
+[2025-10-13 07:47:12] [INFO] Message processed successfully {"processing_time_ms":5102.7,"confidence":0.8,"response_type":"hotel_search"}
+[2025-10-13 07:47:12] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:54:49] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:54:49] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:54:49] [INFO] Processing user message {"message_length":16,"message_preview":"tour ho chi minh","history_count":1}
+[2025-10-13 07:54:50] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour ho chi minh"}
+[2025-10-13 07:54:50] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false}
+[2025-10-13 07:54:50] [INFO] Hybrid search started {"query":"tour ho chi minh","intent":"tour_search"}
+[2025-10-13 07:54:51] [INFO] Reranking started {"candidates":8,"query_length":16}
+[2025-10-13 07:54:51] [INFO] generateVietnameseResponse called {"userMessage":"tour ho chi minh","context_length":643,"metadata":{"match_level":"hybrid_match","confidence":0.75}}
+[2025-10-13 07:54:53] [INFO] Successfully generated response {"response_length":714,"response_preview":"Okay, I can help with that! Here are the tours I found in Ho Chi Minh:\n\n*   **Museum and Contemporar"}
+[2025-10-13 07:54:53] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.75}
+[2025-10-13 07:54:53] [INFO] Message processed successfully {"processing_time_ms":4351.85,"confidence":0.75,"response_type":"tour_search"}
+[2025-10-13 07:54:53] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:54:58] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:54:58] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:54:58] [INFO] Processing user message {"message_length":9,"message_preview":"hotel hue","history_count":3}
+[2025-10-13 07:54:58] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel hue"}
+[2025-10-13 07:54:59] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false}
+[2025-10-13 07:54:59] [INFO] Hybrid search started {"query":"hotel hue","intent":"hotel_search"}
+[2025-10-13 07:55:00] [INFO] Reranking started {"candidates":14,"query_length":9}
+[2025-10-13 07:55:01] [INFO] Reranking completed {"input":14,"output":10}
+[2025-10-13 07:55:01] [INFO] generateVietnameseResponse called {"userMessage":"hotel hue","context_length":478,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 07:55:03] [INFO] Successfully generated response {"response_length":535,"response_preview":"Okay, I can help with that! Here are the hotels I found in Hue:\n\n*   **Vo Thi Sau Boutique Hotel** -"}
+[2025-10-13 07:55:03] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8}
+[2025-10-13 07:55:03] [INFO] Message processed successfully {"processing_time_ms":5311.24,"confidence":0.8,"response_type":"hotel_search"}
+[2025-10-13 07:55:03] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:56:07] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:56:07] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:56:07] [INFO] Processing user message {"message_length":20,"message_preview":"tour tay bac and hue","history_count":5}
+[2025-10-13 07:56:08] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour tay bac and hue"}
+[2025-10-13 07:56:09] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":false}
+[2025-10-13 07:56:09] [INFO] Hybrid search started {"query":"tour tay bac and hue","intent":"tour_search"}
+[2025-10-13 07:56:10] [INFO] Reranking started {"candidates":16,"query_length":20}
+[2025-10-13 07:56:12] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 07:56:12] [INFO] generateVietnameseResponse called {"userMessage":"tour tay bac and hue","context_length":786,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:56:15] [INFO] Successfully generated response {"response_length":919,"response_preview":"Okay, I can help with that! Here are the tours I found in Tay Bac and Hue:\n\nTours available across T"}
+[2025-10-13 07:56:15] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-13 07:56:15] [INFO] Message processed successfully {"processing_time_ms":7537.75,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-13 07:56:15] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:56:16] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:56:16] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:56:16] [INFO] Processing user message {"message_length":25,"message_preview":"hotel da nang and can tho","history_count":5}
+[2025-10-13 07:56:17] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel da nang and can tho"}
+[2025-10-13 07:56:18] [INFO] Intent Analysis {"intent":"hotel_search","cities":2,"has_conditions":false}
+[2025-10-13 07:56:18] [INFO] Hybrid search started {"query":"hotel da nang and can tho","intent":"hotel_search"}
+[2025-10-13 07:56:18] [INFO] Reranking started {"candidates":16,"query_length":25}
+[2025-10-13 07:56:20] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 07:56:20] [INFO] generateVietnameseResponse called {"userMessage":"hotel da nang and can tho","context_length":561,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:56:22] [INFO] Successfully generated response {"response_length":647,"response_preview":"Okay, I can help with that! Here are the hotels I found in Da Nang and Can Tho:\n\nHotels in Da Nang:\n"}
+[2025-10-13 07:56:22] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"multi_city_hotels","confidence":0.9}
+[2025-10-13 07:56:22] [INFO] Message processed successfully {"processing_time_ms":6254.84,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-13 07:56:22] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:58:37] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:58:37] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:58:37] [INFO] Processing user message {"message_length":13,"message_preview":"tour phu quoc","history_count":5}
+[2025-10-13 07:58:38] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour phu quoc"}
+[2025-10-13 07:58:39] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false}
+[2025-10-13 07:58:39] [INFO] Hybrid search started {"query":"tour phu quoc","intent":"tour_search"}
+[2025-10-13 07:58:39] [INFO] Reranking started {"candidates":9,"query_length":13}
+[2025-10-13 07:58:39] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc","context_length":750,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-13 07:58:42] [INFO] Successfully generated response {"response_length":807,"response_preview":"Okay, I found these tours in Phu Quoc:\n\n*   **Phu Quoc Island Adventure: Phu Quoc National Park - Fi"}
+[2025-10-13 07:58:42] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775}
+[2025-10-13 07:58:42] [INFO] Message processed successfully {"processing_time_ms":5108.73,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-13 07:58:42] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:58:44] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:58:44] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:58:44] [INFO] Processing user message {"message_length":12,"message_preview":"hotel da lat","history_count":5}
+[2025-10-13 07:58:45] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel da lat"}
+[2025-10-13 07:58:46] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false}
+[2025-10-13 07:58:46] [INFO] Hybrid search started {"query":"hotel da lat","intent":"hotel_search"}
+[2025-10-13 07:58:47] [INFO] Reranking started {"candidates":12,"query_length":12}
+[2025-10-13 07:58:48] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-13 07:58:48] [INFO] generateVietnameseResponse called {"userMessage":"hotel da lat","context_length":480,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 07:58:50] [INFO] Successfully generated response {"response_length":549,"response_preview":"Okay, I found these hotels in Da Lat:\n\n*   **Ba Thang Hai Heritage Hotel** - Rating: 5.0\/5 - 950,000"}
+[2025-10-13 07:58:50] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8}
+[2025-10-13 07:58:50] [INFO] Message processed successfully {"processing_time_ms":5791.86,"confidence":0.8,"response_type":"hotel_search"}
+[2025-10-13 07:58:50] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 07:58:55] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:58:55] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:58:55] [INFO] Processing user message {"message_length":21,"message_preview":"tour phu quoc and hue","history_count":5}
+[2025-10-13 07:58:56] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour phu quoc and hue"}
+[2025-10-13 07:58:57] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":false}
+[2025-10-13 07:58:57] [INFO] Hybrid search started {"query":"tour phu quoc and hue","intent":"tour_search"}
+[2025-10-13 07:58:58] [INFO] Reranking started {"candidates":15,"query_length":21}
+[2025-10-13 07:58:59] [INFO] Reranking completed {"input":15,"output":10}
+[2025-10-13 07:58:59] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc and hue","context_length":900,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:59:02] [INFO] Successfully generated response {"response_length":999,"response_preview":"Okay, I found these tours in Phu Quoc and Hue:\n\nTours available across Phu Quoc and Hue:\n\nTours in P"}
+[2025-10-13 07:59:02] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-13 07:59:02] [INFO] Message processed successfully {"processing_time_ms":6354.39,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-13 07:59:02] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 07:59:20] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 07:59:20] [INFO] Chatbot initialized successfully 
+[2025-10-13 07:59:20] [INFO] Processing user message {"message_length":24,"message_preview":"hotel ha noi and da nang","history_count":5}
+[2025-10-13 07:59:21] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel ha noi and da nang"}
+[2025-10-13 07:59:21] [INFO] Intent Analysis {"intent":"hotel_search","cities":2,"has_conditions":false}
+[2025-10-13 07:59:21] [INFO] Hybrid search started {"query":"hotel ha noi and da nang","intent":"hotel_search"}
+[2025-10-13 07:59:22] [INFO] Reranking started {"candidates":18,"query_length":24}
+[2025-10-13 07:59:24] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-13 07:59:24] [INFO] generateVietnameseResponse called {"userMessage":"hotel ha noi and da nang","context_length":582,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 07:59:24] [ERROR] Gemini API returned non-200 status {"http_code":429,"response":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 15\\nPlease retry in 46.468769878s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"violations\": [\n          {\n            \"quotaMetric\": \"generativelanguage.googleapis.com\/generate_content_free_tier_requests\",\n            \"quotaId\": \"GenerateRequestsPerMinutePerProjectPerModel-FreeTier\",\n            \"quotaDimensions\": {\n              \"location\": \"global\",\n              \"model\": \"gemini-2.0-flash\"\n            },\n            \"quotaValue\": \"15\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Learn more about Gemini API quotas\",\n            \"url\": \"https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits\"\n          }\n        ]\n      },\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.RetryInfo\",\n        \"retryDelay\": \"46s\"\n      }\n    ]\n  }\n}\n"}
+[2025-10-13 07:59:24] [ERROR] Gemini API error - generating fallback {"error_message":"Gemini API request failed (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 15\nPlease retry in 46.468769878s.","user_message":"hotel ha noi and da nang"}
+[2025-10-13 07:59:24] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"multi_city_hotels","confidence":0.9}
+[2025-10-13 07:59:24] [INFO] Message processed successfully {"processing_time_ms":4599.59,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-13 07:59:24] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 08:03:07] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 08:03:07] [INFO] Chatbot initialized successfully 
+[2025-10-13 08:03:07] [INFO] Processing user message {"message_length":15,"message_preview":"tour in phu yen","history_count":1}
+[2025-10-13 08:03:08] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour in phu yen"}
+[2025-10-13 08:03:09] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false}
+[2025-10-13 08:03:09] [INFO] Hybrid search started {"query":"tour in phu yen","intent":"tour_search"}
+[2025-10-13 08:03:10] [INFO] Reranking started {"candidates":15,"query_length":15}
+[2025-10-13 08:03:11] [INFO] Reranking completed {"input":15,"output":10}
+[2025-10-13 08:03:11] [INFO] generateVietnameseResponse called {"userMessage":"tour in phu yen","context_length":634,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 08:03:14] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-13 08:03:14] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.8}
+[2025-10-13 08:03:14] [INFO] Message processed successfully {"processing_time_ms":6885.42,"confidence":0.8,"response_type":"tour_search"}
+[2025-10-13 08:03:14] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 08:03:18] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 08:03:18] [INFO] Chatbot initialized successfully 
+[2025-10-13 08:03:18] [INFO] Processing user message {"message_length":12,"message_preview":"hotel da lat","history_count":3}
+[2025-10-13 08:03:19] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel da lat"}
+[2025-10-13 08:03:20] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false}
+[2025-10-13 08:03:20] [INFO] Hybrid search started {"query":"hotel da lat","intent":"hotel_search"}
+[2025-10-13 08:03:21] [INFO] Reranking started {"candidates":12,"query_length":12}
+[2025-10-13 08:03:22] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-13 08:03:22] [INFO] generateVietnameseResponse called {"userMessage":"hotel da lat","context_length":480,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-13 08:03:24] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-13 08:03:24] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8}
+[2025-10-13 08:03:24] [INFO] Message processed successfully {"processing_time_ms":5507.22,"confidence":0.8,"response_type":"hotel_search"}
+[2025-10-13 08:03:24] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 08:03:37] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 08:03:37] [INFO] Chatbot initialized successfully 
+[2025-10-13 08:03:37] [INFO] Processing user message {"message_length":26,"message_preview":"tour nha trang and tay bac","history_count":5}
+[2025-10-13 08:03:37] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour nha trang and tay bac"}
+[2025-10-13 08:03:38] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":false}
+[2025-10-13 08:03:38] [INFO] Hybrid search started {"query":"tour nha trang and tay bac","intent":"tour_search"}
+[2025-10-13 08:03:39] [INFO] Reranking started {"candidates":16,"query_length":26}
+[2025-10-13 08:03:41] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-13 08:03:41] [INFO] generateVietnameseResponse called {"userMessage":"tour nha trang and tay bac","context_length":764,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 08:03:44] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-13 08:03:44] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.9}
+[2025-10-13 08:03:44] [INFO] Message processed successfully {"processing_time_ms":7043.06,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-13 08:03:44] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-13 08:03:53] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 08:03:53] [INFO] Chatbot initialized successfully 
+[2025-10-13 08:03:53] [INFO] Processing user message {"message_length":21,"message_preview":"hotel hue and da nang","history_count":5}
+[2025-10-13 08:03:54] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel hue and da nang"}
+[2025-10-13 08:03:54] [INFO] Intent Analysis {"intent":"hotel_search","cities":2,"has_conditions":false}
+[2025-10-13 08:03:54] [INFO] Hybrid search started {"query":"hotel hue and da nang","intent":"hotel_search"}
+[2025-10-13 08:03:55] [INFO] Reranking started {"candidates":18,"query_length":21}
+[2025-10-13 08:03:58] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-13 08:03:58] [INFO] generateVietnameseResponse called {"userMessage":"hotel hue and da nang","context_length":518,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 08:03:59] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-13 08:03:59] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"multi_city_hotels","confidence":0.9}
+[2025-10-13 08:03:59] [INFO] Message processed successfully {"processing_time_ms":6539.94,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-13 08:03:59] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-13 08:04:17] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-13 08:04:17] [INFO] Chatbot initialized successfully 
+[2025-10-13 08:04:17] [INFO] Processing user message {"message_length":29,"message_preview":"tour tay bac and hotel ha noi","history_count":5}
+[2025-10-13 08:04:17] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"tour tay bac and hotel ha noi"}
+[2025-10-13 08:04:18] [INFO] Intent Analysis {"intent":"mixed_search","cities":2,"has_conditions":false}
+[2025-10-13 08:04:18] [INFO] Detected mixed query pattern {"message":"tour tay bac and hotel ha noi"}
+[2025-10-13 08:04:18] [INFO] Hybrid search started {"query":"tour tay bac and hotel ha noi","intent":"mixed_search"}
+[2025-10-13 08:04:19] [INFO] Reranking started {"candidates":20,"query_length":29}
+[2025-10-13 08:04:21] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-13 08:04:21] [INFO] generateVietnameseResponse called {"userMessage":"tour tay bac and hotel ha noi","context_length":598,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-13 08:04:23] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-13 08:04:23] [INFO] Hybrid response generated {"response_type":"mixed_content","layout_type":"mixed_content","confidence":0.9}
+[2025-10-13 08:04:23] [INFO] Message processed successfully {"processing_time_ms":6197.84,"confidence":0.9,"response_type":"mixed_content"}
+[2025-10-13 08:04:23] [INFO] Request processed successfully {"response_type":"mixed_content","has_data":true}

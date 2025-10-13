@@ -567,12 +567,15 @@ class TravelChatbot {
         const city1Tours = data.city1_tours || [];
         const city2Tours = data.city2_tours || [];
         
-        // Validation: Must have at least 3 tours per city
-        if (city1Tours.length < 3 || city2Tours.length < 3) {
-            // Fallback if data is insufficient
-            this.renderTwoColumnSplit(container, tours, 'Tours', 'tour');
-            return;
-        }
+        // MODIFICATION START: Remove the faulty validation check.
+        // The old code incorrectly forced a fallback if one city had < 3 results.
+        // OLD CODE BLOCK TO BE REMOVED:
+        // if (city1Tours.length < 3 || city2Tours.length < 3) {
+        //     // Fallback if data is insufficient
+        //     this.renderTwoColumnSplit(container, tours, 'Tours', 'tour');
+        //     return;
+        // }
+        // MODIFICATION END
         
         // LEFT COLUMN: City 1 Tours with individual header
         const leftColumn = document.createElement('div');
@@ -585,6 +588,7 @@ class TravelChatbot {
         
         const leftCardsWrapper = document.createElement('div');
         leftCardsWrapper.className = 'column-cards';
+        // Use slice(0, 3) to ensure a maximum of 3 cards are shown
         city1Tours.slice(0, 3).forEach(item => {
             leftCardsWrapper.appendChild(this.createTourCard(item));
         });
@@ -602,6 +606,7 @@ class TravelChatbot {
         
         const rightCardsWrapper = document.createElement('div');
         rightCardsWrapper.className = 'column-cards';
+        // Use slice(0, 3) to ensure a maximum of 3 cards are shown
         city2Tours.slice(0, 3).forEach(item => {
             rightCardsWrapper.appendChild(this.createTourCard(item));
         });
@@ -620,10 +625,13 @@ class TravelChatbot {
         const city1Hotels = data.city1_hotels || [];
         const city2Hotels = data.city2_hotels || [];
 
-        if (city1Hotels.length < 3 || city2Hotels.length < 3) {
-            this.renderTwoColumnSplit(container, hotels, 'Hotels', 'hotel');
-            return;
-        }
+        // MODIFICATION START: Remove the faulty validation check.
+        // OLD CODE BLOCK TO BE REMOVED:
+        // if (city1Hotels.length < 3 || city2Hotels.length < 3) {
+        //     this.renderTwoColumnSplit(container, hotels, 'Hotels', 'hotel');
+        //     return;
+        // }
+        // MODIFICATION END
         
         // LEFT COLUMN: City 1 Hotels with individual header
         const leftColumn = document.createElement('div');
@@ -662,9 +670,6 @@ class TravelChatbot {
         return;
     }
 
-    // ==================================================
-    // CASE: Mixed content (tour in city1 AND hotel in city2)
-    // ==================================================
     if (layoutType === 'mixed_content' && tours.length > 0 && hotels.length > 0) {
         container.className = 'data-cards two-column-layout';
         
@@ -710,26 +715,24 @@ class TravelChatbot {
 
     // Default Fallback for Single City Tours
     if (layoutType === 'single_tours' && tours.length > 0) {
+        // FIX: Only pass the city name, not the full title.
         const cityName = tours[0].city_name || 'Vietnam';
-        this.renderTwoColumnSplit(container, tours.slice(0, 6), `Tours in ${cityName}`, 'tour');
+        this.renderTwoColumnSplit(container, tours.slice(0, 6), cityName, 'tour'); // OLD: `Tours in ${cityName}`
         return;
     }
 
     // Default Fallback for Single City Hotels
     if (layoutType === 'single_hotels' && hotels.length > 0) {
         const cityName = hotels[0].city_name || 'Vietnam';
-        this.renderTwoColumnSplit(container, hotels.slice(0, 6), `Hotels in ${cityName}`, 'hotel');
+        this.renderTwoColumnSplit(container, hotels.slice(0, 6), cityName, 'hotel'); // OLD: `Hotels in ${cityName}`
         return;
     }
     }
-    // MODIFICATION END
 
-    // MODIFICATION START: Renamed createCityColumn to renderTwoColumnSplit and adjusted it for a shared header, which is used by the fallback single-city layouts.
     renderTwoColumnSplit(container, items, headerText, itemType) {
         container.className = 'data-cards two-column-layout has-shared-header';
         
-        // Create SINGLE shared header spanning both columns
-        const sharedHeader = document.createElement('div');
+       const sharedHeader = document.createElement('div');
         sharedHeader.className = `shared-column-header ${itemType}-header`;
         const icon = itemType === 'tour' ? 'fa-map-signs' : 'fa-bed';
         sharedHeader.innerHTML = `<i class="fas ${icon}"></i> ${this.escapeHtml(headerText)}`;
@@ -739,11 +742,11 @@ class TravelChatbot {
         const leftItems = items.slice(0, halfPoint);
         const rightItems = items.slice(halfPoint);
         
-        // Left column (no individual header)
+        // Left column (no header)
         const leftCol = this.createCityColumnNoHeader(leftItems, itemType);
         container.appendChild(leftCol);
         
-        // Right column (no individual header, if items exist)
+        // Right column (no header, if items exist)
         if (rightItems.length > 0) {
             const rightCol = this.createCityColumnNoHeader(rightItems, itemType);
             container.appendChild(rightCol);
@@ -781,7 +784,7 @@ class TravelChatbot {
         return column;
     }
 
-    renderTwoColumnSplit(container, items, cityName, itemType) {
+    renderTwoColumnSplit(container, items, cityName, itemType) { // Parameter is now cityName
         container.className = 'data-cards two-column-layout has-shared-header';
         
         // Create SINGLE shared header spanning both columns
@@ -789,6 +792,8 @@ class TravelChatbot {
         sharedHeader.className = `shared-column-header ${itemType}-header`;
         const icon = itemType === 'tour' ? 'fa-compass' : 'fa-hotel';
         const label = itemType === 'tour' ? 'Tour' : 'Hotel';
+        
+        // This function now correctly constructs the full headline
         sharedHeader.innerHTML = `<i class="fas ${icon}"></i> ${label} in ${this.escapeHtml(cityName)}`;
         container.appendChild(sharedHeader);
         

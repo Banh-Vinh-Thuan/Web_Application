@@ -37,8 +37,18 @@ class ResponseGenerator
                 );
             }
 
-            $context = $this->buildHybridContext($retrievalResult['results']);
-            
+            // MODIFICATION START: Reorder the logic.
+            // 1. Structure the data for the UI first. This applies the 3-per-city limits.
+            $displayData = $this->structureDisplayData($retrievalResult['results'], $userMessage);
+
+            // 2. Build the context for the AI from this *same* structured and limited data.
+            $context = $this->buildHybridContext($displayData);
+            // OLD LOGIC:
+            // $context = $this->buildHybridContext($retrievalResult['results']);
+            // ...
+            // $displayData = $this->structureDisplayData($retrievalResult['results'], $userMessage);
+            // MODIFICATION END
+
             $aiResponse = $this->geminiService->generateVietnameseResponse(
                 $userMessage,
                 $context,
@@ -49,11 +59,8 @@ class ResponseGenerator
                 ]
             );
 
-            $displayData = $this->structureDisplayData($retrievalResult['results'], $userMessage);
             $responseType = $this->determineResponseType($displayData);
-            // MODIFICATION START: Call the updated determineLayoutType function
             $layoutType = $this->determineLayoutType($displayData, $userMessage);
-            // MODIFICATION END
 
             Logger::info("Hybrid response generated", [
                 'response_type' => $responseType,
@@ -169,7 +176,10 @@ class ResponseGenerator
             $city1Tours = $this->filterItemsByCity($tours, $city1, 3);
             $city2Tours = $this->filterItemsByCity($tours, $city2, 3);
 
-            if (count($city1Tours) >= 3 && count($city2Tours) >= 3) {
+            // MODIFICATION START: Relax the condition to check for any results, not a minimum of 3.
+            // OLD: if (count($city1Tours) >= 3 && count($city2Tours) >= 3)
+            if (!empty($city1Tours) && !empty($city2Tours)) { 
+            // MODIFICATION END
                 $displayData['multi_city'] = true;
                 $displayData['cities'] = [$city1, $city2];
                 $displayData['city1_tours'] = $city1Tours;
@@ -177,7 +187,7 @@ class ResponseGenerator
                 // Combine for context generation, but frontend will use specific keys
                 $displayData['tours'] = array_merge($city1Tours, $city2Tours);
             } else {
-                 // Fallback to single city layout if not enough tours for both
+                // Fallback to single city layout if not enough tours for both
                 $displayData['tours'] = array_slice($tours, 0, 6);
             }
             return $displayData;
@@ -190,7 +200,10 @@ class ResponseGenerator
             $city1Hotels = $this->filterItemsByCity($hotels, $city1, 3);
             $city2Hotels = $this->filterItemsByCity($hotels, $city2, 3);
 
-            if (count($city1Hotels) >= 3 && count($city2Hotels) >= 3) {
+            // MODIFICATION START: Relax the condition to check for any results, not a minimum of 3.
+            // OLD: if (count($city1Hotels) >= 3 && count($city2Hotels) >= 3)
+            if (!empty($city1Hotels) && !empty($city2Hotels)) {
+            // MODIFICATION END
                 $displayData['multi_city'] = true;
                 $displayData['cities'] = [$city1, $city2];
                 $displayData['city1_hotels'] = $city1Hotels;
@@ -431,41 +444,41 @@ class ResponseGenerator
     /**
      * Build context string from retrieval results
      */
-    private function buildHybridContext($results): string
+    private function buildHybridContext($displayData): string
     {
         $context = "# Available Travel Information\n\n";
 
-        $tours = [];
-        $hotels = [];
-
-        foreach ($results as $result) {
-            if (!isset($result['item_type']) || !isset($result['item'])) continue;
-
-            if ($result['item_type'] === 'tour') {
-                $tours[] = $result;
-            } elseif ($result['item_type'] === 'hotel') {
-                $hotels[] = $result;
-            }
-        }
+        // Extract tours and hotels from the structured data
+        $tours = $displayData['tours'] ?? [];
+        $hotels = $displayData['hotels'] ?? [];
 
         if (!empty($tours)) {
             $context .= "## Available Tours:\n";
-            $toursByCity = [];
-            
-            foreach ($tours as $tourResult) {
-                $tour = $tourResult['item'];
-                $cityName = $tour['city_name'] ?? $tour['city'] ?? 'Unknown City';
-                
-                if (!isset($toursByCity[$cityName])) {
-                    $toursByCity[$cityName] = [];
-                }
-                $toursByCity[$cityName][] = $tour;
-            }
-
-            foreach ($toursByCity as $cityName => $cityTours) {
-                $context .= "\nTours in {$cityName}:\n";
-                foreach ($cityTours as $tour) {
+            // Check for multi-city structure
+            if (!empty($displayData['city1_tours'])) {
+                 $context .= "\nTours in {$displayData['cities'][0]}:\n";
+                 foreach($displayData['city1_tours'] as $tour) {
                     $context .= sprintf(
+                        "* **%s** - %d days - %s VND\n",
+                        $tour['tour_name'] ?? 'Unknown Tour',
+                        $tour['duration_days'] ?? 0,
+                        number_format($tour['price_per_person'] ?? 0)
+                    );
+                 }
+                 $context .= "\nTours in {$displayData['cities'][1]}:\n";
+                 foreach($displayData['city2_tours'] as $tour) {
+                    $context .= sprintf(
+                        "* **%s** - %d days - %s VND\n",
+                        $tour['tour_name'] ?? 'Unknown Tour',
+                        $tour['duration_days'] ?? 0,
+                        number_format($tour['price_per_person'] ?? 0)
+                    );
+                 }
+            } else { // Single city or mixed
+                $cityName = $displayData['tour_city'] ?? ($tours[0]['city_name'] ?? 'Vietnam');
+                $context .= "\nTours in {$cityName}:\n";
+                foreach ($tours as $tour) {
+                     $context .= sprintf(
                         "* **%s** - %d days - %s VND\n",
                         $tour['tour_name'] ?? 'Unknown Tour',
                         $tour['duration_days'] ?? 0,
@@ -477,21 +490,29 @@ class ResponseGenerator
 
         if (!empty($hotels)) {
             $context .= "\n## Available Hotels:\n";
-            $hotelsByCity = [];
-            
-            foreach ($hotels as $hotelResult) {
-                $hotel = $hotelResult['item'];
-                $cityName = $hotel['city_name'] ?? $hotel['city'] ?? 'Unknown City';
-                
-                if (!isset($hotelsByCity[$cityName])) {
-                    $hotelsByCity[$cityName] = [];
+            if (!empty($displayData['city1_hotels'])) {
+                $context .= "\nHotels in {$displayData['cities'][0]}:\n";
+                foreach($displayData['city1_hotels'] as $hotel) {
+                   $context .= sprintf(
+                        "* **%s** - Rating: %.1f/5 - %s VND/night\n",
+                        $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
+                        $hotel['ratings'] ?? 0,
+                        number_format($hotel['cost'] ?? 0)
+                    );
                 }
-                $hotelsByCity[$cityName][] = $hotel;
-            }
-
-            foreach ($hotelsByCity as $cityName => $cityHotels) {
+                $context .= "\nHotels in {$displayData['cities'][1]}:\n";
+                foreach($displayData['city2_hotels'] as $hotel) {
+                   $context .= sprintf(
+                        "* **%s** - Rating: %.1f/5 - %s VND/night\n",
+                        $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
+                        $hotel['ratings'] ?? 0,
+                        number_format($hotel['cost'] ?? 0)
+                    );
+                }
+            } else { // Single city or mixed
+                $cityName = $displayData['hotel_city'] ?? ($hotels[0]['city_name'] ?? 'Vietnam');
                 $context .= "\nHotels in {$cityName}:\n";
-                foreach ($cityHotels as $hotel) {
+                foreach ($hotels as $hotel) {
                     $context .= sprintf(
                         "* **%s** - Rating: %.1f/5 - %s VND/night\n",
                         $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
