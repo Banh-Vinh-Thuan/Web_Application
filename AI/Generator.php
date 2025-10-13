@@ -1,5 +1,4 @@
 <?php
-
 require_once './Logger.php';
 require_once './config.php';
 
@@ -37,17 +36,11 @@ class ResponseGenerator
                 );
             }
 
-            // MODIFICATION START: Reorder the logic.
-            // 1. Structure the data for the UI first. This applies the 3-per-city limits.
+            // CRITICAL FIX: Structure data first, then build context from it
             $displayData = $this->structureDisplayData($retrievalResult['results'], $userMessage);
-
-            // 2. Build the context for the AI from this *same* structured and limited data.
+            
+            // Build context from the SAME structured data that will be displayed
             $context = $this->buildHybridContext($displayData);
-            // OLD LOGIC:
-            // $context = $this->buildHybridContext($retrievalResult['results']);
-            // ...
-            // $displayData = $this->structureDisplayData($retrievalResult['results'], $userMessage);
-            // MODIFICATION END
 
             $aiResponse = $this->geminiService->generateVietnameseResponse(
                 $userMessage,
@@ -65,7 +58,8 @@ class ResponseGenerator
             Logger::info("Hybrid response generated", [
                 'response_type' => $responseType,
                 'layout_type' => $layoutType,
-                'confidence' => $retrievalResult['confidence']
+                'confidence' => $retrievalResult['confidence'],
+                'display_data_keys' => array_keys($displayData)
             ]);
 
             return [
@@ -121,27 +115,27 @@ class ResponseGenerator
     private function structureDisplayData($results, $userMessage): array {
         $tours = [];
         $hotels = [];
-        
+
         foreach ($results as $result) {
             if (!isset($result['item']) || !isset($result['item_type'])) continue;
-            
+
             if ($result['item_type'] === 'tour') {
                 $tours[] = $result['item'];
             } elseif ($result['item_type'] === 'hotel') {
                 $hotels[] = $result['item'];
             }
         }
-        
+
         // Extract query information
         $cities = self::extractCitiesFromQuery($userMessage);
         $queryType = $this->analyzeQueryType($userMessage);
         $hasConditions = $this->detectConditions($userMessage);
-        
+
         $displayData = [
             'multi_city' => false,
             'has_conditions' => $hasConditions
         ];
-        
+
         Logger::debug("Query Analysis", [
             'cities' => $cities,
             'query_type' => $queryType,
@@ -149,90 +143,119 @@ class ResponseGenerator
             'tours_count' => count($tours),
             'hotels_count' => count($hotels)
         ]);
-        
-        // CASE: Mixed query (tour in city1 AND hotel in city2)
+
+        // CASE 5-6: Mixed query (tour in city1 AND hotel in city2)
         if ($queryType === 'mixed' && !empty($tours) && !empty($hotels)) {
             if (count($cities) >= 2) {
-                // Assign tours and hotels to their respective cities
                 $tourCity = $this->findItemCity($tours, $cities) ?: $cities[0];
                 $hotelCity = $this->findItemCity($hotels, $cities, [$tourCity]) ?: $cities[1];
                 
+                // FIX: Ensure we get 3 tours AND 3 hotels
                 $displayData['tours'] = $this->filterItemsByCity($tours, $tourCity, 3);
                 $displayData['hotels'] = $this->filterItemsByCity($hotels, $hotelCity, 3);
+                
                 $displayData['tour_city'] = $tourCity;
                 $displayData['hotel_city'] = $hotelCity;
-            } else {
-                // Fallback for same-city mixed query
-                $displayData['tours'] = array_slice($tours, 0, 3);
-                $displayData['hotels'] = array_slice($hotels, 0, 3);
+                
+                // CRITICAL: Log if we're getting fewer than expected
+                Logger::debug("Mixed query structured", [
+                    'tour_city' => $tourCity,
+                    'tours_count' => count($displayData['tours']),
+                    'hotel_city' => $hotelCity,
+                    'hotels_count' => count($displayData['hotels']),
+                    'expected_per_type' => 3
+                ]);
+                
+                return $displayData;
             }
-            return $displayData;
         }
-        
-        // CASE: Multi-city tours
+
+        // CASE 3 & 7: Multi-city tours
         if ($queryType === 'tour_only' && count($cities) >= 2 && !empty($tours)) {
             $city1 = $cities[0];
             $city2 = $cities[1];
+
             $city1Tours = $this->filterItemsByCity($tours, $city1, 3);
             $city2Tours = $this->filterItemsByCity($tours, $city2, 3);
 
-            // MODIFICATION START: Relax the condition to check for any results, not a minimum of 3.
-            // OLD: if (count($city1Tours) >= 3 && count($city2Tours) >= 3)
-            if (!empty($city1Tours) && !empty($city2Tours)) { 
-            // MODIFICATION END
+            // CRITICAL FIX: Accept ANY results, no minimum requirement
+            if (!empty($city1Tours) || !empty($city2Tours)) {
                 $displayData['multi_city'] = true;
                 $displayData['cities'] = [$city1, $city2];
                 $displayData['city1_tours'] = $city1Tours;
                 $displayData['city2_tours'] = $city2Tours;
-                // Combine for context generation, but frontend will use specific keys
                 $displayData['tours'] = array_merge($city1Tours, $city2Tours);
+                
+                Logger::debug("Multi-city tours structured", [
+                    'city1' => $city1,
+                    'city1_count' => count($city1Tours),
+                    'city2' => $city2,
+                    'city2_count' => count($city2Tours)
+                ]);
             } else {
-                // Fallback to single city layout if not enough tours for both
+                // True fallback: no results for either city
                 $displayData['tours'] = array_slice($tours, 0, 6);
             }
             return $displayData;
         }
-        
-        // CASE: Multi-city hotels
+
+        // CASE 4: Multi-city hotels
         if ($queryType === 'hotel_only' && count($cities) >= 2 && !empty($hotels)) {
+
             $city1 = $cities[0];
             $city2 = $cities[1];
+
             $city1Hotels = $this->filterItemsByCity($hotels, $city1, 3);
             $city2Hotels = $this->filterItemsByCity($hotels, $city2, 3);
 
-            // MODIFICATION START: Relax the condition to check for any results, not a minimum of 3.
-            // OLD: if (count($city1Hotels) >= 3 && count($city2Hotels) >= 3)
-            if (!empty($city1Hotels) && !empty($city2Hotels)) {
-            // MODIFICATION END
+            // CRITICAL FIX: Accept ANY results
+            if (!empty($city1Hotels) || !empty($city2Hotels)) {
+
                 $displayData['multi_city'] = true;
+                
+                // ✅ FIX: LUÔN set cities array (chính là nguyên nhân lỗi!)
                 $displayData['cities'] = [$city1, $city2];
+                
                 $displayData['city1_hotels'] = $city1Hotels;
                 $displayData['city2_hotels'] = $city2Hotels;
                 $displayData['hotels'] = array_merge($city1Hotels, $city2Hotels);
+
+                Logger::debug("Multi-city hotels structured", [
+                    'city1' => $city1,
+                    'city1_count' => count($city1Hotels),
+                    'city2' => $city2,
+                    'city2_count' => count($city2Hotels),
+                    'cities_set' => true  // ← verify it's set
+                ]);
+
             } else {
-                // Fallback to single city layout
+                // True fallback: no results for either city
                 $displayData['hotels'] = array_slice($hotels, 0, 6);
             }
+
             return $displayData;
         }
-        
-        // Default CASE 1 & 8: Single city tours
+
+
+        // CASE 1 & 8: Single city tours
         if (!empty($tours)) {
             $displayData['tours'] = array_slice($tours, 0, 6);
             return $displayData;
         }
-        
-        // Default CASE 2: Single city hotels
+
+        // CASE 2: Single city hotels
         if (!empty($hotels)) {
             $displayData['hotels'] = array_slice($hotels, 0, 6);
             return $displayData;
         }
-        
+
         return $displayData;
     }
 
-    private function findItemCity($items, $cities, $excludeCities = []) {
+    private function findItemCity($items, $cities, $excludeCities = [])
+    {
         $availableCities = array_diff($cities, $excludeCities);
+
         foreach ($items as $item) {
             $itemCityName = $item['city_name'] ?? '';
             foreach ($availableCities as $queryCity) {
@@ -241,11 +264,13 @@ class ResponseGenerator
                 }
             }
         }
+
         return reset($availableCities) ?: null;
     }
 
     private function filterItemsByCity($items, $targetCity, $limit) {
         $filtered = [];
+        
         foreach ($items as $item) {
             $itemCity = strtolower(trim($item['city_name'] ?? ''));
             if (self::cityMatches($itemCity, $targetCity)) {
@@ -253,148 +278,55 @@ class ResponseGenerator
                 if (count($filtered) >= $limit) break;
             }
         }
+        
         return $filtered;
     }
-    
+
     private function analyzeQueryType($userMessage): string
     {
         $messageLower = strtolower($userMessage);
-        
-        // Extract tour and hotel keywords with context
+
         $tourPattern = '/\b(tour|tours|trip|trips|package|excursion)s?\b/i';
         $hotelPattern = '/\b(hotel|hotels|accommodation|stay|resort)s?\b/i';
-        
+
         preg_match_all($tourPattern, $messageLower, $tourMatches, PREG_OFFSET_CAPTURE);
         preg_match_all($hotelPattern, $messageLower, $hotelMatches, PREG_OFFSET_CAPTURE);
-        
+
         $hasTour = !empty($tourMatches[0]);
         $hasHotel = !empty($hotelMatches[0]);
-        
-        // Check for explicit mixing with "and"
+
         if ($hasTour && $hasHotel) {
-            // Check if tour and hotel are separated by "and"
-            // Example: "tour in city1 and hotel in city2"
             if (preg_match('/\b(tour|tours)\b.*\band\b.*\b(hotel|hotels)\b/i', $messageLower) ||
                 preg_match('/\b(hotel|hotels)\b.*\band\b.*\b(tour|tours)\b/i', $messageLower)) {
                 return 'mixed';
             }
         }
-        
-        // Single type queries
+
         if ($hasTour && !$hasHotel) {
             return 'tour_only';
         }
-        
+
         if ($hasHotel && !$hasTour) {
             return 'hotel_only';
         }
-        
-        // Default fallback
+
         return 'unknown';
     }
 
     private function detectConditions($userMessage): bool
     {
         $messageLower = strtolower($userMessage);
-        
-        // Price conditions
+
         $hasPrice = preg_match('/\b(under|over|below|above)\s+\d+/i', $messageLower) ||
                     preg_match('/\d+\s+(million|millions)/i', $messageLower);
-        
-        // Duration conditions with context
+
         $hasDuration = preg_match('/\b(for|with|of)\s+\d+\s+(day|days)/i', $messageLower) ||
-                    preg_match('/\d+\s+(day|days)\s+(tour|trip)/i', $messageLower);
-        
-        // Rating conditions
+                       preg_match('/\d+\s+(day|days)\s+(tour|trip)/i', $messageLower);
+
         $hasRating = preg_match('/\b(for|with)?\s*\d+\s+star/i', $messageLower) ||
-                    preg_match('/\bstar\s+\d+/i', $messageLower);
-        
+                     preg_match('/\bstar\s+\d+/i', $messageLower);
+
         return $hasPrice || $hasDuration || $hasRating;
-    }
-
-    private function groupItemsByCity($items, $cities, $maxItems = 6): array
-    {
-        $grouped = [];
-        
-        foreach ($items as $item) {
-            if (!is_array($item)) continue;
-            
-            $itemCity = strtolower(trim($item['city_name'] ?? $item['city'] ?? ''));
-            
-            // Check which city this item belongs to
-            foreach ($cities as $targetCity) {
-                if (self::cityMatches($itemCity, $targetCity)) {
-                    $item['city_group'] = $targetCity;
-                    $grouped[] = $item;
-                    break;
-                }
-            }
-        }
-        
-        return $grouped;
-    }
-
-    /**
-     * FIXED: Ensure each city gets at least 3 items, prefer 6 each
-     */
-    private function balanceDistribution($city1Items, $city2Items, $otherItems, $cities, $maxItems): array
-    {
-        $targetPerCity = 6; // Target 6 per city
-        $minPerCity = 3;    // Minimum 3 per city
-        
-        $result = [];
-        $c1 = count($city1Items);
-        $c2 = count($city2Items);
-
-        // Both cities have enough items
-        if ($c1 >= $targetPerCity && $c2 >= $targetPerCity) {
-            $result = array_merge(
-                array_slice($city1Items, 0, $targetPerCity),
-                array_slice($city2Items, 0, $targetPerCity)
-            );
-        }
-        // City 1 has more items
-        elseif ($c1 >= $minPerCity && $c2 >= $minPerCity) {
-            $result = array_merge(
-                array_slice($city1Items, 0, min($c1, $targetPerCity)),
-                array_slice($city2Items, 0, min($c2, $targetPerCity))
-            );
-        }
-        // Try to fill from other items
-        else {
-            $result = array_merge(
-                array_slice($city1Items, 0, $c1),
-                array_slice($city2Items, 0, $c2)
-            );
-
-            // Distribute other items to cities that need more
-            if (count($result) < $maxItems && !empty($otherItems)) {
-                $needed = min($maxItems - count($result), count($otherItems));
-                $assignCity = ($c1 <= $c2) ? $cities[0] : $cities[1];
-                
-                foreach (array_slice($otherItems, 0, $needed) as $item) {
-                    $item['city_group'] = $assignCity;
-                    $result[] = $item;
-                }
-            }
-        }
-
-        return $result;
-    }
-
-    private function isValidMultiCityDistribution($groupedItems, $cities): bool
-    {
-        if (count($cities) < 2 || count($groupedItems) < 2) return false;
-        
-        $city1Count = count(array_filter($groupedItems, fn($item) =>
-            ($item['city_group'] ?? '') === ($cities[0] ?? '')
-        ));
-        
-        $city2Count = count(array_filter($groupedItems, fn($item) =>
-            ($item['city_group'] ?? '') === ($cities[1] ?? '')
-        ));
-        
-        return $city1Count >= 1 && $city2Count >= 1;
     }
 
     // ==================== LAYOUT DETERMINATION ====================
@@ -409,7 +341,7 @@ class ResponseGenerator
         if ($isMultiCity && !empty($displayData['city1_tours']) && !empty($displayData['city2_tours'])) {
             return 'multi_city_tours';
         }
-        
+
         // Case 4: Multi-city hotels
         if ($isMultiCity && !empty($displayData['city1_hotels']) && !empty($displayData['city2_hotels'])) {
             return 'multi_city_hotels';
@@ -419,7 +351,7 @@ class ResponseGenerator
         if ($hasTours && $hasHotels && !empty($displayData['tour_city']) && !empty($displayData['hotel_city'])) {
             return 'mixed_content';
         }
-        
+
         // Fallback to existing single-type layouts
         if ($hasTours && !$hasHotels) return 'single_tours';
         if ($hasHotels && !$hasTours) return 'single_hotels';
@@ -442,43 +374,47 @@ class ResponseGenerator
     // ==================== CONTEXT BUILDING ====================
 
     /**
-     * Build context string from retrieval results
+     * CRITICAL FIX: Build context from displayData that matches what frontend will show
      */
     private function buildHybridContext($displayData): string
     {
         $context = "# Available Travel Information\n\n";
 
-        // Extract tours and hotels from the structured data
         $tours = $displayData['tours'] ?? [];
         $hotels = $displayData['hotels'] ?? [];
 
         if (!empty($tours)) {
             $context .= "## Available Tours:\n";
-            // Check for multi-city structure
+
+            // Multi-city tours structure
             if (!empty($displayData['city1_tours'])) {
-                 $context .= "\nTours in {$displayData['cities'][0]}:\n";
-                 foreach($displayData['city1_tours'] as $tour) {
+                $context .= "\nTours in {$displayData['cities'][0]}:\n";
+                foreach($displayData['city1_tours'] as $tour) {
                     $context .= sprintf(
                         "* **%s** - %d days - %s VND\n",
                         $tour['tour_name'] ?? 'Unknown Tour',
                         $tour['duration_days'] ?? 0,
                         number_format($tour['price_per_person'] ?? 0)
                     );
-                 }
-                 $context .= "\nTours in {$displayData['cities'][1]}:\n";
-                 foreach($displayData['city2_tours'] as $tour) {
-                    $context .= sprintf(
-                        "* **%s** - %d days - %s VND\n",
-                        $tour['tour_name'] ?? 'Unknown Tour',
-                        $tour['duration_days'] ?? 0,
-                        number_format($tour['price_per_person'] ?? 0)
-                    );
-                 }
-            } else { // Single city or mixed
+                }
+
+                if (!empty($displayData['city2_tours'])) {
+                    $context .= "\nTours in {$displayData['cities'][1]}:\n";
+                    foreach($displayData['city2_tours'] as $tour) {
+                        $context .= sprintf(
+                            "* **%s** - %d days - %s VND\n",
+                            $tour['tour_name'] ?? 'Unknown Tour',
+                            $tour['duration_days'] ?? 0,
+                            number_format($tour['price_per_person'] ?? 0)
+                        );
+                    }
+                }
+            } else {
+                // Single city or mixed
                 $cityName = $displayData['tour_city'] ?? ($tours[0]['city_name'] ?? 'Vietnam');
                 $context .= "\nTours in {$cityName}:\n";
                 foreach ($tours as $tour) {
-                     $context .= sprintf(
+                    $context .= sprintf(
                         "* **%s** - %d days - %s VND\n",
                         $tour['tour_name'] ?? 'Unknown Tour',
                         $tour['duration_days'] ?? 0,
@@ -490,26 +426,32 @@ class ResponseGenerator
 
         if (!empty($hotels)) {
             $context .= "\n## Available Hotels:\n";
+
+            // Multi-city hotels structure
             if (!empty($displayData['city1_hotels'])) {
                 $context .= "\nHotels in {$displayData['cities'][0]}:\n";
                 foreach($displayData['city1_hotels'] as $hotel) {
-                   $context .= sprintf(
+                    $context .= sprintf(
                         "* **%s** - Rating: %.1f/5 - %s VND/night\n",
                         $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
                         $hotel['ratings'] ?? 0,
                         number_format($hotel['cost'] ?? 0)
                     );
                 }
-                $context .= "\nHotels in {$displayData['cities'][1]}:\n";
-                foreach($displayData['city2_hotels'] as $hotel) {
-                   $context .= sprintf(
-                        "* **%s** - Rating: %.1f/5 - %s VND/night\n",
-                        $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
-                        $hotel['ratings'] ?? 0,
-                        number_format($hotel['cost'] ?? 0)
-                    );
+
+                if (!empty($displayData['city2_hotels'])) {
+                    $context .= "\nHotels in {$displayData['cities'][1]}:\n";
+                    foreach($displayData['city2_hotels'] as $hotel) {
+                        $context .= sprintf(
+                            "* **%s** - Rating: %.1f/5 - %s VND/night\n",
+                            $hotel['hotel'] ?? $hotel['hotel_name'] ?? 'Unknown Hotel',
+                            $hotel['ratings'] ?? 0,
+                            number_format($hotel['cost'] ?? 0)
+                        );
+                    }
                 }
-            } else { // Single city or mixed
+            } else {
+                // Single city or mixed
                 $cityName = $displayData['hotel_city'] ?? ($hotels[0]['city_name'] ?? 'Vietnam');
                 $context .= "\nHotels in {$cityName}:\n";
                 foreach ($hotels as $hotel) {
@@ -522,6 +464,12 @@ class ResponseGenerator
                 }
             }
         }
+
+        Logger::debug("Context built from display data", [
+            'context_length' => strlen($context),
+            'has_multi_city_tours' => !empty($displayData['city1_tours']),
+            'has_multi_city_hotels' => !empty($displayData['city1_hotels'])
+        ]);
 
         return $context;
     }
@@ -633,6 +581,7 @@ class ResponseGenerator
     public static function extractCitiesFromQuery($query): array
     {
         self::initializeCityPatterns();
+
         $cities = [];
         $query = strtolower(trim($query));
 
@@ -690,5 +639,4 @@ class ResponseGenerator
         return $similarity >= 60;
     }
 }
-
 ?>

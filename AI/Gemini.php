@@ -185,15 +185,14 @@ class GeminiService
                 
                 foreach ($tourCities as $cityName) {
                     $response .= "**Tours in " . trim($cityName) . ":**\n";
-                    
                     $citySection = $this->extractCitySection($context, "Tours in " . trim($cityName));
                     preg_match_all('/\*\*(.*?)\*\* - (\d+) days - ([\d,.]+) VND/', $citySection, $cityTours);
                     
                     $count = min(3, count($cityTours[0]));
                     for ($i = 0; $i < $count; $i++) {
-                        $response .= "• **{$cityTours[1][$i]}** - {$cityTours[2][$i]} days - {$cityTours[3][$i]} VND\n";
+                        $response .= "• **" . $cityTours[1][$i] . "** - " . $cityTours[2][$i] . " days - " . $cityTours[3][$i] . " VND\n";
                     }
-                    $response .= "\n";
+                    $response .= "\n"; // Ensure blank line between cities
                 }
             } else {
                 // Single city tours
@@ -398,6 +397,10 @@ For MULTI-CITY TOURS:
   • **[Tour Name]** - [X] days - [Price] VND\"
 
 For MIXED CONTENT:
+- Greet with acknowledgment of both types: \"I found these great options for you!\" 
+- Present tours first with their city: \"Here are wonderful tours in [City1]:\"
+- Transition to hotels: \"For accommodation in [City2], I've found excellent options:\" 
+- Close with a connecting statement about the overall experience
 - Clearly separate tours and hotels sections
 - Specify city for each item
 

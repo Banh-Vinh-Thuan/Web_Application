@@ -141,21 +141,19 @@ class DatabaseService {
         return ['sql' => $sql, 'params' => $params, 'types' => $types];
     }
 
-    private function determineQueryLimit($filters): int
-    {
+    private function determineQueryLimit($filters): int {
         $isMultiCity = !empty($filters['cityIds']) && count($filters['cityIds']) >= 2;
-        $hasConditions = !empty($filters['budget']) ||
-                        !empty($filters['duration']) ||
+        $hasConditions = !empty($filters['budget']) || 
+                        !empty($filters['duration']) || 
                         !empty($filters['rating']);
         
-        // Multi-city basic queries need at least 6 total (3 per city)
-        if ($isMultiCity && !$hasConditions) {
-            return 12; // Get extra to ensure 3 per city after filtering
+        // CRITICAL: Mixed queries need BOTH tours AND hotels
+        if ($isMultiCity && $hasConditions && isset($filters['isMixed']) && $filters['isMixed']) {
+            return 30; // 15 tours + 15 hotels to ensure 3 of each per city
         }
         
-        // Multi-city conditional queries
-        if ($isMultiCity && $hasConditions) {
-            return 20; // Get more for filtering
+        if ($isMultiCity && !$hasConditions && isset($filters['isMixed']) && $filters['isMixed']) {
+            return 20; // Mixed basic query
         }
         
         // Single city basic
