@@ -15,9 +15,6 @@ class FewShotIntentAnalyzer {
         $this->initializeIntentDefinitions();
     }
     
-    /**
-     * Initialize few-shot examples for each intent class
-     */
     private function initializeFewShotExamples() {
         $this->fewShotExamples = [
             'tour_search' => [
@@ -75,9 +72,6 @@ class FewShotIntentAnalyzer {
         ];
     }
     
-    /**
-     * Initialize clear definitions for each intent
-     */
     private function initializeIntentDefinitions() {
         $this->intentDefinitions = [
             'tour_search' => 'User wants to find, browse, or get information about tours, trips, packages, excursions, or travel activities.',
@@ -91,9 +85,6 @@ class FewShotIntentAnalyzer {
         ];
     }
     
-    /**
-     * Main intent analysis using few-shot prompting
-     */
     public function analyzeIntent($message) {
         try {
             Logger::debug("Analyzing intent with few-shot learning", ['message' => $message]);
@@ -106,7 +97,6 @@ class FewShotIntentAnalyzer {
                     'maxTokens' => 100
                 ]);
                 
-                // CRITICAL: Check if response is valid
                 if (empty(trim($response))) {
                     Logger::warning("Gemini returned empty response for intent, using fallback");
                     return $this->fallbackToRuleBase($message);
@@ -115,7 +105,6 @@ class FewShotIntentAnalyzer {
                 $intent = $this->parseIntentResponse($response);
                 $confidence = $this->extractConfidence($response);
                 
-                // VALIDATION: Ensure intent is valid
                 if (!array_key_exists($intent, $this->intentDefinitions)) {
                     Logger::warning("Invalid intent detected: $intent, using fallback");
                     return $this->fallbackToRuleBase($message);
@@ -147,7 +136,6 @@ class FewShotIntentAnalyzer {
                 'message' => $message
             ]);
             
-            // LAST RESORT: Return general intent
             return [
                 'intent' => 'general',
                 'confidence' => 0.3,
@@ -156,9 +144,6 @@ class FewShotIntentAnalyzer {
         }
     }
     
-    /**
-     * Build few-shot prompt following Brown et al. (2020) methodology
-     */
     private function buildFewShotPrompt($message) {
         $prompt = "You are an expert intent classifier for a Vietnam travel booking system.\n\n";
         $prompt .= "INTENT DEFINITIONS:\n";
@@ -169,7 +154,6 @@ class FewShotIntentAnalyzer {
         
         $prompt .= "\n=== FEW-SHOT EXAMPLES ===\n\n";
         
-        // Add examples for each intent
         foreach ($this->fewShotExamples as $intent => $examples) {
             foreach (array_slice($examples, 0, 3) as $example) {
                 $prompt .= "User message: \"{$example}\"\n";
@@ -184,20 +168,15 @@ class FewShotIntentAnalyzer {
         return $prompt;
     }
     
-    /**
-     * Parse intent from LLM response
-     */
     private function parseIntentResponse($response) {
         $response = strtolower(trim($response));
         
-        // Extract intent name (first word usually)
         foreach (array_keys($this->intentDefinitions) as $intent) {
             if (strpos($response, $intent) === 0) {
                 return $intent;
             }
         }
         
-        // Fallback: find any mention of intent
         foreach (array_keys($this->intentDefinitions) as $intent) {
             if (strpos($response, $intent) !== false) {
                 return $intent;
@@ -207,138 +186,88 @@ class FewShotIntentAnalyzer {
         return 'general';
     }
     
-    /**
-     * Extract confidence score from response
-     */
     private function extractConfidence($response) {
-        // Look for confidence indicators in response
         if (preg_match('/confidence[:\s]+(\d+\.?\d*)%?/i', $response, $matches)) {
             return floatval($matches[1]) / 100;
         }
         
-        // Default confidence based on response clarity
         if (strlen($response) < 50 && $this->parseIntentResponse($response) !== 'general') {
-            return 0.85; // High confidence for clear, short responses
+            return 0.85;
         }
         
-        return 0.70; // Moderate default confidence
+        return 0.70;
     }
     
-    /**
-     * Fallback to rule-based classification if LLM fails
-     */
     private function fallbackToRuleBase($message) {
         Logger::warning("Using enhanced fallback rule-based intent detection");
         
         $messageLower = strtolower($message);
         
-        // Extract cities and conditions
         $cities = $this->extractCityNames($messageLower);
         $hasTwoOrMoreCities = count($cities) >= 2;
         
-        // Extract keywords
         $hasTourKeyword = preg_match('/\b(tour|tours|trip|package)\b/', $messageLower);
         $hasHotelKeyword = preg_match('/\b(hotel|hotels|accommodation|stay|resort)\b/', $messageLower);
         
-        // CRITICAL: Check for explicit mixed pattern with "and"
         $hasMixedPattern = preg_match('/\b(tour|tours)\b.*\band\b.*\b(hotel|hotels)\b/i', $messageLower) ||
                         preg_match('/\b(hotel|hotels)\b.*\band\b.*\b(tour|tours)\b/i', $messageLower);
         
-        // Extract conditions
         $hasConditions = $this->detectConditionsInMessage($messageLower);
         
-        // PRIORITY 1: Mixed queries (tour AND hotel)
         if ($hasMixedPattern || ($hasTourKeyword && $hasHotelKeyword && $hasTwoOrMoreCities)) {
             return [
-                'intent' => 'mixed_search',
-                'confidence' => 0.85,
-                'method' => 'fallback',
-                'has_conditions' => $hasConditions
+                'intent' => 'mixed_search', 'confidence' => 0.85, 'method' => 'fallback', 'has_conditions' => $hasConditions
             ];
         }
         
-        // PRIORITY 2: Multi-city single type with conditions
         if ($hasTwoOrMoreCities && $hasConditions) {
             if ($hasTourKeyword && !$hasHotelKeyword) {
                 return [
-                    'intent' => 'tour_search',
-                    'confidence' => 0.80,
-                    'method' => 'fallback',
-                    'has_conditions' => true,
-                    'multi_city' => true
+                    'intent' => 'tour_search', 'confidence' => 0.80, 'method' => 'fallback', 'has_conditions' => true, 'multi_city' => true
                 ];
             }
             if ($hasHotelKeyword && !$hasTourKeyword) {
                 return [
-                    'intent' => 'hotel_search',
-                    'confidence' => 0.80,
-                    'method' => 'fallback',
-                    'has_conditions' => true,
-                    'multi_city' => true
+                    'intent' => 'hotel_search', 'confidence' => 0.80, 'method' => 'fallback', 'has_conditions' => true, 'multi_city' => true
                 ];
             }
         }
         
-        // PRIORITY 3: Multi-city single type without conditions
         if ($hasTwoOrMoreCities) {
-            if ($hasTourKeyword && !$hasHotelKeyword) {
+            if ($hasTourKeyword && !$hasTourKeyword) {
                 return [
-                    'intent' => 'tour_search',
-                    'confidence' => 0.75,
-                    'method' => 'fallback',
-                    'has_conditions' => false,
-                    'multi_city' => true
+                    'intent' => 'tour_search', 'confidence' => 0.75, 'method' => 'fallback', 'has_conditions' => false, 'multi_city' => true
                 ];
             }
             if ($hasHotelKeyword && !$hasTourKeyword) {
                 return [
-                    'intent' => 'hotel_search',
-                    'confidence' => 0.75,
-                    'method' => 'fallback',
-                    'has_conditions' => false,
-                    'multi_city' => true
+                    'intent' => 'hotel_search', 'confidence' => 0.75, 'method' => 'fallback', 'has_conditions' => false, 'multi_city' => true
                 ];
             }
         }
         
-        // PRIORITY 4: Single city or general
         if ($hasTourKeyword) {
             return [
-                'intent' => 'tour_search',
-                'confidence' => 0.70,
-                'method' => 'fallback',
-                'has_conditions' => $hasConditions,
-                'multi_city' => false
+                'intent' => 'tour_search', 'confidence' => 0.70, 'method' => 'fallback', 'has_conditions' => $hasConditions, 'multi_city' => false
             ];
         }
         
         if ($hasHotelKeyword) {
             return [
-                'intent' => 'hotel_search',
-                'confidence' => 0.70,
-                'method' => 'fallback',
-                'has_conditions' => $hasConditions,
-                'multi_city' => false
+                'intent' => 'hotel_search', 'confidence' => 0.70, 'method' => 'fallback', 'has_conditions' => $hasConditions, 'multi_city' => false
             ];
         }
         
         return [
-            'intent' => 'general',
-            'confidence' => 0.50,
-            'method' => 'fallback',
-            'has_conditions' => false,
-            'multi_city' => false
+            'intent' => 'general', 'confidence' => 0.50, 'method' => 'fallback', 'has_conditions' => false, 'multi_city' => false
         ];
     }
 
     private function detectConditionsInMessage($messageLower) {
         $hasPrice = preg_match('/\b(under|over|below|above)\s+\d+/i', $messageLower) ||
                     preg_match('/\d+\s+(million|millions)/i', $messageLower);
-        
         $hasDuration = preg_match('/\b(for|with|of)\s+\d+\s+(day|days)/i', $messageLower);
-        
         $hasRating = preg_match('/\b(for|with)?\s*\d+\s+star/i', $messageLower);
-        
         return $hasPrice || $hasDuration || $hasRating;
     }
 
@@ -372,23 +301,74 @@ class FewShotIntentAnalyzer {
 
     public function extractEntities($message, $vietnameseCities) {
         try {
-            $prompt = $this->buildEntityExtractionPrompt($message, $vietnameseCities);
-            $response = $this->geminiService->generateText($prompt, [
-                'temperature' => 0.1,
-                'maxTokens' => 300
-            ]);
-            
-            $entities = $this->parseEntityResponse($response, $message, $vietnameseCities);
-            
-            // CRITICAL: Ensure has_conditions is set
+            $entities = $this->fallbackEntityExtraction($message, $vietnameseCities);
             $entities['has_conditions'] = $this->detectConditions($message);
-            
+            // CRITICAL FIX: The logic to detect out-of-scope queries is moved here.
+            $entities['is_international'] = $this->detectOutOfScopeQuery($message, $entities['cities']);
             return $entities;
-            
         } catch (Exception $e) {
             Logger::error("Entity extraction failed", ['error' => $e->getMessage()]);
-            return $this->fallbackEntityExtraction($message, $vietnameseCities);
+            return [
+                'cities' => [], 'duration' => null, 'rating' => null, 'rating_condition' => 'minimum',
+                'budget' => null, 'price_condition' => null, 'preferences' => [],
+                'is_international' => false, 'raw_message' => $message, 'has_conditions' => false
+            ];
         }
+    }
+
+    private function detectOutOfScopeQuery($message, $foundVNCities): bool
+    {
+        // If Vietnamese cities found, it's in scope
+        if (!empty($foundVNCities)) {
+            return false;
+        }
+
+        $messageLower = strtolower($message);
+
+        // Expanded travel intent keywords
+        $travelKeywords = [
+            'tour', 'trip', 'visit', 'go to', 'travel', 'plan for', 'itinerary', 
+            'design plan', 'create plan', 'vacation', 'holiday', 'explore',
+            'food', 'eat', 'try', 'taste', 'cuisine', 'dish', 'restaurant',
+            'attraction', 'sightseeing', 'landmark', 'activity', 'things to do'
+        ];
+
+        // Check for any travel/destination keyword
+        $hasTravelIntent = false;
+        foreach ($travelKeywords as $keyword) {
+            if (strpos($messageLower, $keyword) !== false) {
+                $hasTravelIntent = true;
+                break;
+            }
+        }
+
+        // CRITICAL: If travel intent detected but no VN city matched, it's out-of-scope
+        if ($hasTravelIntent) {
+            Logger::info("Detected out-of-scope query (travel intent with no matching VN city)", ['message' => substr($message, 0, 100)]);
+            return true;
+        }
+
+        // Check for international city/country mentions (non-exhaustive but common)
+        $internationalLocations = [
+            'korea', 'korean', 'seoul', 'busan',
+            'japan', 'tokyo', 'osaka', 'kyoto',
+            'thailand', 'bangkok', 'phuket',
+            'singapore', 'malaysia', 'kuala lumpur',
+            'china', 'beijing', 'shanghai',
+            'france', 'paris', 'london', 'england',
+            'usa', 'america', 'new york',
+            'vung tau', 'vũng tàu', 
+            'an giang', 'bac lieu', 'soc trang', 'vinh long', 'tra vinh'
+        ];
+
+        foreach ($internationalLocations as $location) {
+            if (strpos($messageLower, $location) !== false) {
+                Logger::info("Detected international/out-of-DB location", ['location' => $location, 'message' => substr($message, 0, 100)]);
+                return true;
+            }
+        }
+
+        return false;
     }
     
     /**
@@ -497,18 +477,15 @@ class FewShotIntentAnalyzer {
     
     private function detectConditions($message) {
         $messageLower = strtolower($message);
-        
-        $hasPrice = preg_match('/\b(under|over|below|above)\s+\d+/i', $messageLower) ||
-                    preg_match('/\d+\s+(million|budget)/i', $messageLower);
-        
-        $hasDuration = preg_match('/\b(with|for|of)?\s*\d+\s+(day|days)\b/i', $messageLower);
-        
+        $hasPrice = preg_match('/\b(under|over|below|above|budget)\s+\d+/i', $messageLower) ||
+                    preg_match('/\d+\s+(million|triệu)/i', $messageLower);
+        $hasDuration = preg_match('/\b(with|for|of)?\s*\d+\s+(day|days|ngày)\b/i', $messageLower);
         $hasRating = preg_match('/\b\d+\s+star/i', $messageLower) ||
-                    preg_match('/\bstar\s+\d+/i', $messageLower);
-        
+                    preg_match('/\bstar\s+\d+/i', $messageLower) ||
+                    preg_match('/\d+\s+sao/i', $messageLower);
         return $hasPrice || $hasDuration || $hasRating;
     }
-
+    
     // Keep existing extraction methods as fallbacks
     private function extractCities($message, $vietnameseCities) {
         $foundCities = [];
@@ -550,15 +527,16 @@ class FewShotIntentAnalyzer {
     
     private function extractBudget($message) {
         $patterns = [
-            'under' => '/(?:dưới|under|below)\s*(\d+)\s*(?:triệu|million)/i',
-            'over' => '/(?:trên|above|over)\s*(\d+)\s*(?:triệu|million)/i',
-            'default' => '/(\d+)\s*(?:triệu|million)/i'
+            'under' => '/(?:dưới|under|below)\s*([\d,.]+)\s*(?:triệu|million)/i',
+            'over' => '/(?:trên|above|over)\s*([\d,.]+)\s*(?:triệu|million)/i',
+            'default' => '/([\d,.]+)\s*(?:triệu|million)/i'
         ];
         
         foreach ($patterns as $condition => $pattern) {
             if (preg_match($pattern, $message, $matches)) {
+                $amount = (float)str_replace(',', '', $matches[1]);
                 return [
-                    'budget' => intval($matches[1]) * 1000000,
+                    'budget' => $amount * 1000000,
                     'condition' => $condition === 'default' ? 'under' : $condition
                 ];
             }

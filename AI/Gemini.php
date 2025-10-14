@@ -17,19 +17,19 @@ class GeminiService
         }
     }
 
-    public function generateText(string $prompt, array $config = []): string
-    {
+    public function generateText(string $prompt, array $config = []): string{
         $requestData = [
             'contents' => [['parts' => [['text' => $prompt]]]],
             'generationConfig' => [
                 'temperature' => $config['temperature'] ?? 0.7,
                 'topK' => 40,
                 'topP' => 0.95,
-                'maxOutputTokens' => $config['max_tokens'] ?? 1024,
+                'maxOutputTokens' => $config['max_tokens'] ?? 2048,  // INCREASED default from 1024
             ],
         ];
 
         $response = $this->makeApiRequest($this->apiUrl, $requestData);
+
         $text = $response['candidates'][0]['content']['parts'][0]['text'] ?? null;
 
         if ($text === null) {
@@ -351,6 +351,222 @@ Would you like me to help you research specific aspects of your {$cityName} trip
 
         return array_slice($suggestions, 0, 4);
     }
+    
+    public function generateCreativeResponse(string $userMessage, array $conversationHistory): string
+    {
+        $conversationContext = $this->buildConversationContext($conversationHistory);
+
+        $prompt = <<<PROMPT
+    You are an expert travel assistant AI. The user is asking about travel planning.
+
+    **User's Request:** "{$userMessage}"
+
+{$conversationContext}
+
+**Your Instructions:**
+1. Provide a COMPLETE and detailed response in ENGLISH
+2. For itineraries, include ALL days requested (don't stop early)
+3. Structure clearly with headers and bullet points
+4. Include practical information: attractions, activities, budget, tips
+5. Be thorough - don't truncate your response
+
+**For Multi-Day Itineraries:**
+- Cover EVERY day from Day 1 to the last day
+- Include morning, afternoon, and evening activities
+- Add budget estimates and travel tips
+- Finish with a proper conclusion
+
+Generate your FULL response now (ensure completion):
+PROMPT;
+
+        try {
+            Logger::info("Calling Gemini for creative response", [
+                'message_length' => strlen($userMessage),
+                'prompt_length' => strlen($prompt)
+            ]);
+
+            // CRITICAL FIX: Increase max tokens for long-form content
+            $response = $this->generateText($prompt, [
+                'temperature' => 0.7,
+                'max_tokens' => 2048  // DOUBLED from 1024 to 2048
+            ]);
+            
+            if (empty(trim($response))) {
+                Logger::warning("Empty response from Gemini API");
+                throw new Exception("Empty response received from API");
+            }
+            
+            // Check if response appears truncated
+            if ($this->isResponseTruncated($response)) {
+                Logger::warning("Response appears truncated, attempting continuation");
+                
+                // Try to get continuation
+                $continuationPrompt = "Continue the previous response from where it stopped. Complete the remaining days and conclusion.";
+                $continuation = $this->generateText($continuationPrompt, [
+                    'temperature' => 0.7,
+                    'max_tokens' => 1024
+                ]);
+                
+                if (!empty($continuation)) {
+                    $response .= "\n\n" . $continuation;
+                }
+            }
+            
+            Logger::info("Gemini creative response generated successfully", [
+                'response_length' => strlen($response),
+                'is_truncated' => $this->isResponseTruncated($response)
+            ]);
+            
+            return $response;
+            
+        } catch (Exception $e) {
+            Logger::error("Gemini API error in generateCreativeResponse", [
+                'error' => $e->getMessage(),
+                'user_message' => substr($userMessage, 0, 100),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return $this->buildFallbackCreativeResponse($userMessage);
+        }
+    }
+
+    private function isResponseTruncated(string $response): bool{
+        // Check for common truncation indicators
+        $truncationIndicators = [
+            'Day 5:', 'Day 6:', 'Day 7:',  // Stops mid-itinerary
+            '* Activities:', '* Accommodation:',  // Stops mid-section
+            '* Morning:', '* Afternoon:',  // Stops mid-day
+        ];
+        
+        $lastLine = substr(trim($response), -200);  // Check last 200 chars
+        
+        foreach ($truncationIndicators as $indicator) {
+            if (strpos($lastLine, $indicator) !== false && 
+                !preg_match('/Day \d+:.*?Morning:.*?Afternoon:.*?Evening:/s', $lastLine)) {
+                return true;
+            }
+        }
+        
+        // Check if ends abruptly without conclusion
+        if (!preg_match('/(enjoy|safe travels|have a great trip|conclusion|summary)/i', $lastLine)) {
+            return true;
+        }
+        
+        return false;
+    }
+
+    private function buildFallbackCreativeResponse(string $userMessage): string
+    {
+        $messageLower = strtolower($userMessage);
+        
+        // Check for Korea/Korean
+        if (strpos($messageLower, 'korea') !== false || strpos($messageLower, 'korean') !== false) {
+            return <<<RESPONSE
+I'd be happy to help you plan a trip to Korea! Here's a suggested itinerary:
+
+**Planning Your Korea Trip**
+
+**Popular Destinations:**
+- **Seoul**: Modern city with palaces, shopping, and K-pop culture
+- **Busan**: Beautiful beaches and seafood markets
+- **Jeju Island**: Natural wonders and volcanic landscapes
+
+**Sample 7-Day Itinerary:**
+- **Days 1-3: Seoul**
+  - Visit Gyeongbokgung Palace and Bukchon Hanok Village
+  - Explore Myeongdong for shopping and street food
+  - Experience Gangnam district and Han River
+  
+- **Days 4-5: Busan**
+  - Haeundae Beach and Gamcheon Culture Village
+  - Jagalchi Fish Market
+  - Beomeosa Temple
+
+- **Days 6-7: Jeju Island**
+  - Seongsan Ilchulbong (Sunrise Peak)
+  - Manjanggul Lava Tube
+  - Beach relaxation
+
+**Budget Estimate:**
+- Flights: $300-$600 depending on season
+- Accommodation: $40-$100/night
+- Daily expenses: $50-$80 (food, transport, activities)
+- Total for 7 days: ~$1,500-$2,500 per person
+
+**Best Time to Visit:**
+- Spring (April-May) or Fall (September-November) for mild weather
+
+**Travel Tips:**
+- Get a T-money card for public transportation
+- Try local foods: kimchi, bibimbap, Korean BBQ
+- Learn basic Korean phrases
+- Download Papago translation app
+
+Would you like more specific recommendations for any part of your Korea trip?
+RESPONSE;
+    }
+    
+    // Check for other international destinations
+    if (preg_match('/(japan|tokyo|thailand|bangkok|singapore|paris|london)/i', $messageLower, $matches)) {
+        $destination = ucfirst($matches[1]);
+        return <<<RESPONSE
+I'd love to help you plan your trip to {$destination}!
+
+**General Travel Planning Tips:**
+
+**Before You Go:**
+- Check visa requirements for your nationality
+- Book flights 2-3 months in advance for best prices
+- Research accommodation options (hotels, hostels, Airbnb)
+- Get travel insurance
+
+**Budget Planning:**
+- Research average daily costs for your destination
+- Set aside 20% extra for unexpected expenses
+- Book major attractions in advance for discounts
+
+**What to Research:**
+- Top attractions and must-see landmarks
+- Local transportation options
+- Cultural etiquette and customs
+- Best neighborhoods to stay
+- Local cuisine to try
+- Safety tips and emergency contacts
+
+**Itinerary Planning:**
+- Don't over-schedule - leave room for spontaneity
+- Group nearby attractions by day
+- Consider travel time between locations
+- Mix popular spots with local experiences
+
+Would you like help planning a specific aspect of your {$destination} trip? Or would you like to explore tours and hotels in Vietnam instead?
+RESPONSE;
+    }
+    
+    // Generic fallback for other queries
+    return <<<RESPONSE
+I'd be happy to help you with your travel planning! 
+
+While I specialize in Vietnam tours and hotels, I can offer some general travel advice:
+
+**Travel Planning Essentials:**
+- Research your destination thoroughly
+- Check visa and entry requirements
+- Book accommodation and major activities in advance
+- Plan your budget with 20% buffer
+- Get travel insurance
+- Learn basic local phrases
+- Download offline maps
+
+**What I Can Help You With:**
+- Tours and hotels throughout Vietnam
+- Itinerary planning for Vietnamese destinations
+- Budget travel options in Vietnam
+- Cultural tips for visiting Vietnam
+
+Would you like to explore what Vietnam has to offer? I have detailed information about tours and hotels in cities like Hanoi, Ho Chi Minh City, Da Nang, and many more!
+RESPONSE;
+}
 
     private function buildPrompt($userMessage, $context, $conversationHistory, $metadata) {
         $conversationContext = $this->buildConversationContext($conversationHistory);

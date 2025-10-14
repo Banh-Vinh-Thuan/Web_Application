@@ -10,9 +10,18 @@ class Config {
 
     // Gemini AI Configuration
     const GEMINI_API_KEY = "AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA";
-    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent";
+    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"; // UPDATED MODEL
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
     const GEMINI_EMBEDDING_MODEL = "models/text-embedding-004";
+
+    // Generation Configuration
+    const GEMINI_MAX_OUTPUT_TOKENS = 2048;  // NEW: Increased for long-form content
+    const GEMINI_TEMPERATURE = 0.7;
+    const GEMINI_TOP_K = 40;
+    const GEMINI_TOP_P = 0.95;
+
+    // API Timeouts
+    const API_TIMEOUT = 30;
 
     // RAG Pipeline
     public const HYBRID_WEIGHTS = ['semantic' => 0.45, 'bm25' => 0.35, 'sql' => 0.20];
@@ -30,9 +39,6 @@ class Config {
     public const MAX_CONVERSATION_HISTORY = 10;
     public const MAX_RESULTS_PER_CHANNEL = 15;
     public const MAX_FINAL_RESULTS = 10;
-
-    // Timeouts (seconds)
-    public const API_TIMEOUT = 30;
 
     // Search Quality Thresholds
     public const MIN_SIMILARITY_SCORE = 0.3;
