@@ -277,6 +277,30 @@ class OptimizedRAGTravelChatbot {
         ];
     }
 
+    private function validateResponseDuration($response, $requestedDuration): array{
+        if (!$requestedDuration || !is_numeric($requestedDuration)) {
+            return $response;
+        }
+        
+        $responseText = $response['response']['text'] ?? '';
+        
+        // Check if response exceeds requested duration
+        preg_match_all('/Day\s+(\d+):/i', $responseText, $matches);
+        if (!empty($matches[1])) {
+            $maxDay = max(array_map('intval', $matches[1]));
+            if ($maxDay > $requestedDuration) {
+                Logger::warning("Response exceeds requested duration", [
+                    'requested' => $requestedDuration,
+                    'generated' => $maxDay
+                ]);
+                // Flag for re-generation or truncation
+                $response['duration_exceeded'] = true;
+            }
+        }
+        
+        return $response;
+    }
+
     public function getChatHistory($limit = 50) {
         try {
             $history = $this->dbService->getChatHistory($this->userId, $limit);

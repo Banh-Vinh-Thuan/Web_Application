@@ -139,6 +139,20 @@ class DatabaseService {
         $types .= 'i';
         
         return ['sql' => $sql, 'params' => $params, 'types' => $types];
+            
+        if (!empty($filters['excluded_cities'])) {
+            $excludedIds = array_filter(
+                array_map(fn($city) => $city['id'] ?? null, $filters['excluded_cities'])
+            );
+            if (!empty($excludedIds)) {
+                $placeholders = implode(',', array_fill(0, count($excludedIds), '?'));
+                $sql .= " AND {$tableAlias}.cityid NOT IN ({$placeholders})";
+                foreach ($excludedIds as $id) {
+                    $params[] = (int)$id;
+                    $types .= 'i';
+                }
+            }
+        }
     }
 
     private function determineQueryLimit($filters): int {

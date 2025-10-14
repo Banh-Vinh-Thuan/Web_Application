@@ -2,6 +2,7 @@
 
 require_once './Gemini.php';
 require_once './Logger.php';
+require_once './config.php';
 
 class FewShotIntentAnalyzer {
     
@@ -216,50 +217,82 @@ class FewShotIntentAnalyzer {
         
         if ($hasMixedPattern || ($hasTourKeyword && $hasHotelKeyword && $hasTwoOrMoreCities)) {
             return [
-                'intent' => 'mixed_search', 'confidence' => 0.85, 'method' => 'fallback', 'has_conditions' => $hasConditions
+                'intent' => 'mixed_search', 
+                'confidence' => 0.85, 
+                'method' => 'fallback', 
+                'has_conditions' => $hasConditions
             ];
         }
         
         if ($hasTwoOrMoreCities && $hasConditions) {
             if ($hasTourKeyword && !$hasHotelKeyword) {
                 return [
-                    'intent' => 'tour_search', 'confidence' => 0.80, 'method' => 'fallback', 'has_conditions' => true, 'multi_city' => true
+                    'intent' => 'tour_search', 
+                    'confidence' => 0.80, 
+                    'method' => 'fallback', 
+                    'has_conditions' => true, 
+                    'multi_city' => true
                 ];
             }
             if ($hasHotelKeyword && !$hasTourKeyword) {
                 return [
-                    'intent' => 'hotel_search', 'confidence' => 0.80, 'method' => 'fallback', 'has_conditions' => true, 'multi_city' => true
+                    'intent' => 'hotel_search', 
+                    'confidence' => 0.80, 
+                    'method' => 'fallback', 
+                    'has_conditions' => true, 
+                    'multi_city' => true
                 ];
             }
         }
         
+        // FIXED: Correct logic - was checking !$hasTourKeyword twice
         if ($hasTwoOrMoreCities) {
-            if ($hasTourKeyword && !$hasTourKeyword) {
+            if ($hasTourKeyword && !$hasHotelKeyword) {
                 return [
-                    'intent' => 'tour_search', 'confidence' => 0.75, 'method' => 'fallback', 'has_conditions' => false, 'multi_city' => true
+                    'intent' => 'tour_search', 
+                    'confidence' => 0.75, 
+                    'method' => 'fallback', 
+                    'has_conditions' => false, 
+                    'multi_city' => true
                 ];
             }
             if ($hasHotelKeyword && !$hasTourKeyword) {
                 return [
-                    'intent' => 'hotel_search', 'confidence' => 0.75, 'method' => 'fallback', 'has_conditions' => false, 'multi_city' => true
+                    'intent' => 'hotel_search', 
+                    'confidence' => 0.75, 
+                    'method' => 'fallback', 
+                    'has_conditions' => false, 
+                    'multi_city' => true
                 ];
             }
         }
         
         if ($hasTourKeyword) {
             return [
-                'intent' => 'tour_search', 'confidence' => 0.70, 'method' => 'fallback', 'has_conditions' => $hasConditions, 'multi_city' => false
+                'intent' => 'tour_search', 
+                'confidence' => 0.70, 
+                'method' => 'fallback', 
+                'has_conditions' => $hasConditions, 
+                'multi_city' => false
             ];
         }
         
         if ($hasHotelKeyword) {
             return [
-                'intent' => 'hotel_search', 'confidence' => 0.70, 'method' => 'fallback', 'has_conditions' => $hasConditions, 'multi_city' => false
+                'intent' => 'hotel_search', 
+                'confidence' => 0.70, 
+                'method' => 'fallback', 
+                'has_conditions' => $hasConditions, 
+                'multi_city' => false
             ];
         }
         
         return [
-            'intent' => 'general', 'confidence' => 0.50, 'method' => 'fallback', 'has_conditions' => false, 'multi_city' => false
+            'intent' => 'general', 
+            'confidence' => 0.50, 
+            'method' => 'fallback', 
+            'has_conditions' => false, 
+            'multi_city' => false
         ];
     }
 
@@ -300,55 +333,79 @@ class FewShotIntentAnalyzer {
     }
 
     public function extractEntities($message, $vietnameseCities) {
-        try {
-            $entities = $this->fallbackEntityExtraction($message, $vietnameseCities);
-            $entities['has_conditions'] = $this->detectConditions($message);
-            // CRITICAL FIX: The logic to detect out-of-scope queries is moved here.
-            $entities['is_international'] = $this->detectOutOfScopeQuery($message, $entities['cities']);
-            return $entities;
-        } catch (Exception $e) {
-            Logger::error("Entity extraction failed", ['error' => $e->getMessage()]);
-            return [
-                'cities' => [], 'duration' => null, 'rating' => null, 'rating_condition' => 'minimum',
-                'budget' => null, 'price_condition' => null, 'preferences' => [],
-                'is_international' => false, 'raw_message' => $message, 'has_conditions' => false
-            ];
-        }
+        $entities = $this->fallbackEntityExtraction($message, $vietnameseCities);
+        
+        // Extract excluded cities
+        $entities['excluded_cities'] = $this->extractExcludedCities($message, $vietnameseCities);
+        $entities['has_conditions'] = $this->detectConditions($message);
+        $entities['is_international'] = $this->detectOutOfScopeQuery($message, $entities['cities']);
+        
+        return $entities;
     }
 
-    private function detectOutOfScopeQuery($message, $foundVNCities): bool
-    {
-        // If Vietnamese cities found, it's in scope
+    private function extractExcludedCities($message, $vietnameseCities): array {
+        $excluded = [];
+        $messageLower = strtolower($message);
+        
+        // Patterns: "except X", "excluding X", "except for X", "without X"
+        $patterns = [
+            '/except\s+(?:for\s+)?([^,\.]+?)(?:\s+and|\s+or|,|\.|\s*$)/i',
+            '/excluding\s+([^,\.]+?)(?:\s+and|\s+or|,|\.|\s*$)/i',
+            '/without\s+([^,\.]+?)(?:\s+and|\s+or|,|\.|\s*$)/i'
+        ];
+        
+        foreach ($patterns as $pattern) {
+            if (preg_match_all($pattern, $messageLower, $matches)) {
+                foreach ($matches[1] as $excludedCity) {
+                    $excludedCityLower = strtolower(trim($excludedCity));
+                    foreach ($vietnameseCities as $cityName => $cityData) {
+                        if (strpos(strtolower($cityName), $excludedCityLower) !== false) {
+                            $excluded[] = $cityData;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return array_unique($excluded, SORT_REGULAR);
+    }
+
+    private function detectOutOfScopeQuery($message, $foundVNCities): bool {
+        // If Vietnamese cities found in DB, it's in scope
         if (!empty($foundVNCities)) {
             return false;
         }
 
         $messageLower = strtolower($message);
-
-        // Expanded travel intent keywords
-        $travelKeywords = [
-            'tour', 'trip', 'visit', 'go to', 'travel', 'plan for', 'itinerary', 
-            'design plan', 'create plan', 'vacation', 'holiday', 'explore',
-            'food', 'eat', 'try', 'taste', 'cuisine', 'dish', 'restaurant',
-            'attraction', 'sightseeing', 'landmark', 'activity', 'things to do'
+        
+        // Check for Vietnam-specific travel queries
+        $vietnamTravelKeywords = [
+            'beach', 'bien', 'mountain', 'nui', 'climbing', 'leo', 
+            'waterfall', 'thac', 'cave', 'hang', 'hiking', 'trekking',
+            'island', 'dao', 'national park', 'nature', 'trek'
         ];
-
-        // Check for any travel/destination keyword
-        $hasTravelIntent = false;
-        foreach ($travelKeywords as $keyword) {
+        
+        $hasVietnamTravelIntent = false;
+        foreach ($vietnamTravelKeywords as $keyword) {
             if (strpos($messageLower, $keyword) !== false) {
-                $hasTravelIntent = true;
+                $hasVietnamTravelIntent = true;
                 break;
             }
         }
-
-        // CRITICAL: If travel intent detected but no VN city matched, it's out-of-scope
-        if ($hasTravelIntent) {
-            Logger::info("Detected out-of-scope query (travel intent with no matching VN city)", ['message' => substr($message, 0, 100)]);
+        
+        // If Vietnam travel intent but no DB cities matched, flag for safe handling
+        if ($hasVietnamTravelIntent && empty($foundVNCities)) {
+            Logger::info("Vietnam-specific query without DB match", 
+                ['message' => substr($message, 0, 100)]);
             return true;
         }
-
-        // Check for international city/country mentions (non-exhaustive but common)
+        
+        // Check for international destinations
+        return $this->isInternationalQuery($messageLower);
+    }
+  
+    private function isInternationalQuery($messageLower): bool {
         $internationalLocations = [
             'korea', 'korean', 'seoul', 'busan',
             'japan', 'tokyo', 'osaka', 'kyoto',
@@ -357,20 +414,20 @@ class FewShotIntentAnalyzer {
             'china', 'beijing', 'shanghai',
             'france', 'paris', 'london', 'england',
             'usa', 'america', 'new york',
-            'vung tau', 'vũng tàu', 
-            'an giang', 'bac lieu', 'soc trang', 'vinh long', 'tra vinh'
+            'australia', 'sydney', 'melbourne'
         ];
 
         foreach ($internationalLocations as $location) {
             if (strpos($messageLower, $location) !== false) {
-                Logger::info("Detected international/out-of-DB location", ['location' => $location, 'message' => substr($message, 0, 100)]);
+                Logger::info("Detected international location", 
+                    ['location' => $location]);
                 return true;
             }
         }
 
         return false;
     }
-    
+
     /**
      * Build entity extraction prompt with examples
      */

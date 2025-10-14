@@ -5768,3 +5768,52 @@
 [2025-10-14 02:46:26] [INFO] Gemini creative response generated successfully {"response_length":11819,"is_truncated":true}
 [2025-10-14 02:46:26] [INFO] Generative response created successfully {"response_length":11819,"response_preview":"Okay, here's a detailed 6-day Korean itinerary, including a day flight, designed to give you a fanta"}
 [2025-10-14 02:46:26] [INFO] Request processed successfully {"response_type":"general_info","has_data":false}
+[2025-10-14 03:42:53] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-14 03:42:53] [INFO] Chatbot initialized successfully 
+[2025-10-14 03:42:53] [INFO] Processing user message {"message_length":64,"message_preview":"Create a 6-day travel plan to South Korea, includi","history_count":5}
+[2025-10-14 03:42:54] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"Create a 6-day travel plan to South Korea, including flight days"}
+[2025-10-14 03:42:54] [INFO] Detected international location {"location":"korea"}
+[2025-10-14 03:42:54] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":false,"is_international":true}
+[2025-10-14 03:42:54] [INFO] Handling complex/out-of-scope query with generative model {"message":"Create a 6-day travel plan to South Korea, including flight days","is_international":true,"message_length":64}
+[2025-10-14 03:42:54] [INFO] Calling Gemini for creative response {"message_length":64,"is_vietnam_query":false}
+[2025-10-14 03:43:08] [INFO] Gemini creative response generated successfully {"response_length":8219,"is_truncated":false}
+[2025-10-14 03:43:08] [INFO] Generative response created successfully {"response_length":8219,"response_preview":"Okay, here's a detailed 6-day South Korean itinerary, including arrival and departure days, designed"}
+[2025-10-14 03:43:08] [INFO] Request processed successfully {"response_type":"general_info","has_data":false}
+[2025-10-14 03:45:30] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-14 03:45:30] [INFO] Chatbot initialized successfully 
+[2025-10-14 03:45:30] [INFO] Processing user message {"message_length":113,"message_preview":"Create a 3-day travel itinerary to Ha Long Bay wit","history_count":5}
+[2025-10-14 03:45:31] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND, starting from Ho Chi Minh City"}
+[2025-10-14 03:45:31] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-14 03:45:31] [INFO] Hybrid search started {"query":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND, starting from Ho Chi Minh City","intent":"tour_search"}
+[2025-10-14 03:45:31] [INFO] Reranking started {"candidates":8,"query_length":113}
+[2025-10-14 03:45:31] [INFO] generateVietnameseResponse called {"userMessage":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND, starting from Ho ","context_length":620,"metadata":{"match_level":"hybrid_match","confidence":0.65}}
+[2025-10-14 03:45:36] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-14 03:45:36] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.65,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-14 03:45:36] [INFO] Message processed successfully {"processing_time_ms":6223.42,"confidence":0.65,"response_type":"tour_search"}
+[2025-10-14 03:45:36] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-14 03:46:27] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-14 03:46:27] [INFO] Chatbot initialized successfully 
+[2025-10-14 03:46:27] [INFO] Processing user message {"message_length":81,"message_preview":"Create a 3-day travel itinerary to Ha Long Bay wit","history_count":5}
+[2025-10-14 03:46:28] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND"}
+[2025-10-14 03:46:28] [INFO] Intent Analysis {"intent":"mixed_search","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-14 03:46:28] [INFO] Hybrid search started {"query":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND","intent":"mixed_search"}
+[2025-10-14 03:46:29] [INFO] Reranking started {"candidates":20,"query_length":81}
+[2025-10-14 03:46:31] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-14 03:46:31] [INFO] generateVietnameseResponse called {"userMessage":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND","context_length":727,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-14 03:46:32] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-14 03:46:32] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-14 03:46:32] [INFO] Message processed successfully {"processing_time_ms":4915,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-14 03:46:32] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-14 03:46:39] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-14 03:46:39] [INFO] Chatbot initialized successfully 
+[2025-10-14 03:46:39] [INFO] Processing user message {"message_length":81,"message_preview":"Create a 3-day travel itinerary to Ha Long Bay wit","history_count":5}
+[2025-10-14 03:46:40] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND"}
+[2025-10-14 03:46:40] [INFO] Intent Analysis {"intent":"mixed_search","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-14 03:46:40] [INFO] Hybrid search started {"query":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND","intent":"mixed_search"}
+[2025-10-14 03:46:41] [INFO] Reranking started {"candidates":20,"query_length":81}
+[2025-10-14 03:46:43] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-14 03:46:43] [INFO] generateVietnameseResponse called {"userMessage":"Create a 3-day travel itinerary to Ha Long Bay with a budget under 20 million VND","context_length":727,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-14 03:46:44] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-14 03:46:44] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-14 03:46:44] [INFO] Message processed successfully {"processing_time_ms":4722.34,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-14 03:46:44] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}

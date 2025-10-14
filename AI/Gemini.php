@@ -180,7 +180,6 @@ class GeminiService
             $tourCities = $cityMatches[1] ?? [];
             
             if (count($tourCities) >= 2) {
-                // Multi-city tours
                 $response .= "Tours available across multiple cities:\n\n";
                 
                 foreach ($tourCities as $cityName) {
@@ -192,10 +191,9 @@ class GeminiService
                     for ($i = 0; $i < $count; $i++) {
                         $response .= "• **" . $cityTours[1][$i] . "** - " . $cityTours[2][$i] . " days - " . $cityTours[3][$i] . " VND\n";
                     }
-                    $response .= "\n"; // Ensure blank line between cities
+                    $response .= "\n";
                 }
             } else {
-                // Single city tours
                 $city = !empty($tourCities) ? trim($tourCities[0]) : 'Vietnam';
                 $response .= "I found these tours in **$city**:\n\n";
                 
@@ -208,7 +206,7 @@ class GeminiService
             $response .= "\nThese tours offer wonderful experiences!";
         }
         
-        // Parse hotels from context
+        // Parse hotels from context (similar fix for encoding)
         elseif (preg_match_all(
             '/\*\*(.*?)\*\* - Rating: ([\d.]+)\/5 - ([\d,.]+\s*VND\/night)/s',
             $context,
@@ -219,7 +217,6 @@ class GeminiService
             $hotelCities = $cityMatches[1] ?? [];
             
             if (count($hotelCities) >= 2) {
-                // Multi-city hotels
                 $response .= "Hotels available across multiple cities:\n\n";
                 
                 foreach ($hotelCities as $cityName) {
@@ -235,7 +232,6 @@ class GeminiService
                     $response .= "\n";
                 }
             } else {
-                // Single city hotels
                 $city = !empty($hotelCities) ? trim($hotelCities[0]) : 'Vietnam';
                 $response .= "I found these hotels in **$city**:\n\n";
                 
@@ -352,43 +348,26 @@ Would you like me to help you research specific aspects of your {$cityName} trip
         return array_slice($suggestions, 0, 4);
     }
     
-    public function generateCreativeResponse(string $userMessage, array $conversationHistory): string
-    {
+    public function generateCreativeResponse(string $userMessage, array $conversationHistory): string {
         $conversationContext = $this->buildConversationContext($conversationHistory);
-
-        $prompt = <<<PROMPT
-    You are an expert travel assistant AI. The user is asking about travel planning.
-
-    **User's Request:** "{$userMessage}"
-
-{$conversationContext}
-
-**Your Instructions:**
-1. Provide a COMPLETE and detailed response in ENGLISH
-2. For itineraries, include ALL days requested (don't stop early)
-3. Structure clearly with headers and bullet points
-4. Include practical information: attractions, activities, budget, tips
-5. Be thorough - don't truncate your response
-
-**For Multi-Day Itineraries:**
-- Cover EVERY day from Day 1 to the last day
-- Include morning, afternoon, and evening activities
-- Add budget estimates and travel tips
-- Finish with a proper conclusion
-
-Generate your FULL response now (ensure completion):
-PROMPT;
-
+        
+        $isVietnamQuery = $this->isVietnamSpecificQuery($userMessage);
+        
+        if ($isVietnamQuery) {
+            $prompt = $this->buildVietnamContextualPrompt($userMessage, $conversationContext);
+        } else {
+            $prompt = $this->buildGenericTravelPrompt($userMessage, $conversationContext);
+        }
+        
         try {
             Logger::info("Calling Gemini for creative response", [
                 'message_length' => strlen($userMessage),
-                'prompt_length' => strlen($prompt)
+                'is_vietnam_query' => $isVietnamQuery
             ]);
 
-            // CRITICAL FIX: Increase max tokens for long-form content
             $response = $this->generateText($prompt, [
                 'temperature' => 0.7,
-                'max_tokens' => 2048  // DOUBLED from 1024 to 2048
+                'max_tokens' => 2048
             ]);
             
             if (empty(trim($response))) {
@@ -396,11 +375,9 @@ PROMPT;
                 throw new Exception("Empty response received from API");
             }
             
-            // Check if response appears truncated
             if ($this->isResponseTruncated($response)) {
                 Logger::warning("Response appears truncated, attempting continuation");
                 
-                // Try to get continuation
                 $continuationPrompt = "Continue the previous response from where it stopped. Complete the remaining days and conclusion.";
                 $continuation = $this->generateText($continuationPrompt, [
                     'temperature' => 0.7,
@@ -428,6 +405,63 @@ PROMPT;
 
             return $this->buildFallbackCreativeResponse($userMessage);
         }
+    }
+
+    private function buildVietnamContextualPrompt($userMessage, $context): string
+{
+    return <<<PROMPT
+You are a Vietnam travel expert. The user is asking about a Vietnam travel experience
+that may not be in our main database (e.g., lesser-known beaches, mountain trails).
+
+Guidelines:
+1. Only suggest REAL Vietnam locations you know about
+2. DO NOT fabricate beaches, mountains, or attractions
+3. If uncertain about a specific location, say so explicitly
+4. Suggest realistic alternatives if the requested location is unclear
+
+User Request: "$userMessage"
+
+$context
+
+Provide accurate, helpful information without inventing locations:
+PROMPT;
+}
+
+    private function isVietnamSpecificQuery($userMessage): bool {
+        $messageLower = strtolower($userMessage);
+        
+        $vietnamIndicators = [
+            'vietnam', 'viet nam', 'hanoi', 'saigon', 'ho chi minh',
+            'beach', 'bien', 'mountain', 'nui', 'mekong', 'halongbay',
+            'hoi an', 'danang', 'nha trang', 'dalat', 'phuquoc'
+        ];
+        
+        foreach ($vietnamIndicators as $indicator) {
+            if (strpos($messageLower, $indicator) !== false) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
+   
+    private function buildGenericTravelPrompt($userMessage, $context): string {
+    return <<<PROMPT
+You are an expert travel assistant AI. The user is asking about travel planning.
+
+**User's Request:** "{$userMessage}"
+
+{$context}
+
+**Your Instructions:**
+1. Provide a COMPLETE and detailed response in ENGLISH
+2. For itineraries, include ALL days requested (don't stop early)
+3. Structure clearly with headers and bullet points
+4. Include practical information: attractions, activities, budget, tips
+5. Be thorough - don't truncate your response
+
+Generate your FULL response now:
+PROMPT;
     }
 
     private function isResponseTruncated(string $response): bool{
