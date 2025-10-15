@@ -61,17 +61,16 @@ class DatabaseService {
     private function buildSearchQuery($itemType, $filters) {
         $tableAlias = $itemType === 'tour' ? 't' : 'h';
         $tableName = $itemType === 'tour' ? 'tours' : 'hotels';
-
+        
         $sql = "SELECT {$tableAlias}.*, c.city as city_name
                 FROM {$tableName} {$tableAlias}
                 LEFT JOIN cities c ON {$tableAlias}.cityid = c.cityid
                 WHERE 1=1";
-
+        
         $params = [];
         $types = "";
-
-        // City filter
-        if (!empty($filters['cityIds'])) {
+        
+        if (!empty($filters['cityIds']) && is_array($filters['cityIds'])) {
             $cityIds = array_filter($filters['cityIds'], 'is_numeric');
             if (!empty($cityIds)) {
                 $placeholders = implode(',', array_fill(0, count($cityIds), '?'));
@@ -82,7 +81,7 @@ class DatabaseService {
                 }
             }
         }
-
+      
         // Budget filter
         if (!empty($filters['budget']) && is_numeric($filters['budget'])) {
             $priceField = $itemType === 'tour' ? 'price_per_person' : 'cost';
@@ -134,14 +133,17 @@ class DatabaseService {
     }
 
     private function determineQueryLimit($filters): int {
-        $isMultiCity = !empty($filters['cityIds']) && count($filters['cityIds']) >= 2;
-        $hasConditions = !empty($filters['budget']) || 
-                        !empty($filters['duration']) || 
+        $hasCity = !empty($filters['cityIds']);
+        $isMultiCity = $hasCity && count($filters['cityIds']) >= 2;
+        $hasConditions = !empty($filters['budget']) ||
+                        !empty($filters['duration']) ||
                         !empty($filters['rating']);
 
-        // ✅ FIX: For single-city queries with price filter, use reasonable limit
+        if (!$hasCity && $hasConditions) {
+            return 15; // Return more results when searching across all cities
+        }
+
         if (!$isMultiCity && $hasConditions) {
-            // Allow up to 10 results for filtered single-city queries
             return 10;
         }
 

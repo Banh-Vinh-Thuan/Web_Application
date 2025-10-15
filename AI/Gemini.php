@@ -9,12 +9,27 @@ class GeminiService
 {
     private int $retryAttempts = 3;
     private int $retryDelay = 2;
+    private string $currentApiKey;
+    private array $backupKeys;
 
     public function __construct(
         private readonly string $apiKey = Config::GEMINI_API_KEY,
         private readonly string $apiUrl = Config::GEMINI_API_URL,
         private readonly string $embeddingApiUrl = Config::GEMINI_EMBEDDING_API_URL
-    ) {}
+    ) {
+        $this->currentApiKey = $this->apiKey;
+        $this->backupKeys = Config::GEMINI_BACKUP_KEYS;
+    }
+
+    private function getNextApiKey(): ?string {
+        if (!empty($this->backupKeys)) {
+            $key = array_shift($this->backupKeys);
+            Logger::info("Switching to backup API key");
+            return $key;
+        }
+        return null;
+    }
+
 
     /**
      * Generate text from prompt with retry logic
@@ -30,6 +45,8 @@ class GeminiService
             ],
         ];
 
+        $lastError = null;
+        
         for ($attempt = 1; $attempt <= $this->retryAttempts; $attempt++) {
             try {
                 $response = $this->makeApiRequest($this->apiUrl, $requestData);
@@ -40,11 +57,24 @@ class GeminiService
                 }
 
                 return $text;
+
             } catch (Exception $e) {
+                $lastError = $e->getMessage();
+                
                 Logger::warning("Gemini API attempt $attempt failed", [
-                    'error' => $e->getMessage(),
-                    'attempt' => $attempt
+                    'error' => $lastError,
+                    'attempt' => $attempt,
+                    'current_key' => substr($this->currentApiKey, -10)
                 ]);
+
+                if (strpos($lastError, '401') !== false || strpos($lastError, '403') !== false) {
+                    $backupKey = $this->getNextApiKey();
+                    if ($backupKey) {
+                        $this->currentApiKey = $backupKey;
+                        Logger::info("Switched to backup API key, retrying...");
+                        continue; // Retry immediately with new key
+                    }
+                }
 
                 if ($attempt < $this->retryAttempts) {
                     sleep($this->retryDelay * $attempt);
@@ -52,7 +82,7 @@ class GeminiService
                 }
 
                 throw new RuntimeException(
-                    "Gemini API failed after {$this->retryAttempts} attempts: " . $e->getMessage()
+                    "Gemini API failed after {$this->retryAttempts} attempts: " . $lastError
                 );
             }
         }
@@ -68,6 +98,8 @@ class GeminiService
             'content' => ['parts' => [['text' => $text]]],
         ];
 
+        $lastError = null;
+
         for ($attempt = 1; $attempt <= $this->retryAttempts; $attempt++) {
             try {
                 $response = $this->makeApiRequest($this->embeddingApiUrl, $requestData);
@@ -78,11 +110,22 @@ class GeminiService
                 }
 
                 return $embedding;
+
             } catch (Exception $e) {
+                $lastError = $e->getMessage();
+                
                 Logger::warning("Embedding attempt $attempt failed", [
-                    'error' => $e->getMessage(),
+                    'error' => $lastError,
                     'attempt' => $attempt
                 ]);
+
+                if (strpos($lastError, '401') !== false || strpos($lastError, '403') !== false) {
+                    $backupKey = $this->getNextApiKey();
+                    if ($backupKey) {
+                        $this->currentApiKey = $backupKey;
+                        continue;
+                    }
+                }
 
                 if ($attempt < $this->retryAttempts) {
                     sleep($this->retryDelay * $attempt);
@@ -103,7 +146,8 @@ class GeminiService
      */
     private function makeApiRequest(string $url, array $data): array {
         $ch = curl_init();
-        $fullUrl = $url . '?key=' . $this->apiKey;
+        
+        $fullUrl = $url . '?key=' . $this->currentApiKey;
 
         $options = [
             CURLOPT_URL => $fullUrl,
@@ -112,8 +156,8 @@ class GeminiService
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
             CURLOPT_TIMEOUT => Config::API_TIMEOUT,
-            CURLOPT_SSL_VERIFYPEER => false,
-            CURLOPT_CONNECTTIMEOUT => 10,
+            CURLOPT_SSL_VERIFYPEER => true, // ✅ FIX: Enable SSL verification
+            CURLOPT_CONNECTTIMEOUT => 15, // ✅ FIX: Increased connection timeout
         ];
 
         curl_setopt_array($ch, $options);
@@ -121,7 +165,7 @@ class GeminiService
         $responseJson = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $error = curl_error($ch);
-
+        
         curl_close($ch);
 
         if ($responseJson === false) {
@@ -132,10 +176,12 @@ class GeminiService
 
         if ($httpCode !== 200) {
             $errorMessage = $this->parseApiError($response, $httpCode);
+            
             Logger::error("Gemini API returned non-200 status", [
                 'http_code' => $httpCode,
                 'error_message' => $errorMessage,
-                'response_preview' => substr($responseJson, 0, 500)
+                'response_preview' => substr($responseJson, 0, 500),
+                'api_key_suffix' => substr($this->currentApiKey, -10)
             ]);
 
             throw new RuntimeException("Gemini API error (HTTP $httpCode): $errorMessage");

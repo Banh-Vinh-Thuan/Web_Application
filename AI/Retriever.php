@@ -403,18 +403,18 @@ class HybridRetriever
             $filters['budget'] = $entities['budget'];
             $filters['price_condition'] = $entities['price_condition'] ?? 'under';
         }
-        
+
         // Duration filter
         if (!empty($entities['duration'])) {
             $filters['duration'] = $entities['duration'];
         }
-        
+
         // Rating filter
         if (!empty($entities['rating'])) {
             $filters['rating'] = $entities['rating'];
             $filters['rating_condition'] = $entities['rating_condition'] ?? 'minimum';
         }
-        
+
         // Item focus based on intent
         $filters['item_focus'] = match($intent) {
             'tour_search' => 'tour',
@@ -422,13 +422,14 @@ class HybridRetriever
             'mixed_search' => 'both',
             default => null
         };
-        
+
         Logger::debug("Filters prepared", [
             'intent' => $intent,
             'is_mixed' => $isMixedQuery,
+            'has_city_filter' => isset($filters['cityIds']),
             'filters' => $filters
         ]);
-        
+
         return $filters;
     }
 

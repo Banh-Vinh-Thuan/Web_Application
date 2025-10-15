@@ -9,19 +9,24 @@ class Config {
     const DB_CHARSET = "utf8mb4";
 
     // Gemini AI Configuration
-    const GEMINI_API_KEY = "AIzaSyAhRgeHFeyOpM37BXiYSofR23fHvLIJFck";
+    const GEMINI_API_KEY = "AIzaSyAOlyFnLb4WxsCh-wgLoO7N3qYHy-94xG0";
+    
+    const GEMINI_BACKUP_KEYS = [
+        "AIzaSyDrp5ViLBeOYZuIflc1fLd4xUQ9gP5KlWE",
+        "AIzaSyBmRj5Ztc3S6-YGAroOE3T62otmNMivn7A"
+    ];
     const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
     const GEMINI_EMBEDDING_MODEL = "models/text-embedding-004";
 
     // Generation Configuration
-    const GEMINI_MAX_OUTPUT_TOKENS = 2048;  // NEW: Increased for long-form content
+    const GEMINI_MAX_OUTPUT_TOKENS = 2048;  
     const GEMINI_TEMPERATURE = 0.7;
     const GEMINI_TOP_K = 40;
     const GEMINI_TOP_P = 0.95;
 
     // API Timeouts
-    const API_TIMEOUT = 30;
+    const API_TIMEOUT = 60;
 
     // RAG Pipeline
     public const HYBRID_WEIGHTS = ['semantic' => 0.45, 'bm25' => 0.35, 'sql' => 0.20];
@@ -150,11 +155,8 @@ class Config {
     public static function getOutOfDatabaseVietnameseCities() {
         return [
             // Mekong Delta Region
-            'an giang', 'an phu', 'tan chau', 'tien giang', 'my tho', 
-            'ben tre', 'vinh long', 'long an', 'cao lanh', 'kien giang', 
-            'rach gia', 'ca mau', 'u minh', 'bac lieu', 'dong hai', 
-            'soc trang', 'nga nam', 'tran de', 'hau giang', 'vi thanh', 
-            'dong thap', 'sa dec',
+            'an giang', 'an phu', 'tan chau', 'tien giang', 'my tho', 'ben tre', 'vinh long', 'long an', 'cao lanh', 'kien giang', 'rach gia', 'ca mau', 'u minh', 'bac lieu', 'dong hai', 
+            'soc trang', 'nga nam', 'tran de', 'hau giang', 'vi thanh', 'dong thap', 'sa dec',
             
             // Southeast Region
             'binh duong', 'thu dau mot', 'binh phuoc', 'dong xoai', 
