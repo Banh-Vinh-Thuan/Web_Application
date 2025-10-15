@@ -9,8 +9,8 @@ class Config {
     const DB_CHARSET = "utf8mb4";
 
     // Gemini AI Configuration
-    const GEMINI_API_KEY = "AIzaSyBKlus-HPPK2H14xstpE1VHsfkzbUkoRJA";
-    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent"; // UPDATED MODEL
+    const GEMINI_API_KEY = "AIzaSyAhRgeHFeyOpM37BXiYSofR23fHvLIJFck";
+    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
     const GEMINI_EMBEDDING_MODEL = "models/text-embedding-004";
 
@@ -144,6 +144,51 @@ class Config {
                 'bm25' => self::MIN_BM25_SCORE,
                 'confidence' => self::MIN_CONFIDENCE_THRESHOLD
             ]
+        ];
+    }
+
+    public static function getOutOfDatabaseVietnameseCities() {
+        return [
+            // Mekong Delta Region
+            'an giang', 'an phu', 'tan chau', 'tien giang', 'my tho', 
+            'ben tre', 'vinh long', 'long an', 'cao lanh', 'kien giang', 
+            'rach gia', 'ca mau', 'u minh', 'bac lieu', 'dong hai', 
+            'soc trang', 'nga nam', 'tran de', 'hau giang', 'vi thanh', 
+            'dong thap', 'sa dec',
+            
+            // Southeast Region
+            'binh duong', 'thu dau mot', 'binh phuoc', 'dong xoai', 
+            'tay ninh', 'hoa thanh', 'dong nai', 'bien hoa', 
+            'ba ria', 'vung tau',
+            
+            // Central Coast
+            'binh thuan', 'phan thiet', 'mui ne', 'ninh thuan', 'phan rang', 
+            'quang nam', 'tam ky', 'quang ngai', 'duc pho', 
+            'binh dinh', 'quy nhon', 'khanh hoa', 
+            'quang tri', 'dong ha', 'quang binh', 'dong hoi', 
+            'thua thien hue', 'kon tum', 'gia lai', 'pleiku', 
+            'dak lak', 'buon ma thuot', 'dak nong', 'gia nghia', 'lam dong',
+            
+            // North Central
+            'nghe an', 'vinh', 'cua lo', 'ha tinh', 'ky anh', 
+            'thanh hoa', 'sam son',
+            
+            // Red River Delta
+            'hai phong', 'haiphong', 'quang ninh', 'ha long', 'halong',
+            'bac ninh', 'tu son', 'bac giang', 'lang giang', 
+            'hung yen', 'my hao', 'hai duong', 'chi linh', 
+            'nam dinh', 'ninh binh', 'tam coc', 'trang an', 'thai binh',
+            
+            // Northern Mountains
+            'lao cai', 'sapa', 'sa pa', 'yen bai', 'tuyen quang', 
+            'phu tho', 'viet tri', 'thai nguyen', 'bac kan', 
+            'cao bang', 'ban gioc', 'lang son', 'son la', 
+            'dien bien', 'dien bien phu', 'lai chau', 'hoa binh', 'mai chau',
+            
+            // Popular tourism spots not in DB
+            'cat ba', 'ba na hills', 'ba na', 'marble mountains', 
+            'my son', 'cham island', 'cu chi tunnels', 'cu chi',
+            'mekong delta', 'sapa valley', 'ha giang loop'
         ];
     }
 

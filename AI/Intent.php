@@ -124,10 +124,13 @@ class FewShotIntentAnalyzer {
                 ];
                 
             } catch (Exception $apiError) {
+                // ✅ FIX: Log detailed error but continue with fallback
                 Logger::error("Gemini API failed in analyzeIntent", [
                     'error' => $apiError->getMessage(),
-                    'message' => $message
+                    'message' => substr($message, 0, 100),
+                    'error_type' => get_class($apiError)
                 ]);
+                
                 return $this->fallbackToRuleBase($message);
             }
             
@@ -245,7 +248,6 @@ class FewShotIntentAnalyzer {
             }
         }
         
-        // FIXED: Correct logic - was checking !$hasTourKeyword twice
         if ($hasTwoOrMoreCities) {
             if ($hasTourKeyword && !$hasHotelKeyword) {
                 return [
@@ -335,7 +337,6 @@ class FewShotIntentAnalyzer {
     public function extractEntities($message, $vietnameseCities) {
         $entities = $this->fallbackEntityExtraction($message, $vietnameseCities);
         
-        // Extract excluded cities
         $entities['excluded_cities'] = $this->extractExcludedCities($message, $vietnameseCities);
         $entities['has_conditions'] = $this->detectConditions($message);
         $entities['is_international'] = $this->detectOutOfScopeQuery($message, $entities['cities']);
@@ -347,7 +348,6 @@ class FewShotIntentAnalyzer {
         $excluded = [];
         $messageLower = strtolower($message);
         
-        // Patterns: "except X", "excluding X", "except for X", "without X"
         $patterns = [
             '/except\s+(?:for\s+)?([^,\.]+?)(?:\s+and|\s+or|,|\.|\s*$)/i',
             '/excluding\s+([^,\.]+?)(?:\s+and|\s+or|,|\.|\s*$)/i',
@@ -372,55 +372,120 @@ class FewShotIntentAnalyzer {
     }
 
     private function detectOutOfScopeQuery($message, $foundVNCities): bool {
-        // If Vietnamese cities found in DB, it's in scope
-        if (!empty($foundVNCities)) {
-            return false;
-        }
-
         $messageLower = strtolower($message);
-        
-        // Check for Vietnam-specific travel queries
-        $vietnamTravelKeywords = [
-            'beach', 'bien', 'mountain', 'nui', 'climbing', 'leo', 
-            'waterfall', 'thac', 'cave', 'hang', 'hiking', 'trekking',
-            'island', 'dao', 'national park', 'nature', 'trek'
-        ];
-        
-        $hasVietnamTravelIntent = false;
-        foreach ($vietnamTravelKeywords as $keyword) {
-            if (strpos($messageLower, $keyword) !== false) {
-                $hasVietnamTravelIntent = true;
-                break;
-            }
-        }
-        
-        // If Vietnam travel intent but no DB cities matched, flag for safe handling
-        if ($hasVietnamTravelIntent && empty($foundVNCities)) {
-            Logger::info("Vietnam-specific query without DB match", 
-                ['message' => substr($message, 0, 100)]);
+
+        // Check for international destinations first
+        if ($this->isInternationalQuery($messageLower)) {
             return true;
         }
-        
-        // Check for international destinations
-        return $this->isInternationalQuery($messageLower);
+
+        // If no Vietnam cities found in our database, check out-of-DB cities
+        if (empty($foundVNCities)) {
+            $outOfDBCities = Config::getOutOfDatabaseVietnameseCities();
+            
+            foreach ($outOfDBCities as $city) {
+                if (strpos($messageLower, $city) !== false) {
+                    Logger::info("Vietnam out-of-database city detected", [
+                        'city' => $city, 
+                        'message' => substr($message, 0, 100)
+                    ]);
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
   
     private function isInternationalQuery($messageLower): bool {
+        // Expanded international locations list
         $internationalLocations = [
-            'korea', 'korean', 'seoul', 'busan',
-            'japan', 'tokyo', 'osaka', 'kyoto',
-            'thailand', 'bangkok', 'phuket',
-            'singapore', 'malaysia', 'kuala lumpur',
-            'china', 'beijing', 'shanghai',
-            'france', 'paris', 'london', 'england',
-            'usa', 'america', 'new york',
-            'australia', 'sydney', 'melbourne'
+            // East Asia
+            'korea', 'south korea', 'korean', 'seoul', 'busan', 'incheon', 'jeju',
+            'japan', 'tokyo', 'osaka', 'kyoto', 'nagoya', 'hokkaido', 'fukuoka',
+            'china', 'beijing', 'shanghai', 'guangzhou', 'shenzhen', 'chengdu',
+            'hong kong', 'hongkong', 'macau', 'macao',
+            'taiwan', 'taipei', 'kaohsiung', 'taichung',
+            
+            // Southeast Asia (excluding Vietnam)
+            'thailand', 'bangkok', 'phuket', 'chiang mai', 'pattaya',
+            'singapore',
+            'malaysia', 'kuala lumpur', 'penang', 'langkawi',
+            'indonesia', 'bali', 'jakarta', 'yogyakarta',
+            'philippines', 'manila', 'cebu', 'boracay',
+            'cambodia', 'siem reap', 'phnom penh', 'angkor',
+            'laos', 'vientiane', 'luang prabang',
+            'myanmar', 'yangon', 'mandalay', 'bagan',
+            'brunei',
+            
+            // South Asia
+            'india', 'new delhi', 'mumbai', 'bangalore', 'goa', 'jaipur',
+            'nepal', 'kathmandu', 'pokhara',
+            'sri lanka', 'colombo', 'kandy',
+            'maldives', 'male',
+            'bhutan', 'pakistan', 'bangladesh',
+            
+            // Middle East
+            'uae', 'dubai', 'abu dhabi', 'emirates',
+            'qatar', 'doha',
+            'saudi arabia', 'riyadh', 'jeddah', 'mecca',
+            'turkey', 'istanbul', 'ankara', 'antalya',
+            'israel', 'jerusalem', 'tel aviv',
+            'jordan', 'petra', 'oman', 'kuwait', 'bahrain',
+            
+            // Europe
+            'france', 'paris', 'lyon', 'nice', 'marseille',
+            'england', 'london', 'manchester', 'liverpool',
+            'uk', 'britain', 'scotland', 'wales',
+            'germany', 'berlin', 'munich', 'frankfurt', 'cologne',
+            'italy', 'rome', 'milan', 'venice', 'florence', 'naples',
+            'spain', 'madrid', 'barcelona', 'seville', 'valencia',
+            'portugal', 'lisbon', 'porto',
+            'netherlands', 'amsterdam', 'rotterdam',
+            'switzerland', 'zurich', 'geneva', 'bern',
+            'austria', 'vienna', 'salzburg',
+            'belgium', 'brussels', 'bruges',
+            'sweden', 'stockholm', 'gothenburg',
+            'norway', 'oslo', 'bergen',
+            'denmark', 'copenhagen',
+            'finland', 'helsinki',
+            'greece', 'athens', 'santorini', 'mykonos',
+            'czech republic', 'prague',
+            'poland', 'warsaw', 'krakow',
+            'russia', 'moscow', 'st petersburg',
+            
+            // North America
+            'usa', 'america', 'united states', 
+            'new york', 'los angeles', 'chicago', 'san francisco', 
+            'las vegas', 'miami', 'boston', 'seattle', 'washington dc',
+            'canada', 'toronto', 'vancouver', 'montreal', 'ottawa',
+            'mexico', 'cancun', 'mexico city',
+            
+            // Oceania
+            'australia', 'sydney', 'melbourne', 'brisbane', 'perth', 'cairns',
+            'new zealand', 'auckland', 'wellington', 'christchurch', 'queenstown',
+            'fiji', 'tahiti',
+            
+            // South America
+            'brazil', 'rio de janeiro', 'sao paulo', 'brasilia',
+            'argentina', 'buenos aires', 'patagonia',
+            'chile', 'santiago', 'peru', 'lima', 'machu picchu',
+            'colombia', 'bogota', 'cartagena',
+            
+            // Africa
+            'egypt', 'cairo', 'luxor', 'alexandria',
+            'south africa', 'cape town', 'johannesburg',
+            'morocco', 'marrakech', 'casablanca',
+            'kenya', 'nairobi', 'tanzania', 'zanzibar',
+            'ethiopia', 'tunisia', 'algeria'
         ];
 
         foreach ($internationalLocations as $location) {
             if (strpos($messageLower, $location) !== false) {
-                Logger::info("Detected international location", 
-                    ['location' => $location]);
+                Logger::info("Detected international location", [
+                    'location' => $location,
+                    'message_preview' => substr($messageLower, 0, 100)
+                ]);
                 return true;
             }
         }
@@ -428,95 +493,6 @@ class FewShotIntentAnalyzer {
         return false;
     }
 
-    /**
-     * Build entity extraction prompt with examples
-     */
-    private function buildEntityExtractionPrompt($message, $vietnameseCities) {
-        $cityNames = array_keys($vietnameseCities);
-        
-        $prompt = "Extract travel-related entities from user messages.\n\n";
-        $prompt .= "Available cities: " . implode(', ', $cityNames) . "\n\n";
-        $prompt .= "=== EXAMPLES ===\n\n";
-        
-        $prompt .= "Message: \"Show me 3-day tours in Da Nang under 5 million\"\n";
-        $prompt .= "Entities: {\"cities\": [\"Da Nang\"], \"duration\": 3, \"budget\": 5000000, \"price_condition\": \"under\"}\n\n";
-        
-        $prompt .= "Message: \"Find 4-star hotels in Hanoi and Ho Chi Minh City\"\n";
-        $prompt .= "Entities: {\"cities\": [\"Hanoi\", \"Ho Chi Minh City\"], \"rating\": 4, \"rating_condition\": \"minimum\"}\n\n";
-        
-        $prompt .= "Message: \"I want luxury tours in Hoi An\"\n";
-        $prompt .= "Entities: {\"cities\": [\"Hoi An\"], \"preferences\": [\"luxury\"]}\n\n";
-        
-        $prompt .= "=== NOW EXTRACT ===\n\n";
-        $prompt .= "Message: \"{$message}\"\n";
-        $prompt .= "Entities: ";
-        
-        return $prompt;
-    }
-    
-    /**
-     * Parse entity extraction response
-     */
-    private function parseEntityResponse($response, $message, $vietnameseCities) {
-        // Try to parse JSON response
-        if (preg_match('/\{[^}]+\}/', $response, $matches)) {
-            $json = json_decode($matches[0], true);
-            if ($json) {
-                return $this->normalizeEntities($json, $vietnameseCities);
-            }
-        }
-        
-        // Fallback to rule-based extraction
-        return $this->fallbackEntityExtraction($message, $vietnameseCities);
-    }
-    
-    /**
-     * Normalize extracted entities
-     */
-    private function normalizeEntities($entities, $vietnameseCities) {
-        $normalized = [
-            'cities' => [],
-            'duration' => $entities['duration'] ?? null,
-            'rating' => $entities['rating'] ?? null,
-            'rating_condition' => $entities['rating_condition'] ?? 'minimum',
-            'budget' => $entities['budget'] ?? null,
-            'price_condition' => $entities['price_condition'] ?? null,
-            'preferences' => $entities['preferences'] ?? [],
-            'is_international' => false,
-            'raw_message' => ''
-        ];
-        
-        // Map city names to city data
-        if (!empty($entities['cities'])) {
-            foreach ($entities['cities'] as $cityName) {
-                $cityKey = $this->findCityKey($cityName, $vietnameseCities);
-                if ($cityKey && isset($vietnameseCities[$cityKey])) {
-                    $normalized['cities'][] = $vietnameseCities[$cityKey];
-                }
-            }
-        }
-        
-        return $normalized;
-    }
-    
-    /**
-     * Find city key in vietnameseCities array
-     */
-    private function findCityKey($cityName, $vietnameseCities) {
-        $cityName = strtolower(trim($cityName));
-        
-        foreach (array_keys($vietnameseCities) as $key) {
-            if (strtolower($key) === $cityName) {
-                return $key;
-            }
-        }
-        
-        return null;
-    }
-    
-    /**
-     * Fallback entity extraction using rules
-     */
     private function fallbackEntityExtraction($message, $vietnameseCities) {
         return [
             'cities' => $this->extractCities($message, $vietnameseCities),
@@ -543,7 +519,6 @@ class FewShotIntentAnalyzer {
         return $hasPrice || $hasDuration || $hasRating;
     }
     
-    // Keep existing extraction methods as fallbacks
     private function extractCities($message, $vietnameseCities) {
         $foundCities = [];
         $normalizedMessage = strtolower($message);
