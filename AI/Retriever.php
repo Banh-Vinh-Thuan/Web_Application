@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 require_once './Logger.php';
@@ -6,42 +7,40 @@ require_once './Gemini.php';
 require_once './config.php';
 require_once './Reranker.php';
 
-class HybridRetriever
-{
+class HybridRetriever {
     private GeminiService $geminiService;
     private CrossEncoderReranker $reranker;
     private array $weights;
     private const DEFAULT_LIMIT = 15;
+    private const VECTOR_SEARCH_LIMIT = 2000;
+
+    // BM25 parameters
+    private float $k1 = 1.2;
+    private float $b = 0.75;
 
     public function __construct(
-        private readonly DatabaseService $dbService,
-        private readonly float $k1 = 1.2,
-        private readonly float $b = 0.75
+        private readonly DatabaseService $dbService
     ) {
         $this->geminiService = new GeminiService();
         $this->reranker = new CrossEncoderReranker($this->geminiService);
-        
-        // Fusion weights (removed SQL channel)
-        $this->weights = [
-            'semantic' => 0.6,
-            'bm25' => 0.4
-        ];
-        
+        $this->weights = Config::HYBRID_WEIGHTS;
+
         Logger::debug("HybridRetriever initialized", ['weights' => $this->weights]);
     }
 
     /**
      * Main hybrid search pipeline
      */
-    public function hybridSearch(string $query, array $entities, string $intent): array
-    {
+    public function hybridSearch(string $query, array $entities, string $intent): array {
         try {
             Logger::info("Hybrid search started", ['query' => $query, 'intent' => $intent]);
 
             $filters = $this->prepareFilters($entities, $intent);
 
-            // STEP 1: Parallel Retrieval (BM25 + Semantic)
+            // STEP 1: Parallel Retrieval - Dense Semantic Search
             $semanticResults = $this->semanticSearch($query, $filters);
+            
+            // STEP 2: Parallel Retrieval - BM25 Keyword Search
             $bm25Results = $this->bm25Search($query, $filters);
 
             Logger::debug("Retrieval completed", [
@@ -49,22 +48,30 @@ class HybridRetriever
                 'bm25' => count($bm25Results)
             ]);
 
-            // STEP 2: Fusion & Pre-ranking
+            // STEP 3: Fusion & Pre-ranking (weighted combination)
             $preRankedCandidates = $this->fuseResults($semanticResults, $bm25Results);
 
             if (empty($preRankedCandidates)) {
                 return $this->emptyResultsResponse($query);
             }
 
-            // STEP 3: Cross-Encoder Reranking (top 20 candidates)
+            // STEP 4: Cross-Encoder Reranking (top 20 candidates)
             $topCandidates = array_slice($preRankedCandidates, 0, 20);
             $hybridScores = array_column($topCandidates, 'combined_score');
+            
             $rerankedResults = $this->reranker->rerank($query, $topCandidates, $hybridScores);
 
-            // STEP 4: Diversity Filtering
-            $finalResults = $this->applyDiversityFiltering($rerankedResults, Config::MAX_FINAL_RESULTS);
+            // STEP 5: Diversity Filtering
+            $finalResults = $this->applyDiversityFiltering(
+                $rerankedResults, 
+                Config::MAX_FINAL_RESULTS
+            );
 
-            $confidence = $this->calculateConfidence($semanticResults, $bm25Results, $finalResults);
+            $confidence = $this->calculateConfidence(
+                $semanticResults, 
+                $bm25Results, 
+                $finalResults
+            );
 
             return [
                 'success' => true,
@@ -81,24 +88,37 @@ class HybridRetriever
 
         } catch (Exception $e) {
             Logger::error("Hybrid search failed", ['error' => $e->getMessage()]);
-            return ['success' => false, 'results' => [], 'confidence' => 0, 'error' => $e->getMessage()];
+            return [
+                'success' => false, 
+                'results' => [], 
+                'confidence' => 0, 
+                'error' => $e->getMessage()
+            ];
         }
     }
 
     /**
      * Dense Semantic Search using embeddings
      */
-    private function semanticSearch($query, $filters, $limit = self::DEFAULT_LIMIT): array
-    {
+    private function semanticSearch($query, $filters, $limit = self::DEFAULT_LIMIT): array {
         try {
+            // Generate query embedding vector
             $queryVector = $this->geminiService->generateEmbedding($query);
+
             if (!$queryVector) {
                 Logger::warning("Failed to generate query embedding");
                 return [];
             }
 
-            $similarityResults = $this->dbService->findSimilarItemsByVector($queryVector, $limit * 2);
-            return empty($similarityResults) ? [] : $this->enrichWithItemData($similarityResults, $filters, $limit);
+            // Find similar items using cosine similarity
+            $similarityResults = $this->dbService->findSimilarItemsByVector(
+                $queryVector, 
+                $limit * 2
+            );
+
+            return empty($similarityResults) 
+                ? [] 
+                : $this->enrichWithItemData($similarityResults, $filters, $limit);
 
         } catch (Exception $e) {
             Logger::error("Semantic search failed", ['error' => $e->getMessage()]);
@@ -109,16 +129,27 @@ class HybridRetriever
     /**
      * BM25 Search using tokenized query
      */
-    private function bm25Search($query, $filters, $limit = self::DEFAULT_LIMIT): array
-    {
+    private function bm25Search($query, $filters, $limit = self::DEFAULT_LIMIT): array {
         try {
+            // Extract keywords from query
             $queryTerms = $this->tokenizeQuery($query);
-            if (empty($queryTerms)) return [];
 
+            if (empty($queryTerms)) {
+                Logger::warning("No valid query terms extracted");
+                return [];
+            }
+
+            // Get searchable documents
             $documents = $this->getSearchableDocuments($filters);
-            if (empty($documents)) return [];
 
+            if (empty($documents)) {
+                Logger::warning("No searchable documents found");
+                return [];
+            }
+
+            // Calculate BM25 scores
             $scores = $this->calculateBM25Scores($queryTerms, $documents);
+
             arsort($scores);
 
             return $this->buildBM25Results($scores, $documents, $queryTerms, $limit);
@@ -132,39 +163,41 @@ class HybridRetriever
     /**
      * Tokenize query into search terms
      */
-    private function tokenizeQuery($query): array
-    {
-        // Remove special characters and normalize
+    private function tokenizeQuery($query): array {
         $query = strtolower(trim($query));
         $query = preg_replace('/[^\p{L}\p{N}\s]/u', ' ', $query);
-        
-        // Split into words
+
         $terms = preg_split('/\s+/', $query, -1, PREG_SPLIT_NO_EMPTY);
-        
-        // Remove common stopwords
+
+        // Remove stopwords
         $stopwords = ['the', 'a', 'an', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'and', 'or'];
-        $terms = array_filter($terms, fn($term) => !in_array($term, $stopwords) && strlen($term) > 2);
-        
+        $terms = array_filter($terms, fn($term) => 
+            !in_array($term, $stopwords) && strlen($term) > 2
+        );
+
         return array_values(array_unique($terms));
     }
 
     /**
      * BM25 Score Calculation (Okapi BM25)
      */
-    private function calculateBM25Scores($queryTerms, $documents): array
-    {
+    private function calculateBM25Scores($queryTerms, $documents): array {
         $scores = array_fill_keys(array_keys($documents), 0.0);
         $docCount = count($documents);
+
         if ($docCount === 0) return $scores;
 
+        // Calculate average document length
         $avgDocLength = array_sum(array_column($documents, 'word_count')) / $docCount;
 
-        // Calculate document frequency
+        // Calculate document frequency (DF) for each term
         $df = array_fill_keys($queryTerms, 0);
         foreach ($documents as $doc) {
             $docText = strtolower($doc['text']);
             foreach ($queryTerms as $term) {
-                if (stripos($docText, $term) !== false) $df[$term]++;
+                if (stripos($docText, $term) !== false) {
+                    $df[$term]++;
+                }
             }
         }
 
@@ -175,12 +208,16 @@ class HybridRetriever
 
             foreach ($queryTerms as $term) {
                 $tf = substr_count($docText, $term);
+                
                 if ($tf === 0) continue;
 
+                // IDF calculation: log((N - df + 0.5) / (df + 0.5) + 1)
                 $idf = log(($docCount - $df[$term] + 0.5) / ($df[$term] + 0.5) + 1);
+
+                // BM25 formula: IDF * (tf * (k1 + 1)) / (tf + k1 * (1 - b + b * (docLength / avgDocLength)))
                 $numerator = $tf * ($this->k1 + 1);
                 $denominator = $tf + $this->k1 * (1 - $this->b + $this->b * ($docLength / $avgDocLength));
-                
+
                 $scores[$docId] += $idf * ($numerator / $denominator);
             }
 
@@ -204,8 +241,7 @@ class HybridRetriever
     /**
      * Get item name for scoring
      */
-    private function getItemName($item, $type): string
-    {
+    private function getItemName($item, $type): string {
         if ($type === 'tour') {
             return strtolower($item['tour_name'] ?? '');
         }
@@ -215,8 +251,7 @@ class HybridRetriever
     /**
      * Extract item ID
      */
-    private function extractItemId($item, $itemType): int
-    {
+    private function extractItemId($item, $itemType): int {
         if ($itemType === 'tour') {
             return (int)($item['tourid'] ?? 0);
         }
@@ -226,14 +261,14 @@ class HybridRetriever
     /**
      * Fusion: Combine BM25 + Semantic results with weighted scoring
      */
-    private function fuseResults($semanticResults, $bm25Results): array
-    {
-        // Normalize scores
+    private function fuseResults($semanticResults, $bm25Results): array {
+        // Normalize scores to [0,1] range
         $normSemantic = $this->normalizeScores($semanticResults, 'similarity_score');
         $normBM25 = $this->normalizeScores($bm25Results, 'bm25_score');
 
         // Unify by item ID
         $unified = [];
+
         foreach (['semantic' => $normSemantic, 'bm25' => $normBM25] as $channel => $results) {
             foreach ($results as $result) {
                 if (!isset($result['item']) || !isset($result['item_type'])) continue;
@@ -256,28 +291,28 @@ class HybridRetriever
             }
         }
 
-        // Calculate combined scores
+        // Calculate combined scores using configured weights
         foreach ($unified as &$result) {
-            $combinedScore = 
+            $combinedScore =
                 $result['scores']['semantic'] * $this->weights['semantic'] +
                 $result['scores']['bm25'] * $this->weights['bm25'];
-            
+
             // Consensus bonus (both channels agree)
             $consensusBonus = count($result['channels']) > 1 ? 0.1 : 0;
-            
+
             $result['combined_score'] = min(1.0, $combinedScore + $consensusBonus);
             $result['channel_count'] = count($result['channels']);
         }
 
         usort($unified, fn($a, $b) => $b['combined_score'] <=> $a['combined_score']);
+
         return array_values($unified);
     }
 
     /**
      * Normalize scores to [0,1] range
      */
-    private function normalizeScores($results, $scoreField): array
-    {
+    private function normalizeScores($results, $scoreField): array {
         if (empty($results)) return [];
 
         $scores = array_column($results, $scoreField);
@@ -288,14 +323,14 @@ class HybridRetriever
         foreach ($results as &$result) {
             $result['norm_score'] = ($result[$scoreField] - $min) / $range;
         }
+
         return $results;
     }
 
     /**
      * Diversity Filtering: Limit per city and type
      */
-    private function applyDiversityFiltering($rankedResults, $limit): array
-    {
+    private function applyDiversityFiltering($rankedResults, $limit): array {
         $finalResults = [];
         $cityCount = [];
         $typeCount = ['tour' => 0, 'hotel' => 0];
@@ -309,7 +344,8 @@ class HybridRetriever
             $cityName = $result['item']['city_name'] ?? 'Unknown';
             $itemType = $result['item_type'];
 
-            if (($cityCount[$cityName] ?? 0) >= $maxPerCity || $typeCount[$itemType] >= $maxPerType) {
+            if (($cityCount[$cityName] ?? 0) >= $maxPerCity || 
+                $typeCount[$itemType] >= $maxPerType) {
                 continue;
             }
 
@@ -324,12 +360,12 @@ class HybridRetriever
     /**
      * Calculate overall confidence score
      */
-    private function calculateConfidence($semanticResults, $bm25Results, $finalResults): float
-    {
+    private function calculateConfidence($semanticResults, $bm25Results, $finalResults): float {
         $baseConfidence = 0.5;
+
         $semanticBoost = min(0.25, count($semanticResults) * 0.025);
         $bm25Boost = min(0.25, count($bm25Results) * 0.025);
-        
+
         $consensusBoost = 0;
         if (!empty($finalResults)) {
             $avgConsensus = array_sum(array_column($finalResults, 'channel_count')) / count($finalResults);
@@ -342,8 +378,7 @@ class HybridRetriever
     /**
      * Empty results response
      */
-    private function emptyResultsResponse($query): array
-    {
+    private function emptyResultsResponse($query): array {
         return [
             'success' => true,
             'results' => [],

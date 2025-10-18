@@ -146,35 +146,50 @@ mysqli_close($conn);
         <div id="view-tours" class="tab-content">
             <div class="info-box">
                 <h3>Your Booked Tours</h3>
-                <table>
-                    <tr>
-                        <?php
-                        $tourHeaders = ['Booking ID', 'City', 'Tour Name', 'Tourists', 'Tour Date', 'Contact', 'Price/Person (VND)', 'Total Amount (VND)', 'Booking Date', 'Status', 'Action'];
-                        foreach ($tourHeaders as $header) echo "<th>$header</th>";
-                        ?>
-                    </tr>
-                    <?php if (!empty($tourBookings)): ?>
-                        <?php foreach ($tourBookings as $booking): ?>
+                <div class="table-responsive">
+                    <table class="booking-table">
+                        <thead>
                             <tr>
-                                <td><?= htmlspecialchars($booking['booking_id'] ?? '') ?></td>
-                                <td><?= htmlspecialchars($booking['city_name'] ?? '') ?></td>
-                                <td><?= htmlspecialchars($booking['tour_name'] ?? '') ?></td>
-                                <td><?= htmlspecialchars($booking['tourists'] ?? '1') ?></td>
-                                <td><?= htmlspecialchars($booking['tour_date'] ?? '') ?></td>
-                                <td><?= htmlspecialchars($booking['contact'] ?? '') ?></td>
-                                <td><?= number_format($booking['price_per_person'] ?? 0) ?></td>
-                                <td><?= number_format($booking['total_amount'] ?? 0) ?></td>
-                                <td><?= htmlspecialchars($booking['booking_date'] ?? '') ?></td>
-                                <td><?= htmlspecialchars($booking['payment_status'] ?? '') ?></td>
-                                <td class="delete-link">
-                                    <a href="?delete_tour=<?= $booking['booking_id'] ?>" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
-                                </td>
+                                <th>ID</th>
+                                <th>City</th>
+                                <th>Tour Name</th>
+                                <th>Tourists</th>
+                                <th>Tour Date</th>
+                                <th>Contact</th>
+                                <th>Price/Person</th>
+                                <th>Total Amount</th>
+                                <th>Booking Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr><td colspan="11">No bookings available.</td></tr>
-                    <?php endif; ?>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($tourBookings)): ?>
+                                <?php foreach ($tourBookings as $booking): ?>
+                                    <tr>
+                                        <td data-label="ID"><span class="booking-id">#<?= htmlspecialchars($booking['booking_id'] ?? '') ?></span></td>
+                                        <td data-label="City"><?= htmlspecialchars($booking['city_name'] ?? '') ?></td>
+                                        <td data-label="Tour Name"><strong><?= htmlspecialchars($booking['tour_name'] ?? '') ?></strong></td>
+                                        <td data-label="Tourists"><span class="badge badge-info"><?= htmlspecialchars($booking['tourists'] ?? '1') ?> <i class="fas fa-user"></i></span></td>
+                                        <td data-label="Tour Date"><i class="far fa-calendar"></i> <?= htmlspecialchars($booking['tour_date'] ?? '') ?></td>
+                                        <td data-label="Contact"><i class="fas fa-phone"></i> <?= htmlspecialchars($booking['contact'] ?? '') ?></td>
+                                        <td data-label="Price/Person"><span class="price"><?= number_format($booking['price_per_person'] ?? 0) ?> VND</span></td>
+                                        <td data-label="Total Amount"><span class="total-price"><?= number_format($booking['total_amount'] ?? 0) ?> VND</span></td>
+                                        <td data-label="Booking Date"><?= htmlspecialchars($booking['booking_date'] ?? '') ?></td>
+                                        <td data-label="Status"><span class="status-badge status-<?= strtolower($booking['payment_status'] ?? 'pending') ?>"><?= htmlspecialchars($booking['payment_status'] ?? '') ?></span></td>
+                                        <td data-label="Action" class="action-cell">
+                                            <a href="?delete_tour=<?= $booking['booking_id'] ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this booking?')">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="11" class="empty-message">No bookings available.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
 
@@ -182,36 +197,52 @@ mysqli_close($conn);
         <div id="view-hotels" class="tab-content">
             <div class="info-box">
                 <h3>Your Booked Hotels</h3>
-                <table>
-                    <tr>
-                        <?php
-                        $hotelHeaders = ['Booking ID', 'Hotel Name', 'City', 'Tourists', 'Number of Rooms', 'Room Types', 'Check-In Date', 'Check-Out Date', 'Total Amount', 'Booking Date', 'Status', 'Action'];
-                        foreach ($hotelHeaders as $header) echo "<th>$header</th>";
-                        ?>
-                    </tr>
-                    <?php if (!empty($hotelReceipts)): ?>
-                        <?php foreach ($hotelReceipts as $receipt): ?>
+                <div class="table-responsive">
+                    <table class="booking-table">
+                        <thead>
                             <tr>
-                                <td><?= htmlspecialchars($receipt['booking_id']) ?></td>
-                                <td><?= htmlspecialchars($receipt['hotel_name']) ?></td>
-                                <td><?= htmlspecialchars($receipt['city_name']) ?></td>
-                                <td><?= htmlspecialchars($receipt['tourists']) ?></td>
-                                <td><?= htmlspecialchars($receipt['number_of_rooms']) ?></td>
-                                <td><?= htmlspecialchars($receipt['room_type']) ?></td>
-                                <td><?= htmlspecialchars($receipt['check_in_date']) ?></td>
-                                <td><?= htmlspecialchars($receipt['check_out_date']) ?></td>
-                                <td><?= htmlspecialchars($receipt['total_amount']) ?> VND</td>
-                                <td><?= htmlspecialchars($receipt['booking_date']) ?></td>
-                                <td><?= htmlspecialchars($receipt['payment_status']) ?></td>
-                                <td class="delete-link">
-                                    <a href="?delete_hotel=<?= $receipt['booking_id'] ?>" onclick="return confirm('Are you sure you want to delete this booking?')">Delete</a>
-                                </td>
+                                <th>ID</th>
+                                <th>Hotel Name</th>
+                                <th>City</th>
+                                <th>Tourists</th>
+                                <th>Rooms</th>
+                                <th>Room Type</th>
+                                <th>Check-In</th>
+                                <th>Check-Out</th>
+                                <th>Total Amount</th>
+                                <th>Booking Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
                             </tr>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <tr><td colspan="12">No receipts recorded.</td></tr>
-                    <?php endif; ?>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (!empty($hotelReceipts)): ?>
+                                <?php foreach ($hotelReceipts as $receipt): ?>
+                                    <tr>
+                                        <td data-label="ID"><span class="booking-id">#<?= htmlspecialchars($receipt['booking_id']) ?></span></td>
+                                        <td data-label="Hotel Name"><strong><?= htmlspecialchars($receipt['hotel_name']) ?></strong></td>
+                                        <td data-label="City"><?= htmlspecialchars($receipt['city_name']) ?></td>
+                                        <td data-label="Tourists"><span class="badge badge-info"><?= htmlspecialchars($receipt['tourists']) ?> <i class="fas fa-user"></i></span></td>
+                                        <td data-label="Rooms"><span class="badge badge-secondary"><?= htmlspecialchars($receipt['number_of_rooms']) ?> <i class="fas fa-bed"></i></span></td>
+                                        <td data-label="Room Type"><?= htmlspecialchars($receipt['room_type']) ?></td>
+                                        <td data-label="Check-In"><i class="far fa-calendar-check"></i> <?= htmlspecialchars($receipt['check_in_date']) ?></td>
+                                        <td data-label="Check-Out"><i class="far fa-calendar-times"></i> <?= htmlspecialchars($receipt['check_out_date']) ?></td>
+                                        <td data-label="Total Amount"><span class="total-price"><?= number_format($receipt['total_amount']) ?> VND</span></td>
+                                        <td data-label="Booking Date"><?= htmlspecialchars($receipt['booking_date']) ?></td>
+                                        <td data-label="Status"><span class="status-badge status-<?= strtolower($receipt['payment_status']) ?>"><?= htmlspecialchars($receipt['payment_status']) ?></span></td>
+                                        <td data-label="Action" class="action-cell">
+                                            <a href="?delete_hotel=<?= $receipt['booking_id'] ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this booking?')">
+                                                <i class="fas fa-trash"></i> Delete
+                                            </a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="12" class="empty-message">No receipts recorded.</td></tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

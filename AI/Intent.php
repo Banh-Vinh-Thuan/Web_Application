@@ -124,7 +124,6 @@ class FewShotIntentAnalyzer {
                 ];
                 
             } catch (Exception $apiError) {
-                // ✅ FIX: Log detailed error but continue with fallback
                 Logger::error("Gemini API failed in analyzeIntent", [
                     'error' => $apiError->getMessage(),
                     'message' => substr($message, 0, 100),

@@ -239,13 +239,23 @@ class ResponseGenerator
 
         // CASE 1 & 8: Single city tours
         if (!empty($tours)) {
-            $displayData['tours'] = array_slice($tours, 0, 6);
+            // ✅ FIX: For conditional queries, return ONLY filtered results
+            if ($hasConditions) {
+                $displayData['tours'] = $tours; // Already filtered by backend
+            } else {
+                $displayData['tours'] = array_slice($tours, 0, 6);
+            }
             return $displayData;
         }
 
-        // CASE 2: Single city hotels
+        // CASE 2: Single city hotels  
         if (!empty($hotels)) {
-            $displayData['hotels'] = array_slice($hotels, 0, 6);
+            // ✅ FIX: For conditional queries, return ONLY filtered results
+            if ($hasConditions) {
+                $displayData['hotels'] = $hotels; // Already filtered by backend
+            } else {
+                $displayData['hotels'] = array_slice($hotels, 0, 6);
+            }
             return $displayData;
         }
 

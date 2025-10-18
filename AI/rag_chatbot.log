@@ -1010,3 +1010,870 @@
 [2025-10-15 04:51:10] [INFO] OOD response successfully generated {"length":4957,"preview":"**4-Day Travel Plan to Visit Taiwan** (Budget: To be determined)\n\n**Cultural Tips:**\n*   Learn basic"}
 [2025-10-15 04:51:10] [INFO] Out-of-database response generated {"response_length":4957,"similar_items":8,"had_embedding":true}
 [2025-10-15 04:51:10] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-15 06:49:01] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:49:01] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:49:01] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":1}
+[2025-10-15 06:49:01] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-15 06:49:12] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:49:12] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:49:12] [INFO] Processing user message {"message_length":21,"message_preview":"introduce tour hoi an","history_count":3}
+[2025-10-15 06:49:14] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"introduce tour hoi an"}
+[2025-10-15 06:49:14] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-15 06:49:14] [INFO] Hybrid search started {"query":"introduce tour hoi an","intent":"tour_search"}
+[2025-10-15 06:49:16] [INFO] Reranking started {"candidates":8,"query_length":21}
+[2025-10-15 06:49:16] [INFO] generateVietnameseResponse called {"userMessage":"introduce tour hoi an","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.75}}
+[2025-10-15 06:49:20] [INFO] Successfully generated response {"response_length":1016,"response_preview":"Okay, here are some tours available in Hoi An:\n\nI found these tours in Hoi An:\n* **Hoi An Nature & C"}
+[2025-10-15 06:49:20] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.75,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 06:49:20] [INFO] Message processed successfully {"processing_time_ms":7495.91,"confidence":0.75,"response_type":"tour_search"}
+[2025-10-15 06:49:20] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 06:49:51] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:49:51] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:49:51] [INFO] Processing user message {"message_length":42,"message_preview":"How about hotel phu quoc has rating 4 star","history_count":5}
+[2025-10-15 06:49:53] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"How about hotel phu quoc has rating 4 star"}
+[2025-10-15 06:49:53] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-15 06:49:53] [INFO] Hybrid search started {"query":"How about hotel phu quoc has rating 4 star","intent":"rating_inquiry"}
+[2025-10-15 06:49:54] [INFO] Reranking started {"candidates":12,"query_length":42}
+[2025-10-15 06:49:57] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-15 06:49:57] [INFO] generateVietnameseResponse called {"userMessage":"How about hotel phu quoc has rating 4 star","context_length":302,"metadata":{"match_level":"hybrid_match","confidence":0.75}}
+[2025-10-15 06:49:59] [INFO] Successfully generated response {"response_length":362,"response_preview":"Okay, let me see what I can find for 4-star hotels in Phu Quoc!\n\nI don't have access to a live hotel"}
+[2025-10-15 06:49:59] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.75,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 06:49:59] [INFO] Message processed successfully {"processing_time_ms":8449.67,"confidence":0.75,"response_type":"tour_search"}
+[2025-10-15 06:49:59] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 06:51:05] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:51:05] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:51:05] [INFO] Processing user message {"message_length":62,"message_preview":"tour ha giang with duration 4 days and price under","history_count":5}
+[2025-10-15 06:51:08] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour ha giang with duration 4 days and price under 10 millions"}
+[2025-10-15 06:51:08] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-15 06:51:08] [INFO] Hybrid search started {"query":"tour ha giang with duration 4 days and price under 10 millions","intent":"tour_search"}
+[2025-10-15 06:51:09] [INFO] Reranking started {"candidates":11,"query_length":62}
+[2025-10-15 06:51:12] [INFO] Reranking completed {"input":11,"output":10}
+[2025-10-15 06:51:12] [INFO] generateVietnameseResponse called {"userMessage":"tour ha giang with duration 4 days and price under 10 millions","context_length":746,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-15 06:51:16] [INFO] Successfully generated response {"response_length":918,"response_preview":"Okay, I found these tours in Ha Giang that fit your criteria of 4 days and under 10 million VND:\n\n* "}
+[2025-10-15 06:51:16] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 06:51:16] [INFO] Message processed successfully {"processing_time_ms":10254.83,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-15 06:51:16] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 06:52:04] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:52:04] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:52:04] [INFO] Processing user message {"message_length":74,"message_preview":"create plan to go thailand for 4 days and budget b","history_count":5}
+[2025-10-15 06:52:06] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"create plan to go thailand for 4 days and budget between 10 to 20 millions"}
+[2025-10-15 06:52:06] [INFO] Detected international location {"location":"thailand","message_preview":"create plan to go thailand for 4 days and budget between 10 to 20 millions"}
+[2025-10-15 06:52:06] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-15 06:52:06] [INFO] Handling out-of-database query {"message":"create plan to go thailand for 4 days and budget between 10 to 20 millions","is_international":true}
+[2025-10-15 06:52:07] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Go Thailand"}
+[2025-10-15 06:52:20] [INFO] OOD response successfully generated {"length":5858,"preview":"**4-Day Travel Plan to Thailand** (Budget: 10-20 million VND)\n\n**Note:** This plan focuses on Bangko"}
+[2025-10-15 06:52:20] [INFO] Out-of-database response generated {"response_length":5858,"similar_items":8,"had_embedding":true}
+[2025-10-15 06:52:20] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-15 06:52:38] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:52:38] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:52:38] [INFO] Processing user message {"message_length":45,"message_preview":"tour ha noi and phu quoc have duration 3 days","history_count":5}
+[2025-10-15 06:52:40] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour ha noi and phu quoc have duration 3 days"}
+[2025-10-15 06:52:40] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":true,"is_international":false}
+[2025-10-15 06:52:40] [INFO] Hybrid search started {"query":"tour ha noi and phu quoc have duration 3 days","intent":"tour_search"}
+[2025-10-15 06:52:42] [INFO] Reranking started {"candidates":1,"query_length":45}
+[2025-10-15 06:52:42] [INFO] generateVietnameseResponse called {"userMessage":"tour ha noi and phu quoc have duration 3 days","context_length":135,"metadata":{"match_level":"hybrid_match","confidence":0.45000000000000007}}
+[2025-10-15 06:52:45] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-15 06:52:45] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.45000000000000007,"display_data_keys":["multi_city","has_conditions","cities","city1_tours","city2_tours","tours"]}
+[2025-10-15 06:52:45] [INFO] Message processed successfully {"processing_time_ms":6655.15,"confidence":0.45000000000000007,"response_type":"tour_search"}
+[2025-10-15 06:52:45] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 06:53:22] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 06:53:22] [INFO] Chatbot initialized successfully 
+[2025-10-15 06:53:22] [INFO] Processing user message {"message_length":36,"message_preview":"tour phu yen and ha giang for 3 days","history_count":5}
+[2025-10-15 06:53:24] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour phu yen and ha giang for 3 days"}
+[2025-10-15 06:53:24] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":true,"is_international":false}
+[2025-10-15 06:53:24] [INFO] Hybrid search started {"query":"tour phu yen and ha giang for 3 days","intent":"tour_search"}
+[2025-10-15 06:53:26] [INFO] Reranking started {"candidates":5,"query_length":36}
+[2025-10-15 06:53:26] [INFO] generateVietnameseResponse called {"userMessage":"tour phu yen and ha giang for 3 days","context_length":494,"metadata":{"match_level":"hybrid_match","confidence":0.625}}
+[2025-10-15 06:53:29] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-15 06:53:29] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.625,"display_data_keys":["multi_city","has_conditions","cities","city1_tours","city2_tours","tours"]}
+[2025-10-15 06:53:29] [INFO] Message processed successfully {"processing_time_ms":7070.02,"confidence":0.625,"response_type":"tour_search"}
+[2025-10-15 06:53:29] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:04:03] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:04:03] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:04:03] [INFO] Processing user message {"message_length":29,"message_preview":"hotel has price under 500.000","history_count":5}
+[2025-10-15 07:04:04] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"hotel has price under 500.000"}
+[2025-10-15 07:04:04] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:04:04] [INFO] Hybrid search started {"query":"hotel has price under 500.000","intent":"price_inquiry"}
+[2025-10-15 07:04:05] [INFO] Reranking started {"candidates":19,"query_length":29}
+[2025-10-15 07:04:08] [INFO] Reranking completed {"input":19,"output":10}
+[2025-10-15 07:04:08] [INFO] generateVietnameseResponse called {"userMessage":"hotel has price under 500.000","context_length":505,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-15 07:04:10] [INFO] Successfully generated response {"response_length":518,"response_preview":"Okay, I can help with that! Here are the hotels I found under 500.000 VND:\n\nI found these hotels in "}
+[2025-10-15 07:04:10] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-15 07:04:10] [INFO] Message processed successfully {"processing_time_ms":7645.55,"confidence":0.8,"response_type":"hotel_search"}
+[2025-10-15 07:04:10] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-15 07:05:42] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:05:42] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:05:42] [INFO] Processing user message {"message_length":15,"message_preview":"tour has 5 days","history_count":5}
+[2025-10-15 07:05:43] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"tour has 5 days"}
+[2025-10-15 07:05:43] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:05:43] [INFO] Hybrid search started {"query":"tour has 5 days","intent":"general"}
+[2025-10-15 07:05:44] [INFO] Reranking started {"candidates":6,"query_length":15}
+[2025-10-15 07:05:44] [INFO] generateVietnameseResponse called {"userMessage":"tour has 5 days","context_length":668,"metadata":{"match_level":"hybrid_match","confidence":0.675}}
+[2025-10-15 07:05:47] [INFO] Successfully generated response {"response_length":735,"response_preview":"Okay, I can help with that! Here are the 5-day tours I found:\n\n• **Hanoi - Ninh Binh - Ha Long: He"}
+[2025-10-15 07:05:47] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.675,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:05:47] [INFO] Message processed successfully {"processing_time_ms":5083.98,"confidence":0.675,"response_type":"tour_search"}
+[2025-10-15 07:05:47] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:13:51] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:13:51] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:13:51] [INFO] Processing user message {"message_length":23,"message_preview":"hotel has rating 4 star","history_count":5}
+[2025-10-15 07:13:53] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"hotel has rating 4 star"}
+[2025-10-15 07:13:53] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:13:53] [INFO] Hybrid search started {"query":"hotel has rating 4 star","intent":"rating_inquiry"}
+[2025-10-15 07:13:55] [INFO] Reranking started {"candidates":20,"query_length":23}
+[2025-10-15 07:14:00] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-15 07:14:00] [INFO] generateVietnameseResponse called {"userMessage":"hotel has rating 4 star","context_length":517,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-15 07:14:03] [INFO] Successfully generated response {"response_length":630,"response_preview":"Okay, I can help with that! Here are the 4-star hotels I found:\n\nI found these hotels in Ha Noi:\n* *"}
+[2025-10-15 07:14:03] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-15 07:14:03] [INFO] Message processed successfully {"processing_time_ms":12597.84,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-15 07:14:03] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-15 07:16:20] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:16:20] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:16:20] [INFO] Processing user message {"message_length":31,"message_preview":"tour has price above 10.000.000","history_count":5}
+[2025-10-15 07:16:22] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"tour has price above 10.000.000"}
+[2025-10-15 07:16:22] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:16:22] [INFO] Hybrid search started {"query":"tour has price above 10.000.000","intent":"price_inquiry"}
+[2025-10-15 07:16:24] [INFO] Reranking started {"candidates":18,"query_length":31}
+[2025-10-15 07:16:29] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-15 07:16:29] [INFO] generateVietnameseResponse called {"userMessage":"tour has price above 10.000.000","context_length":695,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-15 07:16:32] [INFO] Successfully generated response {"response_length":648,"response_preview":"Okay, I can help with that! Here are the tours with prices above 10,000,000 VND:\n\nI found these tour"}
+[2025-10-15 07:16:32] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.8,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:16:32] [INFO] Message processed successfully {"processing_time_ms":11148.32,"confidence":0.8,"response_type":"tour_search"}
+[2025-10-15 07:16:32] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:17:52] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:17:52] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:17:52] [INFO] Processing user message {"message_length":31,"message_preview":"tour has price above 10.000.000","history_count":5}
+[2025-10-15 07:17:54] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"tour has price above 10.000.000"}
+[2025-10-15 07:17:54] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:17:54] [INFO] Hybrid search started {"query":"tour has price above 10.000.000","intent":"price_inquiry"}
+[2025-10-15 07:17:56] [INFO] Reranking started {"candidates":18,"query_length":31}
+[2025-10-15 07:18:00] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-15 07:18:00] [INFO] generateVietnameseResponse called {"userMessage":"tour has price above 10.000.000","context_length":695,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-15 07:18:03] [INFO] Successfully generated response {"response_length":636,"response_preview":"Okay, I can help with that! Here are the tours with prices above 10,000,000 VND:\n\nI found these tour"}
+[2025-10-15 07:18:03] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.8,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:18:03] [INFO] Message processed successfully {"processing_time_ms":10925.38,"confidence":0.8,"response_type":"tour_search"}
+[2025-10-15 07:18:03] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:21:31] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:21:31] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:21:31] [INFO] Processing user message {"message_length":33,"message_preview":"tours have price above 10.000.000","history_count":1}
+[2025-10-15 07:21:33] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"tours have price above 10.000.000"}
+[2025-10-15 07:21:33] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:21:33] [INFO] Hybrid search started {"query":"tours have price above 10.000.000","intent":"price_inquiry"}
+[2025-10-15 07:21:35] [INFO] Reranking started {"candidates":16,"query_length":33}
+[2025-10-15 07:21:39] [INFO] Reranking completed {"input":16,"output":10}
+[2025-10-15 07:21:39] [INFO] generateVietnameseResponse called {"userMessage":"tours have price above 10.000.000","context_length":738,"metadata":{"match_level":"hybrid_match","confidence":0.675}}
+[2025-10-15 07:21:42] [INFO] Successfully generated response {"response_length":668,"response_preview":"Okay, I can certainly help with that! Here are the tours that are above 10,000,000 VND:\n\n*   **Hanoi"}
+[2025-10-15 07:21:42] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.675,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:21:42] [INFO] Message processed successfully {"processing_time_ms":10914.91,"confidence":0.675,"response_type":"tour_search"}
+[2025-10-15 07:21:42] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:21:57] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:21:57] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:21:57] [INFO] Processing user message {"message_length":18,"message_preview":"hotels have 5 star","history_count":3}
+[2025-10-15 07:21:59] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"hotels have 5 star"}
+[2025-10-15 07:21:59] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:21:59] [INFO] Hybrid search started {"query":"hotels have 5 star","intent":"rating_inquiry"}
+[2025-10-15 07:22:00] [INFO] Reranking started {"candidates":20,"query_length":18}
+[2025-10-15 07:22:05] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-15 07:22:05] [INFO] generateVietnameseResponse called {"userMessage":"hotels have 5 star","context_length":572,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-15 07:22:08] [INFO] Successfully generated response {"response_length":647,"response_preview":"Okay, I can certainly help with that! Here are the 5-star hotels I found in Ha Giang:\n\n*   **Nguyen "}
+[2025-10-15 07:22:08] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-15 07:22:08] [INFO] Message processed successfully {"processing_time_ms":11428.88,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-15 07:22:08] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-15 07:29:46] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:29:46] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:29:46] [INFO] Processing user message {"message_length":24,"message_preview":"tour has duration 2 days","history_count":5}
+[2025-10-15 07:29:48] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"tour has duration 2 days"}
+[2025-10-15 07:29:48] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:29:48] [INFO] Hybrid search started {"query":"tour has duration 2 days","intent":"general"}
+[2025-10-15 07:29:50] [INFO] Reranking started {"candidates":17,"query_length":24}
+[2025-10-15 07:29:54] [INFO] Reranking completed {"input":17,"output":10}
+[2025-10-15 07:29:54] [INFO] generateVietnameseResponse called {"userMessage":"tour has duration 2 days","context_length":671,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-15 07:29:57] [INFO] Successfully generated response {"response_length":744,"response_preview":"Okay, I have some tours suitable for you:\n*   **Museum and Contemporary Art Tour in Ho Chi Minh** - "}
+[2025-10-15 07:29:57] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:29:57] [INFO] Message processed successfully {"processing_time_ms":11045.02,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-15 07:29:57] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:30:13] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:30:13] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:30:13] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":5}
+[2025-10-15 07:30:13] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-15 07:30:35] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:30:35] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:30:35] [INFO] Processing user message {"message_length":21,"message_preview":"introduce tour Hoi An","history_count":5}
+[2025-10-15 07:30:37] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"introduce tour Hoi An"}
+[2025-10-15 07:30:37] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-15 07:30:37] [INFO] Hybrid search started {"query":"introduce tour Hoi An","intent":"tour_search"}
+[2025-10-15 07:30:39] [INFO] Reranking started {"candidates":10,"query_length":21}
+[2025-10-15 07:30:39] [INFO] generateVietnameseResponse called {"userMessage":"introduce tour Hoi An","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2025-10-15 07:30:42] [INFO] Successfully generated response {"response_length":888,"response_preview":"Okay, I found these tours in Hoi An:\n\n• **Hoi An Cultural Experience: Ancient Town - Riverside Mar"}
+[2025-10-15 07:30:42] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.8,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:30:42] [INFO] Message processed successfully {"processing_time_ms":6771.39,"confidence":0.8,"response_type":"tour_search"}
+[2025-10-15 07:30:42] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:31:07] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:31:07] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:31:07] [INFO] Processing user message {"message_length":25,"message_preview":"hotel can tho with 3 star","history_count":5}
+[2025-10-15 07:31:09] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"hotel can tho with 3 star"}
+[2025-10-15 07:31:09] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-15 07:31:09] [INFO] Hybrid search started {"query":"hotel can tho with 3 star","intent":"hotel_search"}
+[2025-10-15 07:31:11] [INFO] Reranking started {"candidates":8,"query_length":25}
+[2025-10-15 07:31:11] [INFO] generateVietnameseResponse called {"userMessage":"hotel can tho with 3 star","context_length":446,"metadata":{"match_level":"hybrid_match","confidence":0.7999999999999999}}
+[2025-10-15 07:31:13] [INFO] Successfully generated response {"response_length":287,"response_preview":"Okay, I found these 3-star hotels in Can Tho:\n\n• **Hotel 101 Can Tho** - Rating: 3.0\/5 - 389,610 V"}
+[2025-10-15 07:31:13] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.7999999999999999,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-15 07:31:13] [INFO] Message processed successfully {"processing_time_ms":6072.92,"confidence":0.7999999999999999,"response_type":"hotel_search"}
+[2025-10-15 07:31:13] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-15 07:31:32] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:31:32] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:31:32] [INFO] Processing user message {"message_length":16,"message_preview":"tour have 2 days","history_count":5}
+[2025-10-15 07:31:34] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"tour have 2 days"}
+[2025-10-15 07:31:34] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-15 07:31:34] [INFO] Hybrid search started {"query":"tour have 2 days","intent":"general"}
+[2025-10-15 07:31:35] [INFO] Reranking started {"candidates":17,"query_length":16}
+[2025-10-15 07:31:39] [INFO] Reranking completed {"input":17,"output":10}
+[2025-10-15 07:31:39] [INFO] generateVietnameseResponse called {"userMessage":"tour have 2 days","context_length":691,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-15 07:31:42] [INFO] Successfully generated response {"response_length":718,"response_preview":"Okay, I have some 2-day tours for you:\n\n• **Museum and Contemporary Art Tour in Ho Chi Minh** - 2 "}
+[2025-10-15 07:31:42] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:31:42] [INFO] Message processed successfully {"processing_time_ms":10563.85,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-15 07:31:42] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:32:22] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:32:22] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:32:22] [INFO] Processing user message {"message_length":62,"message_preview":"Tour Ha Giang with duration 4 days and price under","history_count":5}
+[2025-10-15 07:32:23] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Tour Ha Giang with duration 4 days and price under 10 millions"}
+[2025-10-15 07:32:23] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-15 07:32:23] [INFO] Hybrid search started {"query":"Tour Ha Giang with duration 4 days and price under 10 millions","intent":"tour_search"}
+[2025-10-15 07:32:25] [INFO] Reranking started {"candidates":11,"query_length":62}
+[2025-10-15 07:32:27] [INFO] Reranking completed {"input":11,"output":10}
+[2025-10-15 07:32:27] [INFO] generateVietnameseResponse called {"userMessage":"Tour Ha Giang with duration 4 days and price under 10 millions","context_length":746,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-15 07:32:31] [INFO] Successfully generated response 
+[2025-10-15 07:32:31] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-15 07:32:31] [INFO] Message processed successfully {"processing_time_ms":9125.23,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-15 07:32:31] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-15 07:34:00] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:34:00] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:34:00] [INFO] Processing user message {"message_length":35,"message_preview":"Create plan to go taiwan for 3 days","history_count":5}
+[2025-10-15 07:34:03] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Create plan to go taiwan for 3 days"}
+[2025-10-15 07:34:03] [INFO] Detected international location {"location":"taiwan","message_preview":"create plan to go taiwan for 3 days"}
+[2025-10-15 07:34:03] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-15 07:34:03] [INFO] Handling out-of-database query {"message":"Create plan to go taiwan for 3 days","is_international":true}
+[2025-10-15 07:34:04] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Go Taiwan"}
+[2025-10-15 07:34:05] [ERROR] Gemini API returned non-200 status {"http_code":400,"error_message":"* GenerateContentRequest.contents: contents is not specified\n","response_preview":"{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"* GenerateContentRequest.contents: contents is not specified\\n\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-15 07:34:05] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 400): * GenerateContentRequest.contents: contents is not specified\n","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-15 07:34:09] [ERROR] Gemini API returned non-200 status {"http_code":400,"error_message":"* GenerateContentRequest.contents: contents is not specified\n","response_preview":"{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"* GenerateContentRequest.contents: contents is not specified\\n\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-15 07:34:09] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 400): * GenerateContentRequest.contents: contents is not specified\n","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-15 07:34:14] [ERROR] Gemini API returned non-200 status {"http_code":400,"error_message":"* GenerateContentRequest.contents: contents is not specified\n","response_preview":"{\n  \"error\": {\n    \"code\": 400,\n    \"message\": \"* GenerateContentRequest.contents: contents is not specified\\n\",\n    \"status\": \"INVALID_ARGUMENT\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-15 07:34:14] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 400): * GenerateContentRequest.contents: contents is not specified\n","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-15 07:34:14] [ERROR] Out-of-database response generation failed {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 400): * GenerateContentRequest.contents: contents is not specified\n"}
+[2025-10-15 07:34:14] [WARNING] Gemini returned empty response, using structured fallback {"raw_response":null,"is_null":true}
+[2025-10-15 07:34:14] [INFO] OOD response successfully generated {"length":1355,"preview":"## Travel Planning for Go Taiwan\r\n\r\nI'd be happy to help you plan your trip to **Go Taiwan**! Here's"}
+[2025-10-15 07:34:14] [INFO] Out-of-database response generated {"response_length":1355,"similar_items":8,"had_embedding":true}
+[2025-10-15 07:34:14] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-15 07:35:59] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:35:59] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:35:59] [INFO] Processing user message {"message_length":72,"message_preview":"design plan to quang ninh for 4 day and budget bet","history_count":5}
+[2025-10-15 07:36:01] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"design plan to quang ninh for 4 day and budget between 10 to 20 millions"}
+[2025-10-15 07:36:01] [INFO] Vietnam out-of-database city detected {"city":"quang ninh","message":"design plan to quang ninh for 4 day and budget between 10 to 20 millions"}
+[2025-10-15 07:36:01] [INFO] Intent Analysis {"intent":"mixed_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-15 07:36:01] [INFO] Handling out-of-database query {"message":"design plan to quang ninh for 4 day and budget between 10 to 20 millions","is_international":true}
+[2025-10-15 07:36:03] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Quang Ninh"}
+[2025-10-15 07:36:19] [INFO] OOD response successfully generated {"length":6554,"preview":"## **4-Day Travel Plan to Quang Ninh** (Budget: 10-20 million VND)\n\n**Overview:** This itinerary bal"}
+[2025-10-15 07:36:19] [INFO] Out-of-database response generated {"response_length":6554,"similar_items":8,"had_embedding":true}
+[2025-10-15 07:36:19] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-15 07:36:38] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-15 07:36:38] [INFO] Chatbot initialized successfully 
+[2025-10-15 07:36:38] [INFO] Processing user message {"message_length":34,"message_preview":"design plan to Thailand for 5 days","history_count":5}
+[2025-10-15 07:36:40] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"design plan to Thailand for 5 days"}
+[2025-10-15 07:36:40] [INFO] Detected international location {"location":"thailand","message_preview":"design plan to thailand for 5 days"}
+[2025-10-15 07:36:40] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-15 07:36:40] [INFO] Handling out-of-database query {"message":"design plan to Thailand for 5 days","is_international":true}
+[2025-10-15 07:36:42] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Thailand"}
+[2025-10-15 07:36:57] [INFO] OOD response successfully generated {"length":6575,"preview":"## **5-Day Travel Plan to Thailand** (Budget: To be determined)\n\n**Overview:** This itinerary focuse"}
+[2025-10-15 07:36:57] [INFO] Out-of-database response generated {"response_length":6575,"similar_items":8,"had_embedding":true}
+[2025-10-15 07:36:57] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 07:39:14] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:39:14] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:39:14] [INFO] Processing user message {"message_length":24,"message_preview":"what is hotel has 4 star","history_count":1}
+[2025-10-16 07:39:16] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"what is hotel has 4 star"}
+[2025-10-16 07:39:16] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 07:39:16] [INFO] Hybrid search started {"query":"what is hotel has 4 star","intent":"rating_inquiry"}
+[2025-10-16 07:39:18] [INFO] Reranking started {"candidates":20,"query_length":24}
+[2025-10-16 07:39:23] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-16 07:39:23] [INFO] generateVietnameseResponse called {"userMessage":"what is hotel has 4 star","context_length":517,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-16 07:39:26] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-16 07:39:26] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 07:39:26] [INFO] Message processed successfully {"processing_time_ms":12024.77,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-16 07:39:26] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 07:41:45] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:41:45] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:41:45] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":3}
+[2025-10-16 07:41:45] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-16 07:41:51] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:41:51] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:41:51] [INFO] Processing user message {"message_length":19,"message_preview":"show me tour hoi an","history_count":5}
+[2025-10-16 07:41:53] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"show me tour hoi an"}
+[2025-10-16 07:41:53] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-16 07:41:53] [INFO] Hybrid search started {"query":"show me tour hoi an","intent":"tour_search"}
+[2025-10-16 07:41:55] [INFO] Reranking started {"candidates":8,"query_length":19}
+[2025-10-16 07:41:55] [INFO] generateVietnameseResponse called {"userMessage":"show me tour hoi an","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.75}}
+[2025-10-16 07:41:58] [INFO] Successfully generated response {"response_length":910,"response_preview":"Okay, here are some tours I found in Hoi An:\n\n*   **Hoi An Nature & Culture: Cam Thanh Village - Thu"}
+[2025-10-16 07:41:58] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.75,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 07:41:58] [INFO] Message processed successfully {"processing_time_ms":7101.76,"confidence":0.75,"response_type":"tour_search"}
+[2025-10-16 07:41:58] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 07:42:06] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:42:07] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:42:07] [INFO] Processing user message {"message_length":28,"message_preview":"find 3 star hotel in can tho","history_count":5}
+[2025-10-16 07:42:08] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"find 3 star hotel in can tho"}
+[2025-10-16 07:42:08] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 07:42:08] [INFO] Hybrid search started {"query":"find 3 star hotel in can tho","intent":"hotel_search"}
+[2025-10-16 07:42:10] [INFO] Reranking started {"candidates":8,"query_length":28}
+[2025-10-16 07:42:10] [INFO] generateVietnameseResponse called {"userMessage":"find 3 star hotel in can tho","context_length":445,"metadata":{"match_level":"hybrid_match","confidence":0.7999999999999999}}
+[2025-10-16 07:42:13] [INFO] Successfully generated response {"response_length":304,"response_preview":"Okay, here are some 3-star hotels I found in Can Tho:\n\n*   **Lion 3 Hotel Can Tho** - Rating: 3.0\/5 "}
+[2025-10-16 07:42:13] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.7999999999999999,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 07:42:13] [INFO] Message processed successfully {"processing_time_ms":6014.01,"confidence":0.7999999999999999,"response_type":"hotel_search"}
+[2025-10-16 07:42:13] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 07:42:44] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:42:44] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:42:44] [INFO] Processing user message {"message_length":40,"message_preview":"list tours that have a duration of 2 day","history_count":5}
+[2025-10-16 07:42:46] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"list tours that have a duration of 2 day"}
+[2025-10-16 07:42:46] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 07:42:46] [INFO] Hybrid search started {"query":"list tours that have a duration of 2 day","intent":"general"}
+[2025-10-16 07:42:47] [INFO] Reranking started {"candidates":18,"query_length":40}
+[2025-10-16 07:42:52] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-16 07:42:52] [INFO] generateVietnameseResponse called {"userMessage":"list tours that have a duration of 2 day","context_length":736,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-16 07:42:55] [INFO] Successfully generated response {"response_length":779,"response_preview":"Okay, here are the tours with a duration of 2 days that I found:\n\n*   **Museum and Contemporary Art "}
+[2025-10-16 07:42:55] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 07:42:55] [INFO] Message processed successfully {"processing_time_ms":11551.12,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-16 07:42:55] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 07:43:28] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:43:28] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:43:28] [INFO] Processing user message {"message_length":74,"message_preview":"Find Ha Giang tours with a duration of 4 days and ","history_count":5}
+[2025-10-16 07:43:30] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find Ha Giang tours with a duration of 4 days and a price under 10.000.000"}
+[2025-10-16 07:43:30] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 07:43:30] [INFO] Hybrid search started {"query":"Find Ha Giang tours with a duration of 4 days and a price under 10.000.000","intent":"tour_search"}
+[2025-10-16 07:43:31] [INFO] Reranking started {"candidates":10,"query_length":74}
+[2025-10-16 07:43:31] [INFO] generateVietnameseResponse called {"userMessage":"Find Ha Giang tours with a duration of 4 days and a price under 10.000.000","context_length":746,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-16 07:43:35] [INFO] Successfully generated response {"response_length":832,"response_preview":"Okay, I found these Ha Giang tours that are 4 days long and under 10,000,000 VND:\n\n*   **Ha Giang Na"}
+[2025-10-16 07:43:35] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 07:43:35] [INFO] Message processed successfully {"processing_time_ms":7237.73,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-16 07:43:35] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 07:44:47] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:44:47] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:44:47] [INFO] Processing user message {"message_length":39,"message_preview":"Create travel plan to taiwan for 3 days","history_count":5}
+[2025-10-16 07:44:49] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Create travel plan to taiwan for 3 days"}
+[2025-10-16 07:44:49] [INFO] Detected international location {"location":"taiwan","message_preview":"create travel plan to taiwan for 3 days"}
+[2025-10-16 07:44:49] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 07:44:49] [INFO] Handling out-of-database query {"message":"Create travel plan to taiwan for 3 days","is_international":true}
+[2025-10-16 07:44:51] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 07:45:04] [INFO] OOD response successfully generated {"length":5505,"preview":"**3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n**Assumptions:** This itinerary focuses "}
+[2025-10-16 07:45:04] [INFO] Out-of-database response generated {"response_length":5505,"similar_items":8,"had_embedding":true}
+[2025-10-16 07:45:04] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 07:45:26] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 07:45:26] [INFO] Chatbot initialized successfully 
+[2025-10-16 07:45:26] [INFO] Processing user message {"message_length":82,"message_preview":"Design a 4 days travel plan to An Giang with a bud","history_count":5}
+[2025-10-16 07:45:28] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"Design a 4 days travel plan to An Giang with a budget between 10 to 15 million VND"}
+[2025-10-16 07:45:28] [INFO] Vietnam out-of-database city detected {"city":"an giang","message":"Design a 4 days travel plan to An Giang with a budget between 10 to 15 million VND"}
+[2025-10-16 07:45:28] [INFO] Intent Analysis {"intent":"mixed_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 07:45:28] [INFO] Handling out-of-database query {"message":"Design a 4 days travel plan to An Giang with a budget between 10 to 15 million VND","is_international":true}
+[2025-10-16 07:45:29] [INFO] Generating OOD response {"prompt_type":"planning","destination":"An Giang With A Budget Between"}
+[2025-10-16 07:45:41] [INFO] OOD response successfully generated {"length":4904,"preview":"**4-Day Travel Plan to An Giang** (Budget: 10-15 million VND)\n\n**Assumptions:** This itinerary focus"}
+[2025-10-16 07:45:41] [INFO] Out-of-database response generated {"response_length":4904,"similar_items":8,"had_embedding":true}
+[2025-10-16 07:45:41] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 08:15:45] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:15:45] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:15:45] [INFO] Processing user message {"message_length":2,"message_preview":"Hi","history_count":1}
+[2025-10-16 08:15:45] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-16 08:16:00] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:16:00] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:16:00] [INFO] Processing user message {"message_length":23,"message_preview":"Show me tours in Hoi An","history_count":3}
+[2025-10-16 08:16:12] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Show me tours in Hoi An"}
+[2025-10-16 08:16:12] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-16 08:16:12] [INFO] Hybrid search started {"query":"Show me tours in Hoi An","intent":"tour_search"}
+[2025-10-16 08:16:14] [INFO] Reranking started {"candidates":9,"query_length":23}
+[2025-10-16 08:16:14] [INFO] generateVietnameseResponse called {"userMessage":"Show me tours in Hoi An","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-16 08:16:18] [ERROR] Gemini API returned non-200 status {"http_code":503,"error_message":"The model is overloaded. Please try again later.","response_preview":"{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The model is overloaded. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:16:18] [ERROR] Gemini API error - generating fallback {"error_message":"Gemini API error (HTTP 503): The model is overloaded. Please try again later.","user_message":"Show me tours in Hoi An"}
+[2025-10-16 08:16:18] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 08:16:18] [INFO] Message processed successfully {"processing_time_ms":18520.15,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-16 08:16:18] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 08:17:07] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:17:07] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:17:07] [INFO] Processing user message {"message_length":29,"message_preview":"Find 3 star hotels in Can Tho","history_count":5}
+[2025-10-16 08:17:16] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find 3 star hotels in Can Tho"}
+[2025-10-16 08:17:16] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 08:17:16] [INFO] Hybrid search started {"query":"Find 3 star hotels in Can Tho","intent":"hotel_search"}
+[2025-10-16 08:17:18] [INFO] Reranking started {"candidates":11,"query_length":29}
+[2025-10-16 08:17:30] [ERROR] Gemini API returned non-200 status {"http_code":503,"error_message":"The model is overloaded. Please try again later.","response_preview":"{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The model is overloaded. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:17:30] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 503): The model is overloaded. Please try again later.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:17:55] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:17:55] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:17:55] [INFO] Processing user message {"message_length":22,"message_preview":"Which hotel has 4 star","history_count":5}
+[2025-10-16 08:17:57] [ERROR] Gemini API returned non-200 status {"http_code":503,"error_message":"The model is overloaded. Please try again later.","response_preview":"{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The model is overloaded. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:17:57] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 503): The model is overloaded. Please try again later.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:18:04] [ERROR] Gemini API returned non-200 status {"http_code":503,"error_message":"The model is overloaded. Please try again later.","response_preview":"{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The model is overloaded. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:18:04] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 503): The model is overloaded. Please try again later.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:18:20] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"Which hotel has 4 star"}
+[2025-10-16 08:18:20] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 08:18:20] [INFO] Hybrid search started {"query":"Which hotel has 4 star","intent":"rating_inquiry"}
+[2025-10-16 08:18:22] [INFO] Reranking started {"candidates":20,"query_length":22}
+[2025-10-16 08:21:24] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:21:24] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:21:24] [INFO] Processing user message {"message_length":28,"message_preview":"find 3 star hotel in can tho","history_count":1}
+[2025-10-16 08:21:29] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"find 3 star hotel in can tho"}
+[2025-10-16 08:21:29] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 08:21:29] [INFO] Hybrid search started {"query":"find 3 star hotel in can tho","intent":"hotel_search"}
+[2025-10-16 08:21:30] [INFO] Reranking started {"candidates":8,"query_length":28}
+[2025-10-16 08:21:30] [INFO] generateVietnameseResponse called {"userMessage":"find 3 star hotel in can tho","context_length":445,"metadata":{"match_level":"hybrid_match","confidence":0.7999999999999999}}
+[2025-10-16 08:21:43] [ERROR] Gemini API returned non-200 status {"http_code":503,"error_message":"The model is overloaded. Please try again later.","response_preview":"{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The model is overloaded. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:21:43] [ERROR] Gemini API error - generating fallback {"error_message":"Gemini API error (HTTP 503): The model is overloaded. Please try again later.","user_message":"find 3 star hotel in can tho"}
+[2025-10-16 08:21:43] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.7999999999999999,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 08:21:43] [INFO] Message processed successfully {"processing_time_ms":19060.17,"confidence":0.7999999999999999,"response_type":"hotel_search"}
+[2025-10-16 08:21:43] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 08:45:36] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:45:36] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:45:36] [INFO] Processing user message {"message_length":2,"message_preview":"Hi","history_count":1}
+[2025-10-16 08:45:36] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-16 08:45:53] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:45:53] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:45:53] [INFO] Processing user message {"message_length":23,"message_preview":"Show me tours in Hoi An","history_count":3}
+[2025-10-16 08:45:55] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Show me tours in Hoi An"}
+[2025-10-16 08:45:55] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-16 08:45:55] [INFO] Hybrid search started {"query":"Show me tours in Hoi An","intent":"tour_search"}
+[2025-10-16 08:45:57] [INFO] Reranking started {"candidates":9,"query_length":23}
+[2025-10-16 08:45:57] [INFO] generateVietnameseResponse called {"userMessage":"Show me tours in Hoi An","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-16 08:46:00] [INFO] Successfully generated response {"response_length":958,"response_preview":"Hello! Here are some tours in Hoi An that you might be interested in:\n\nI found these tours in Hoi An"}
+[2025-10-16 08:46:00] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 08:46:00] [INFO] Message processed successfully {"processing_time_ms":7398.35,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-16 08:46:00] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 08:47:04] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:47:04] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:47:04] [INFO] Processing user message {"message_length":28,"message_preview":"Find 3 star hotel in Can Tho","history_count":5}
+[2025-10-16 08:47:07] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find 3 star hotel in Can Tho"}
+[2025-10-16 08:47:07] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 08:47:07] [INFO] Hybrid search started {"query":"Find 3 star hotel in Can Tho","intent":"hotel_search"}
+[2025-10-16 08:47:08] [INFO] Reranking started {"candidates":12,"query_length":28}
+[2025-10-16 08:47:11] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-16 08:47:11] [INFO] generateVietnameseResponse called {"userMessage":"Find 3 star hotel in Can Tho","context_length":446,"metadata":{"match_level":"hybrid_match","confidence":0.85}}
+[2025-10-16 08:47:14] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-16 08:47:14] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.85,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 08:47:14] [INFO] Message processed successfully {"processing_time_ms":9940.42,"confidence":0.85,"response_type":"hotel_search"}
+[2025-10-16 08:47:14] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 08:47:29] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:47:29] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:47:29] [INFO] Processing user message {"message_length":28,"message_preview":"Find 3 star hotel in Can Tho","history_count":5}
+[2025-10-16 08:47:32] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find 3 star hotel in Can Tho"}
+[2025-10-16 08:47:32] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 08:47:32] [INFO] Hybrid search started {"query":"Find 3 star hotel in Can Tho","intent":"hotel_search"}
+[2025-10-16 08:47:34] [INFO] Reranking started {"candidates":12,"query_length":28}
+[2025-10-16 08:47:36] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-16 08:47:36] [INFO] generateVietnameseResponse called {"userMessage":"Find 3 star hotel in Can Tho","context_length":446,"metadata":{"match_level":"hybrid_match","confidence":0.85}}
+[2025-10-16 08:47:39] [ERROR] Gemini API returned non-200 status {"http_code":503,"error_message":"The model is overloaded. Please try again later.","response_preview":"{\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"The model is overloaded. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:47:39] [ERROR] Gemini API error - generating fallback {"error_message":"Gemini API error (HTTP 503): The model is overloaded. Please try again later.","user_message":"Find 3 star hotel in Can Tho"}
+[2025-10-16 08:47:39] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.85,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 08:47:39] [INFO] Message processed successfully {"processing_time_ms":9580.94,"confidence":0.85,"response_type":"hotel_search"}
+[2025-10-16 08:47:39] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 08:48:10] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:48:10] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:48:10] [INFO] Processing user message {"message_length":23,"message_preview":"Show me tours in Hoi An","history_count":5}
+[2025-10-16 08:48:12] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Show me tours in Hoi An"}
+[2025-10-16 08:48:12] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-16 08:48:12] [INFO] Hybrid search started {"query":"Show me tours in Hoi An","intent":"tour_search"}
+[2025-10-16 08:48:14] [INFO] Reranking started {"candidates":9,"query_length":23}
+[2025-10-16 08:48:14] [INFO] generateVietnameseResponse called {"userMessage":"Show me tours in Hoi An","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-16 08:48:18] [INFO] Successfully generated response {"response_length":861,"response_preview":"I found these tours in Hoi An:\n* **Hoi An Cultural Experience: Ancient Town - Riverside Market - Tra"}
+[2025-10-16 08:48:18] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 08:48:18] [INFO] Message processed successfully {"processing_time_ms":7855.14,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-16 08:48:18] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 08:48:46] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:48:46] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:48:46] [INFO] Processing user message {"message_length":24,"message_preview":"Which hotels have 4 star","history_count":5}
+[2025-10-16 08:48:49] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"Which hotels have 4 star"}
+[2025-10-16 08:48:49] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 08:48:49] [INFO] Hybrid search started {"query":"Which hotels have 4 star","intent":"rating_inquiry"}
+[2025-10-16 08:48:50] [INFO] Reranking started {"candidates":20,"query_length":24}
+[2025-10-16 08:49:03] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-16 08:49:03] [INFO] generateVietnameseResponse called {"userMessage":"Which hotels have 4 star","context_length":555,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-16 08:49:09] [INFO] Successfully generated response {"response_length":667,"response_preview":"Okay, I can help with that! Here are the 4-star hotels I found:\n\nI found these hotels in Ha Noi:\n* *"}
+[2025-10-16 08:49:09] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 08:49:09] [INFO] Message processed successfully {"processing_time_ms":23391.66,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-16 08:49:09] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 08:49:54] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:49:54] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:49:54] [INFO] Processing user message {"message_length":36,"message_preview":"List tours with a duration of 2 days","history_count":5}
+[2025-10-16 08:49:56] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"List tours with a duration of 2 days"}
+[2025-10-16 08:49:56] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 08:49:56] [INFO] Hybrid search started {"query":"List tours with a duration of 2 days","intent":"general"}
+[2025-10-16 08:49:58] [INFO] Reranking started {"candidates":18,"query_length":36}
+[2025-10-16 08:50:07] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-16 08:50:07] [INFO] generateVietnameseResponse called {"userMessage":"List tours with a duration of 2 days","context_length":653,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-16 08:50:11] [INFO] Successfully generated response {"response_length":672,"response_preview":"Okay, I have some tours suitable for you:\n* **Museum and Contemporary Art Tour in Ho Chi Minh** - 2 "}
+[2025-10-16 08:50:11] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 08:50:11] [INFO] Message processed successfully {"processing_time_ms":17129.41,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-16 08:50:11] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 08:50:59] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:50:59] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:50:59] [INFO] Processing user message {"message_length":70,"message_preview":"Find Ha Giang Tour with duration 4 days and price ","history_count":5}
+[2025-10-16 08:51:01] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find Ha Giang Tour with duration 4 days and price under 10.000.000 VND"}
+[2025-10-16 08:51:01] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 08:51:01] [INFO] Hybrid search started {"query":"Find Ha Giang Tour with duration 4 days and price under 10.000.000 VND","intent":"tour_search"}
+[2025-10-16 08:51:03] [INFO] Reranking started {"candidates":10,"query_length":70}
+[2025-10-16 08:51:03] [INFO] generateVietnameseResponse called {"userMessage":"Find Ha Giang Tour with duration 4 days and price under 10.000.000 VND","context_length":746,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-16 08:51:06] [INFO] Successfully generated response {"response_length":800,"response_preview":"Okay, I found these Ha Giang tours that fit your criteria:\n\n*   **Ha Giang Trekking Expedition: Rice"}
+[2025-10-16 08:51:06] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 08:51:06] [INFO] Message processed successfully {"processing_time_ms":6778.27,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-16 08:51:06] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 08:52:11] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:52:11] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:52:11] [INFO] Processing user message {"message_length":37,"message_preview":"Create a 3 days travel plan to Taiwan","history_count":5}
+[2025-10-16 08:52:14] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Create a 3 days travel plan to Taiwan"}
+[2025-10-16 08:52:14] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 3 days travel plan to taiwan"}
+[2025-10-16 08:52:14] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 08:52:14] [INFO] Handling out-of-database query {"message":"Create a 3 days travel plan to Taiwan","is_international":true}
+[2025-10-16 08:52:15] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 08:52:28] [INFO] OOD response successfully generated {"length":5319,"preview":"## **3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n**🗓️ Day 1 - Taipei City Explora"}
+[2025-10-16 08:52:28] [INFO] Out-of-database response generated {"response_length":5319,"similar_items":8,"had_embedding":true}
+[2025-10-16 08:52:28] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 08:54:07] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:54:07] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:54:07] [INFO] Processing user message {"message_length":76,"message_preview":"Design a 4 days travel plan to An Giang with a bud","history_count":5}
+[2025-10-16 08:54:09] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 5.164301104s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 5.164301104s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"v","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:54:09] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 5.164301104s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:54:12] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 1.754395954s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 1.754395954s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"v","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:54:12] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 1.754395954s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:54:17] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 56.505037257s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 56.505037257s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:54:17] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 56.505037257s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:54:17] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 56.505037257s.","message":"Design a 4 days travel plan to An Giang with a budget of 10 - 15 million VND","error_type":"RuntimeException"}
+[2025-10-16 08:54:17] [WARNING] Using enhanced fallback rule-based intent detection 
+[2025-10-16 08:54:17] [INFO] Vietnam out-of-database city detected {"city":"an giang","message":"Design a 4 days travel plan to An Giang with a budget of 10 - 15 million VND"}
+[2025-10-16 08:54:17] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 08:54:17] [INFO] Handling out-of-database query {"message":"Design a 4 days travel plan to An Giang with a budget of 10 - 15 million VND","is_international":true}
+[2025-10-16 08:54:19] [INFO] Generating OOD response {"prompt_type":"planning","destination":"An Giang With A Budget Of"}
+[2025-10-16 08:54:20] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 53.408993867s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 53.408993867s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:54:20] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 53.408993867s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:54:24] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 50.119129051s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 50.119129051s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:54:24] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 50.119129051s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:54:29] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 44.686824334s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 44.686824334s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:54:29] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 44.686824334s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:54:29] [ERROR] Out-of-database response generation failed {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 44.686824334s."}
+[2025-10-16 08:54:29] [WARNING] Gemini returned empty response, using structured fallback {"raw_response":null,"is_null":true}
+[2025-10-16 08:54:29] [INFO] OOD response successfully generated {"length":1419,"preview":"## Travel Planning for An Giang With A Budget Of\r\n\r\nI'd be happy to help you plan your trip to **An "}
+[2025-10-16 08:54:29] [INFO] Out-of-database response generated {"response_length":1419,"similar_items":8,"had_embedding":true}
+[2025-10-16 08:54:29] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 08:54:45] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:54:45] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:54:45] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":1}
+[2025-10-16 08:54:45] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-16 08:55:22] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:55:22] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:55:22] [INFO] Processing user message {"message_length":73,"message_preview":"Design a 4 day travel plan to An Giang with a budg","history_count":3}
+[2025-10-16 08:55:24] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 49.706563166s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 49.706563166s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:55:24] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 49.706563166s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:55:27] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 46.387078646s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 46.387078646s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:55:27] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 46.387078646s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:55:32] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 41.181054875s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 41.181054875s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:55:33] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 41.181054875s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:55:33] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 41.181054875s.","message":"Design a 4 day travel plan to An Giang with a budget of 10-15 million VND","error_type":"RuntimeException"}
+[2025-10-16 08:55:33] [WARNING] Using enhanced fallback rule-based intent detection 
+[2025-10-16 08:55:33] [INFO] Vietnam out-of-database city detected {"city":"an giang","message":"Design a 4 day travel plan to An Giang with a budget of 10-15 million VND"}
+[2025-10-16 08:55:33] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 08:55:33] [INFO] Handling out-of-database query {"message":"Design a 4 day travel plan to An Giang with a budget of 10-15 million VND","is_international":true}
+[2025-10-16 08:55:34] [INFO] Generating OOD response {"prompt_type":"planning","destination":"An Giang With A Budget Of"}
+[2025-10-16 08:55:35] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 38.261640605s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 38.261640605s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:55:35] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 38.261640605s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:55:39] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 34.954130411s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 34.954130411s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:55:39] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 34.954130411s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:55:44] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 29.59501102s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 29.59501102s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"v","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:55:44] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 29.59501102s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:55:44] [ERROR] Out-of-database response generation failed {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 29.59501102s."}
+[2025-10-16 08:55:44] [WARNING] Gemini returned empty response, using structured fallback {"raw_response":null,"is_null":true}
+[2025-10-16 08:55:44] [INFO] OOD response successfully generated {"length":1419,"preview":"## Travel Planning for An Giang With A Budget Of\r\n\r\nI'd be happy to help you plan your trip to **An "}
+[2025-10-16 08:55:44] [INFO] Out-of-database response generated {"response_length":1419,"similar_items":8,"had_embedding":true}
+[2025-10-16 08:55:44] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 08:56:49] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 08:56:49] [INFO] Chatbot initialized successfully 
+[2025-10-16 08:56:49] [INFO] Processing user message {"message_length":37,"message_preview":"Create a 3 day travel plan for Taiwan","history_count":3}
+[2025-10-16 08:56:51] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 23.210642437s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 23.210642437s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:56:51] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 23.210642437s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:56:54] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.931673607s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 19.931673607s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:56:54] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.931673607s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:56:59] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 14.681984133s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 14.681984133s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:56:59] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 14.681984133s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:56:59] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 14.681984133s.","message":"Create a 3 day travel plan for Taiwan","error_type":"RuntimeException"}
+[2025-10-16 08:56:59] [WARNING] Using enhanced fallback rule-based intent detection 
+[2025-10-16 08:56:59] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 3 day travel plan for taiwan"}
+[2025-10-16 08:56:59] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 08:56:59] [INFO] Handling out-of-database query {"message":"Create a 3 day travel plan for Taiwan","is_international":true}
+[2025-10-16 08:57:01] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 08:57:02] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 11.702467385s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 11.702467385s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 08:57:02] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 11.702467385s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 08:57:15] [INFO] OOD response successfully generated {"length":4179,"preview":"**3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n## 🗓️ Day 1 - Taipei Exploration\n\n-"}
+[2025-10-16 08:57:15] [INFO] Out-of-database response generated {"response_length":4179,"similar_items":8,"had_embedding":true}
+[2025-10-16 08:57:15] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 09:02:29] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:02:29] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:02:29] [INFO] Processing user message {"message_length":64,"message_preview":"Design a 4 day travel to An Giang with a budget of","history_count":5}
+[2025-10-16 09:02:31] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 43.0309934s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 43.0309934s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"vi","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:02:31] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 43.0309934s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:02:34] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 39.428267887s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 39.428267887s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:02:34] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 39.428267887s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:02:40] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 33.965725401s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 33.965725401s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:02:40] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 33.965725401s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:02:40] [INFO] Switching to backup API key 
+[2025-10-16 09:02:40] [INFO] Switched to backup API key, retrying... 
+[2025-10-16 09:02:40] [ERROR] Gemini API failed in analyzeIntent {"error":"Unexpected error in generateText","message":"Design a 4 day travel to An Giang with a budget of 10-15 million","error_type":"RuntimeException"}
+[2025-10-16 09:02:40] [WARNING] Using enhanced fallback rule-based intent detection 
+[2025-10-16 09:02:40] [INFO] Vietnam out-of-database city detected {"city":"an giang","message":"Design a 4 day travel to An Giang with a budget of 10-15 million"}
+[2025-10-16 09:02:40] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 09:02:40] [INFO] Handling out-of-database query {"message":"Design a 4 day travel to An Giang with a budget of 10-15 million","is_international":true}
+[2025-10-16 09:02:42] [INFO] Generating OOD response {"prompt_type":"planning","destination":"An Giang With A Budget Of"}
+[2025-10-16 09:02:43] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 30.289636782s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 30.289636782s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:02:44] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 30.289636782s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:02:47] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 26.391237092s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 26.391237092s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:02:47] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 26.391237092s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:02:53] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 20.963919887s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 20.963919887s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:02:53] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 20.963919887s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:02:53] [ERROR] Out-of-database response generation failed {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 20.963919887s."}
+[2025-10-16 09:02:53] [WARNING] Gemini returned empty response, using structured fallback {"raw_response":null,"is_null":true}
+[2025-10-16 09:02:53] [INFO] OOD response successfully generated {"length":1419,"preview":"## Travel Planning for An Giang With A Budget Of\r\n\r\nI'd be happy to help you plan your trip to **An "}
+[2025-10-16 09:02:53] [INFO] Out-of-database response generated {"response_length":1419,"similar_items":8,"had_embedding":true}
+[2025-10-16 09:02:53] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 09:03:30] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:03:30] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:03:30] [INFO] Processing user message {"message_length":35,"message_preview":"create 3 day travel plan for Taiwan","history_count":1}
+[2025-10-16 09:03:31] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 42.558344288s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 42.558344288s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:03:31] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 42.558344288s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:03:34] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 39.221703619s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 39.221703619s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:03:34] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 39.221703619s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:03:42] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"create 3 day travel plan for Taiwan"}
+[2025-10-16 09:03:42] [INFO] Detected international location {"location":"taiwan","message_preview":"create 3 day travel plan for taiwan"}
+[2025-10-16 09:03:42] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 09:03:42] [INFO] Handling out-of-database query {"message":"create 3 day travel plan for Taiwan","is_international":true}
+[2025-10-16 09:03:43] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 09:03:45] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 29.014067962s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 29.014067962s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:03:45] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 29.014067962s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:03:48] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 25.408649661s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 25.408649661s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:03:48] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 25.408649661s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:03:55] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.07532154s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 19.07532154s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"v","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:03:55] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.07532154s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:03:55] [ERROR] Out-of-database response generation failed {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.07532154s."}
+[2025-10-16 09:03:55] [WARNING] Gemini returned empty response, using structured fallback {"raw_response":null,"is_null":true}
+[2025-10-16 09:03:55] [INFO] OOD response successfully generated {"length":1343,"preview":"## Travel Planning for Taiwan\r\n\r\nI'd be happy to help you plan your trip to **Taiwan**! Here's how t"}
+[2025-10-16 09:03:55] [INFO] Out-of-database response generated {"response_length":1343,"similar_items":8,"had_embedding":true}
+[2025-10-16 09:03:55] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 09:05:27] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:05:27] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:05:27] [INFO] Processing user message {"message_length":37,"message_preview":"create a 3 day travel plan for Taiwan","history_count":3}
+[2025-10-16 09:05:30] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"create a 3 day travel plan for Taiwan"}
+[2025-10-16 09:05:30] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 3 day travel plan for taiwan"}
+[2025-10-16 09:05:30] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 09:05:30] [INFO] Handling out-of-database query {"message":"create a 3 day travel plan for Taiwan","is_international":true}
+[2025-10-16 09:05:31] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 09:05:33] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 40.981382272s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 40.981382272s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:05:33] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 40.981382272s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:05:36] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 37.578495622s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 37.578495622s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:05:36] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 37.578495622s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:05:42] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 32.114567776s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 32.114567776s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:05:42] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 32.114567776s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:05:42] [ERROR] Out-of-database response generation failed {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 32.114567776s."}
+[2025-10-16 09:05:42] [WARNING] Gemini returned empty response, using structured fallback {"raw_response":null,"is_null":true}
+[2025-10-16 09:05:42] [INFO] OOD response successfully generated {"length":1343,"preview":"## Travel Planning for Taiwan\r\n\r\nI'd be happy to help you plan your trip to **Taiwan**! Here's how t"}
+[2025-10-16 09:05:42] [INFO] Out-of-database response generated {"response_length":1343,"similar_items":8,"had_embedding":true}
+[2025-10-16 09:05:42] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 09:07:28] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:07:28] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:07:28] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":1}
+[2025-10-16 09:07:28] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-16 09:07:44] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:07:44] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:07:44] [INFO] Processing user message {"message_length":37,"message_preview":"create a 3 day travel plan for Taiwan","history_count":3}
+[2025-10-16 09:07:45] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 28.502359279s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 28.502359279s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:07:45] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 28.502359279s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:07:49] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 24.740416057s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 24.740416057s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:07:49] [WARNING] Gemini API attempt 2 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 24.740416057s.","attempt":2,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:07:54] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.52321232s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 19.52321232s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"v","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:07:54] [WARNING] Gemini API attempt 3 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.52321232s.","attempt":3,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:07:54] [ERROR] Gemini API failed in analyzeIntent {"error":"Gemini API failed after 3 attempts: Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 19.52321232s.","message":"create a 3 day travel plan for Taiwan","error_type":"RuntimeException"}
+[2025-10-16 09:07:54] [WARNING] Using enhanced fallback rule-based intent detection 
+[2025-10-16 09:07:54] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 3 day travel plan for taiwan"}
+[2025-10-16 09:07:54] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 09:07:54] [INFO] Handling out-of-database query {"message":"create a 3 day travel plan for Taiwan","is_international":true}
+[2025-10-16 09:07:57] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 09:07:58] [ERROR] Gemini API returned non-200 status {"http_code":429,"error_message":"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 15.305748683s.","response_preview":"{\n  \"error\": {\n    \"code\": 429,\n    \"message\": \"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\\nPlease retry in 15.305748683s.\",\n    \"status\": \"RESOURCE_EXHAUSTED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com\/google.rpc.QuotaFailure\",\n        \"","api_key_suffix":"qYHy-94xG0"}
+[2025-10-16 09:07:58] [WARNING] Gemini API attempt 1 failed {"error":"Gemini API error (HTTP 429): You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https:\/\/ai.google.dev\/gemini-api\/docs\/rate-limits.\n* Quota exceeded for metric: generativelanguage.googleapis.com\/generate_content_free_tier_requests, limit: 50\nPlease retry in 15.305748683s.","attempt":1,"current_key":"qYHy-94xG0"}
+[2025-10-16 09:09:38] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:09:38] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:09:38] [INFO] Processing user message {"message_length":37,"message_preview":"create a 3 day travel plan for Taiwan","history_count":3}
+[2025-10-16 09:09:40] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"create a 3 day travel plan for Taiwan"}
+[2025-10-16 09:09:40] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 3 day travel plan for taiwan"}
+[2025-10-16 09:09:40] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 09:09:40] [INFO] Handling out-of-database query {"message":"create a 3 day travel plan for Taiwan","is_international":true}
+[2025-10-16 09:09:43] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 09:09:56] [INFO] OOD response successfully generated {"length":4916,"preview":"**3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n## 🗓️ Day 1 - Taipei City Explorati"}
+[2025-10-16 09:09:56] [INFO] Out-of-database response generated {"response_length":4916,"similar_items":8,"had_embedding":true}
+[2025-10-16 09:09:56] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 09:11:27] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 09:11:27] [INFO] Chatbot initialized successfully 
+[2025-10-16 09:11:27] [INFO] Processing user message {"message_length":70,"message_preview":"Design a 4 day travel plan to Vung Tau with budget","history_count":5}
+[2025-10-16 09:11:29] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"Design a 4 day travel plan to Vung Tau with budget of 5-10 million VND"}
+[2025-10-16 09:11:29] [INFO] Vietnam out-of-database city detected {"city":"vung tau","message":"Design a 4 day travel plan to Vung Tau with budget of 5-10 million VND"}
+[2025-10-16 09:11:29] [INFO] Intent Analysis {"intent":"mixed_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 09:11:29] [INFO] Handling out-of-database query {"message":"Design a 4 day travel plan to Vung Tau with budget of 5-10 million VND","is_international":true}
+[2025-10-16 09:11:31] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Vung Tau With Budget Of"}
+[2025-10-16 09:11:46] [INFO] OOD response successfully generated {"length":5009,"preview":"**4-Day Travel Plan to Vung Tau** (Budget: 5,000,000 - 10,000,000 VND)\n\n## 🗓️ Day 1 - Arrival &"}
+[2025-10-16 09:11:46] [INFO] Out-of-database response generated {"response_length":5009,"similar_items":8,"had_embedding":true}
+[2025-10-16 09:11:46] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 10:46:01] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:46:01] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:46:01] [INFO] Processing user message {"message_length":2,"message_preview":"Hi","history_count":1}
+[2025-10-16 10:46:01] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-16 10:46:10] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:46:10] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:46:10] [INFO] Processing user message {"message_length":23,"message_preview":"Show me tours in Hoi An","history_count":3}
+[2025-10-16 10:46:11] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Show me tours in Hoi An"}
+[2025-10-16 10:46:11] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2025-10-16 10:46:11] [INFO] Hybrid search started {"query":"Show me tours in Hoi An","intent":"tour_search"}
+[2025-10-16 10:46:12] [INFO] Reranking started {"candidates":9,"query_length":23}
+[2025-10-16 10:46:12] [INFO] generateVietnameseResponse called {"userMessage":"Show me tours in Hoi An","context_length":842,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-16 10:46:19] [INFO] Successfully generated response {"response_length":902,"response_preview":"Okay, I found these tours in Hoi An:\n\n• **Hoi An Cultural Experience: Ancient Town - Riverside Mar"}
+[2025-10-16 10:46:19] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 10:46:19] [INFO] Message processed successfully {"processing_time_ms":8525.68,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-16 10:46:19] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 10:47:15] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:47:15] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:47:15] [INFO] Processing user message {"message_length":24,"message_preview":"Which hotels have 4 star","history_count":5}
+[2025-10-16 10:47:16] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"Which hotels have 4 star"}
+[2025-10-16 10:47:16] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 10:47:16] [INFO] Hybrid search started {"query":"Which hotels have 4 star","intent":"rating_inquiry"}
+[2025-10-16 10:47:17] [INFO] Reranking started {"candidates":20,"query_length":24}
+[2025-10-16 10:47:19] [INFO] Reranking completed {"input":20,"output":10}
+[2025-10-16 10:47:19] [INFO] generateVietnameseResponse called {"userMessage":"Which hotels have 4 star","context_length":555,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-16 10:47:22] [INFO] Successfully generated response {"response_length":603,"response_preview":"Okay, I found these 4-star hotels in Ha Noi:\n\n• **3T Hotel Hanoi** - Rating: 4.0\/5 - 658,009 VND\/n"}
+[2025-10-16 10:47:22] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.9,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2025-10-16 10:47:22] [INFO] Message processed successfully {"processing_time_ms":7558.41,"confidence":0.9,"response_type":"hotel_search"}
+[2025-10-16 10:47:22] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2025-10-16 10:47:54] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:47:54] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:47:54] [INFO] Processing user message {"message_length":31,"message_preview":"List tours with duration 2 days","history_count":5}
+[2025-10-16 10:47:55] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"List tours with duration 2 days"}
+[2025-10-16 10:47:55] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-16 10:47:55] [INFO] Hybrid search started {"query":"List tours with duration 2 days","intent":"general"}
+[2025-10-16 10:47:55] [INFO] Reranking started {"candidates":18,"query_length":31}
+[2025-10-16 10:47:58] [INFO] Reranking completed {"input":18,"output":10}
+[2025-10-16 10:47:58] [INFO] generateVietnameseResponse called {"userMessage":"List tours with duration 2 days","context_length":594,"metadata":{"match_level":"hybrid_match","confidence":0.9}}
+[2025-10-16 10:48:01] [INFO] Successfully generated response {"response_length":621,"response_preview":"Okay, I have some tours suitable for you:\n\n• **Museum and Contemporary Art Tour in Ho Chi Minh** -"}
+[2025-10-16 10:48:01] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.9,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 10:48:01] [INFO] Message processed successfully {"processing_time_ms":6959.32,"confidence":0.9,"response_type":"tour_search"}
+[2025-10-16 10:48:01] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 10:48:37] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:48:37] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:48:37] [INFO] Processing user message {"message_length":71,"message_preview":"Find Ha Giang tours with duration 4 days and price","history_count":5}
+[2025-10-16 10:48:39] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find Ha Giang tours with duration 4 days and price under 10.000.000 VND"}
+[2025-10-16 10:48:39] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-16 10:48:39] [INFO] Hybrid search started {"query":"Find Ha Giang tours with duration 4 days and price under 10.000.000 VND","intent":"tour_search"}
+[2025-10-16 10:48:40] [INFO] Reranking started {"candidates":9,"query_length":71}
+[2025-10-16 10:48:40] [INFO] generateVietnameseResponse called {"userMessage":"Find Ha Giang tours with duration 4 days and price under 10.000.000 VND","context_length":746,"metadata":{"match_level":"hybrid_match","confidence":0.75}}
+[2025-10-16 10:48:43] [INFO] Successfully generated response {"response_length":827,"response_preview":"Okay, I found these 4-day tours in Ha Giang that are priced under 10,000,000 VND:\n\n• **Ha Giang Na"}
+[2025-10-16 10:48:43] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.75,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-16 10:48:43] [INFO] Message processed successfully {"processing_time_ms":5546.32,"confidence":0.75,"response_type":"tour_search"}
+[2025-10-16 10:48:43] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-16 10:49:22] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:49:22] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:49:22] [INFO] Processing user message {"message_length":38,"message_preview":"Create a 3 days travel plan for Taiwan","history_count":5}
+[2025-10-16 10:49:23] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Create a 3 days travel plan for Taiwan"}
+[2025-10-16 10:49:23] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 3 days travel plan for taiwan"}
+[2025-10-16 10:49:23] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 10:49:23] [INFO] Handling out-of-database query {"message":"Create a 3 days travel plan for Taiwan","is_international":true}
+[2025-10-16 10:49:24] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-16 10:49:38] [INFO] OOD response successfully generated {"length":5648,"preview":"**3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n**General Notes:**\n\n*   **Best Time to V"}
+[2025-10-16 10:49:38] [INFO] Out-of-database response generated {"response_length":5648,"similar_items":8,"had_embedding":true}
+[2025-10-16 10:49:38] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-16 10:51:08] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-16 10:51:08] [INFO] Chatbot initialized successfully 
+[2025-10-16 10:51:08] [INFO] Processing user message {"message_length":75,"message_preview":"Design a 4 days travel plan to Vung Tau with a bud","history_count":5}
+[2025-10-16 10:51:09] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"Design a 4 days travel plan to Vung Tau with a budget of 5 - 10 million VND"}
+[2025-10-16 10:51:09] [INFO] Vietnam out-of-database city detected {"city":"vung tau","message":"Design a 4 days travel plan to Vung Tau with a budget of 5 - 10 million VND"}
+[2025-10-16 10:51:09] [INFO] Intent Analysis {"intent":"mixed_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-16 10:51:09] [INFO] Handling out-of-database query {"message":"Design a 4 days travel plan to Vung Tau with a budget of 5 - 10 million VND","is_international":true}
+[2025-10-16 10:51:10] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Vung Tau With A Budget Of"}
+[2025-10-16 10:51:24] [INFO] OOD response successfully generated {"length":5554,"preview":"**4-Day Travel Plan to Vung Tau** (Budget: 5,000,000 - 10,000,000 VND)\n\n**General Notes:**\n\n*   **Be"}
+[2025-10-16 10:51:24] [INFO] Out-of-database response generated {"response_length":5554,"similar_items":8,"had_embedding":true}
+[2025-10-16 10:51:24] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-17 08:45:55] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-17 08:45:55] [INFO] Chatbot initialized successfully 
+[2025-10-17 08:45:55] [INFO] Processing user message {"message_length":74,"message_preview":"create plan to go Long Hai for 3 days with budget ","history_count":1}
+[2025-10-17 08:45:59] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"create plan to go Long Hai for 3 days with budget 10 millions for 2 people"}
+[2025-10-17 08:45:59] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":false}
+[2025-10-17 08:45:59] [INFO] Hybrid search started {"query":"create plan to go Long Hai for 3 days with budget 10 millions for 2 people","intent":"tour_search"}
+[2025-10-17 08:46:01] [INFO] Reranking started {"candidates":13,"query_length":74}
+[2025-10-17 08:46:04] [INFO] Reranking completed {"input":13,"output":10}
+[2025-10-17 08:46:04] [INFO] generateVietnameseResponse called {"userMessage":"create plan to go Long Hai for 3 days with budget 10 millions for 2 people","context_length":758,"metadata":{"match_level":"hybrid_match","confidence":0.725}}
+[2025-10-17 08:46:12] [INFO] Successfully generated response {"response_length":2233,"response_preview":"Okay, here's a plan for a 3-day trip to Long Hai for two people with a budget of 10 million VND. Sin"}
+[2025-10-17 08:46:12] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.725,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-17 08:46:12] [INFO] Message processed successfully {"processing_time_ms":17676.22,"confidence":0.725,"response_type":"tour_search"}
+[2025-10-17 08:46:12] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-17 08:52:11] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-17 08:52:11] [INFO] Chatbot initialized successfully 
+[2025-10-17 08:52:11] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":3}
+[2025-10-17 08:52:11] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-17 08:52:18] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-17 08:52:18] [INFO] Chatbot initialized successfully 
+[2025-10-17 08:52:18] [INFO] Processing user message {"message_length":17,"message_preview":"tour taiwan 3 day","history_count":5}
+[2025-10-17 08:52:20] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour taiwan 3 day"}
+[2025-10-17 08:52:20] [INFO] Detected international location {"location":"taiwan","message_preview":"tour taiwan 3 day"}
+[2025-10-17 08:52:20] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-17 08:52:20] [INFO] Handling out-of-database query {"message":"tour taiwan 3 day","is_international":true}
+[2025-10-17 08:52:22] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Taiwan"}
+[2025-10-17 08:52:33] [INFO] OOD response successfully generated {"length":3772,"preview":"## **3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n**Cultural Tips:**\n*   Best time to v"}
+[2025-10-17 08:52:33] [INFO] Out-of-database response generated {"response_length":3772,"similar_items":8,"had_embedding":true}
+[2025-10-17 08:52:33] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-17 11:24:08] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-17 11:24:08] [INFO] Chatbot initialized successfully 
+[2025-10-17 11:24:08] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":1}
+[2025-10-17 11:24:08] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-18 02:25:52] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 02:25:52] [INFO] Chatbot initialized successfully 
+[2025-10-18 02:25:52] [INFO] Processing user message {"message_length":5,"message_preview":"hello","history_count":1}
+[2025-10-18 02:25:52] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-18 02:26:00] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 02:26:00] [INFO] Chatbot initialized successfully 
+[2025-10-18 02:26:00] [INFO] Processing user message {"message_length":24,"message_preview":"tour ha giang for 4 days","history_count":3}
+[2025-10-18 02:26:02] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour ha giang for 4 days"}
+[2025-10-18 02:26:02] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2025-10-18 02:26:02] [INFO] Hybrid search started {"query":"tour ha giang for 4 days","intent":"tour_search"}
+[2025-10-18 02:26:04] [INFO] Reranking started {"candidates":12,"query_length":24}
+[2025-10-18 02:26:07] [INFO] Reranking completed {"input":12,"output":10}
+[2025-10-18 02:26:07] [INFO] generateVietnameseResponse called {"userMessage":"tour ha giang for 4 days","context_length":746,"metadata":{"match_level":"hybrid_match","confidence":0.775}}
+[2025-10-18 02:26:10] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-18 02:26:10] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.775,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-18 02:26:10] [INFO] Message processed successfully {"processing_time_ms":10182.65,"confidence":0.775,"response_type":"tour_search"}
+[2025-10-18 02:26:10] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-18 02:26:14] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 02:26:14] [INFO] Chatbot initialized successfully 
+[2025-10-18 02:26:14] [INFO] Processing user message {"message_length":36,"message_preview":"tour phu quoc and can tho for 3 days","history_count":5}
+[2025-10-18 02:26:15] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour phu quoc and can tho for 3 days"}
+[2025-10-18 02:26:15] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":true,"is_international":false}
+[2025-10-18 02:26:15] [INFO] Hybrid search started {"query":"tour phu quoc and can tho for 3 days","intent":"tour_search"}
+[2025-10-18 02:26:17] [INFO] Reranking started {"candidates":4,"query_length":36}
+[2025-10-18 02:26:17] [INFO] generateVietnameseResponse called {"userMessage":"tour phu quoc and can tho for 3 days","context_length":286,"metadata":{"match_level":"hybrid_match","confidence":0.55}}
+[2025-10-18 02:26:20] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-18 02:26:20] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.55,"display_data_keys":["multi_city","has_conditions","cities","city1_tours","city2_tours","tours"]}
+[2025-10-18 02:26:20] [INFO] Message processed successfully {"processing_time_ms":6173.79,"confidence":0.55,"response_type":"tour_search"}
+[2025-10-18 02:26:20] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-18 02:26:34] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 02:26:34] [INFO] Chatbot initialized successfully 
+[2025-10-18 02:26:34] [INFO] Processing user message {"message_length":37,"message_preview":"tour nha trang and can tho for 3 days","history_count":5}
+[2025-10-18 02:26:36] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour nha trang and can tho for 3 days"}
+[2025-10-18 02:26:36] [INFO] Intent Analysis {"intent":"tour_search","cities":2,"has_conditions":true,"is_international":false}
+[2025-10-18 02:26:36] [INFO] Hybrid search started {"query":"tour nha trang and can tho for 3 days","intent":"tour_search"}
+[2025-10-18 02:26:38] [INFO] Reranking started {"candidates":11,"query_length":37}
+[2025-10-18 02:26:40] [INFO] Reranking completed {"input":11,"output":10}
+[2025-10-18 02:26:40] [INFO] generateVietnameseResponse called {"userMessage":"tour nha trang and can tho for 3 days","context_length":685,"metadata":{"match_level":"hybrid_match","confidence":0.8250000000000001}}
+[2025-10-18 02:26:43] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-18 02:26:43] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"multi_city_tours","confidence":0.8250000000000001,"display_data_keys":["multi_city","has_conditions","cities","city1_tours","city2_tours","tours"]}
+[2025-10-18 02:26:43] [INFO] Message processed successfully {"processing_time_ms":9216.33,"confidence":0.8250000000000001,"response_type":"tour_search"}
+[2025-10-18 02:26:43] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-18 02:32:17] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 02:32:17] [INFO] Chatbot initialized successfully 
+[2025-10-18 02:32:17] [INFO] Processing user message {"message_length":24,"message_preview":"plan to korea for 4 days","history_count":5}
+[2025-10-18 02:32:19] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"plan to korea for 4 days"}
+[2025-10-18 02:32:19] [INFO] Detected international location {"location":"korea","message_preview":"plan to korea for 4 days"}
+[2025-10-18 02:32:19] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2025-10-18 02:32:19] [INFO] Handling out-of-database query {"message":"plan to korea for 4 days","is_international":true}
+[2025-10-18 02:32:20] [INFO] Generating OOD response {"prompt_type":"planning","destination":"Korea"}
+[2025-10-18 02:32:31] [INFO] OOD response successfully generated {"length":4548,"preview":"## **4-Day Travel Plan to Korea** (Budget: To be determined)\n\n**🗓️ Day 1 - Seoul Arrival & Hist"}
+[2025-10-18 02:32:31] [INFO] Out-of-database response generated {"response_length":4548,"similar_items":8,"had_embedding":true}
+[2025-10-18 02:32:31] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}

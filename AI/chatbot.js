@@ -624,40 +624,48 @@ class TravelChatbot {
                 city2Hotels = this.filterHotelsByRating(city2Hotels, ratingFilter);
             }
             
-            // LEFT COLUMN
-            const leftColumn = document.createElement('div');
-            leftColumn.className = 'card-column hotel-column';
-            const leftHeader = document.createElement('div');
-            leftHeader.className = 'column-header';
-            leftHeader.innerHTML = `<i class="fas fa-bed"></i> Hotels in ${this.escapeHtml(cities[0])}`;
-            leftColumn.appendChild(leftHeader);
-            
-            const leftCardsWrapper = document.createElement('div');
-            leftCardsWrapper.className = 'column-cards';
-            city1Hotels.slice(0, 3).forEach(item => {
-                leftCardsWrapper.appendChild(this.createHotelCard(item));
-            });
-            leftColumn.appendChild(leftCardsWrapper);
-            container.appendChild(leftColumn);
-            
-            // RIGHT COLUMN
-            const rightColumn = document.createElement('div');
-            rightColumn.className = 'card-column hotel-column';
-            const rightHeader = document.createElement('div');
-            rightHeader.className = 'column-header';
-            rightHeader.innerHTML = `<i class="fas fa-bed"></i> Hotels in ${this.escapeHtml(cities[1])}`;
-            rightColumn.appendChild(rightHeader);
-            
-            const rightCardsWrapper = document.createElement('div');
-            rightCardsWrapper.className = 'column-cards';
-            city2Hotels.slice(0, 3).forEach(item => {
-                rightCardsWrapper.appendChild(this.createHotelCard(item));
-            });
-            rightColumn.appendChild(rightCardsWrapper);
-            container.appendChild(rightColumn);
+            // ✅ FIX: Only create columns if we have hotels
+            if (city1Hotels.length > 0 || city2Hotels.length > 0) {
+                // LEFT COLUMN (only if has hotels)
+                if (city1Hotels.length > 0) {
+                    const leftColumn = document.createElement('div');
+                    leftColumn.className = 'card-column hotel-column';
+                    const leftHeader = document.createElement('div');
+                    leftHeader.className = 'column-header';
+                    leftHeader.innerHTML = `<i class="fas fa-bed"></i> Hotels in ${this.escapeHtml(cities[0])}`;
+                    leftColumn.appendChild(leftHeader);
+                    
+                    const leftCardsWrapper = document.createElement('div');
+                    leftCardsWrapper.className = 'column-cards';
+                    city1Hotels.slice(0, 3).forEach(item => {
+                        leftCardsWrapper.appendChild(this.createHotelCard(item));
+                    });
+                    leftColumn.appendChild(leftCardsWrapper);
+                    container.appendChild(leftColumn);
+                }
+                
+                // RIGHT COLUMN (only if has hotels)
+                if (city2Hotels.length > 0) {
+                    const rightColumn = document.createElement('div');
+                    rightColumn.className = 'card-column hotel-column';
+                    const rightHeader = document.createElement('div');
+                    rightHeader.className = 'column-header';
+                    rightHeader.innerHTML = `<i class="fas fa-bed"></i> Hotels in ${this.escapeHtml(cities[1])}`;
+                    rightColumn.appendChild(rightHeader);
+                    
+                    const rightCardsWrapper = document.createElement('div');
+                    rightCardsWrapper.className = 'column-cards';
+                    city2Hotels.slice(0, 3).forEach(item => {
+                        rightCardsWrapper.appendChild(this.createHotelCard(item));
+                    });
+                    rightColumn.appendChild(rightCardsWrapper);
+                    container.appendChild(rightColumn);
+                }
+            }
             
             return;
         }
+
         
         // ==================================================
         // CASE: Mixed query (✅ APPLY FILTER HERE)
