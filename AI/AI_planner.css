@@ -647,7 +647,7 @@ body {
 
 .message.user .message-timestamp {
     text-align: right;
-    color: #10a37f;
+
 }
 
 .message.assistant .message-timestamp {
@@ -2015,7 +2015,7 @@ body {
 }
 
 .input-box:focus-within {
-  border-color: #10a37f;
+  border-color: #cdf9ff;
 }
 
 .message-input {
@@ -2998,4 +2998,1048 @@ body {
 
 .multi-city-column.hotels-column h4 i.fa-bed {
     color: #3498db;
+}
+
+/* ============================================
+   ENHANCED FEATURES - ADD TO YOUR CSS FILE
+   ============================================ */
+
+/* 1. DARK MODE STYLES */
+body.dark-mode {
+    background: #1a1a1a;
+    color: #e4e4e4;
+}
+
+body.dark-mode .sidebar {
+    background: #2d2d2d;
+    border-right-color: #3d3d3d;
+}
+
+body.dark-mode .sidebar-header,
+body.dark-mode .sidebar-content,
+body.dark-mode .sidebar-footer {
+    background: #2d2d2d;
+}
+
+body.dark-mode .new-chat-btn {
+    background: #3d3d3d;
+    color: #e4e4e4;
+    border-color: #4d4d4d;
+}
+
+body.dark-mode .new-chat-btn:hover {
+    background: #4d4d4d;
+}
+
+body.dark-mode .chat-item:hover,
+body.dark-mode .chat-item.active {
+    background: #3d3d3d;
+}
+
+body.dark-mode .chat-title {
+    color: #fcfcfc;
+}
+
+body.dark-mode .section-title,
+body.dark-mode .chat-date-header {
+    color: #a0a0a0;
+    background: #2d2d2d;
+}
+
+body.dark-mode .user-info:hover {
+    background: #3d3d3d;
+}
+
+body.dark-mode .user-menu {
+    background: #3d3d3d;
+    border-color: #4d4d4d;
+}
+
+body.dark-mode .menu-item:hover {
+    background: #4d4d4d;
+}
+
+body.dark-mode .main-content {
+    background: #1a1a1a;
+}
+
+body.dark-mode .message.assistant .message-text {
+    background: #2d2d2d;
+    color: #e4e4e4;
+    border-color: #3d3d3d;
+}
+
+body.dark-mode .input-container {
+    background: #1a1a1a;
+    border-top-color: #3d3d3d;
+}
+
+body.dark-mode .input-box {
+    background: #2d2d2d;
+    border-color: #3d3d3d;
+}
+
+body.dark-mode .message-input {
+    color: #e4e4e4;
+}
+
+body.dark-mode .message-input::placeholder {
+    color: #808080;
+}
+
+body.dark-mode .data-card {
+    background: #2d2d2d;
+    border-color: #3d3d3d;
+}
+
+body.dark-mode .data-card:hover {
+    border-color: #10a37f;
+}
+
+body.dark-mode .card-title {
+    color: #e4e4e4;
+}
+
+body.dark-mode .detail-value {
+    color: #c0c0c0;
+}
+
+body.dark-mode .card-btn-secondary {
+    background: #3d3d3d;
+    color: #e4e4e4;
+    border-color: #4d4d4d;
+}
+
+/* 2. MOBILE MENU TOGGLE BUTTON */
+.mobile-menu-toggle {
+    display: none;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1001;
+    background: #10a37f;
+    color: white;
+    border: none;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(16, 163, 127, 0.3);
+    transition: all 0.3s ease;
+}
+
+.mobile-menu-toggle:hover {
+    background: #0d8f6f;
+    transform: scale(1.05);
+}
+
+.mobile-menu-toggle.active {
+    background: #dc3545;
+}
+
+.mobile-menu-toggle i {
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* 3. CHAT SEARCH BOX */
+.chat-search-container {
+    padding: 12px;
+    border-bottom: 1px solid #e9ecef;
+    background: #f8f9fa;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: #ffffff;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    padding: 8px 12px;
+    transition: border-color 0.2s ease;
+}
+
+.search-box:focus-within {
+    border-color: #d1edff;
+}
+
+.search-box i.fa-search {
+    color: #6c757d;
+    font-size: 14px;
+    margin-right: 8px;
+}
+
+.chat-search-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #333333;
+    background: transparent;
+}
+
+.chat-search-input::placeholder {
+    color: #adb5bd;
+}
+
+.clear-search-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.clear-search-btn:hover {
+    background: #e9ecef;
+    color: #333333;
+}
+
+body.dark-mode .chat-search-container {
+    background: #2d2d2d;
+    border-bottom-color: #3d3d3d;
+}
+
+body.dark-mode .search-box {
+    background: #3d3d3d;
+    border-color: #4d4d4d;
+}
+
+body.dark-mode .chat-search-input {
+    color: #e4e4e4;
+}
+
+body.dark-mode .chat-search-input::placeholder {
+    color: #808080;
+}
+
+/* 4. THEME TOGGLE BUTTON */
+.theme-toggle-container {
+    padding: 8px 12px;
+    border-bottom: 1px solid #e9ecef;
+    margin-bottom: 8px;
+}
+
+.theme-toggle-btn {
+    width: 100%;
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #333333;
+    padding: 10px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.theme-toggle-btn:hover {
+    background: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.theme-toggle-btn i {
+    font-size: 16px;
+    color: #10a37f;
+}
+
+body.dark-mode .theme-toggle-container {
+    border-bottom-color: #3d3d3d;
+}
+
+body.dark-mode .theme-toggle-btn {
+    background: #3d3d3d;
+    color: #e4e4e4;
+    border-color: #4d4d4d;
+}
+
+body.dark-mode .theme-toggle-btn:hover {
+    background: #4d4d4d;
+}
+
+body.dark-mode .theme-toggle-btn i {
+    color: #ffc107;
+}
+
+/* 5. ENHANCED MESSAGE ACTIONS */
+.message-actions {
+    display: flex;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    margin-top: 6px;
+}
+
+.message:hover .message-actions {
+    opacity: 1;
+}
+
+.message.assistant .message-actions {
+    justify-content: flex-start;
+    margin-left: 44px;
+}
+
+.message-action-btn {
+    background: #f8f9fa;
+    border: 1px solid #e9ecef;
+    color: #6c757d;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 11px;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.message-action-btn:hover {
+    background: #10a37f;
+    color: white;
+    border-color: #10a37f;
+    transform: translateY(-1px);
+}
+
+.message-action-btn i {
+    font-size: 10px;
+}
+
+body.dark-mode .message-action-btn {
+    background: #3d3d3d;
+    border-color: #4d4d4d;
+    color: #a0a0a0;
+}
+
+body.dark-mode .message-action-btn:hover {
+    background: #10a37f;
+    color: white;
+    border-color: #10a37f;
+}
+
+/* 6. SKELETON LOADING ANIMATION */
+.skeleton-container {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.skeleton-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+}
+
+.skeleton-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.skeleton-line {
+    height: 12px;
+    background: linear-gradient(90deg, #e9ecef 25%, #f8f9fa 50%, #e9ecef 75%);
+    background-size: 200% 100%;
+    animation: skeleton-loading 1.5s infinite;
+    border-radius: 4px;
+}
+
+.skeleton-line.short {
+    width: 60%;
+}
+
+.loading-text {
+    color: #6c757d;
+    font-style: italic;
+    text-align: center;
+}
+
+@keyframes skeleton-loading {
+    0% {
+        background-position: 200% 0;
+    }
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+body.dark-mode .skeleton-container {
+    background: #2d2d2d;
+}
+
+body.dark-mode .skeleton-avatar,
+body.dark-mode .skeleton-line {
+    background: linear-gradient(90deg, #3d3d3d 25%, #4d4d4d 50%, #3d3d3d 75%);
+    background-size: 200% 100%;
+}
+
+/* 7. TOAST NOTIFICATION */
+.toast-notification {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #10a37f;
+    color: white;
+    padding: 14px 20px;
+    border-radius: 12px;
+    box-shadow: 0 6px 20px rgba(16, 163, 127, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    transform: translateX(400px);
+    transition: transform 0.3s ease;
+    z-index: 10000;
+}
+
+.toast-notification.show {
+    transform: translateX(0);
+}
+
+.toast-notification.error {
+    background: #dc3545;
+    box-shadow: 0 6px 20px rgba(220, 53, 69, 0.4);
+}
+
+.toast-notification i {
+    font-size: 18px;
+}
+
+/* 8. EXPORT MODAL */
+.export-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    backdrop-filter: blur(4px);
+}
+
+.export-content {
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: modal-slide-in 0.3s ease;
+}
+
+@keyframes modal-slide-in {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.export-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.export-header h3 {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+.close-modal-btn {
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.close-modal-btn:hover {
+    background: #e9ecef;
+    color: #333333;
+}
+
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.export-option-btn {
+    background: #f8f9fa;
+    border: 2px solid #e9ecef;
+    color: #333333;
+    padding: 16px;
+    border-radius: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.export-option-btn:hover {
+    background: #10a37f;
+    color: white;
+    border-color: #10a37f;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(16, 163, 127, 0.3);
+}
+
+.export-option-btn i {
+    font-size: 20px;
+}
+
+body.dark-mode .export-content {
+    background: #2d2d2d;
+}
+
+body.dark-mode .export-header h3 {
+    color: #e4e4e4;
+}
+
+body.dark-mode .close-modal-btn:hover {
+    background: #3d3d3d;
+    color: #e4e4e4;
+}
+
+body.dark-mode .export-option-btn {
+    background: #3d3d3d;
+    border-color: #4d4d4d;
+    color: #e4e4e4;
+}
+
+body.dark-mode .export-option-btn:hover {
+    background: #10a37f;
+    color: white;
+    border-color: #10a37f;
+}
+
+/* 9. SMOOTH SCROLL BEHAVIOR */
+html {
+    scroll-behavior: smooth;
+}
+
+/* 10. ENHANCED TRANSITIONS */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Reset transitions for specific elements */
+.message-input,
+.chat-search-input,
+input,
+textarea {
+    transition: border-color 0.2s ease;
+}
+
+/* 11. ACCESSIBILITY IMPROVEMENTS */
+*:focus-visible {
+    outline: 2px solid #10a37f;
+    outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+    outline: 2px solid #10a37f;
+    outline-offset: 2px;
+}
+
+/* 12. IMPROVED CARD HOVER EFFECTS */
+.data-card {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.data-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(16, 163, 127, 0.05), rgba(16, 163, 127, 0));
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+.data-card:hover::before {
+    opacity: 1;
+}
+
+/* 13. MESSAGE ENTRANCE ANIMATION */
+.message {
+    animation: message-fade-in 0.4s ease;
+}
+
+@keyframes message-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 14. PULSE ANIMATION FOR NEW MESSAGES */
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(16, 163, 127, 0.4);
+    }
+    50% {
+        box-shadow: 0 0 0 8px rgba(16, 163, 127, 0);
+    }
+}
+
+.message.new {
+    animation: message-fade-in 0.4s ease, pulse-glow 1s ease;
+}
+
+/* 15. IMPROVED INPUT FOCUS STATE */
+.input-box:focus-within {
+    box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+}
+
+.input-box:focus-within .message-input {
+    color: #333333;
+}
+
+body.dark-mode .input-box:focus-within .message-input {
+    color: #e4e4e4;
+}
+
+/* 16. CHAT ITEM SLIDE ANIMATION */
+.chat-history-item {
+    animation: slide-in-left 0.3s ease;
+}
+
+@keyframes slide-in-left {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* 17. LOADING DOTS ANIMATION (Alternative) */
+.loading-dots {
+    display: flex;
+    gap: 4px;
+    justify-content: center;
+}
+
+.loading-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10a37f;
+    animation: loading-bounce 1.4s infinite ease-in-out both;
+}
+
+.loading-dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.loading-dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes loading-bounce {
+    0%, 80%, 100% {
+        transform: scale(0);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 18. GRADIENT TEXT EFFECT */
+.gradient-text {
+    background: linear-gradient(135deg, #10a37f, #0d8f6f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcome-content h1 {
+    background: linear-gradient(135deg, #10a37f, #667eea);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* 19. IMPROVED SCROLLBAR FOR DARK MODE */
+body.dark-mode .sidebar-content::-webkit-scrollbar-track,
+body.dark-mode .messages-container::-webkit-scrollbar-track {
+    background: #2d2d2d;
+}
+
+body.dark-mode .sidebar-content::-webkit-scrollbar-thumb,
+body.dark-mode .messages-container::-webkit-scrollbar-thumb {
+    background: #4d4d4d;
+    border-color: #3d3d3d;
+}
+
+body.dark-mode .sidebar-content::-webkit-scrollbar-thumb:hover,
+body.dark-mode .messages-container::-webkit-scrollbar-thumb:hover {
+    background: #5d5d5d;
+}
+
+/* 20. FLOATING ACTION BUTTON (For Export) */
+.floating-action-btn {
+    position: fixed;
+    bottom: 100px;
+    right: 30px;
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #10a37f, #0d8f6f);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 16px rgba(16, 163, 127, 0.4);
+    transition: all 0.3s ease;
+    z-index: 100;
+}
+
+.floating-action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 24px rgba(16, 163, 127, 0.5);
+}
+
+.floating-action-btn i {
+    font-size: 20px;
+}
+
+@media (max-width: 768px) {
+    .floating-action-btn {
+        bottom: 140px;
+        right: 20px;
+        width: 48px;
+        height: 48px;
+    }
+    
+    .floating-action-btn i {
+        font-size: 18px;
+    }
+}
+
+/* 21. ENHANCED SUGGESTION BUTTONS */
+.suggestion-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.suggestion-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(16, 163, 127, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease;
+}
+
+.suggestion-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+/* 22. BADGE ANIMATIONS */
+.card-badge,
+.card-category-badge {
+    animation: badge-pop 0.4s ease;
+}
+
+@keyframes badge-pop {
+    0% {
+        transform: scale(0);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* 23. IMPROVED MODAL BACKDROP */
+.loading-modal,
+.export-modal {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+/* 24. TEXT SELECTION STYLING */
+::selection {
+    background: rgba(16, 163, 127, 0.3);
+    color: inherit;
+}
+
+::-moz-selection {
+    background: rgba(16, 163, 127, 0.3);
+    color: inherit;
+}
+
+body.dark-mode ::selection {
+    background: rgba(16, 163, 127, 0.5);
+}
+
+/* 25. RESPONSIVE IMPROVEMENTS */
+@media (max-width: 768px) {
+    .toast-notification {
+        bottom: 150px;
+        right: 20px;
+        left: 20px;
+        font-size: 13px;
+        padding: 12px 16px;
+    }
+    
+    .export-content {
+        width: 95%;
+        padding: 20px;
+    }
+    
+    .export-header h3 {
+        font-size: 18px;
+    }
+    
+    .export-option-btn {
+        padding: 14px;
+        font-size: 14px;
+    }
+}
+
+/* 26. NO HISTORY STATE IMPROVEMENTS */
+.no-history {
+    animation: fade-in 0.5s ease;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+.no-history i {
+    font-size: 48px;
+    color: #dee2e6;
+    margin-bottom: 16px;
+}
+
+body.dark-mode .no-history i {
+    color: #4d4d4d;
+}
+
+/* 27. IMPROVED BUTTON STATES */
+button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+button:not(:disabled):active {
+    transform: scale(0.98);
+}
+
+/* 28. ENHANCED CARD ACTIONS */
+.card-actions {
+    animation: action-slide-up 0.3s ease;
+}
+
+@keyframes action-slide-up {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 29. TYPING INDICATOR ENHANCEMENT */
+.typing-indicator {
+    animation: fade-in 0.3s ease;
+}
+
+/* 30. MICRO-INTERACTIONS */
+.send-btn:not(:disabled):hover {
+    animation: button-pulse 0.6s ease;
+}
+
+@keyframes button-pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* 31. SIDEBAR OVERLAY FOR MOBILE */
+.sidebar-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 99;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.sidebar-overlay.show {
+    display: block;
+    opacity: 1;
+}
+
+@media (max-width: 768px) {
+    body.sidebar-open .sidebar-overlay {
+        display: block;
+        opacity: 1;
+    }
+}
+
+/* 32. ENHANCED WELCOME SCREEN */
+.welcome-content {
+    animation: welcome-fade-in 0.8s ease;
+}
+
+@keyframes welcome-fade-in {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.ai-logo {
+    animation: logo-bounce 2s ease infinite;
+}
+
+@keyframes logo-bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* 33. IMPROVED CLEAR BUTTON */
+.clear-all-btn {
+    position: relative;
+    overflow: hidden;
+}
+
+.clear-all-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(220, 53, 69, 0.1);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.clear-all-btn:hover::before {
+    width: 200px;
+    height: 200px;
+}
+
+/* 34. PERFORMANCE OPTIMIZATIONS */
+.message-text,
+.card-image img {
+    will-change: transform;
+}
+
+.data-card {
+    contain: layout style paint;
+}
+
+/* 35. PRINT STYLES */
+@media print {
+    .sidebar,
+    .input-container,
+    .mobile-menu-toggle,
+    .message-actions,
+    .floating-action-btn {
+        display: none !important;
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .message {
+        break-inside: avoid;
+    }
 }

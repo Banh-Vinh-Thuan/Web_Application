@@ -1877,3 +1877,32 @@
 [2025-10-18 02:32:31] [INFO] OOD response successfully generated {"length":4548,"preview":"## **4-Day Travel Plan to Korea** (Budget: To be determined)\n\n**🗓️ Day 1 - Seoul Arrival & Hist"}
 [2025-10-18 02:32:31] [INFO] Out-of-database response generated {"response_length":4548,"similar_items":8,"had_embedding":true}
 [2025-10-18 02:32:31] [INFO] Request processed successfully {"response_type":"out_of_database","has_data":false}
+[2025-10-18 08:29:32] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 08:29:32] [INFO] Chatbot initialized successfully 
+[2025-10-18 08:29:32] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":1}
+[2025-10-18 08:29:32] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2025-10-18 08:43:24] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 08:43:24] [INFO] Chatbot initialized successfully 
+[2025-10-18 08:43:24] [INFO] Processing user message {"message_length":4,"message_preview":"ăe.","history_count":3}
+[2025-10-18 08:43:26] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"ăe."}
+[2025-10-18 08:43:26] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":false,"is_international":false}
+[2025-10-18 08:43:26] [INFO] Hybrid search started {"query":"ăe.","intent":"general"}
+[2025-10-18 08:43:28] [INFO] Reranking started {"candidates":15,"query_length":4}
+[2025-10-18 08:43:30] [INFO] Reranking completed {"input":15,"output":10}
+[2025-10-18 08:43:30] [INFO] generateVietnameseResponse called {"userMessage":"ăe.","context_length":237,"metadata":{"match_level":"hybrid_match","confidence":0.65}}
+[2025-10-18 08:43:33] [WARNING] Empty or generic response detected, using context fallback 
+[2025-10-18 08:43:33] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.65,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-18 08:43:33] [INFO] Message processed successfully {"processing_time_ms":8622.88,"confidence":0.65,"response_type":"tour_search"}
+[2025-10-18 08:43:33] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2025-10-18 08:58:39] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2025-10-18 08:58:39] [INFO] Chatbot initialized successfully 
+[2025-10-18 08:58:39] [INFO] Processing user message {"message_length":29,"message_preview":"gsfggawerggggggggg33333333333","history_count":3}
+[2025-10-18 08:58:42] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"gsfggawerggggggggg33333333333"}
+[2025-10-18 08:58:42] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":false,"is_international":false}
+[2025-10-18 08:58:42] [INFO] Hybrid search started {"query":"gsfggawerggggggggg33333333333","intent":"general"}
+[2025-10-18 08:58:44] [INFO] Reranking started {"candidates":10,"query_length":29}
+[2025-10-18 08:58:44] [INFO] generateVietnameseResponse called {"userMessage":"gsfggawerggggggggg33333333333","context_length":195,"metadata":{"match_level":"hybrid_match","confidence":0.65}}
+[2025-10-18 08:58:46] [INFO] Successfully generated response {"response_length":100,"response_preview":"I'm sorry, I didn't quite understand your request. Could you please clarify what you're looking for?"}
+[2025-10-18 08:58:46] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.65,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2025-10-18 08:58:46] [INFO] Message processed successfully {"processing_time_ms":6509.98,"confidence":0.65,"response_type":"tour_search"}
+[2025-10-18 08:58:46] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}

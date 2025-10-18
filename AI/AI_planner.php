@@ -11,6 +11,11 @@
     <link rel="stylesheet" href="AI_planner.css">
 </head>
 <body>
+    <!-- Mobile Menu Toggle -->
+    <button id="mobileMenuToggle" class="mobile-menu-toggle" aria-label="Toggle menu">
+        <i class="fas fa-bars"></i>
+    </button>
+
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
         <div class="sidebar-header">
@@ -24,6 +29,17 @@
         </div>
         
         <div class="sidebar-content">
+            <!-- Search Chat History -->
+            <div class="chat-search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="chatSearchInput" placeholder="Search conversations..." class="chat-search-input">
+                    <button id="clearSearch" class="clear-search-btn" style="display: none;">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            
             <div class="chat-history">
                 <div class="chat-section">
                     <div class="section-title">Conversations</div>
@@ -35,16 +51,21 @@
         </div>
         
         <div class="sidebar-footer">
+            <!-- Dark Mode Toggle -->
+            <div class="theme-toggle-container">
+                <button id="themeToggle" class="theme-toggle-btn" title="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                    <span>Dark Mode</span>
+                </button>
+            </div>
+            
             <div class="user-info" onclick="toggleUserMenu()">
                 <div class="user-avatar">
                     <?php 
-                    // Get user info from session with fallbacks
                     $userName = isset($_SESSION['username']) ? $_SESSION['username'] : 
                                (isset($_SESSION['user_name']) ? $_SESSION['user_name'] : 
                                (isset($_SESSION['name']) ? $_SESSION['name'] : 'Guest'));
                     $userEmail = isset($_SESSION['email']) ? $_SESSION['email'] : 'Free';
-                    
-                    // Display first letter of username
                     echo strtoupper(substr($userName, 0, 1));
                     ?>
                 </div>
@@ -108,16 +129,181 @@
         </div>
     </div>
 
-    <!-- Loading Modal -->
+    <!-- Enhanced Loading Modal with Skeleton -->
     <div id="loadingModal" class="loading-modal">
         <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p>AI is thinking...</p>
+            <div class="skeleton-container">
+                <div class="skeleton-avatar"></div>
+                <div class="skeleton-text">
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line"></div>
+                    <div class="skeleton-line short"></div>
+                </div>
+            </div>
+            <p class="loading-text">AI is thinking...</p>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="toast-notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="toastMessage">Message copied!</span>
+    </div>
+
+    <!-- Export Chat Modal -->
+    <div id="exportModal" class="export-modal">
+        <div class="export-content">
+            <div class="export-header">
+                <h3>Export Conversation</h3>
+                <button class="close-modal-btn" onclick="closeExportModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="export-options">
+                <button class="export-option-btn" onclick="exportChat('txt')">
+                    <i class="fas fa-file-alt"></i>
+                    <span>Export as Text</span>
+                </button>
+                <button class="export-option-btn" onclick="exportChat('json')">
+                    <i class="fas fa-file-code"></i>
+                    <span>Export as JSON</span>
+                </button>
+            </div>
         </div>
     </div>
 
     <script>
-        // Add logout function
+        // Theme Toggle
+        function initTheme() {
+            const theme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            updateThemeIcon(theme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.querySelector('#themeToggle i');
+            const text = document.querySelector('#themeToggle span');
+            if (theme === 'dark') {
+                icon.className = 'fas fa-sun';
+                text.textContent = 'Light Mode';
+            } else {
+                icon.className = 'fas fa-moon';
+                text.textContent = 'Dark Mode';
+            }
+        }
+
+        document.getElementById('themeToggle')?.addEventListener('click', function() {
+            const isDark = document.body.classList.toggle('dark-mode');
+            const theme = isDark ? 'dark' : 'light';
+            localStorage.setItem('theme', theme);
+            updateThemeIcon(theme);
+        });
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuToggle')?.addEventListener('click', function() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('show');
+            this.classList.toggle('active');
+        });
+
+        // Chat Search Functionality
+        const chatSearchInput = document.getElementById('chatSearchInput');
+        const clearSearchBtn = document.getElementById('clearSearch');
+
+        chatSearchInput?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            clearSearchBtn.style.display = searchTerm ? 'block' : 'none';
+            filterChatHistory(searchTerm);
+        });
+
+        clearSearchBtn?.addEventListener('click', function() {
+            chatSearchInput.value = '';
+            this.style.display = 'none';
+            filterChatHistory('');
+        });
+
+        function filterChatHistory(searchTerm) {
+            const chatItems = document.querySelectorAll('.chat-history-item');
+            chatItems.forEach(item => {
+                const title = item.querySelector('.chat-title')?.textContent.toLowerCase() || '';
+                item.style.display = title.includes(searchTerm) ? 'block' : 'none';
+            });
+        }
+
+        // Toast Notification
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toastNotification');
+            const toastMessage = document.getElementById('toastMessage');
+            const icon = toast.querySelector('i');
+            
+            toastMessage.textContent = message;
+            toast.className = `toast-notification ${type}`;
+            
+            if (type === 'success') {
+                icon.className = 'fas fa-check-circle';
+            } else if (type === 'error') {
+                icon.className = 'fas fa-exclamation-circle';
+            }
+            
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Copy Message Function
+        function copyMessage(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast('Message copied to clipboard!');
+            }).catch(() => {
+                showToast('Failed to copy message', 'error');
+            });
+        }
+
+        // Export Chat Modal
+        function openExportModal() {
+            document.getElementById('exportModal').style.display = 'flex';
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').style.display = 'none';
+        }
+
+        function exportChat(format) {
+            const messages = document.querySelectorAll('.message');
+            let content = '';
+            
+            if (format === 'txt') {
+                messages.forEach(msg => {
+                    const role = msg.classList.contains('user') ? 'You' : 'AI';
+                    const text = msg.querySelector('.message-text')?.textContent || '';
+                    content += `${role}: ${text}\n\n`;
+                });
+                downloadFile(content, 'chat-export.txt', 'text/plain');
+            } else if (format === 'json') {
+                const chatData = Array.from(messages).map(msg => ({
+                    role: msg.classList.contains('user') ? 'user' : 'assistant',
+                    content: msg.querySelector('.message-text')?.textContent || ''
+                }));
+                content = JSON.stringify(chatData, null, 2);
+                downloadFile(content, 'chat-export.json', 'application/json');
+            }
+            
+            closeExportModal();
+            showToast('Chat exported successfully!');
+        }
+
+        function downloadFile(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Logout Function
         function logout() {
             if (confirm('Are you sure you want to logout?')) {
                 window.location.href = '../Login/login.php';
@@ -137,6 +323,9 @@
                 userMenu.classList.remove('show');
             }
         });
+
+        // Initialize theme on load
+        initTheme();
     </script>
     <script src="chatbot.js"></script>
 </body>
