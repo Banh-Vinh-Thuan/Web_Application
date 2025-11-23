@@ -156,8 +156,8 @@ class GeminiService
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => ['Content-Type: application/json'],
             CURLOPT_TIMEOUT => Config::API_TIMEOUT,
-            CURLOPT_SSL_VERIFYPEER => true, // ✅ FIX: Enable SSL verification
-            CURLOPT_CONNECTTIMEOUT => 15, // ✅ FIX: Increased connection timeout
+            CURLOPT_SSL_VERIFYPEER => true, 
+            CURLOPT_CONNECTTIMEOUT => 15, 
         ];
 
         curl_setopt_array($ch, $options);

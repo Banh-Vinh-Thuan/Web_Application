@@ -1277,32 +1277,8 @@ body {
     background: rgba(52, 152, 219, 0.9);
 }
 
-.multi-city-column{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: #f8f9fa;
-    border-radius: 12px;
-    padding: 16px;
-    border: 1px solid #e9ecef;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    min-height: 200px;
-}
-
 .multi-city-column.center-column{
     border-left: 4px solid #e74c3c; /* Red for middle column */
-}
-
-.multi-city-column h4{
-    font-size: 16px;
-    font-weight: 600;
-    margin-bottom: 12px;
-    padding-bottom: 8px;
-    border-bottom: 2px solid #dee2e6;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    color: #333333;
 }
 
 .left-column h4,
@@ -1461,25 +1437,6 @@ body {
 .card-show-toggle {
     text-align: center;
     margin-top: 16px;
-}
-
-.show-more-btn, .show-less-btn {
-    background: linear-gradient(135deg, #10a37f, #0d8f6f);
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 8px rgba(16, 163, 127, 0.3);
-}
-
-.show-more-btn:hover, .show-less-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(16, 163, 127, 0.4);
-    background: linear-gradient(135deg, #0d8f6f, #0a7c61);
 }
 
 /* Hidden cards that can be shown with "Show More" */
@@ -2004,18 +1961,18 @@ body {
 }
 
 .input-box {
-  background: #f8f9fa;
-  border: 2px solid #e9ecef;
-  border-radius: 12px;
-  display: flex;
-  align-items: flex-end;
-  padding: 10px 14px;
-  gap: 10px;
-  transition: border-color 0.2s ease;
+    background: #f8f9fa;
+    border: none;  
+    border-radius: 12px;
+    display: flex;
+    align-items: flex-end;
+    padding: 10px 14px;
+    gap: 10px;
+    transition: box-shadow 0.2s ease;  
 }
 
 .input-box:focus-within {
-  border-color: #cdf9ff;
+    box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);  
 }
 
 .message-input {
@@ -2026,7 +1983,7 @@ body {
   font-size: 15px;
   line-height: 1.4;
   resize: none;
-  outline: none;
+  outline: none !important;
   min-height: 22px;
   max-height: 180px;
   overflow-y: auto;
@@ -2351,33 +2308,6 @@ body {
     z-index: 2;
 }
 
-/* Show more/less buttons for city subsections */
-.city-subsection .card-show-toggle {
-    text-align: center;
-    margin-top: 12px;
-}
-
-.city-subsection .show-more-btn, 
-.city-subsection .show-less-btn {
-    background: linear-gradient(135deg, #10a37f, #0d8f6f);
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 12px;
-    font-weight: 500;
-    transition: all 0.3s ease;
-    box-shadow: 0 2px 6px rgba(16, 163, 127, 0.3);
-}
-
-.city-subsection .show-more-btn:hover, 
-.city-subsection .show-less-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 10px rgba(16, 163, 127, 0.4);
-    background: linear-gradient(135deg, #0d8f6f, #0a7c61);
-}
-
 /* Mobile responsive for city subsections */
 @media (max-width: 768px) {
     .data-cards.two-column-layout,
@@ -2488,26 +2418,6 @@ body {
     }
 }
 
-.data-cards.multi-city-layout {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 16px;
-    margin-top: 15px;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.multi-city-column {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    background: transparent; 
-    border-radius: 0; 
-    padding: 0; 
-    border: none; 
-    box-shadow: none; 
-}
-
 .multi-city-column h4 {
     font-size: 16px;
     font-weight: 600;
@@ -2560,13 +2470,6 @@ body {
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
     transform: translateY(-3px);
     border-color: #10a37f;
-}
-
-/* Nội dung thẻ hiển thị dọc */
-.multi-city-column .card-content {
-    height: 180px;
-    display: flex;
-    flex-direction: row; 
 }
 
 .multi-city-column .card-image {
@@ -3170,10 +3073,6 @@ body.dark-mode .card-btn-secondary {
     transition: border-color 0.2s ease;
 }
 
-.search-box:focus-within {
-    border-color: #d1edff;
-}
-
 .search-box i.fa-search {
     color: #6c757d;
     font-size: 14px;
@@ -3182,7 +3081,7 @@ body.dark-mode .card-btn-secondary {
 
 .chat-search-input {
     flex: 1;
-    border: none;
+    border: none !important;
     outline: none;
     font-size: 14px;
     color: #333333;

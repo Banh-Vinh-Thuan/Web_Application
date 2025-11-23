@@ -317,8 +317,6 @@ class CrossEncoderReranker{
         return $formatted;
     }
 
-    // ==================== UTILITY METHODS ====================
-
     private function clampScore($score): float
     {
         return max(self::MIN_SCORE, min(self::MAX_SCORE, $score));

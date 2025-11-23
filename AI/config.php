@@ -9,11 +9,11 @@ class Config {
     const DB_CHARSET = "utf8mb4";
 
     // Gemini AI Configuration
-    const GEMINI_API_KEY = "AIzaSyAEn4jCjwoA8DK2RIiyiZt7PxZ7rAwlAcs";
+    const GEMINI_API_KEY = "AIzaSyAOlyFnLb4WxsCh-wgLoO7N3qYHy-94xG0";
     const GEMINI_BACKUP_KEYS = [
         "AIzaSyDrp5ViLBeOYZuIflc1fLd4xUQ9gP5KlWE",
         "AIzaSyBmRj5Ztc3S6-YGAroOE3T62otmNMivn7A",
-        "AIzaSyAOlyFnLb4WxsCh-wgLoO7N3qYHy-94xG0"
+        "AIzaSyAEn4jCjwoA8DK2RIiyiZt7PxZ7rAwlAcs"
     ];
     const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";

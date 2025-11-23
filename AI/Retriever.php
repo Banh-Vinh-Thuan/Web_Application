@@ -55,7 +55,7 @@ class HybridRetriever {
                 return $this->emptyResultsResponse($query);
             }
 
-            // STEP 4: Cross-Encoder Reranking (top 20 candidates)
+            // STEP 4: LLM-based Reranking (top 20 candidates)
             $topCandidates = array_slice($preRankedCandidates, 0, 20);
             $hybridScores = array_column($topCandidates, 'combined_score');
             
