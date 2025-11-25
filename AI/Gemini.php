@@ -30,10 +30,7 @@ class GeminiService
         return null;
     }
 
-
-    /**
-     * Generate text from prompt with retry logic
-     */
+    // Generate text from prompt with retry logic
     public function generateText(string $prompt, array $config = []): string {
         $requestData = [
             'contents' => [['parts' => [['text' => $prompt]]]],
@@ -41,7 +38,7 @@ class GeminiService
                 'temperature' => $config['temperature'] ?? 0.7,
                 'topK' => 40,
                 'topP' => 0.95,
-                'maxOutputTokens' => $config['max_tokens'] ?? 2048,
+                'maxOutputTokens' => $config['max_tokens'] ?? 3072, // ✅ Tăng lên 3072
             ],
         ];
 
@@ -50,11 +47,43 @@ class GeminiService
         for ($attempt = 1; $attempt <= $this->retryAttempts; $attempt++) {
             try {
                 $response = $this->makeApiRequest($this->apiUrl, $requestData);
-                $text = $response['candidates'][0]['content']['parts'][0]['text'] ?? null;
-
-                if ($text === null) {
-                    throw new RuntimeException("Empty response from Gemini API");
+                
+                if (!isset($response['candidates'])) {
+                    Logger::error("No candidates in response", [
+                        'response_keys' => array_keys($response),
+                        'full_response' => json_encode($response)
+                    ]);
+                    throw new RuntimeException("Invalid response structure: no candidates");
                 }
+
+                if (empty($response['candidates'])) {
+                    Logger::error("Empty candidates array", [
+                        'response' => json_encode($response)
+                    ]);
+                    throw new RuntimeException("Empty candidates from Gemini API");
+                }
+
+                $candidate = $response['candidates'][0] ?? null;
+                if (!$candidate) {
+                    throw new RuntimeException("No candidate at index 0");
+                }
+
+                $text = $candidate['content']['parts'][0]['text'] ?? null;
+
+                if ($text === null || trim($text) === '') {
+                    Logger::warning("Empty text extracted", [
+                        'candidate_keys' => array_keys($candidate),
+                        'content_keys' => array_keys($candidate['content'] ?? []),
+                        'parts_count' => count($candidate['content']['parts'] ?? []),
+                        'attempt' => $attempt
+                    ]);
+                    throw new RuntimeException("Empty text in response");
+                }
+
+                Logger::info("Text generated successfully", [
+                    'length' => strlen($text),
+                    'attempt' => $attempt
+                ]);
 
                 return $text;
 
@@ -67,15 +96,17 @@ class GeminiService
                     'current_key' => substr($this->currentApiKey, -10)
                 ]);
 
+                // Switch API key on auth errors
                 if (strpos($lastError, '401') !== false || strpos($lastError, '403') !== false) {
                     $backupKey = $this->getNextApiKey();
                     if ($backupKey) {
                         $this->currentApiKey = $backupKey;
                         Logger::info("Switched to backup API key, retrying...");
-                        continue; // Retry immediately with new key
+                        continue;
                     }
                 }
 
+                // Retry with delay
                 if ($attempt < $this->retryAttempts) {
                     sleep($this->retryDelay * $attempt);
                     continue;
@@ -90,9 +121,7 @@ class GeminiService
         throw new RuntimeException("Unexpected error in generateText");
     }
 
-    /**
-     * Generate embedding vector for text
-     */
+    // Generate embedding vector for text
     public function generateEmbedding(string $text): array {
         $requestData = [
             'content' => ['parts' => [['text' => $text]]],
@@ -141,9 +170,7 @@ class GeminiService
         throw new RuntimeException("Unexpected error in generateEmbedding");
     }
 
-    /**
-     * Make API request with error handling
-     */
+    // Make API request with error handling
     private function makeApiRequest(string $url, array $data): array {
         $ch = curl_init();
         
@@ -194,9 +221,7 @@ class GeminiService
         return $response;
     }
 
-    /**
-     * Parse API error messages
-     */
+    // Parse API error messages
     private function parseApiError(?array $response, int $httpCode): string {
         if (isset($response['error']['message'])) {
             return $response['error']['message'];
@@ -212,47 +237,6 @@ class GeminiService
         };
     }
 
-    /**
-     * Generate out-of-database response (international travel planning)
-     */
-    public function generateOutOfDatabaseResponse(
-        $message,
-        $context,
-        $conversationHistory,
-        $queryContext
-    ): ?string {
-        try {
-            $conversationContext = $this->buildConversationContext($conversationHistory);
-            $isPlanningQuery = $queryContext['is_planning_query'] ?? false;
-
-            // Build appropriate prompt based on query type
-            $prompt = $isPlanningQuery
-                ? $this->buildTravelPlanPrompt($message, $conversationContext, $queryContext)
-                : $this->buildGeneralPrompt($message, $conversationContext, $context);
-
-            Logger::info("Generating OOD response", [
-                'prompt_type' => $isPlanningQuery ? 'planning' : 'general',
-                'destination' => $queryContext['mentioned_city'] ?? 'unknown'
-            ]);
-
-            return $this->generateText($prompt, [
-                'temperature' => 0.7,
-                'max_tokens' => 2048
-            ]);
-
-        } catch (Exception $e) {
-            Logger::error("Out-of-database response generation failed", [
-                'error' => $e->getMessage()
-            ]);
-
-            // Return null to trigger fallback in Controller
-            return null;
-        }
-    }
-
-    /**
-     * Build travel planning prompt for international destinations
-     */
     private function buildTravelPlanPrompt(string $message, string $conversationContext, array $queryContext): string {
         $destination = $this->extractDestination($message, $queryContext);
         $duration = $this->extractDuration($message);
@@ -263,7 +247,7 @@ class GeminiService
             : "Budget: To be determined";
 
         return <<<PROMPT
-You are an expert travel planner creating detailed itineraries.
+You are an expert travel planner creating detailed itineraries for international destinations.
 
 {$conversationContext}
 
@@ -321,71 +305,19 @@ Generate the detailed travel plan now:
 PROMPT;
     }
 
-    /**
-     * Build general travel advice prompt
-     */
-    private function buildGeneralPrompt(string $message, string $conversationContext, string $context): string {
-        return <<<PROMPT
-You are an expert travel assistant with deep knowledge of both Vietnam and international destinations.
-
-{$conversationContext}
-
-# Available Context
-{$context}
-
-# User Query
-"{$message}"
-
-# Instructions
-Provide helpful, actionable travel advice following this structure:
-
-1. **Direct Answer** (2-3 sentences)
-   - Immediately address the user's question
-   - Be clear and specific
-
-2. **Key Recommendations** (3-4 points)
-   - Top attractions or experiences
-   - Practical considerations (visa, weather, best time)
-   - Budget estimates if relevant
-   - Transportation and accommodation tips
-
-3. **Cultural & Practical Tips** (2-3 points)
-   - Local customs and etiquette
-   - Safety considerations
-   - Language tips
-   - What to pack
-
-4. **Next Steps** (1-2 suggestions)
-   - What to research further
-   - Booking recommendations
-   - Follow-up question to help user
-
-## Guidelines
-- Be conversational and encouraging
-- Use bullet points for clarity
-- Provide realistic estimates
-- If uncertain about specific details, acknowledge it
-- Keep response between 200-350 words
-- Response must be in English
-
-Provide your travel advice now:
-PROMPT;
-    }
-
-    /**
-     * Extract destination from message
-     */
+    // Extract destination from message
     private function extractDestination(string $message, array $queryContext): string {
         // Priority 1: From query context
         if (!empty($queryContext['mentioned_city'])) {
             return ucwords($queryContext['mentioned_city']);
         }
 
-        // Priority 2: Parse from message with improved patterns
+        // Priority 2: Parse from message - ENHANCED PATTERNS
         $patterns = [
             '/(?:to|visit|in|for)\s+([A-Z][a-zA-ZÀ-ỹ\s]+?)(?:\s+for|\s+with|\s*$)/i',
             '/(?:plan|design|create)\s+(?:tour|trip)?\s*(?:to)?\s*([A-Z][a-zA-ZÀ-ỹ\s]+?)(?:\s+for|\s*$)/i',
-            '/go\s+([A-Z][a-zA-ZÀ-ỹ\s]+?)\s+for/i',
+            '/(?:travel|go|trip)\s+(?:to\s+)?([A-Z][a-zA-ZÀ-ỹ\s]+?)\s+for/i',
+            '/visit\s+([A-Z][a-zA-ZÀ-ỹ\s]+?)\s+for/i',
         ];
 
         foreach ($patterns as $pattern) {
@@ -393,17 +325,24 @@ PROMPT;
                 $extracted = trim($matches[1]);
                 $cleaned = preg_replace('/\s+(for|with|and|day|days|to)$/i', '', $extracted);
                 if (strlen($cleaned) >= 3) {
+                    Logger::info("Extracted destination", [
+                        'pattern' => $pattern,
+                        'extracted' => $extracted,
+                        'cleaned' => $cleaned
+                    ]);
                     return ucwords($cleaned);
                 }
             }
         }
 
+        Logger::warning("Could not extract destination from message", [
+            'message' => $message
+        ]);
+        
         return 'your destination';
     }
 
-    /**
-     * Extract duration from message
-     */
+    // Extract duration from message
     private function extractDuration(string $message): string {
         if (preg_match('/(\d+)\s*(?:day|days)/i', $message, $matches)) {
             $days = (int)$matches[1];
@@ -412,9 +351,7 @@ PROMPT;
         return 'Multi-Day';
     }
 
-    /**
-     * Extract budget range from message
-     */
+    // Extract budget range from message
     private function extractBudget(string $message): ?array {
         // Pattern: "between X to/and Y million"
         if (preg_match('/between\s+([\d,.]+)\s+(?:to|and)\s+([\d,.]+)\s*million/i', $message, $matches)) {
@@ -446,10 +383,8 @@ PROMPT;
         return null;
     }
 
-    /**
-     * Build conversation context from history
-     */
-    private function buildConversationContext($conversationHistory): string {
+    // Build conversation context from history
+    private function buildConversationContext(array $conversationHistory): string {
         if (empty($conversationHistory)) {
             return "No previous conversation.";
         }
@@ -471,9 +406,37 @@ PROMPT;
         return $context;
     }
 
-    /**
-     * Generate Vietnamese response (for in-database results)
-     */
+    public function generateInternationalPlan(
+        string $message,
+        string $cityName,
+        array $conversationHistory
+    ): string {
+        $conversationContext = $this->buildConversationContext($conversationHistory);
+        
+        $queryContext = [
+            'mentioned_city' => $cityName,
+            'is_planning_query' => true
+        ];
+
+        Logger::info("Building travel plan prompt", [
+            'destination' => $cityName,
+            'message_preview' => substr($message, 0, 100)
+        ]);
+
+        $prompt = $this->buildTravelPlanPrompt($message, $conversationContext, $queryContext);
+        
+        Logger::info("Prompt generated", [
+            'prompt_length' => strlen($prompt),
+            'prompt_preview' => substr($prompt, 0, 300) . '...'
+        ]);
+
+        return $this->generateText($prompt, [
+            'temperature' => Config::GEMINI_TEMPERATURE,
+            'max_tokens' => Config::GEMINI_MAX_OUTPUT_TOKENS
+        ]);
+    }
+
+    // Generate Vietnamese response (for in-database results)
     public function generateVietnameseResponse($userMessage, $context, $conversationHistory, $metadata = []) {
         try {
             Logger::info("generateVietnameseResponse called", [
@@ -487,7 +450,7 @@ PROMPT;
                 return "I'm ready to help you explore tours and hotels in Vietnam! Could you tell me which city you're interested in?";
             }
 
-            $prompt = $this->buildPrompt($userMessage, $context, $conversationHistory, $metadata);
+            $prompt = $this->buildDatabasePrompt($userMessage, $context, $conversationHistory, $metadata);
 
             $requestData = [
                 'contents' => [
@@ -536,10 +499,8 @@ PROMPT;
         }
     }
 
-    /**
-     * Build prompt for Vietnamese response
-     */
-    private function buildPrompt($userMessage, $context, $conversationHistory, $metadata) {
+    // Build prompt for database-backed Vietnamese responses
+    private function buildDatabasePrompt($userMessage, $context, $conversationHistory, $metadata) {
         $conversationContext = $this->buildConversationContext($conversationHistory);
         $isMultiCity = $this->detectMultiCityQuery($userMessage, $context);
         $isDurationOnly = $this->isDurationOnlyQuery($userMessage);
@@ -607,10 +568,8 @@ Provide your response now:";
     private function isDurationOnlyQuery(string $userMessage): bool {
         $messageLower = strtolower($userMessage);
         
-        // Check if message has duration pattern
         $hasDuration = preg_match('/\b\d+\s*(?:day|days|ngày)\b/i', $messageLower);
         
-        // Check if message mentions city
         $vietnameseCities = ['hanoi', 'ha noi', 'hcm', 'ho chi minh', 'saigon', 
                             'da nang', 'danang', 'hue', 'nha trang', 'hoi an',
                             'da lat', 'dalat', 'phu quoc', 'can tho', 'ha giang',
@@ -648,14 +607,13 @@ Provide your response now:";
     /**
      * Build context-based fallback response
      */
-    private function buildContextBasedResponse($context, $userMessage) {
+    public function buildContextBasedResponse($context, $userMessage) {
         if (empty(trim($context))) {
             return "I'm ready to help you plan your trip to Vietnam! Which destination are you interested in?";
         }
 
         $response = "";
 
-        // Extract tours from context
         if (preg_match_all('/\*\*(.*?)\*\* - (\d+) days - ([\d,.]+) VND/s', $context, $tourMatches, PREG_SET_ORDER)) {
             preg_match_all('/Tours in (.*?):/s', $context, $cityMatches);
             $tourCities = $cityMatches[1] ?? [];
@@ -675,7 +633,6 @@ Provide your response now:";
                     $response .= "\n";
                 }
             } else {
-                // ✅ FIX: Check if duration-only query
                 $isDurationOnly = $this->isDurationOnlyQuery($userMessage);
                 
                 if ($isDurationOnly) {
@@ -693,7 +650,6 @@ Provide your response now:";
 
             $response .= "\nThese tours offer wonderful experiences!";
         }
-        // Extract hotels from context
         elseif (preg_match_all('/\*\*(.*?)\*\* - Rating: ([\d.]+)\/5 - ([\d,.]+ *VND\/night)/s', $context, $hotelMatches, PREG_SET_ORDER)) {
             preg_match_all('/Hotels in (.*?):/s', $context, $cityMatches);
             $hotelCities = $cityMatches[1] ?? [];

@@ -62,9 +62,30 @@ class OptimizedRAGTravelChatbot
                 'is_international' => $entities['is_international'] ?? false
             ]);
 
-            // Route to appropriate handler
+            // ✅ INTERNATIONAL QUERY: Let exceptions propagate
             if ($entities['is_international'] ?? false) {
-                return $this->handleOutOfDatabaseQuery($sanitizedMessage, $entities, $conversationHistory);
+                Logger::info("International query detected", [
+                    'message' => substr($sanitizedMessage, 0, 100)
+                ]);
+                
+                // This will throw exception if API fails, which is caught by outer try-catch
+                $response = $this->handleInternationalQuery($sanitizedMessage, $entities, $conversationHistory);
+                
+                // Save successful conversation
+                try {
+                    $this->dbService->saveConversation($this->userId, $sanitizedMessage, $response);
+                } catch (Exception $saveError) {
+                    Logger::warning("Failed to save conversation", ['error' => $saveError->getMessage()]);
+                }
+                
+                $processingTime = microtime(true) - $startTime;
+                
+                return [
+                    'success' => true,
+                    'response' => $response['response'],
+                    'processing_time' => round($processingTime * 1000, 2),
+                    'debug_info' => $response['debug_info']
+                ];
             }
 
             // Refine mixed intent if needed
@@ -79,13 +100,29 @@ class OptimizedRAGTravelChatbot
             $minConfidenceThreshold = 0.40;
 
             if ($isSearchIntent && ($retrievalConfidence < $minConfidenceThreshold || empty($retrievalResult['results']))) {
-                Logger::warning("Low confidence or no results, using embedding-based fallback.", [
+                Logger::warning("Low confidence - redirecting to international handler", [
                     'message' => $sanitizedMessage,
                     'intent' => $intent,
                     'confidence' => $retrievalConfidence
                 ]);
 
-                return $this->handleOutOfDatabaseQuery($sanitizedMessage, $entities, $conversationHistory);
+                // This will throw exception if API fails
+                $response = $this->handleInternationalQuery($sanitizedMessage, $entities, $conversationHistory);
+                
+                try {
+                    $this->dbService->saveConversation($this->userId, $sanitizedMessage, $response);
+                } catch (Exception $saveError) {
+                    Logger::warning("Failed to save conversation", ['error' => $saveError->getMessage()]);
+                }
+                
+                $processingTime = microtime(true) - $startTime;
+                
+                return [
+                    'success' => true,
+                    'response' => $response['response'],
+                    'processing_time' => round($processingTime * 1000, 2),
+                    'debug_info' => $response['debug_info']
+                ];
             }
 
             if (empty($retrievalResult['results'])) {
@@ -128,12 +165,27 @@ class OptimizedRAGTravelChatbot
         } catch (InvalidArgumentException $e) {
             Logger::warning("Invalid input", ['error' => $e->getMessage()]);
             return $this->generateErrorResponse($e->getMessage());
+            
+        } catch (RuntimeException $e) {
+            // ✅ Handle Gemini API errors specifically
+            Logger::error("Gemini API error in processMessage", [
+                'error' => $e->getMessage(),
+                'message' => substr($message, 0, 100)
+            ]);
+            
+            return $this->generateErrorResponse(
+                "I'm having trouble connecting to the travel planning service. Please try again in a moment."
+            );
+            
         } catch (Exception $e) {
             Logger::error("Message processing error", [
                 'error' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            return $this->generateErrorResponse("I'm sorry, an unexpected error occurred. Please try again.");
+            
+            return $this->generateErrorResponse(
+                "I'm sorry, an unexpected error occurred. Please try again."
+            );
         }
     }
 
@@ -192,437 +244,60 @@ class OptimizedRAGTravelChatbot
     }
 
     /**
-     * IMPROVED: Handle queries outside database scope
+     * Handle international queries
+     * DIRECTLY REDIRECTS to GeminiService->generateInternationalPlan
+     * which then uses buildTravelPlanPrompt
      */
-    private function handleOutOfDatabaseQuery($message, $entities, $conversationHistory) {
-        Logger::info("Handling out-of-database query", [
-            'message' => substr($message, 0, 100),
-            'is_international' => $entities['is_international'] ?? false
+    private function handleInternationalQuery($message, $entities, $conversationHistory) {
+        // Extract destination name
+        $cityName = !empty($entities['cities']) ? $entities['cities'][0]['name'] : 'your destination';
+
+        Logger::info("Redirecting to generateInternationalPlan", [
+            'destination' => $cityName,
+            'message_preview' => substr($message, 0, 100)
         ]);
 
-        try {
-            // Step 1: Analyze query context
-            $queryContext = $this->analyzeOutOfDatabaseQuery($message, $entities);
-
-            // Step 2: Try to generate embedding (may fail if API is down)
-            $queryEmbedding = null;
-            $similarItems = [];
-
-            try {
-                $queryEmbedding = $this->generateQueryEmbeddingWithRetry($message);
-                if ($queryEmbedding) {
-                    $similarItems = $this->dbService->findSimilarItemsByVector($queryEmbedding, 8);
-                }
-            } catch (Exception $embeddingError) {
-                Logger::warning("Embedding generation failed, proceeding without semantic context", [
-                    'error' => $embeddingError->getMessage()
-                ]);
-            }
-
-            // Step 3: Build context
-            $context = !empty($similarItems)
-                ? $this->buildIntelligentContext($similarItems, $message, $queryContext)
-                : $this->buildTopicBasedContext($message, $queryContext);
-
-            // Step 4: Generate response using Gemini
-            $responseText = $this->geminiService->generateOutOfDatabaseResponse(
-                $message,
-                $context,
-                $conversationHistory,
-                $queryContext
-            );
-
-            // CRITICAL FIX: Handle empty/null response (API failure)
-            if (empty(trim($responseText ?? ''))) {
-                Logger::warning("Gemini returned empty response, using structured fallback", [
-                    'raw_response' => $responseText,
-                    'is_null' => $responseText === null
-                ]);
-                $responseText = $this->buildStructuredFallback($queryContext);
-            }
-
-            Logger::info("OOD response successfully generated", [
-                'length' => strlen($responseText),
-                'preview' => substr($responseText, 0, 100)
-            ]);
-
-            Logger::info("Out-of-database response generated", [
-                'response_length' => strlen($responseText),
-                'similar_items' => count($similarItems),
-                'had_embedding' => $queryEmbedding !== null
-            ]);
-
-            return [
-                'success' => true,
-                'response' => [
-                    'text' => $responseText,
-                    'type' => 'out_of_database',
-                    'layout_type' => 'default',
-                    'data' => [],
-                    'match_level' => 'out_of_database',
-                    'confidence' => 0.7,
-                    'suggestions' => $this->generateOutOfDatabaseSuggestions($queryContext),
-                    'destination_info' => [
-                        'type' => $queryContext['destination_type'],
-                        'focus' => $queryContext['query_focus']
-                    ]
-                ],
-                'processing_time' => 0,
-                'debug_info' => [
-                    'type' => 'embedding_based_fallback',
-                    'similar_items' => count($similarItems),
-                    'api_called' => true,
-                    'used_fallback' => $queryEmbedding === null
-                ]
-            ];
-
-        } catch (Exception $e) {
-            Logger::error("Out-of-database handler failed", [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return $this->generateErrorResponse(
-                "I'm having trouble with that query right now. For Vietnam travel, I can help you with cities like Hanoi, Da Nang, or Ho Chi Minh City. For international travel, please try again in a moment."
-            );
-        }
-    }
-
-    /**
-     * Build structured fallback for OOD queries when API fails
-     */
-    private function buildStructuredFallback(array $queryContext): string {
-        $destination = $queryContext['mentioned_city'] ?? 'your destination';
-        $isPlanningQuery = $queryContext['is_planning_query'] ?? false;
-
-        if ($isPlanningQuery) {
-            return <<<FALLBACK
-## Travel Planning for {$destination}
-
-I'd be happy to help you plan your trip to **{$destination}**! Here's how to get started:
-
-### 🗓️ Planning Essentials
-- Research visa requirements and entry regulations
-- Check weather conditions for your travel dates
-- Book flights and accommodation in advance
-- Purchase comprehensive travel insurance
-- Download offline maps and translation apps
-
-### 💰 Budget Considerations
-- Accommodation costs (budget/mid-range/luxury)
-- Daily food and dining expenses
-- Local transportation options
-- Entrance fees for attractions
-- Shopping and souvenirs
-- Emergency fund (10-15% of total)
-
-### 🎯 Things to Research
-**Must-See Attractions:**
-- Top-rated landmarks and tourist sites
-- Hidden gems and local favorites
-- Opening hours and admission fees
-
-**Local Transportation:**
-- Public transit options (metro, buses, trains)
-- Taxi services and ride-sharing apps
-- Walking distances between attractions
-
-**Cultural Tips:**
-- Local customs and etiquette
-- Basic phrases in local language
-- Dress codes for cultural sites
-- Tipping practices
-
-### 📱 Recommended Resources
-- Official tourism website for {$destination}
-- Recent traveler reviews on TripAdvisor
-- Travel blogs and vlogs
-- Local travel forums and Facebook groups
-
-**How else can I help with your {$destination} trip planning?**
-FALLBACK;
-        }
-
-        return <<<FALLBACK
-## Travel Information for {$destination}
-
-I understand you're interested in **{$destination}**. Here's some helpful guidance:
-
-### 🌍 General Travel Tips
-**Planning Essentials:**
-- Best time to visit and seasonal weather
-- Visa requirements and application process
-- Local currency and exchange methods
-- Basic language phrases
-- Safety tips and travel advisories
-
-**What to Explore:**
-- Major landmarks and cultural sites
-- Local food markets and authentic dining
-- Popular tourist areas and local neighborhoods
-- Day trips and nearby attractions
-- Cultural festivals and events
-
-**Practical Considerations:**
-- Local transportation and costs
-- Average daily budget
-- SIM cards and WiFi availability
-- Power outlets and adapters
-- Emergency contacts
-
-### 🇻🇳 Alternative: Explore Vietnam
-Since I specialize in Vietnam travel, I can provide detailed recommendations for:
-- **Hanoi**: Rich cultural heritage and street food
-- **Ho Chi Minh City**: Dynamic urban life and history
-- **Da Nang**: Modern coastal city with beaches
-- **Hoi An**: UNESCO ancient town
-- **Nha Trang**: Beach paradise
-- **Phu Quoc**: Tropical island getaway
-
-I can help you plan detailed itineraries, find tours and hotels, and provide budget estimates for any Vietnamese destination!
-
-**How can I assist you further?**
-FALLBACK;
-    }
-
-    /**
-     * Analyze out-of-database query
-     */
-    private function analyzeOutOfDatabaseQuery($message, $entities): array {
-        $messageLower = strtolower($message);
-        $isInternational = $entities['is_international'] ?? false;
-
-        // Extract mentioned city
-        $mentionedCity = $this->extractMentionedCity($message, $entities);
-        $queryFocus = $this->detectQueryFocus($messageLower);
-
-        // Enhanced planning query detection
-        $isPlanningQuery = (bool)preg_match(
-            '/\b(plan|design|help|organize|suggest|recommend|create|make|build|prepare|itinerary|schedule)\b/i',
-            $message
+        // ✅ NO TRY-CATCH - Let exceptions propagate to main handler
+        // This allows Gemini's retry logic to work properly
+        $responseText = $this->geminiService->generateInternationalPlan(
+            $message,
+            $cityName,
+            $conversationHistory
         );
 
-        // Detect if asking about visiting/traveling
-        $isVisitQuery = (bool)preg_match(
-            '/\b(visit|travel|go to|trip to|tour|explore|discover)\b/i',
-            $message
-        );
-
-        if ($isVisitQuery && !$isPlanningQuery) {
-            $isPlanningQuery = true;
+        // ✅ Validate response
+        if (empty(trim($responseText))) {
+            Logger::warning("Empty response from generateInternationalPlan");
+            throw new RuntimeException("Failed to generate travel plan - empty response");
         }
 
-        $isAttractionFocus = (bool)preg_match(
-            '/\b(attraction|see|visit|activity|experience|place|landmark|museum|temple|beach|mountain)\b/i',
-            $message
-        );
+        Logger::info("International plan generated successfully", [
+            'length' => strlen($responseText),
+            'preview' => substr($responseText, 0, 100)
+        ]);
 
         return [
-            'destination_type' => $isInternational ? 'international' : 'vietnam_related',
-            'mentioned_city' => $mentionedCity,
-            'query_focus' => $queryFocus,
-            'is_planning_query' => $isPlanningQuery,
-            'is_visit_query' => $isVisitQuery,
-            'is_attraction_focus' => $isAttractionFocus,
-            'has_conditions' => $entities['has_conditions'] ?? false
+            'success' => true,
+            'response' => [
+                'text' => $responseText,
+                'type' => 'international_info',
+                'layout_type' => 'default',
+                'data' => [],
+                'match_level' => 'international',
+                'confidence' => 0.8,
+                'suggestions' => [
+                    "Tell me more about {$cityName} attractions",
+                    "What's the best time to visit {$cityName}?",
+                    "Help me plan my budget for {$cityName}",
+                    "Show me tours in Vietnam instead"
+                ]
+            ],
+            'processing_time' => 0,
+            'debug_info' => [
+                'type' => 'international',
+                'destination' => $cityName
+            ]
         ];
-    }
-
-    /**
-     * Extract mentioned city from message
-     */
-    private function extractMentionedCity(string $message, array $entities): ?string {
-        // Method 1: Check extracted entities
-        if (!empty($entities['cities'])) {
-            return $entities['cities'][0]['name'] ?? null;
-        }
-
-        // Method 2: Parse directly from message with CASE-INSENSITIVE patterns
-        $patterns = [
-            '/(?:visit|to|in|for)\s+([a-zA-Z][a-zA-ZÀ-ỹ\s]+?)(?:\s+for|\s+\d+|$)/i',
-            '/([a-zA-Z]+)\s+for\s+\d+/i',
-            '/(?:plan|design|create)\s+(?:tour|trip)?\s*(?:to)?\s*([a-zA-Z][a-zA-ZÀ-ỹ\s]+?)(?:\s+for|$)/i',
-            '/trip\s+to\s+([a-zA-Z][a-zA-ZÀ-ỹ\s]+?)(?:\s+for|\s+\d+|$)/i',
-            '/go\s+([a-zA-Z][a-zA-ZÀ-ỹ\s]+?)\s+for/i'
-        ];
-
-        foreach ($patterns as $pattern) {
-            if (preg_match($pattern, $message, $matches)) {
-                $city = trim($matches[1]);
-                $city = preg_replace('/\s+(for|with|and|under|over|day|days|to|plan|visit|create)$/i', '', $city);
-                if (strlen($city) >= 3) {
-                    // Capitalize properly: "taiwan" -> "Taiwan"
-                    return ucwords(strtolower($city));
-                }
-            }
-        }
-
-        // Method 3: Check for known international destinations (case-insensitive)
-        $internationalKeywords = [
-            'korea' => 'Korea', 'seoul' => 'Seoul',
-            'japan' => 'Japan', 'tokyo' => 'Tokyo',
-            'taiwan' => 'Taiwan', 'taipei' => 'Taipei',
-            'thailand' => 'Thailand', 'bangkok' => 'Bangkok',
-            'singapore' => 'Singapore'
-        ];
-
-        $messageLower = strtolower($message);
-        foreach ($internationalKeywords as $keyword => $cityName) {
-            if (strpos($messageLower, $keyword) !== false) {
-                return $cityName;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Detect query focus/theme
-     */
-    private function detectQueryFocus($messageLower): string {
-        $focusMap = [
-            'beach' => ['beach', 'sea', 'coast', 'island', 'seaside'],
-            'mountain' => ['mountain', 'hiking', 'trek', 'climbing', 'altitude'],
-            'culture' => ['culture', 'tradition', 'history', 'temple', 'monument', 'heritage'],
-            'food' => ['food', 'cuisine', 'restaurant', 'eat', 'taste', 'culinary'],
-            'adventure' => ['adventure', 'extreme', 'thrilling', 'action', 'sports'],
-            'nature' => ['nature', 'forest', 'waterfall', 'cave', 'national park', 'wildlife'],
-            'budget' => ['budget', 'cheap', 'affordable', 'economical', 'backpack'],
-            'luxury' => ['luxury', 'expensive', 'high-end', 'resort', 'premium'],
-            'family' => ['family', 'kids', 'children', 'child-friendly']
-        ];
-
-        foreach ($focusMap as $focus => $keywords) {
-            foreach ($keywords as $keyword) {
-                if (strpos($messageLower, $keyword) !== false) {
-                    return $focus;
-                }
-            }
-        }
-
-        return 'general_travel';
-    }
-
-    /**
-     * Build intelligent context from similar items
-     */
-    private function buildIntelligentContext($similarItems, $query, $queryContext): string {
-        $context = "# Reference Information from Database\n\n";
-        $context .= "Based on similar travel experiences in our database:\n\n";
-
-        $tours = array_filter($similarItems, fn($item) => $item['item_type'] === 'tour');
-        $hotels = array_filter($similarItems, fn($item) => $item['item_type'] === 'hotel');
-
-        if (!empty($tours)) {
-            $context .= "## Similar Tour Experiences:\n";
-            foreach (array_slice($tours, 0, 3) as $tour) {
-                $tourData = $this->dbService->getToursByIds([$tour['item_id']]);
-                if (!empty($tourData)) {
-                    $t = $tourData[0];
-                    $context .= sprintf(
-                        "- **%s** (%s): %d days, %s VND\n",
-                        $t['tour_name'] ?? 'Tour',
-                        $t['city_name'] ?? 'Vietnam',
-                        $t['duration_days'] ?? 0,
-                        number_format($t['price_per_person'] ?? 0)
-                    );
-                }
-            }
-            $context .= "\n";
-        }
-
-        if (!empty($hotels)) {
-            $context .= "## Similar Accommodations:\n";
-            foreach (array_slice($hotels, 0, 3) as $hotel) {
-                $hotelData = $this->dbService->getHotelsByIds([$hotel['item_id']]);
-                if (!empty($hotelData)) {
-                    $h = $hotelData[0];
-                    $context .= sprintf(
-                        "- **%s** (%s): %s/5 stars, %s VND/night\n",
-                        $h['hotel'] ?? $h['hotel_name'] ?? 'Hotel',
-                        $h['city_name'] ?? 'Vietnam',
-                        $h['ratings'] ?? 'N/A',
-                        number_format($h['cost'] ?? 0)
-                    );
-                }
-            }
-            $context .= "\n";
-        }
-
-        $context .= "## Query Context\n";
-        $context .= sprintf("Destination: %s\n", $queryContext['destination_type']);
-        $context .= sprintf("Interest: %s\n", $queryContext['query_focus']);
-
-        return $context;
-    }
-
-    /**
-     * Build topic-based context
-     */
-    private function buildTopicBasedContext($message, $queryContext): string {
-        $context = "# Travel Information Context\n\n";
-        $context .= "User is asking about:\n";
-        $context .= sprintf("- Destination: %s\n", $queryContext['destination_type']);
-
-        if ($queryContext['mentioned_city']) {
-            $context .= sprintf("- Location: %s\n", $queryContext['mentioned_city']);
-        }
-
-        $context .= sprintf("- Interest: %s\n", $queryContext['query_focus']);
-
-        if ($queryContext['is_planning_query']) {
-            $context .= "- Needs: Planning guidance\n";
-        }
-
-        return $context;
-    }
-
-    /**
-     * Generate suggestions for OOD queries
-     */
-    private function generateOutOfDatabaseSuggestions($queryContext): array {
-        $suggestions = [
-            "Tell me about tours in Vietnam",
-            "Find hotels in Ho Chi Minh City"
-        ];
-
-        $focusSuggestions = [
-            'beach' => "Show me beach destinations in Vietnam",
-            'mountain' => "Suggest mountain trekking experiences",
-            'culture' => "Find culturally immersive tours",
-            'food' => "Show me culinary tours in Vietnam",
-            'family' => "Find family-friendly tours in Vietnam"
-        ];
-
-        if (isset($focusSuggestions[$queryContext['query_focus']])) {
-            $suggestions[] = $focusSuggestions[$queryContext['query_focus']];
-        }
-
-        if ($queryContext['destination_type'] === 'international') {
-            $suggestions[] = "Help me plan a trip to Vietnam instead";
-        }
-
-        $suggestions[] = "What are my best travel options?";
-
-        return array_slice($suggestions, 0, 4);
-    }
-
-    /**
-     * Generate query embedding with retry
-     */
-    private function generateQueryEmbeddingWithRetry($message, $maxRetries = 2): ?array {
-        for ($attempt = 1; $attempt <= $maxRetries; $attempt++) {
-            try {
-                return $this->geminiService->generateEmbedding($message);
-            } catch (Exception $e) {
-                Logger::warning("Embedding attempt $attempt failed", ['error' => $e->getMessage()]);
-                if ($attempt < $maxRetries) {
-                    sleep(1);
-                }
-            }
-        }
-
-        return null;
     }
 
     /**

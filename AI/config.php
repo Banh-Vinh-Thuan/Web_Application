@@ -9,18 +9,18 @@ class Config {
     const DB_CHARSET = "utf8mb4";
 
     // Gemini AI Configuration
-    const GEMINI_API_KEY = "AIzaSyAOlyFnLb4WxsCh-wgLoO7N3qYHy-94xG0";
+    const GEMINI_API_KEY = "AIzaSyAKHCAo2Ci778MOo4EkHBvYJ-BivzxTIdE";
     const GEMINI_BACKUP_KEYS = [
-        "AIzaSyDrp5ViLBeOYZuIflc1fLd4xUQ9gP5KlWE",
-        "AIzaSyBmRj5Ztc3S6-YGAroOE3T62otmNMivn7A",
-        "AIzaSyAEn4jCjwoA8DK2RIiyiZt7PxZ7rAwlAcs"
+        "AIzaSyDgfAp6MB4m9vAwI4e8RnT-yc-P3AKyPIk",
+        "AIzaSyAd5KlnovRifyuQml6lheBNi0fE20KdNgo",
     ];
-    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent";
+    // config.php
+    const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent";
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
     const GEMINI_EMBEDDING_MODEL = "models/text-embedding-004";
 
     // Generation Configuration
-    const GEMINI_MAX_OUTPUT_TOKENS = 2048;
+    const GEMINI_MAX_OUTPUT_TOKENS = 3072;
     const GEMINI_TEMPERATURE = 0.7;
     const GEMINI_TOP_K = 40;
     const GEMINI_TOP_P = 0.95;
