@@ -85,22 +85,6 @@ $result = $stmt->get_result();
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header">
-            <div class="page-title">
-                <h2><i class="fas fa-list"></i> Tour Bookings Management</h2>
-                <p class="subtitle">Manage and monitor all tour bookings</p>
-            </div>
-            <div class="stats-summary">
-                <div class="stat-card">
-                    <i class="fas fa-calendar-check"></i>
-                    <div class="stat-info">
-                        <span class="stat-number"><?= $result->num_rows ?></span>
-                        <span class="stat-label">Total Bookings</span>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- Filter Section -->
         <div class="filter-section">
