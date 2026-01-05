@@ -10,10 +10,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $season = $_POST["season"];
 
     $stmt = $conn->prepare("INSERT INTO tours (cityid, tour_name, description, duration_days, price_per_person, season) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ississ", $cityid, $tour_name, $description, $duration_days, $price_per_person, $season);
-    $stmt->execute();
-
-    header("Location: ../adminviewtour.php");
+    $stmt->bind_param("issids", $cityid, $tour_name, $description, $duration_days, $price_per_person, $season);
+    
+    if ($stmt->execute()) {
+        header("Location: ../adminviewtour.php?success=1");
+    } else {
+        header("Location: ../adminviewtour.php?error=1");
+    }
+    
+    $stmt->close();
+    $conn->close();
     exit();
 }
 ?>

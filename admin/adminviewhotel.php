@@ -1,6 +1,53 @@
 <?php
 include '../dbconnect.php';
 
+// Handle image migration from hotelphotoID folder
+if (isset($_GET['migrate_images']) && $_GET['migrate_images'] == '1') {
+    $sourceDir = '../hotelphotoID/';
+    $targetDir = '../images/hotels/';
+    
+    if (!is_dir($targetDir)) {
+        mkdir($targetDir, 0755, true);
+    }
+    
+    $migrated = 0;
+    $errors = 0;
+    
+    // Get hotels without images
+    $hotels_to_migrate = $conn->query("SELECT hotelid FROM hotels WHERE image IS NULL OR image = ''");
+    
+    while ($hotel = $hotels_to_migrate->fetch_assoc()) {
+        $hotelId = $hotel['hotelid'];
+        $sourceFile = $sourceDir . $hotelId . '.jpg';
+        
+        if (file_exists($sourceFile)) {
+            $newFileName = $hotelId . '_' . time() . '.jpg';
+            $targetFile = $targetDir . $newFileName;
+            
+            if (copy($sourceFile, $targetFile)) {
+                $stmt = $conn->prepare("UPDATE hotels SET image = ?, discount = 7 WHERE hotelid = ?");
+                $stmt->bind_param("si", $newFileName, $hotelId);
+                
+                if ($stmt->execute()) {
+                    $migrated++;
+                } else {
+                    $errors++;
+                }
+                $stmt->close();
+            } else {
+                $errors++;
+            }
+        }
+    }
+    
+    if ($migrated > 0) {
+        header("Location: adminviewhotel.php?success=Successfully migrated {$migrated} hotel images" . ($errors > 0 ? " ({$errors} errors)" : ""));
+    } else {
+        header("Location: adminviewhotel.php?error=No images to migrate or migration failed");
+    }
+    exit();
+}
+
 // Handle filters
 $filters = [];
 $filter_query = "SELECT * FROM hotels WHERE 1=1";
@@ -29,12 +76,6 @@ if (isset($_GET['cost']) && $_GET['cost'] !== '') {
     $filters['cost'] = $cost;
 }
 
-if (isset($_GET['payment_status']) && $_GET['payment_status'] !== '') {
-    $payment_status = $_GET['payment_status'];
-    $filter_query .= " AND payment_status = '$payment_status'";
-    $filters['payment_status'] = $payment_status;
-}
-
 // Fetch hotels
 $result = $conn->query($filter_query);
 
@@ -45,6 +86,9 @@ while ($city = $cities_result->fetch_assoc()) {
     $city_options[$city['cityid']] = $city['city'];
 }
 
+// Check if there are hotels without images
+$hotels_without_images = $conn->query("SELECT COUNT(*) as count FROM hotels WHERE image IS NULL OR image = ''")->fetch_assoc()['count'];
+
 // Fetch hotel for editing if requested
 $edit_data = null;
 if (isset($_GET["edit"])) {
@@ -52,27 +96,16 @@ if (isset($_GET["edit"])) {
     $edit_data = $conn->query("SELECT * FROM hotels WHERE hotelid = $id")->fetch_assoc();
 }
 
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $hotel = $_POST['hotel'];
-    $cityid = (int)$_POST['cityid'];
-    $cost = (int)$_POST['cost'];
-    $amenities = $_POST['amenities'];
-    $ratings = (int)$_POST['ratings'];
-    
-    $stmt = $conn->prepare("INSERT INTO hotels (hotel, cityid, cost, amenities, ratings) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sidsi", $hotel, $cityid, $cost, $amenities, $ratings);
-    
-    if ($stmt->execute()) {
-        header("Location: ../adminviewhotel.php?success=Hotel added successfully");
-    } else {
-        header("Location: ../adminviewhotel.php?error=Failed to add hotel");
-    }
-    
-    $stmt->close();
+// Display success/error messages
+$message = '';
+$message_type = '';
+if (isset($_GET['success'])) {
+    $message = $_GET['success'];
+    $message_type = 'success';
+} elseif (isset($_GET['error'])) {
+    $message = $_GET['error'];
+    $message_type = 'error';
 }
-
-$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -85,6 +118,54 @@ $conn->close();
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        .migration-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .migration-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .migration-banner i {
+            font-size: 24px;
+        }
+        .migration-banner-text h3 {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .migration-banner-text p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            opacity: 0.9;
+        }
+        .btn-migrate {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn-migrate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <body>
     <!-- Header -->
@@ -100,6 +181,29 @@ $conn->close();
     </header>
 
     <div class="container">
+        <?php if ($message): ?>
+        <div class="alert alert-<?= $message_type ?>">
+            <i class="fas fa-<?= $message_type == 'success' ? 'check-circle' : 'exclamation-circle' ?>"></i>
+            <?= htmlspecialchars($message) ?>
+        </div>
+        <?php endif; ?>
+
+        <?php if ($hotels_without_images > 0): ?>
+        <div class="migration-banner">
+            <div class="migration-banner-content">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div class="migration-banner-text">
+                    <h3><?= $hotels_without_images ?> hotel(s) without images detected</h3>
+                    <p>Click the button to automatically migrate images from hotelphotoID folder</p>
+                </div>
+            </div>
+            <button onclick="migrateImages()" class="btn-migrate">
+                <i class="fas fa-sync-alt"></i>
+                Migrate Images
+            </button>
+        </div>
+        <?php endif; ?>
+
         <!-- Filter Section -->
         <section class="filter-section">
             <div class="section-header">
@@ -178,9 +282,11 @@ $conn->close();
                     <thead>
                         <tr>
                             <th>ID</th>
+                            <th>Image</th>
                             <th>Hotel Name</th>
                             <th>City</th>
                             <th>Cost</th>
+                            <th>Discount</th>
                             <th>Amenities</th>
                             <th>Rating</th>
                             <th>Actions</th>
@@ -190,9 +296,17 @@ $conn->close();
                     <?php while ($row = $result->fetch_assoc()) { ?>
                         <tr class="table-row">
                             <td class="id-cell"><?= $row["hotelid"] ?></td>
+                            <td class="image-cell">
+                                <?php if (!empty($row["image"])): ?>
+                                    <img src="../images/hotels/<?= htmlspecialchars($row["image"]) ?>" alt="<?= htmlspecialchars($row["hotel"]) ?>" class="hotel-thumbnail">
+                                <?php else: ?>
+                                    <div class="no-image"><i class="fas fa-image"></i></div>
+                                <?php endif; ?>
+                            </td>
                             <td class="hotel-name"><?= htmlspecialchars($row["hotel"]) ?></td>
                             <td class="city-info"><?= $row["cityid"] ?> - <?= $city_options[$row["cityid"]] ?? "Unknown" ?></td>
                             <td class="cost-cell">$<?= number_format($row["cost"]) ?></td>
+                            <td class="cost-cell"><?= $row["discount"] ?? 0 ?>%</td>
                             <td class="amenities-cell"><?= nl2br(htmlspecialchars($row["amenities"])) ?></td>
                             <td class="rating-cell">
                                 <div class="star-rating">
@@ -241,8 +355,9 @@ $conn->close();
                 </button>
             </div>
 
-            <form id="hotelForm" method="POST" action="controllers/addhotel.php" class="hotel-form">
+            <form id="hotelForm" method="POST" action="controllers/addhotel.php" enctype="multipart/form-data" class="hotel-form">
                 <input type="hidden" name="hotelid" id="hotelid" value="">
+                <input type="hidden" name="existing_image" id="existing_image" value="">
                 
                 <div class="form-grid">
                     <div class="form-group">
@@ -276,10 +391,21 @@ $conn->close();
                             <i class="fas fa-dollar-sign"></i>
                             Cost per Night *
                         </label>
-                        <input id="modal_cost" name="cost" type="number" 
+                        <input id="modal_cost" name="cost" type="number" step="0.01"
                                class="form-input" 
                                placeholder="Enter cost"
                                required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modal_discount">
+                            <i class="fas fa-percent"></i>
+                            Discount (%)
+                        </label>
+                        <input id="modal_discount" name="discount" type="number" min="0" max="100"
+                               class="form-input" 
+                               placeholder="Enter discount percentage"
+                               value="0" />
                     </div>
 
                     <div class="form-group">
@@ -309,6 +435,18 @@ $conn->close();
                               rows="3"></textarea>
                 </div>
 
+                <div class="form-group full-width">
+                    <label for="hotel_image">
+                        <i class="fas fa-image"></i>
+                        Hotel Image
+                    </label>
+                    <div class="image-upload-container">
+                        <input type="file" id="hotel_image" name="hotel_image" accept="image/*" class="form-file" onchange="previewImage(event)">
+                        <div id="imagePreview" class="image-preview"></div>
+                    </div>
+                    <small class="form-hint">Recommended: JPG, PNG, or WEBP (Max 5MB)</small>
+                </div>
+
                 <div class="modal-actions">
                     <button type="submit" class="btn-primary">
                         <i class="fas fa-check"></i>
@@ -335,6 +473,30 @@ $conn->close();
         const cityOptions = <?= json_encode($city_options) ?>;
         const editData = <?= $edit_data ? json_encode($edit_data) : 'null' ?>;
 
+        // Migrate images function
+        function migrateImages() {
+            if (confirm('This will migrate images from hotelphotoID folder to database. Continue?')) {
+                document.getElementById('loadingOverlay').style.display = 'flex';
+                window.location.href = 'adminviewhotel.php?migrate_images=1';
+            }
+        }
+
+        // Preview image before upload
+        function previewImage(event) {
+            const preview = document.getElementById('imagePreview');
+            const file = event.target.files[0];
+            
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+                }
+                reader.readAsDataURL(file);
+            } else {
+                preview.innerHTML = '';
+            }
+        }
+
         // Open modal for adding new hotel
         function openModal() {
             document.getElementById('hotelModal').style.display = 'flex';
@@ -343,6 +505,9 @@ $conn->close();
             document.getElementById('hotelForm').action = 'controllers/addhotel.php';
             document.getElementById('hotelForm').reset();
             document.getElementById('hotelid').value = '';
+            document.getElementById('existing_image').value = '';
+            document.getElementById('imagePreview').innerHTML = '';
+            document.getElementById('modal_discount').value = '0';
         }
 
         // Open modal for editing hotel
@@ -357,14 +522,25 @@ $conn->close();
             document.getElementById('hotel').value = hotel.hotel;
             document.getElementById('modal_cityid').value = hotel.cityid;
             document.getElementById('modal_cost').value = hotel.cost;
+            document.getElementById('modal_discount').value = hotel.discount || 0;
             document.getElementById('modal_ratings').value = hotel.ratings;
             document.getElementById('modal_amenities').value = hotel.amenities;
+            document.getElementById('existing_image').value = hotel.image || '';
+            
+            // Show existing image
+            const preview = document.getElementById('imagePreview');
+            if (hotel.image) {
+                preview.innerHTML = `<img src="../images/hotels/${hotel.image}" alt="Current image"><p class="current-image-text">Current Image</p>`;
+            } else {
+                preview.innerHTML = '';
+            }
         }
 
         // Close modal
         function closeModal() {
             document.getElementById('hotelModal').style.display = 'none';
             document.getElementById('hotelForm').reset();
+            document.getElementById('imagePreview').innerHTML = '';
         }
 
         // Close modal when clicking outside
@@ -391,6 +567,15 @@ $conn->close();
         if (editData) {
             editHotel(editData);
         }
+
+        // Auto-hide alerts after 5 seconds
+        setTimeout(() => {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(alert => {
+                alert.style.opacity = '0';
+                setTimeout(() => alert.remove(), 300);
+            });
+        }, 5000);
     </script>
 </body>
 </html>
