@@ -9,25 +9,12 @@ class GeminiService
 {
     private int $retryAttempts = 3;
     private int $retryDelay = 2;
-    private string $currentApiKey;
-    private array $backupKeys;
 
     public function __construct(
         private readonly string $apiKey = Config::GEMINI_API_KEY,
         private readonly string $apiUrl = Config::GEMINI_API_URL,
         private readonly string $embeddingApiUrl = Config::GEMINI_EMBEDDING_API_URL
     ) {
-        $this->currentApiKey = $this->apiKey;
-        $this->backupKeys = Config::GEMINI_BACKUP_KEYS;
-    }
-
-    private function getNextApiKey(): ?string {
-        if (!empty($this->backupKeys)) {
-            $key = array_shift($this->backupKeys);
-            Logger::info("Switching to backup API key");
-            return $key;
-        }
-        return null;
     }
 
     // Generate text from prompt with retry logic
@@ -93,18 +80,8 @@ class GeminiService
                 Logger::warning("Gemini API attempt $attempt failed", [
                     'error' => $lastError,
                     'attempt' => $attempt,
-                    'current_key' => substr($this->currentApiKey, -10)
+                    'current_key' => substr($this->apiKey, -10)
                 ]);
-
-                // Switch API key on auth errors
-                if (strpos($lastError, '401') !== false || strpos($lastError, '403') !== false) {
-                    $backupKey = $this->getNextApiKey();
-                    if ($backupKey) {
-                        $this->currentApiKey = $backupKey;
-                        Logger::info("Switched to backup API key, retrying...");
-                        continue;
-                    }
-                }
 
                 // Retry with delay
                 if ($attempt < $this->retryAttempts) {
@@ -148,14 +125,6 @@ class GeminiService
                     'attempt' => $attempt
                 ]);
 
-                if (strpos($lastError, '401') !== false || strpos($lastError, '403') !== false) {
-                    $backupKey = $this->getNextApiKey();
-                    if ($backupKey) {
-                        $this->currentApiKey = $backupKey;
-                        continue;
-                    }
-                }
-
                 if ($attempt < $this->retryAttempts) {
                     sleep($this->retryDelay * $attempt);
                     continue;
@@ -174,7 +143,7 @@ class GeminiService
     private function makeApiRequest(string $url, array $data): array {
         $ch = curl_init();
         
-        $fullUrl = $url . '?key=' . $this->currentApiKey;
+        $fullUrl = $url . '?key=' . $this->apiKey;
 
         $options = [
             CURLOPT_URL => $fullUrl,
@@ -207,8 +176,7 @@ class GeminiService
             Logger::error("Gemini API returned non-200 status", [
                 'http_code' => $httpCode,
                 'error_message' => $errorMessage,
-                'response_preview' => substr($responseJson, 0, 500),
-                'api_key_suffix' => substr($this->currentApiKey, -10)
+                'response_preview' => substr($responseJson, 0, 500)
             ]);
 
             throw new RuntimeException("Gemini API error (HTTP $httpCode): $errorMessage");

@@ -184,7 +184,7 @@ function formatCurrency($amount) {
                                         <a href="?delete=<?= htmlspecialchars($row["booking_id"]) ?>" 
                                            onclick="return confirm('⚠️ Are you sure you want to delete this booking?\n\nBooking ID: #<?= htmlspecialchars($row["booking_id"]) ?>\nGuest: <?= htmlspecialchars($row["name"]) ?>\n\nThis action cannot be undone!')"
                                            title="Delete Booking">
-                                            🗑️ Delete
+                                            🗑️ Cancel
                                         </a>
                                     </div>
                                 </td>

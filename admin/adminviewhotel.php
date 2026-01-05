@@ -45,12 +45,34 @@ while ($city = $cities_result->fetch_assoc()) {
     $city_options[$city['cityid']] = $city['city'];
 }
 
-// Fetch hotel for editing
-$edit = null;
+// Fetch hotel for editing if requested
+$edit_data = null;
 if (isset($_GET["edit"])) {
     $id = (int)$_GET["edit"];
-    $edit = $conn->query("SELECT * FROM hotels WHERE hotelid = $id")->fetch_assoc();
+    $edit_data = $conn->query("SELECT * FROM hotels WHERE hotelid = $id")->fetch_assoc();
 }
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $hotel = $_POST['hotel'];
+    $cityid = (int)$_POST['cityid'];
+    $cost = (int)$_POST['cost'];
+    $amenities = $_POST['amenities'];
+    $ratings = (int)$_POST['ratings'];
+    
+    $stmt = $conn->prepare("INSERT INTO hotels (hotel, cityid, cost, amenities, ratings) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sidsi", $hotel, $cityid, $cost, $amenities, $ratings);
+    
+    if ($stmt->execute()) {
+        header("Location: ../adminviewhotel.php?success=Hotel added successfully");
+    } else {
+        header("Location: ../adminviewhotel.php?error=Failed to add hotel");
+    }
+    
+    $stmt->close();
+}
+
+$conn->close();
 ?>
 
 <!DOCTYPE html>
@@ -62,7 +84,7 @@ if (isset($_GET["edit"])) {
     <link rel="stylesheet" type="text/css" href="../css/adminviewhotel.css">
     <link rel="icon" type="image/png" href="../images/favicon.png">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
@@ -73,7 +95,6 @@ if (isset($_GET["edit"])) {
                     <i class="fas fa-hotel"></i>
                     Hotel Management System
                 </h1>
-                <p class="header-subtitle">Manage your hotels with ease and efficiency</p>
             </div>
         </div>
     </header>
@@ -81,9 +102,8 @@ if (isset($_GET["edit"])) {
     <div class="container">
         <!-- Filter Section -->
         <section class="filter-section">
-            <div class="filter-header">
-                <h2><i class="fas fa-filter"></i> Filter Hotels</h2>
-                <p>Use the filters below to find specific hotels</p>
+            <div class="section-header">
+                <h2><i class="fas fa-filter"></i> Filters</h2>
             </div>
             
             <form method="GET" class="filter-form">
@@ -132,9 +152,9 @@ if (isset($_GET["edit"])) {
                     </div>
 
                     <div class="filter-group">
-                        <button type="submit" class="btn-primary">
+                        <button type="submit" class="btn-filter">
                             <i class="fas fa-search"></i>
-                            Apply Filters
+                            Apply
                         </button>
                     </div>
                 </div>
@@ -143,22 +163,27 @@ if (isset($_GET["edit"])) {
 
         <!-- Hotels Table Section -->
         <section class="table-section">
-            <div class="table-header">
-                <h2><i class="fas fa-list"></i> Hotel Directory</h2>
-                <p>Manage all your hotels in one place</p>
+            <div class="table-header-actions">
+                <div class="section-header">
+                    <h2><i class="fas fa-list"></i> Hotel Directory</h2>
+                </div>
+                <button type="button" class="btn-add-new" onclick="openModal()">
+                    <i class="fas fa-plus"></i>
+                    Add New Hotel
+                </button>
             </div>
 
             <div class="table-container">
                 <table class="hotels-table">
                     <thead>
                         <tr>
-                            <th><i class="fas fa-hashtag"></i> ID</th>
-                            <th><i class="fas fa-hotel"></i> Hotel Name</th>
-                            <th><i class="fas fa-map-marker-alt"></i> City</th>
-                            <th><i class="fas fa-dollar-sign"></i> Cost</th>
-                            <th><i class="fas fa-concierge-bell"></i> Amenities</th>
-                            <th><i class="fas fa-star"></i> Rating</th>
-                            <th><i class="fas fa-cogs"></i> Actions</th>
+                            <th>ID</th>
+                            <th>Hotel Name</th>
+                            <th>City</th>
+                            <th>Cost</th>
+                            <th>Amenities</th>
+                            <th>Rating</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -177,116 +202,20 @@ if (isset($_GET["edit"])) {
                                 </div>
                             </td>
                             <td class="actions-cell">
-                                <a href="?edit=<?= $row["hotelid"] ?>" class="btn-edit">
-                                    <i class="fas fa-edit"></i> Edit
-                                </a>
+                                <button class="btn-icon btn-edit" onclick='editHotel(<?= json_encode($row) ?>)' title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
                                 <a href="controllers/deletehotel.php?delete=<?= $row["hotelid"] ?>" 
-                                   class="btn-delete" 
-                                   onclick="return confirm('Are you sure you want to delete this hotel?')">
-                                    <i class="fas fa-trash"></i> Delete
+                                   class="btn-icon btn-delete" 
+                                   onclick="return confirm('Are you sure you want to delete this hotel?')"
+                                   title="Delete">
+                                    <i class="fas fa-trash"></i>
                                 </a>
                             </td>
                         </tr>
                     <?php } ?>
                     </tbody>
                 </table>
-            </div>
-        </section>
-
-        <!-- Add/Edit Form Section -->
-        <section class="form-section">
-            <div class="form-container">
-                <div class="form-header">
-                    <h2>
-                        <i class="<?= $edit ? 'fas fa-edit' : 'fas fa-plus' ?>"></i>
-                        <?= $edit ? "Edit Hotel #" . $edit["hotelid"] : "Add New Hotel" ?>
-                    </h2>
-                    <p><?= $edit ? "Update hotel information" : "Add a new hotel to your directory" ?></p>
-                </div>
-
-                <form method="POST" action="<?= $edit ? 'controllers/edithotel.php' : 'controllers/addhotel.php' ?>" class="hotel-form">
-                    <input type="hidden" name="hotelid" value="<?= $edit["hotelid"] ?? '' ?>">
-                    
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label for="hotel">
-                                <i class="fas fa-hotel"></i>
-                                Hotel Name *
-                            </label>
-                            <input id="hotel" name="hotel" type="text" 
-                                   value="<?= htmlspecialchars($edit["hotel"] ?? '') ?>" 
-                                   class="form-input" 
-                                   placeholder="Enter hotel name"
-                                   required />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cityid">
-                                <i class="fas fa-map-marker-alt"></i>
-                                City *
-                            </label>
-                            <select id="cityid" name="cityid" class="form-select" required>
-                                <option value="">Select a city</option>
-                                <?php foreach ($city_options as $id => $name) { ?>
-                                    <option value="<?= $id ?>" <?= ($edit["cityid"] ?? '') == $id ? "selected" : "" ?>>
-                                        <?= "$id - $name" ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="cost">
-                                <i class="fas fa-dollar-sign"></i>
-                                Cost per Night *
-                            </label>
-                            <input id="cost" name="cost" type="number" 
-                                   value="<?= $edit["cost"] ?? '' ?>" 
-                                   class="form-input" 
-                                   placeholder="Enter cost"
-                                   required />
-                        </div>
-
-                        <div class="form-group">
-                            <label for="ratings">
-                                <i class="fas fa-star"></i>
-                                Rating (1-5) *
-                            </label>
-                            <select id="ratings" name="ratings" class="form-select" required>
-                                <option value="">Select rating</option>
-                                <?php for ($i = 1; $i <= 5; $i++) { ?>
-                                    <option value="<?= $i ?>" <?= ($edit["ratings"] ?? '') == $i ? "selected" : "" ?>>
-                                        <?= $i ?> Star<?= $i > 1 ? 's' : '' ?>
-                                    </option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group full-width">
-                        <label for="amenities">
-                            <i class="fas fa-concierge-bell"></i>
-                            Amenities
-                        </label>
-                        <textarea id="amenities" name="amenities" 
-                                  class="form-textarea" 
-                                  placeholder="List hotel amenities (e.g., WiFi, Pool, Gym, Restaurant...)"
-                                  rows="4"><?= htmlspecialchars($edit["amenities"] ?? '') ?></textarea>
-                    </div>
-
-                    <div class="form-actions">
-                        <button type="submit" class="btn-primary btn-large">
-                            <i class="<?= $edit ? 'fas fa-save' : 'fas fa-plus' ?>"></i>
-                            <?= $edit ? "Update Hotel" : "Add New Hotel" ?>
-                        </button>
-                        <?php if ($edit) { ?>
-                            <a href="adminviewhotel.php" class="btn-secondary">
-                                <i class="fas fa-times"></i>
-                                Cancel Edit
-                            </a>
-                        <?php } ?>
-                    </div>
-                </form>
             </div>
         </section>
 
@@ -299,6 +228,101 @@ if (isset($_GET["edit"])) {
         </section>
     </div>
 
+    <!-- Modal for Add/Edit Hotel -->
+    <div id="hotelModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">
+                    <i class="fas fa-plus"></i>
+                    Add New Hotel
+                </h2>
+                <button type="button" class="btn-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="hotelForm" method="POST" action="controllers/addhotel.php" class="hotel-form">
+                <input type="hidden" name="hotelid" id="hotelid" value="">
+                
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="hotel">
+                            <i class="fas fa-hotel"></i>
+                            Hotel Name *
+                        </label>
+                        <input id="hotel" name="hotel" type="text" 
+                               class="form-input" 
+                               placeholder="Enter hotel name"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modal_cityid">
+                            <i class="fas fa-map-marker-alt"></i>
+                            City *
+                        </label>
+                        <select id="modal_cityid" name="cityid" class="form-select" required>
+                            <option value="">Select a city</option>
+                            <?php foreach ($city_options as $id => $name) { ?>
+                                <option value="<?= $id ?>">
+                                    <?= "$id - $name" ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modal_cost">
+                            <i class="fas fa-dollar-sign"></i>
+                            Cost per Night *
+                        </label>
+                        <input id="modal_cost" name="cost" type="number" 
+                               class="form-input" 
+                               placeholder="Enter cost"
+                               required />
+                    </div>
+
+                    <div class="form-group">
+                        <label for="modal_ratings">
+                            <i class="fas fa-star"></i>
+                            Rating (1-5) *
+                        </label>
+                        <select id="modal_ratings" name="ratings" class="form-select" required>
+                            <option value="">Select rating</option>
+                            <?php for ($i = 1; $i <= 5; $i++) { ?>
+                                <option value="<?= $i ?>">
+                                    <?= $i ?> Star<?= $i > 1 ? 's' : '' ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label for="modal_amenities">
+                        <i class="fas fa-concierge-bell"></i>
+                        Amenities
+                    </label>
+                    <textarea id="modal_amenities" name="amenities" 
+                              class="form-textarea" 
+                              placeholder="List hotel amenities (e.g., WiFi, Pool, Gym, Restaurant...)"
+                              rows="3"></textarea>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">
+                        <i class="fas fa-check"></i>
+                        <span id="submitBtnText">Add Hotel</span>
+                    </button>
+                    <button type="button" class="btn-secondary" onclick="closeModal()">
+                        <i class="fas fa-times"></i>
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Loading overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner">
@@ -308,32 +332,65 @@ if (isset($_GET["edit"])) {
     </div>
 
     <script>
+        const cityOptions = <?= json_encode($city_options) ?>;
+        const editData = <?= $edit_data ? json_encode($edit_data) : 'null' ?>;
+
+        // Open modal for adding new hotel
+        function openModal() {
+            document.getElementById('hotelModal').style.display = 'flex';
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-plus"></i> Add New Hotel';
+            document.getElementById('submitBtnText').textContent = 'Add Hotel';
+            document.getElementById('hotelForm').action = 'controllers/addhotel.php';
+            document.getElementById('hotelForm').reset();
+            document.getElementById('hotelid').value = '';
+        }
+
+        // Open modal for editing hotel
+        function editHotel(hotel) {
+            document.getElementById('hotelModal').style.display = 'flex';
+            document.getElementById('modalTitle').innerHTML = '<i class="fas fa-edit"></i> Edit Hotel #' + hotel.hotelid;
+            document.getElementById('submitBtnText').textContent = 'Update Hotel';
+            document.getElementById('hotelForm').action = 'controllers/edithotel.php';
+            
+            // Populate form with hotel data
+            document.getElementById('hotelid').value = hotel.hotelid;
+            document.getElementById('hotel').value = hotel.hotel;
+            document.getElementById('modal_cityid').value = hotel.cityid;
+            document.getElementById('modal_cost').value = hotel.cost;
+            document.getElementById('modal_ratings').value = hotel.ratings;
+            document.getElementById('modal_amenities').value = hotel.amenities;
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('hotelModal').style.display = 'none';
+            document.getElementById('hotelForm').reset();
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('hotelModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeModal();
+            }
+        });
+
         // Add loading effect for form submissions
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function() {
-                document.getElementById('loadingOverlay').style.display = 'flex';
-            });
+        document.getElementById('hotelForm').addEventListener('submit', function() {
+            document.getElementById('loadingOverlay').style.display = 'flex';
         });
 
-        // Add smooth scrolling for edit links
-        document.querySelectorAll('a[href*="edit="]').forEach(link => {
-            link.addEventListener('click', function() {
-                setTimeout(() => {
-                    document.querySelector('.form-section').scrollIntoView({ 
-                        behavior: 'smooth' 
-                    });
-                }, 100);
-            });
-        });
-
-        // Auto-hide alerts after 5 seconds
-        setTimeout(() => {
-            const alerts = document.querySelectorAll('.alert');
-            alerts.forEach(alert => {
-                alert.style.opacity = '0';
-                setTimeout(() => alert.remove(), 300);
-            });
-        }, 5000);
+        // If edit parameter exists, open modal with edit data
+        if (editData) {
+            editHotel(editData);
+        }
     </script>
 </body>
 </html>

@@ -9,27 +9,6 @@ if (!isset($_SESSION["usersid"])) {
 
 $userid = $_SESSION["usersid"];
 
-// Handle deletions
-if (isset($_GET['delete_hotel']) && is_numeric($_GET['delete_hotel'])) {
-    $deleteId = (int) $_GET['delete_hotel'];
-    $deleteStmt = mysqli_prepare($conn, "DELETE FROM hotel_bookings WHERE booking_id = ? AND userid = ?");
-    mysqli_stmt_bind_param($deleteStmt, "ii", $deleteId, $userid);
-    mysqli_stmt_execute($deleteStmt);
-    mysqli_stmt_close($deleteStmt);
-    header("Location: profile.php");
-    exit();
-}
-
-if (isset($_GET['delete_tour']) && is_numeric($_GET['delete_tour'])) {
-    $booking_id = (int)$_GET['delete_tour'];
-    $deleteStmt = mysqli_prepare($conn, "DELETE FROM tour_bookings WHERE booking_id = ? AND userid = ?");
-    mysqli_stmt_bind_param($deleteStmt, "ii", $booking_id, $userid);
-    mysqli_stmt_execute($deleteStmt);
-    mysqli_stmt_close($deleteStmt);
-    header("Location: profile.php");
-    exit();
-}
-
 // Get user info
 $userStmt = mysqli_prepare($conn, "SELECT usersId, usersEmail, usersUid FROM login WHERE usersId = ?");
 mysqli_stmt_bind_param($userStmt, "i", $userid);
@@ -114,20 +93,32 @@ mysqli_close($conn);
                 <?php if (!empty($favoriteCities)): ?>
                     <div class='city-gallery'>
                         <?php
-                        $citySlugMap = [10 => 'tay_bac', 11 => 'ho_chi_minh', 12 => 'nha_trang', 13 => 'hue', 14 => 'phu_yen', 15 => 'da_lat', 16 => 'phu_quoc', 17 => 'hoi_an', 18 => 'ha_giang'];
+                        $citySlugMap = [
+                            10 => 'taybac', 
+                            11 => 'hcm', 
+                            12 => 'nhatrang', 
+                            13 => 'hue', 
+                            14 => 'phuyen', 
+                            15 => 'dalat', 
+                            16 => 'phuquoc', 
+                            17 => 'hoian', 
+                            18 => 'hagiang', 
+                            19 => 'danang', 
+                            20 => 'cantho', 
+                            21 => 'hanoi'
+                        ];
                         foreach ($favoriteCities as $favRow):
                             $cityName = htmlspecialchars($favRow['city']);
                             $cityId = intval($favRow['cityid']);
                             $imagePath = "/Places/{$cityId}.jpg";
                             $citySlug = $citySlugMap[$cityId] ?? 'default';
-                            $tourPage = "../Journey/viewjourney_$citySlug.php";
-                        ?>
+                        ?> 
                         <div class='city-item'>
                             <img src='<?= $imagePath ?>' alt='<?= $cityName ?>'>
                             <p><?= $cityName ?></p>
                             <div class='city-actions'>
-                                <a href='../view_hotels.php?city_id=<?= $cityId ?>' class='btn-book'>Book Hotel</a>
-                                <a href='<?= $tourPage ?>' class='btn-book'>Book Tour</a>
+                                <a href='../hotelinfo/view_hotels.php?city_id=<?= $cityId ?>' class='btn-book'>Book Hotel</a>
+                                <a href='../Journey/viewjourney.php?id=<?= $citySlug ?>' class='btn-book'>Book Tour</a>
                                 <form action='remove_favorite.php' method='post'>
                                     <input type='hidden' name='cityid' value='<?= $cityId ?>'>
                                     <button type='submit' class='btn-remove'>Remove</button>
@@ -160,7 +151,6 @@ mysqli_close($conn);
                                 <th>Total Amount</th>
                                 <th>Booking Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -177,15 +167,10 @@ mysqli_close($conn);
                                         <td data-label="Total Amount"><span class="total-price"><?= number_format($booking['total_amount'] ?? 0) ?> VND</span></td>
                                         <td data-label="Booking Date"><?= htmlspecialchars($booking['booking_date'] ?? '') ?></td>
                                         <td data-label="Status"><span class="status-badge status-<?= strtolower($booking['payment_status'] ?? 'pending') ?>"><?= htmlspecialchars($booking['payment_status'] ?? '') ?></span></td>
-                                        <td data-label="Action" class="action-cell">
-                                            <a href="?delete_tour=<?= $booking['booking_id'] ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this booking?')">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </a>
-                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <tr><td colspan="11" class="empty-message">No bookings available.</td></tr>
+                                <tr><td colspan="10" class="empty-message">No bookings available.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
@@ -212,7 +197,6 @@ mysqli_close($conn);
                                 <th>Total Amount</th>
                                 <th>Booking Date</th>
                                 <th>Status</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -230,15 +214,10 @@ mysqli_close($conn);
                                         <td data-label="Total Amount"><span class="total-price"><?= number_format($receipt['total_amount']) ?> VND</span></td>
                                         <td data-label="Booking Date"><?= htmlspecialchars($receipt['booking_date']) ?></td>
                                         <td data-label="Status"><span class="status-badge status-<?= strtolower($receipt['payment_status']) ?>"><?= htmlspecialchars($receipt['payment_status']) ?></span></td>
-                                        <td data-label="Action" class="action-cell">
-                                            <a href="?delete_hotel=<?= $receipt['booking_id'] ?>" class="btn-delete" onclick="return confirm('Are you sure you want to delete this booking?')">
-                                                <i class="fas fa-trash"></i> Delete
-                                            </a>
-                                        </td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else: ?>
-                                <tr><td colspan="12" class="empty-message">No receipts recorded.</td></tr>
+                                <tr><td colspan="11" class="empty-message">No receipts recorded.</td></tr>
                             <?php endif; ?>
                         </tbody>
                     </table>

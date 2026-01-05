@@ -274,3 +274,32 @@
 [2025-12-25 01:26:07] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.5750000000000001,"display_data_keys":["multi_city","has_conditions","tours"]}
 [2025-12-25 01:26:07] [INFO] Message processed successfully {"processing_time_ms":11374.32,"confidence":0.5750000000000001,"response_type":"tour_search"}
 [2025-12-25 01:26:07] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-04 13:36:17] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-04 13:36:17] [INFO] Chatbot initialized successfully 
+[2026-01-04 13:36:17] [INFO] Processing user message {"message_length":36,"message_preview":"List hotel Da Lat have rating 5 star","history_count":1}
+[2026-01-04 13:36:19] [INFO] Text generated successfully {"length":15,"attempt":1}
+[2026-01-04 13:36:19] [INFO] Intent detected {"intent":"rating_inquiry","confidence":0.85,"message":"List hotel Da Lat have rating 5 star"}
+[2026-01-04 13:36:19] [INFO] Intent Analysis {"intent":"rating_inquiry","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-04 13:36:19] [INFO] Hybrid search started {"query":"List hotel Da Lat have rating 5 star","intent":"rating_inquiry"}
+[2026-01-04 13:36:20] [INFO] Reranking started {"candidates":11,"query_length":36}
+[2026-01-04 13:36:22] [INFO] Text generated successfully {"length":90,"attempt":1}
+[2026-01-04 13:36:22] [INFO] Reranking completed {"input":11,"output":10}
+[2026-01-04 13:36:22] [INFO] generateVietnameseResponse called {"userMessage":"List hotel Da Lat have rating 5 star","context_length":373,"metadata":{"match_level":"hybrid_match","confidence":0.725}}
+[2026-01-04 13:36:24] [WARNING] Empty or generic response detected, using context fallback 
+[2026-01-04 13:36:24] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.725,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-04 13:36:24] [INFO] Message processed successfully {"processing_time_ms":7248.04,"confidence":0.725,"response_type":"tour_search"}
+[2026-01-04 13:36:24] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-04 13:36:59] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-04 13:36:59] [INFO] Chatbot initialized successfully 
+[2026-01-04 13:36:59] [INFO] Processing user message {"message_length":67,"message_preview":"create plan to visit Taiwan for 4 days with budget","history_count":3}
+[2026-01-04 13:37:01] [INFO] Text generated successfully {"length":14,"attempt":1}
+[2026-01-04 13:37:01] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"create plan to visit Taiwan for 4 days with budget under 30 million"}
+[2026-01-04 13:37:01] [INFO] Detected international location {"location":"taiwan","message_preview":"create plan to visit taiwan for 4 days with budget under 30 million"}
+[2026-01-04 13:37:01] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-04 13:37:01] [INFO] International query detected {"message":"create plan to visit Taiwan for 4 days with budget under 30 million"}
+[2026-01-04 13:37:01] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"create plan to visit Taiwan for 4 days with budget under 30 million"}
+[2026-01-04 13:37:01] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"create plan to visit Taiwan for 4 days with budget under 30 million"}
+[2026-01-04 13:37:01] [INFO] Prompt generated {"prompt_length":2157,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: List hotel Da Lat have rating 5 star\nAssistant: I found these tours in **Da Lat**:\n\n• **Dalat Dreamy Getaway: Valley of Love - Datanla Waterfall -\nUser: create plan to vis..."}
+[2026-01-04 13:37:12] [INFO] Text generated successfully {"length":5357,"attempt":1}
+[2026-01-04 13:37:12] [INFO] International plan generated successfully {"length":5357,"preview":"## **4-Day Travel Plan to Taiwan** (Budget: 30,000,000 VND)\n\nThis itinerary focuses on experiencing "}
+[2026-01-04 13:37:12] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}

@@ -9,11 +9,7 @@ class Config {
     const DB_CHARSET = "utf8mb4";
 
     // Gemini AI Configuration
-    const GEMINI_API_KEY = "AIzaSyCkuTg48ooJZC3Rdae4cF86cOOysROYXkA";
-    const GEMINI_BACKUP_KEYS = [
-        "AIzaSyBLNusKwtGsdLhEK0tDprKEnH_kngQdiVM",
-        "AIzaSyC48GsGryB2uHiNdOccADsyPAENC3QIsOQ",
-    ];
+    const GEMINI_API_KEY = "";
     // config.php
     const GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.0-flash:generateContent";
     const GEMINI_EMBEDDING_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
