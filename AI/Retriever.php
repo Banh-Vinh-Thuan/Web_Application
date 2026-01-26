@@ -37,7 +37,7 @@ class HybridRetriever {
 
             $filters = $this->prepareFilters($entities, $intent);
 
-            // STEP 1: Parallel Retrieval - Dense Semantic Search
+            // STEP 1: Parallel Retrieval - Semantic Search
             $semanticResults = $this->semanticSearch($query, $filters);
             
             // STEP 2: Parallel Retrieval - BM25 Keyword Search

@@ -303,3 +303,279 @@
 [2026-01-04 13:37:12] [INFO] Text generated successfully {"length":5357,"attempt":1}
 [2026-01-04 13:37:12] [INFO] International plan generated successfully {"length":5357,"preview":"## **4-Day Travel Plan to Taiwan** (Budget: 30,000,000 VND)\n\nThis itinerary focuses on experiencing "}
 [2026-01-04 13:37:12] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-05 03:39:27] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-05 03:39:27] [INFO] Chatbot initialized successfully 
+[2026-01-05 03:39:27] [INFO] Processing user message {"message_length":2,"message_preview":"hi","history_count":1}
+[2026-01-05 03:39:27] [INFO] Request processed successfully {"response_type":"greeting","has_data":false}
+[2026-01-05 03:39:32] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-05 03:39:32] [INFO] Chatbot initialized successfully 
+[2026-01-05 03:39:32] [INFO] Processing user message {"message_length":11,"message_preview":"tour da lat","history_count":3}
+[2026-01-05 03:39:33] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-05 03:39:33] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"tour da lat"}
+[2026-01-05 03:39:33] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2026-01-05 03:39:33] [INFO] Hybrid search started {"query":"tour da lat","intent":"tour_search"}
+[2026-01-05 03:39:34] [INFO] Reranking started {"candidates":15,"query_length":11}
+[2026-01-05 03:39:35] [INFO] Text generated successfully {"length":126,"attempt":1}
+[2026-01-05 03:39:35] [INFO] Reranking completed {"input":15,"output":10}
+[2026-01-05 03:39:35] [INFO] generateVietnameseResponse called {"userMessage":"tour da lat","context_length":726,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2026-01-05 03:39:37] [INFO] Successfully generated response {"response_length":794,"response_preview":"Okay, I found these tours in Da Lat:\n\n• **Dalat History & Culture: French Villas - Railway Station"}
+[2026-01-05 03:39:37] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.8,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-05 03:39:37] [INFO] Message processed successfully {"processing_time_ms":5054.63,"confidence":0.8,"response_type":"tour_search"}
+[2026-01-05 03:39:37] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-05 03:39:45] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-05 03:39:45] [INFO] Chatbot initialized successfully 
+[2026-01-05 03:39:45] [INFO] Processing user message {"message_length":38,"message_preview":"create plan to visit Taiwan for 3 days","history_count":5}
+[2026-01-05 03:39:46] [INFO] Text generated successfully {"length":8,"attempt":1}
+[2026-01-05 03:39:46] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"create plan to visit Taiwan for 3 days"}
+[2026-01-05 03:39:46] [INFO] Detected international location {"location":"taiwan","message_preview":"create plan to visit taiwan for 3 days"}
+[2026-01-05 03:39:46] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-05 03:39:46] [INFO] International query detected {"message":"create plan to visit Taiwan for 3 days"}
+[2026-01-05 03:39:46] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"create plan to visit Taiwan for 3 days"}
+[2026-01-05 03:39:46] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"create plan to visit Taiwan for 3 days"}
+[2026-01-05 03:39:46] [INFO] Prompt generated {"prompt_length":2074,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: tour da lat\nAssistant: Okay, I found these tours in Da Lat:\n\n• **Dalat History & Culture: French Villas - Railway Station\nUser: create plan to visit Taiwan for 3 days\n\r\n\r\n..."}
+[2026-01-05 03:39:55] [INFO] Text generated successfully {"length":5159,"attempt":1}
+[2026-01-05 03:39:55] [INFO] International plan generated successfully {"length":5159,"preview":"**3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n## 🗓️ Day 1 - Taipei City Highlight"}
+[2026-01-05 03:39:55] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-15 03:05:31] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:05:31] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:05:31] [INFO] Processing user message {"message_length":25,"message_preview":"Find hotel in Ho Chi Minh","history_count":1}
+[2026-01-15 03:05:33] [INFO] Text generated successfully {"length":13,"attempt":1}
+[2026-01-15 03:05:33] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find hotel in Ho Chi Minh"}
+[2026-01-15 03:05:33] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false,"is_international":false}
+[2026-01-15 03:05:33] [INFO] Hybrid search started {"query":"Find hotel in Ho Chi Minh","intent":"hotel_search"}
+[2026-01-15 03:05:34] [INFO] Reranking started {"candidates":10,"query_length":25}
+[2026-01-15 03:05:34] [INFO] generateVietnameseResponse called {"userMessage":"Find hotel in Ho Chi Minh","context_length":493,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2026-01-15 03:05:37] [INFO] Successfully generated response {"response_length":616,"response_preview":"Okay, I can help with that! Here are some hotels I found in Ho Chi Minh:\n\nI found these hotels in Ho"}
+[2026-01-15 03:05:37] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2026-01-15 03:05:37] [INFO] Message processed successfully {"processing_time_ms":6183.22,"confidence":0.8,"response_type":"hotel_search"}
+[2026-01-15 03:05:37] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2026-01-15 03:05:43] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:05:43] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:05:43] [INFO] Processing user message {"message_length":30,"message_preview":"Find tour Nha Trang for 4 days","history_count":3}
+[2026-01-15 03:05:45] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:05:45] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find tour Nha Trang for 4 days"}
+[2026-01-15 03:05:45] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-15 03:05:45] [INFO] Hybrid search started {"query":"Find tour Nha Trang for 4 days","intent":"tour_search"}
+[2026-01-15 03:05:47] [WARNING] No searchable documents found 
+[2026-01-15 03:05:47] [INFO] Reranking started {"candidates":2,"query_length":30}
+[2026-01-15 03:05:47] [INFO] generateVietnameseResponse called {"userMessage":"Find tour Nha Trang for 4 days","context_length":213,"metadata":{"match_level":"hybrid_match","confidence":0.45000000000000007}}
+[2026-01-15 03:05:49] [INFO] Successfully generated response {"response_length":304,"response_preview":"Okay, I can help with that! Here are some tours I found in Nha Trang that might interest you:\n\nI fou"}
+[2026-01-15 03:05:49] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.45000000000000007,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2026-01-15 03:05:49] [INFO] Message processed successfully {"processing_time_ms":5659.2,"confidence":0.45000000000000007,"response_type":"hotel_search"}
+[2026-01-15 03:05:49] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2026-01-15 03:06:09] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:06:09] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:06:09] [INFO] Processing user message {"message_length":67,"message_preview":"Create plan to visit Taiwan for 3 days with budget","history_count":5}
+[2026-01-15 03:06:11] [INFO] Text generated successfully {"length":14,"attempt":1}
+[2026-01-15 03:06:11] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"Create plan to visit Taiwan for 3 days with budget under 30 million"}
+[2026-01-15 03:06:11] [INFO] Detected international location {"location":"taiwan","message_preview":"create plan to visit taiwan for 3 days with budget under 30 million"}
+[2026-01-15 03:06:11] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-15 03:06:11] [INFO] International query detected {"message":"Create plan to visit Taiwan for 3 days with budget under 30 million"}
+[2026-01-15 03:06:11] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"Create plan to visit Taiwan for 3 days with budget under 30 million"}
+[2026-01-15 03:06:11] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"Create plan to visit Taiwan for 3 days with budget under 30 million"}
+[2026-01-15 03:06:11] [INFO] Prompt generated {"prompt_length":2151,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: Find tour Nha Trang for 4 days\nAssistant: Okay, I can help with that! Here are some tours I found in Nha Trang that might interest you:\n\nI fou\nUser: Create plan to visit Tai..."}
+[2026-01-15 03:06:22] [INFO] Text generated successfully {"length":5808,"attempt":1}
+[2026-01-15 03:06:22] [INFO] International plan generated successfully {"length":5808,"preview":"**3-Day Travel Plan to Taiwan** (Budget: 0-30 million VND)\n\nThis itinerary focuses on exploring Taip"}
+[2026-01-15 03:06:22] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-15 03:07:15] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:07:15] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:07:15] [INFO] Processing user message {"message_length":29,"message_preview":"Find tour Phu Quoc for 4 days","history_count":5}
+[2026-01-15 03:07:17] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:07:17] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find tour Phu Quoc for 4 days"}
+[2026-01-15 03:07:17] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-15 03:07:17] [INFO] Hybrid search started {"query":"Find tour Phu Quoc for 4 days","intent":"tour_search"}
+[2026-01-15 03:07:18] [INFO] Reranking started {"candidates":8,"query_length":29}
+[2026-01-15 03:07:18] [INFO] generateVietnameseResponse called {"userMessage":"Find tour Phu Quoc for 4 days","context_length":560,"metadata":{"match_level":"hybrid_match","confidence":0.7}}
+[2026-01-15 03:07:21] [INFO] Successfully generated response {"response_length":656,"response_preview":"Okay, I can help with that! Here are some tours I found in Phu Quoc that might interest you:\n\n*   **"}
+[2026-01-15 03:07:21] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.7,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-15 03:07:21] [INFO] Message processed successfully {"processing_time_ms":6106.49,"confidence":0.7,"response_type":"tour_search"}
+[2026-01-15 03:07:21] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-15 03:08:27] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:08:27] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:08:27] [INFO] Processing user message {"message_length":61,"message_preview":"Create plan to visit Taiwan for 3 days with budget","history_count":5}
+[2026-01-15 03:08:29] [INFO] Text generated successfully {"length":14,"attempt":1}
+[2026-01-15 03:08:29] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"Create plan to visit Taiwan for 3 days with budget 30 million"}
+[2026-01-15 03:08:29] [INFO] Detected international location {"location":"taiwan","message_preview":"create plan to visit taiwan for 3 days with budget 30 million"}
+[2026-01-15 03:08:29] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-15 03:08:29] [INFO] International query detected {"message":"Create plan to visit Taiwan for 3 days with budget 30 million"}
+[2026-01-15 03:08:29] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"Create plan to visit Taiwan for 3 days with budget 30 million"}
+[2026-01-15 03:08:29] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"Create plan to visit Taiwan for 3 days with budget 30 million"}
+[2026-01-15 03:08:29] [INFO] Prompt generated {"prompt_length":2138,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: Find tour Phu Quoc for 4 days\nAssistant: Okay, I can help with that! Here are some tours I found in Phu Quoc that might interest you:\n\n*   **\nUser: Create plan to visit Taiw..."}
+[2026-01-15 03:08:43] [INFO] Text generated successfully {"length":5503,"attempt":1}
+[2026-01-15 03:08:43] [INFO] International plan generated successfully {"length":5503,"preview":"## **3-Day Travel Plan to Taiwan** (Budget: 30,000,000 VND)\n\n**Assumptions:** This plan assumes you "}
+[2026-01-15 03:08:43] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-15 03:42:09] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:42:09] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:42:09] [INFO] Processing user message {"message_length":24,"message_preview":"Find tour in Ho Chi Minh","history_count":1}
+[2026-01-15 03:42:11] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:42:11] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find tour in Ho Chi Minh"}
+[2026-01-15 03:42:11] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":false,"is_international":false}
+[2026-01-15 03:42:11] [INFO] Hybrid search started {"query":"Find tour in Ho Chi Minh","intent":"tour_search"}
+[2026-01-15 03:42:12] [INFO] Reranking started {"candidates":8,"query_length":24}
+[2026-01-15 03:42:12] [INFO] generateVietnameseResponse called {"userMessage":"Find tour in Ho Chi Minh","context_length":633,"metadata":{"match_level":"hybrid_match","confidence":0.75}}
+[2026-01-15 03:42:15] [INFO] Successfully generated response {"response_length":656,"response_preview":"I found these tours in Ho Chi Minh:\n* **Museum and Contemporary Art Tour in Ho Chi Minh** - 2 days -"}
+[2026-01-15 03:42:15] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.75,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-15 03:42:15] [INFO] Message processed successfully {"processing_time_ms":6184.64,"confidence":0.75,"response_type":"tour_search"}
+[2026-01-15 03:42:15] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-15 03:42:46] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:42:46] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:42:46] [INFO] Processing user message {"message_length":25,"message_preview":"Find hotel in Ho Chi Minh","history_count":1}
+[2026-01-15 03:42:48] [INFO] Text generated successfully {"length":13,"attempt":1}
+[2026-01-15 03:42:48] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find hotel in Ho Chi Minh"}
+[2026-01-15 03:42:48] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false,"is_international":false}
+[2026-01-15 03:42:48] [INFO] Hybrid search started {"query":"Find hotel in Ho Chi Minh","intent":"hotel_search"}
+[2026-01-15 03:42:49] [INFO] Reranking started {"candidates":10,"query_length":25}
+[2026-01-15 03:42:49] [INFO] generateVietnameseResponse called {"userMessage":"Find hotel in Ho Chi Minh","context_length":493,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2026-01-15 03:42:52] [INFO] Successfully generated response {"response_length":574,"response_preview":"Okay, I can help with that! Here are some hotels I found in Ho Chi Minh:\n\n*   **Havana Airport Hotel"}
+[2026-01-15 03:42:52] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2026-01-15 03:42:52] [INFO] Message processed successfully {"processing_time_ms":5876.23,"confidence":0.8,"response_type":"hotel_search"}
+[2026-01-15 03:42:52] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2026-01-15 03:43:26] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:43:26] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:43:26] [INFO] Processing user message {"message_length":32,"message_preview":"Find tour in Phu Quoc for 4 days","history_count":3}
+[2026-01-15 03:43:27] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:43:27] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find tour in Phu Quoc for 4 days"}
+[2026-01-15 03:43:27] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-15 03:43:27] [INFO] Hybrid search started {"query":"Find tour in Phu Quoc for 4 days","intent":"tour_search"}
+[2026-01-15 03:43:29] [INFO] Reranking started {"candidates":8,"query_length":32}
+[2026-01-15 03:43:29] [INFO] generateVietnameseResponse called {"userMessage":"Find tour in Phu Quoc for 4 days","context_length":560,"metadata":{"match_level":"hybrid_match","confidence":0.7}}
+[2026-01-15 03:43:31] [INFO] Successfully generated response {"response_length":628,"response_preview":"Okay, I can help with that! Here are some 4-day tours I found in Phu Quoc:\n\n*   **Phu Quoc Paradise "}
+[2026-01-15 03:43:31] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.7,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-15 03:43:31] [INFO] Message processed successfully {"processing_time_ms":5685.94,"confidence":0.7,"response_type":"tour_search"}
+[2026-01-15 03:43:31] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-15 03:44:05] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:44:05] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:44:05] [INFO] Processing user message {"message_length":38,"message_preview":"Create plan to visit Korean for 4 days","history_count":5}
+[2026-01-15 03:44:07] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:44:07] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Create plan to visit Korean for 4 days"}
+[2026-01-15 03:44:07] [INFO] Detected international location {"location":"korea","message_preview":"create plan to visit korean for 4 days"}
+[2026-01-15 03:44:07] [INFO] Intent Analysis {"intent":"tour_search","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-15 03:44:07] [INFO] International query detected {"message":"Create plan to visit Korean for 4 days"}
+[2026-01-15 03:44:07] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"Create plan to visit Korean for 4 days"}
+[2026-01-15 03:44:07] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"Create plan to visit Korean for 4 days"}
+[2026-01-15 03:44:07] [INFO] Prompt generated {"prompt_length":2095,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: Find tour in Phu Quoc for 4 days\nAssistant: Okay, I can help with that! Here are some 4-day tours I found in Phu Quoc:\n\n*   **Phu Quoc Paradise \nUser: Create plan to visit K..."}
+[2026-01-15 03:44:17] [INFO] Text generated successfully {"length":4390,"attempt":1}
+[2026-01-15 03:44:17] [INFO] International plan generated successfully {"length":4390,"preview":"## **4-Day Travel Plan to South Korea** (Budget: To be determined)\n\n**🇰🇷 Best Time to Visit:**"}
+[2026-01-15 03:44:17] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-15 03:45:13] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:45:13] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:45:13] [INFO] Processing user message {"message_length":24,"message_preview":"List of Hotel in Da Nang","history_count":1}
+[2026-01-15 03:45:14] [INFO] Text generated successfully {"length":13,"attempt":1}
+[2026-01-15 03:45:14] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"List of Hotel in Da Nang"}
+[2026-01-15 03:45:14] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false,"is_international":false}
+[2026-01-15 03:45:14] [INFO] Hybrid search started {"query":"List of Hotel in Da Nang","intent":"hotel_search"}
+[2026-01-15 03:45:16] [INFO] Reranking started {"candidates":10,"query_length":24}
+[2026-01-15 03:45:16] [INFO] generateVietnameseResponse called {"userMessage":"List of Hotel in Da Nang","context_length":506,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2026-01-15 03:45:19] [INFO] Successfully generated response {"response_length":562,"response_preview":"Okay, here are some hotels I found in Da Nang:\n\n• **Muong Thanh Grand Da Nang Hotel** - Rating: 5."}
+[2026-01-15 03:45:19] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2026-01-15 03:45:19] [INFO] Message processed successfully {"processing_time_ms":5846,"confidence":0.8,"response_type":"hotel_search"}
+[2026-01-15 03:45:19] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2026-01-15 03:45:43] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:45:43] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:45:43] [INFO] Processing user message {"message_length":49,"message_preview":"List tour in Can Tho with budget under 10 million","history_count":3}
+[2026-01-15 03:45:44] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:45:44] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"List tour in Can Tho with budget under 10 million"}
+[2026-01-15 03:45:44] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-15 03:45:44] [INFO] Hybrid search started {"query":"List tour in Can Tho with budget under 10 million","intent":"tour_search"}
+[2026-01-15 03:45:46] [INFO] Reranking started {"candidates":15,"query_length":49}
+[2026-01-15 03:45:48] [INFO] Text generated successfully {"length":126,"attempt":1}
+[2026-01-15 03:45:48] [INFO] Reranking completed {"input":15,"output":10}
+[2026-01-15 03:45:48] [INFO] generateVietnameseResponse called {"userMessage":"List tour in Can Tho with budget under 10 million","context_length":617,"metadata":{"match_level":"hybrid_match","confidence":0.85}}
+[2026-01-15 03:45:50] [INFO] Successfully generated response {"response_length":675,"response_preview":"Okay, I found these tours in Can Tho that are under 10 million VND:\n\n• **Can Tho Countryside Bikin"}
+[2026-01-15 03:45:50] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.85,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-15 03:45:50] [INFO] Message processed successfully {"processing_time_ms":7799.43,"confidence":0.85,"response_type":"tour_search"}
+[2026-01-15 03:45:50] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-15 03:49:58] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:49:58] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:49:58] [INFO] Processing user message {"message_length":78,"message_preview":"Create a 4-day travel plan to visit Taiwan with a ","history_count":5}
+[2026-01-15 03:50:00] [INFO] Text generated successfully {"length":14,"attempt":1}
+[2026-01-15 03:50:00] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND."}
+[2026-01-15 03:50:00] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 4-day travel plan to visit taiwan with a budget under 30 million vnd."}
+[2026-01-15 03:50:00] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-15 03:50:00] [INFO] International query detected {"message":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND."}
+[2026-01-15 03:50:00] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND."}
+[2026-01-15 03:50:00] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND."}
+[2026-01-15 03:50:00] [INFO] Prompt generated {"prompt_length":2200,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: List tour in Can Tho with budget under 10 million\nAssistant: Okay, I found these tours in Can Tho that are under 10 million VND:\n\n• **Can Tho Countryside Bikin\nUser: Creat..."}
+[2026-01-15 03:50:10] [INFO] Text generated successfully {"length":4940,"attempt":1}
+[2026-01-15 03:50:10] [INFO] International plan generated successfully {"length":4940,"preview":"**Multi-Day Travel Plan to Taiwan** (Budget: Under 30,000,000 VND)\n\n**Cultural Tips:** Learn a few b"}
+[2026-01-15 03:50:10] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-15 03:50:58] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:50:58] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:50:58] [INFO] Processing user message {"message_length":40,"message_preview":"Tour Tay Bac with price above 10 million","history_count":1}
+[2026-01-15 03:51:02] [INFO] Text generated successfully {"length":13,"attempt":1}
+[2026-01-15 03:51:02] [INFO] Intent detected {"intent":"mixed_search","confidence":0.85,"message":"Tour Tay Bac with price above 10 million"}
+[2026-01-15 03:51:02] [INFO] Intent Analysis {"intent":"mixed_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-15 03:51:02] [INFO] Hybrid search started {"query":"Tour Tay Bac with price above 10 million","intent":"mixed_search"}
+[2026-01-15 03:51:03] [INFO] Reranking started {"candidates":3,"query_length":40}
+[2026-01-15 03:51:03] [INFO] generateVietnameseResponse called {"userMessage":"Tour Tay Bac with price above 10 million","context_length":410,"metadata":{"match_level":"hybrid_match","confidence":0.5499999999999999}}
+[2026-01-15 03:51:05] [WARNING] Empty or generic response detected, using context fallback 
+[2026-01-15 03:51:05] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.5499999999999999,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-15 03:51:05] [INFO] Message processed successfully {"processing_time_ms":7650.36,"confidence":0.5499999999999999,"response_type":"tour_search"}
+[2026-01-15 03:51:05] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-15 03:54:59] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:54:59] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:54:59] [INFO] Processing user message {"message_length":25,"message_preview":"Find hotel in Ho Chi Minh","history_count":1}
+[2026-01-15 03:55:01] [INFO] Text generated successfully {"length":13,"attempt":1}
+[2026-01-15 03:55:01] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find hotel in Ho Chi Minh"}
+[2026-01-15 03:55:01] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":false,"is_international":false}
+[2026-01-15 03:55:01] [INFO] Hybrid search started {"query":"Find hotel in Ho Chi Minh","intent":"hotel_search"}
+[2026-01-15 03:55:03] [INFO] Reranking started {"candidates":10,"query_length":25}
+[2026-01-15 03:55:03] [INFO] generateVietnameseResponse called {"userMessage":"Find hotel in Ho Chi Minh","context_length":493,"metadata":{"match_level":"hybrid_match","confidence":0.8}}
+[2026-01-15 03:55:05] [INFO] Successfully generated response {"response_length":589,"response_preview":"Okay, I can help with that! Here are some hotels I found in Ho Chi Minh:\n\nI found these hotels in Ho"}
+[2026-01-15 03:55:05] [INFO] Hybrid response generated {"response_type":"hotel_search","layout_type":"single_hotels","confidence":0.8,"display_data_keys":["multi_city","has_conditions","hotels"]}
+[2026-01-15 03:55:05] [INFO] Message processed successfully {"processing_time_ms":5958.85,"confidence":0.8,"response_type":"hotel_search"}
+[2026-01-15 03:55:05] [INFO] Request processed successfully {"response_type":"hotel_search","has_data":true}
+[2026-01-15 03:55:34] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:55:34] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:55:34] [INFO] Processing user message {"message_length":29,"message_preview":"Find tour Phu Quoc for 4 days","history_count":3}
+[2026-01-15 03:55:35] [INFO] Text generated successfully {"length":12,"attempt":1}
+[2026-01-15 03:55:35] [INFO] Intent detected {"intent":"tour_search","confidence":0.85,"message":"Find tour Phu Quoc for 4 days"}
+[2026-01-15 03:55:35] [INFO] Intent Analysis {"intent":"tour_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-15 03:55:35] [INFO] Hybrid search started {"query":"Find tour Phu Quoc for 4 days","intent":"tour_search"}
+[2026-01-15 03:55:37] [INFO] Reranking started {"candidates":8,"query_length":29}
+[2026-01-15 03:55:37] [INFO] generateVietnameseResponse called {"userMessage":"Find tour Phu Quoc for 4 days","context_length":560,"metadata":{"match_level":"hybrid_match","confidence":0.7}}
+[2026-01-15 03:55:39] [WARNING] Empty or generic response detected, using context fallback 
+[2026-01-15 03:55:39] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.7,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-15 03:55:39] [INFO] Message processed successfully {"processing_time_ms":5720.69,"confidence":0.7,"response_type":"tour_search"}
+[2026-01-15 03:55:39] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
+[2026-01-15 03:56:00] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-15 03:56:00] [INFO] Chatbot initialized successfully 
+[2026-01-15 03:56:00] [INFO] Processing user message {"message_length":77,"message_preview":"Create a 4-day travel plan to visit Taiwan with a ","history_count":5}
+[2026-01-15 03:56:02] [INFO] Text generated successfully {"length":14,"attempt":1}
+[2026-01-15 03:56:02] [INFO] Intent detected {"intent":"price_inquiry","confidence":0.85,"message":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND"}
+[2026-01-15 03:56:02] [INFO] Detected international location {"location":"taiwan","message_preview":"create a 4-day travel plan to visit taiwan with a budget under 30 million vnd"}
+[2026-01-15 03:56:02] [INFO] Intent Analysis {"intent":"price_inquiry","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-15 03:56:02] [INFO] International query detected {"message":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND"}
+[2026-01-15 03:56:02] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND"}
+[2026-01-15 03:56:02] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"Create a 4-day travel plan to visit Taiwan with a budget under 30 million VND"}
+[2026-01-15 03:56:02] [INFO] Prompt generated {"prompt_length":2178,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: Find tour Phu Quoc for 4 days\nAssistant: I found these tours in **Phu Quoc**:\n\n• **Phu Quoc Paradise Escape: Sao Beach - Vinpearl Safari - \nUser: Create a 4-day travel pla..."}
+[2026-01-15 03:56:18] [INFO] Text generated successfully {"length":6686,"attempt":1}
+[2026-01-15 03:56:18] [INFO] International plan generated successfully {"length":6686,"preview":"## **Multi-Day Travel Plan to Taiwan** (Budget: 30,000,000 VND)\n\nThis itinerary focuses on Taipei an"}
+[2026-01-15 03:56:18] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-20 03:23:16] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-20 03:23:16] [INFO] Chatbot initialized successfully 
+[2026-01-20 03:23:16] [INFO] Processing user message {"message_length":38,"message_preview":"create plan to visit Taiwan for 3 days","history_count":1}
+[2026-01-20 03:23:18] [INFO] Text generated successfully {"length":8,"attempt":1}
+[2026-01-20 03:23:18] [INFO] Intent detected {"intent":"general","confidence":0.7,"message":"create plan to visit Taiwan for 3 days"}
+[2026-01-20 03:23:18] [INFO] Detected international location {"location":"taiwan","message_preview":"create plan to visit taiwan for 3 days"}
+[2026-01-20 03:23:18] [INFO] Intent Analysis {"intent":"general","cities":0,"has_conditions":true,"is_international":true}
+[2026-01-20 03:23:18] [INFO] International query detected {"message":"create plan to visit Taiwan for 3 days"}
+[2026-01-20 03:23:18] [INFO] Redirecting to generateInternationalPlan {"destination":"your destination","message_preview":"create plan to visit Taiwan for 3 days"}
+[2026-01-20 03:23:18] [INFO] Building travel plan prompt {"destination":"your destination","message_preview":"create plan to visit Taiwan for 3 days"}
+[2026-01-20 03:23:18] [INFO] Prompt generated {"prompt_length":1944,"prompt_preview":"You are an expert travel planner creating detailed itineraries for international destinations.\r\n\r\nPrevious conversation:\nUser: create plan to visit Taiwan for 3 days\n\r\n\r\n# User Request\r\n\"create plan to visit Taiwan for 3 days\"\r\n\r\n# Destination Details\r\n- Location: Your Destination\r\n- Duration: 3-Day..."}
+[2026-01-20 03:23:30] [INFO] Text generated successfully {"length":5333,"attempt":1}
+[2026-01-20 03:23:30] [INFO] International plan generated successfully {"length":5333,"preview":"**3-Day Travel Plan to Taiwan** (Budget: To be determined)\n\n## General Information\n\n*   **Best Time "}
+[2026-01-20 03:23:30] [INFO] Request processed successfully {"response_type":"international_info","has_data":false}
+[2026-01-20 03:23:32] [INFO] RAG Chatbot initialized successfully {"userId":1}
+[2026-01-20 03:23:32] [INFO] Chatbot initialized successfully 
+[2026-01-20 03:23:32] [INFO] Processing user message {"message_length":30,"message_preview":"Find hotel Phu Quoc for 4 star","history_count":3}
+[2026-01-20 03:23:34] [INFO] Text generated successfully {"length":13,"attempt":1}
+[2026-01-20 03:23:34] [INFO] Intent detected {"intent":"hotel_search","confidence":0.85,"message":"Find hotel Phu Quoc for 4 star"}
+[2026-01-20 03:23:34] [INFO] Intent Analysis {"intent":"hotel_search","cities":1,"has_conditions":true,"is_international":false}
+[2026-01-20 03:23:34] [INFO] Hybrid search started {"query":"Find hotel Phu Quoc for 4 star","intent":"hotel_search"}
+[2026-01-20 03:23:36] [INFO] Reranking started {"candidates":5,"query_length":30}
+[2026-01-20 03:23:36] [INFO] generateVietnameseResponse called {"userMessage":"Find hotel Phu Quoc for 4 star","context_length":189,"metadata":{"match_level":"hybrid_match","confidence":0.625}}
+[2026-01-20 03:23:39] [WARNING] Empty or generic response detected, using context fallback 
+[2026-01-20 03:23:39] [INFO] Hybrid response generated {"response_type":"tour_search","layout_type":"single_tours","confidence":0.625,"display_data_keys":["multi_city","has_conditions","tours"]}
+[2026-01-20 03:23:39] [INFO] Message processed successfully {"processing_time_ms":6859.87,"confidence":0.625,"response_type":"tour_search"}
+[2026-01-20 03:23:39] [INFO] Request processed successfully {"response_type":"tour_search","has_data":true}
